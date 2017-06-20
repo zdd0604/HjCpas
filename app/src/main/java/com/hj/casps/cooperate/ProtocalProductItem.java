@@ -105,7 +105,7 @@ public class ProtocalProductItem extends ActivityBaseHeader2 implements View.OnC
                             cooperate_protocol_recycle.setLayoutManager(
                                     new LinearLayoutManager(ProtocalProductItem.this));
                             //如果数据为空或者没有数据
-                            if(categoryList==null||categoryList.size()==0){
+                            if (categoryList == null || categoryList.size() == 0) {
                                 return;
                             }
                             ArrayList<ProtocalProductItem.GoodLevelEntity> dataList = generateData1();
@@ -261,16 +261,19 @@ public class ProtocalProductItem extends ActivityBaseHeader2 implements View.OnC
         ArrayList<ProtocalProductItem.GoodLevelEntity> res = new ArrayList<>();
         for (int i = 0; i < categoryList.size(); i++) {
             ProtocalProductItem.GoodLevelEntity lv0 = new ProtocalProductItem.GoodLevelEntity(categoryList.get(i).getCategoryName(), categoryList.get(i).getCategoryId());
-            if(categoryList.get(i).getNodes()!=null&&categoryList.get(i).getNodes().size()>0)
-            for (int j = 0; j < categoryList.get(i).getNodes().size(); j++) {
-                ProtocalProductItem.GoodLevelEntity lv1 = new ProtocalProductItem.GoodLevelEntity(categoryList.get(i).getNodes().get(j).getCategoryName(), categoryList.get(i).getNodes().get(j).getCategoryId());
-                if(categoryList.get(i).getNodes().get(j).getNodes()!=null&&categoryList.get(i).getNodes().get(j).getNodes().size()>0)
-                for (int x = 0; x < categoryList.get(i).getNodes().get(j).getNodes().size(); x++) {
-                    ProtocalProductItem.GoodLevelEntity lv2 = new ProtocalProductItem.GoodLevelEntity(categoryList.get(i).getNodes().get(j).getNodes().get(x).getCategoryName(), categoryList.get(i).getNodes().get(j).getNodes().get(x).getCategoryId());
-                    lv1.addSubItem(lv2);
+            if (categoryList.get(i).getNodes() != null && categoryList.get(i).getNodes().size() > 0)
+                for (int j = 0; j < categoryList.get(i).getNodes().size(); j++) {
+                    if (categoryList.get(i).getNodes().get(j).getNodes() != null && categoryList.get(i).getNodes().get(j).getNodes().size() > 0) {
+                        ProtocalProductItem.GoodLevelEntity lv1 = new ProtocalProductItem.GoodLevelEntity(categoryList.get(i).getNodes().get(j).getCategoryName(), categoryList.get(i).getNodes().get(j).getCategoryId());
+                        for (int x = 0; x < categoryList.get(i).getNodes().get(j).getNodes().size(); x++) {
+                            if (categoryList.get(i).getNodes().get(j).getNodes().get(x).getNodes() != null && categoryList.get(i).getNodes().get(j).getNodes().get(x).getNodes().size() > 0) {
+                                ProtocalProductItem.GoodLevelEntity lv2 = new ProtocalProductItem.GoodLevelEntity(categoryList.get(i).getNodes().get(j).getNodes().get(x).getCategoryName(), categoryList.get(i).getNodes().get(j).getNodes().get(x).getCategoryId());
+                                lv1.addSubItem(lv2);
+                            }
+                        }
+                        lv0.addSubItem(lv1);
+                    }
                 }
-                lv0.addSubItem(lv1);
-            }
             res.add(lv0);
         }
         return res;
