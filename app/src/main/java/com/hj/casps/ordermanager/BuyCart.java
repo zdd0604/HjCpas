@@ -95,6 +95,13 @@ public class BuyCart extends ActivityBaseHeader implements View.OnClickListener 
 //                                Toast.makeText(context, "没有订单", Toast.LENGTH_SHORT).show();
                                 adapter.removeAll();
                             }
+                            int no = 0;
+                            for (int i = 0; i < orderBuyModels.size(); i++) {
+                                for (int i1 = 0; i1 < orderBuyModels.get(i).getListGoods().size(); i1++) {
+                                    orderBuyModels.get(i).getListGoods().get(i1).setNo(no);
+                                    no++;
+                                }
+                            }
                             adapter.updateRes(orderBuyModels);
                         }
                     }
@@ -292,6 +299,7 @@ public class BuyCart extends ActivityBaseHeader implements View.OnClickListener 
                 private String goodsId;
                 private String goodsName;
                 private String id;
+                private int no;
                 private double maxPrice;
                 private double minPrice;
                 private String mmbName;
@@ -301,6 +309,7 @@ public class BuyCart extends ActivityBaseHeader implements View.OnClickListener 
                     goodsId = in.readString();
                     goodsName = in.readString();
                     id = in.readString();
+                    no = in.readInt();
                     maxPrice = in.readDouble();
                     minPrice = in.readDouble();
                     mmbName = in.readString();
@@ -317,6 +326,14 @@ public class BuyCart extends ActivityBaseHeader implements View.OnClickListener 
                         return new ListGoodsBean[size];
                     }
                 };
+
+                public int getNo() {
+                    return no;
+                }
+
+                public void setNo(int no) {
+                    this.no = no;
+                }
 
                 public String getCategoryId() {
                     return categoryId;
@@ -385,6 +402,7 @@ public class BuyCart extends ActivityBaseHeader implements View.OnClickListener 
                     parcel.writeString(goodsId);
                     parcel.writeString(goodsName);
                     parcel.writeString(id);
+                    parcel.writeInt(no);
                     parcel.writeDouble(maxPrice);
                     parcel.writeDouble(minPrice);
                     parcel.writeString(mmbName);
@@ -426,7 +444,7 @@ public class BuyCart extends ActivityBaseHeader implements View.OnClickListener 
                     intent.putExtra("buy_id", orderBuyModel.getMmbId());
                     intent.putParcelableArrayListExtra("buy_list", (ArrayList<? extends Parcelable>) orderBuyModel.getListGoods());
                     intent.putExtra("buy_num", orderBuyModel.getListGoods().size());
-                    startActivityForResult(intent,Constant.START_ACTIVITY_TYPE);
+                    startActivityForResult(intent, Constant.START_ACTIVITY_TYPE);
                 }
             });
         }

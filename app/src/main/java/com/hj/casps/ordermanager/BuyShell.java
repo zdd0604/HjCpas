@@ -219,7 +219,7 @@ public class BuyShell extends ActivityBaseHeader2 implements View.OnClickListene
             for (int i = 0; i < buy_list.size(); i++) {
                 OrderShellModel orderShellModel = new OrderShellModel();
                 orderShellModel.setNum(0);
-                orderShellModel.setNo(i);
+                orderShellModel.setNo(buy_list.get(i).getNo());
                 orderShellModel.setCategoryId(buy_list.get(i).getCategoryId());
                 orderShellModel.setChecked(false);
                 orderShellModel.setStatus(false);
