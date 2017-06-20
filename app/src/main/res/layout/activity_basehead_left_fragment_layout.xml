@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/uc_bj_2"
+        android:orientation="vertical"
+        >
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/size_10"
+            android:layout_height="wrap_content"
+            android:paddingRight="@dimen/size_10"
+            android:paddingLeft="@dimen/size_10">
+
+            <ImageView
+                android:id="@+id/base_header_left_user_iv"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@mipmap/uc_hpb"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/base_header_left_user_name_tv"
+                style="@style/BaseHeaderTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/size_5"
+                android:text="@string/testStr"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toRightOf="@+id/base_header_left_user_iv" />
+
+            <TextView
+                style="@style/BaseHeaderTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/base_header_back"
+                android:drawablePadding="@dimen/size_5"
+                android:paddingTop="@dimen/size_10"
+                android:paddingBottom="@dimen/size_10"
+                android:drawableRight="@mipmap/jt1"
+                android:text="@string/UserBack1"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </android.support.constraint.ConstraintLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/size_15"
+            android:paddingBottom="@dimen/size_10"
+            android:paddingRight="@dimen/size_10"
+            android:paddingLeft="@dimen/size_10"
+            android:paddingTop="@dimen/size_10">
+
+            <mehdi.sakout.fancybuttons.FancyButton
+                android:id="@+id/base_nav_menu_bt1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:padding="13dp"
+                android:layout_weight="1"
+                app:fb_borderColor="@color/white"
+                app:fb_borderWidth="1dp"
+                app:fb_defaultColor="@color/transLucent"
+                app:fb_focusColor="@color/transLucent"
+                app:fb_iconPosition="left"
+                app:fb_radius="5dp"
+                app:fb_text="@string/buy"
+                app:fb_textColor="@color/white" />
+
+            <mehdi.sakout.fancybuttons.FancyButton
+                android:id="@+id/base_nav_menu_bt2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/size_10"
+                android:padding="13dp"
+                android:layout_weight="1"
+                app:fb_borderColor="@color/white"
+                app:fb_borderWidth="1dp"
+                app:fb_defaultColor="@color/transLucent"
+                app:fb_focusColor="@color/transLucent"
+                app:fb_iconPosition="left"
+                app:fb_radius="5dp"
+                app:fb_text="@string/sale"
+                app:fb_textColor="@color/white" />
+
+            <mehdi.sakout.fancybuttons.FancyButton
+                android:id="@+id/base_nav_menu_bt3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginLeft="@dimen/size_10"
+                android:padding="13dp"
+                android:visibility="gone"
+                app:fb_borderColor="@color/white"
+                app:fb_borderWidth="1dp"
+                app:fb_defaultColor="@color/transLucent"
+                app:fb_focusColor="@color/transLucent"
+                app:fb_iconPosition="left"
+                app:fb_radius="5dp"
+                app:fb_text="采购"
+                app:fb_textColor="@color/white" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/line_height"
+            android:layout_marginTop="@dimen/size_10"
+            android:background="@color/white" />
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:padding="@dimen/size_10"
+            android:orientation="horizontal">
+
+            <View
+                android:id="@+id/base_header_left_utils_space1"
+                android:layout_width="@dimen/line_height"
+                android:layout_height="0dp"
+                android:background="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <android.support.constraint.ConstraintLayout
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:id="@+id/base_header_left_cart_layout"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="@id/base_header_left_utils_space1"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/base_header_left_cart_iv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/size_5"
+                    android:src="@mipmap/uc_shop"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    style="@style/BaseHeaderTv"
+                    android:layout_width="13dp"
+                    android:layout_height="13dp"
+                    android:id="@+id/base_header_left_cart_num"
+                    android:gravity="center"
+                    android:background="@drawable/circle_text"
+                    android:maxLength="1"
+                    android:text="2"
+                    android:textSize="@dimen/font_size_10"
+                    app:layout_constraintRight_toRightOf="@id/base_header_left_cart_iv"
+                    app:layout_constraintTop_toTopOf="@id/base_header_left_cart_iv" />
+                <TextView
+                    android:id="@+id/base_header_left_cart_tag"
+                    style="@style/BaseHeaderTv"
+                    app:layout_constraintLeft_toRightOf="@id/base_header_left_cart_iv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/size_3"
+                    android:text="@string/cart1"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </android.support.constraint.ConstraintLayout>
+
+
+            <TextView
+                style="@style/BaseHeaderTv"
+                android:id="@+id/base_header_left_exit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawableLeft="@mipmap/uc_signout"
+                android:gravity="center"
+                android:drawablePadding="@dimen/size_3"
+                android:text="@string/userExit"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintLeft_toLeftOf="@id/base_header_left_utils_space1"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </android.support.constraint.ConstraintLayout>
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/base_header_left_rv"
+        android:layout_width="match_parent"
+        android:background="@color/white"
+        android:layout_height="match_parent"/>
+</LinearLayout>

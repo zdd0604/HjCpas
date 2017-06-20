@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_bg"
+    android:orientation="vertical"
+    tools:context="com.hj.casps.commodity.SelectPicture03">
+
+    <RelativeLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bottom_line_bg_line">
+
+        <ImageView
+            android:id="@+id/iv"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_margin="@dimen/size_10"
+            android:scaleType="fitCenter" />
+    </RelativeLayout>
+
+    <LinearLayout
+        style="@style/LinearLayout_style"
+        android:layout_marginTop="@dimen/size_10">
+
+        <TextView
+            style="@style/text_style"
+            android:layout_weight="1"
+            android:text="@string/resname" />
+
+        <EditText
+            android:id="@+id/fragment_mypic_empty_class_Et"
+            style="@style/text_style"
+            android:layout_weight="2"
+            android:hint="@string/ple_resname" />
+    </LinearLayout>
+
+    <mehdi.sakout.fancybuttons.FancyButton
+        android:id="@+id/submit"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/btn_height"
+        android:layout_margin="@dimen/size_15"
+        android:paddingLeft="@dimen/size_20"
+        android:paddingRight="@dimen/size_20"
+        app:fb_borderColor="@color/title_bg"
+        app:fb_borderWidth="1dp"
+        app:fb_defaultColor="@color/title_bg"
+        app:fb_focusColor="@color/title_bg"
+        app:fb_radius="@dimen/size_5"
+        app:fb_text="@string/add"
+        app:fb_textColor="@color/white"
+        app:fb_textSize="@dimen/btn_size"/>
+
+</LinearLayout>

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_bg"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/fragment_mypic_empty_class_Ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_10"
+        android:orientation="vertical"
+        >
+
+        <LinearLayout style="@style/LinearLayout_style">
+
+            <TextView
+                style="@style/text_style"
+                android:layout_weight="1"
+                android:text="@string/pic_catalog_name" />
+
+            <EditText
+                android:id="@+id/fragment_mypic_empty_class_Et"
+                style="@style/text_style"
+                android:layout_weight="2"
+                android:maxLines="1"
+                android:hint="@string/pic_catalog_name_hint" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/fragment_mypic_empty_class_btn"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/btn_height"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="@dimen/size_10"
+            android:layout_marginRight="@dimen/size_10"
+            android:layout_marginTop="@dimen/size_15"
+            android:background="@drawable/btn_style"
+            android:text="@string/save"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_size_16" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/fragment_mypic_class_Ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="visible">
+
+        <RelativeLayout
+            android:id="@+id/fragment_mypic_class_top_Re"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_50"
+            android:background="@color/main_bg">
+
+            <mehdi.sakout.fancybuttons.FancyButton
+                android:id="@+id/fragment_mypic_class_add_Btn"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/btn_height"
+                android:layout_marginBottom="@dimen/size_10"
+                android:layout_marginLeft="@dimen/main_margin"
+                android:layout_marginTop="@dimen/size_10"
+                android:paddingLeft="@dimen/size_20"
+                android:paddingRight="@dimen/size_20"
+                app:fb_borderColor="@color/title_bg"
+                app:fb_borderWidth="1dp"
+                app:fb_defaultColor="@color/title_bg"
+                app:fb_focusColor="@color/title_bg"
+                app:fb_radius="@dimen/size_5"
+                app:fb_text="@string/add"
+                app:fb_textColor="@color/white"
+                app:fb_textSize="@dimen/btn_size" />
+
+            <TextView
+                android:id="@+id/fragment_mypic_class_desc_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/btn_height"
+                android:layout_alignParentRight="true"
+                android:layout_marginBottom="@dimen/size_10"
+                android:layout_marginRight="@dimen/main_margin"
+                android:layout_marginTop="@dimen/size_10"
+                android:clickable="true"
+                android:gravity="center"
+                android:text="@string/dodesc"
+                android:textColor="@color/title_bg"
+                android:textSize="@dimen/btn_size" />
+        </RelativeLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/fragment_mypic_class_rv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:overScrollMode="never"
+            android:background="@color/white" />
+    </LinearLayout>
+
+</LinearLayout>

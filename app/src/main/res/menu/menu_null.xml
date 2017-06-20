@@ -1,0 +1,17 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <item
+        android:id="@+id/action_search"
+        android:icon="@mipmap/nav_ser"
+        android:orderInCategory="4"
+        android:title="ShowRight"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/action_showRight"
+        android:icon="@mipmap/nav_menu"
+        android:orderInCategory="4"
+        android:title="ShowRight"
+        app:showAsAction="always" />
+
+</menu>

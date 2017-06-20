@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <LinearLayout
+        android:id="@+id/user_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/title_bg"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/home"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/size_5"
+            android:layout_marginTop="@dimen/size_5"
+            android:layout_weight="1"
+            android:drawableTop="@mipmap/tabbar_home"
+            android:gravity="center"
+            android:text="首页"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_size_14"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/goBuy"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/size_5"
+            android:layout_marginTop="@dimen/size_5"
+            android:layout_weight="1"
+            android:drawableTop="@mipmap/tabbar_cg"
+            android:gravity="center"
+            android:text="去采购"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_size_14" />
+
+        <TextView
+            android:id="@+id/goSell"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/size_5"
+            android:layout_marginTop="@dimen/size_5"
+            android:layout_weight="1"
+            android:drawableTop="@mipmap/tabbar_xs"
+            android:gravity="center"
+            android:text="去销售"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_size_14" />
+
+
+        <TextView
+            android:id="@+id/manager_back"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/size_5"
+            android:layout_marginTop="@dimen/size_5"
+            android:layout_weight="1"
+            android:drawableTop="@mipmap/tabbar_ht"
+            android:gravity="center"
+            android:text="管理后台"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_size_14" />
+
+        <TextView
+
+            android:id="@+id/save"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/size_5"
+            android:layout_marginTop="@dimen/size_5"
+            android:layout_weight="1"
+            android:drawableTop="@mipmap/tabbar_like"
+            android:gravity="center"
+            android:text="收藏店铺"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_size_14"
+            android:visibility="gone" />
+    </LinearLayout>
+
+
+    <WebView
+        android:id="@+id/webView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/user_btn"
+        android:layout_alignParentTop="true" />
+</RelativeLayout>

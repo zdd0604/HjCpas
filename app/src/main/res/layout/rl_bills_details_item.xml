@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_35"
+        android:layout_marginLeft="@dimen/size_15"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tv_bills_id_title"
+            android:textColor="@color/bills_tv_color" />
+
+        <TextView
+            android:id="@+id/rl_one_tv_bills_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1524854854478148"
+            android:textColor="@color/bills_tv_color" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_1"
+        android:layout_marginBottom="@dimen/size_5"
+        android:background="@color/activity_bg_color" />
+
+    <LinearLayout
+        android:id="@+id/layout_bills_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/size_5"
+        android:layout_marginLeft="@dimen/size_15"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/layout_1_tv_tltle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/tv_bills_type_title"
+            android:textColor="@color/details_title_color" />
+
+        <TextView
+            android:id="@+id/rl_ft_tv_bills_type"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="@color/bills_tv_color" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_bills_2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/size_5"
+        android:layout_marginLeft="@dimen/size_15"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:textColor="@color/details_title_color">
+
+        <TextView
+            android:id="@+id/layout_2_tv_tltle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/tv_bills_flow_id_title"
+            android:textColor="@color/details_title_color" />
+
+        <TextView
+            android:id="@+id/rl_ft_tv_flow_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="@color/bills_tv_color" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_bills_3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/size_5"
+        android:layout_marginLeft="@dimen/size_15"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/layout_3_tv_tltle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/tv_bills_buy_name_title"
+            android:textColor="@color/details_title_color" />
+
+        <TextView
+            android:id="@+id/rl_ft_tv_buy_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="@color/bills_tv_color" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_bills_4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/size_5"
+        android:layout_marginLeft="@dimen/size_15"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/layout_4_tv_tltle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/tv_bills_contract_time_title"
+            android:textColor="@color/details_title_color" />
+
+        <TextView
+            android:id="@+id/rl_ft_tv_contract_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="@color/bills_tv_color" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_bills_5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/size_5"
+        android:layout_marginLeft="@dimen/size_15"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/layout_5_tv_tltle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/tv_bills_payment_time_title"
+            android:textColor="@color/details_title_color" />
+
+        <TextView
+            android:id="@+id/rl_ft_tv_payment_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="@color/bills_tv_color" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_bills_6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/size_5"
+        android:layout_marginLeft="@dimen/size_15"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/layout_6_tv_tltle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/tv_bills_start_delivery_time_title"
+            android:textColor="@color/details_title_color" />
+
+        <TextView
+            android:id="@+id/rl_ft_tv_start_delivery"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="@color/bills_tv_color" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_bills_7"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/size_5"
+        android:layout_marginLeft="@dimen/size_15"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/layout_7_tv_tltle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/tv_bills_end_delivery_time_title"
+            android:textColor="@color/details_title_color" />
+
+        <TextView
+            android:id="@+id/rl_ft_tv_end_delivery"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="@color/bills_tv_color" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_bills_8"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/size_5"
+        android:layout_marginLeft="@dimen/size_15"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/layout_8_tv_tltle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/tv_sum_money_title"
+            android:textColor="@color/details_title_color" />
+
+        <TextView
+            android:id="@+id/rl_ft_tv_sum_money"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="@color/bills_tv_color" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_bills_9"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/size_5"
+        android:layout_marginLeft="@dimen/size_15"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/layout_9_tv_tltle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/tv_payment_card_id_title"
+            android:textColor="@color/details_title_color" />
+
+        <TextView
+            android:id="@+id/rl_ft_tv_payment_card_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="@color/bills_tv_color" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_bills_10"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/size_5"
+        android:layout_marginLeft="@dimen/size_15"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/layout_10_tv_tltle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/tv_gathering_card_title"
+            android:textColor="@color/details_title_color" />
+
+        <TextView
+            android:id="@+id/rl_ft_tv_gathering_card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="@color/bills_tv_color" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_bills_11_f"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/size_5"
+        android:layout_marginLeft="@dimen/size_15"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/layout_11_tv_tltle_f"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/tv_ment_address_title"
+            android:textColor="@color/details_title_color" />
+
+        <TextView
+            android:id="@+id/rl_ft_tv_payment_address_f"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="@color/bills_tv_color" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_bills_11"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/size_5"
+        android:layout_marginLeft="@dimen/size_15"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/layout_11_tv_tltle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/tv_payment_address_title"
+            android:textColor="@color/details_title_color" />
+
+        <TextView
+            android:id="@+id/rl_ft_tv_payment_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="@color/bills_tv_color" />
+    </LinearLayout>
+
+</LinearLayout>

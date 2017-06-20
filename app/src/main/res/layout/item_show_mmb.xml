@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/size_45"
+    android:background="@color/white">
+
+
+
+    <CheckBox
+        android:id="@+id/show_mmb_check_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/size_10"
+        android:background="@drawable/check_bg"
+        android:button="@null" />
+
+    <TextView
+        android:id="@+id/show_mmb_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/size_40"
+        android:gravity="center_vertical"
+        android:text="北京职业技术学院"
+        android:textColor="@color/black" />
+
+
+    <TextView
+        android:id="@+id/show_mmb_relation"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/size_5"
+        android:paddingRight="@dimen/size_10"
+        android:text="卖家"
+        android:textColor="@color/red" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_toLeftOf="@id/show_mmb_relation"
+        android:gravity="center_vertical"
+        android:text="关联关系：" />
+</RelativeLayout>

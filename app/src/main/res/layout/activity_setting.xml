@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/lineColor"
+    android:orientation="vertical">
+
+
+
+
+
+    <RelativeLayout
+        android:id="@+id/setting_notice_Re"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/input_hignt"
+        android:background="@drawable/bottom_line_bg_line"
+        android:paddingLeft="@dimen/size_15"
+        >
+        <TextView
+            style="@style/text_style"
+            android:layout_width="wrap_content"
+            android:text="@string/settings_notice" />
+        <ToggleButton
+            android:id="@+id/toggle_coop_buy"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:button="@drawable/ios7_btn"
+            android:text=""
+            android:textOff=""
+            android:layout_alignParentRight="true"
+            android:textOn="" />
+        <ImageView
+            android:visibility="gone"
+            android:id="@+id/setting_notice_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:padding="@dimen/size_10" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/setting_clean_Re"
+        style="@style/LinearLayout_style">
+
+        <TextView
+            style="@style/text_style"
+            android:layout_width="wrap_content"
+            android:text="@string/clean_cache" />
+
+        <TextView
+            android:id="@+id/setting_cache_size"
+            style="@style/text_style"
+            android:layout_width="wrap_content"
+            android:layout_alignParentRight="true"
+            android:drawableRight="@mipmap/jt1"
+            android:text="12MB"
+            android:textColor="@color/grey" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/setting_new_version_Re"
+        style="@style/LinearLayout_style">
+
+        <TextView
+            style="@style/text_style"
+            android:layout_width="wrap_content"
+            android:text="@string/new_version" />
+
+        <TextView
+            android:id="@+id/setting_new_version_tv"
+            style="@style/text_style"
+            android:layout_width="wrap_content"
+            android:layout_alignParentRight="true"
+            android:drawableRight="@mipmap/jt1"
+            android:text="当前最新"
+            android:textColor="@color/grey" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/setting_about_version_Re"
+        style="@style/LinearLayout_style">
+
+        <TextView
+            style="@style/text_style"
+            android:layout_width="wrap_content"
+            android:text="@string/about_version" />
+
+        <TextView
+            android:id="@+id/setting_about_version_tv"
+            style="@style/text_style"
+            android:layout_width="wrap_content"
+            android:layout_alignParentRight="true"
+            android:drawableRight="@mipmap/jt1"
+            android:text="V1.0"
+            android:textColor="@color/grey" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/setting_about_us_Re"
+        style="@style/LinearLayout_style">
+
+        <TextView
+            style="@style/text_style"
+            android:layout_width="wrap_content"
+            android:text="@string/about_us" />
+
+        <TextView
+            android:id="@+id/setting_about_us_tv"
+            style="@style/text_style"
+            android:layout_width="wrap_content"
+            android:layout_alignParentRight="true"
+            android:drawableRight="@mipmap/jt1"
+            android:textColor="@color/grey" />
+    </RelativeLayout>
+</LinearLayout>

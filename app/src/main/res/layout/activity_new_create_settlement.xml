@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/view_bg"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <RadioGroup
+            android:id="@+id/selectpic01_rg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:layout_marginBottom="@dimen/size_10"
+            android:layout_marginTop="@dimen/size_10"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/create_setttlement_rb_buyersId"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/size_40"
+                android:layout_weight="1"
+                android:background="@drawable/selectpic_title_left_bg"
+                android:button="@null"
+                android:checked="true"
+                android:gravity="center"
+                android:padding="@dimen/size_8"
+                android:text="@string/hint_tab_my_payment_money_title"
+                android:textColor="@color/select_pic_title_color" />
+
+            <RadioButton
+                android:id="@+id/create_setttlement_rb_sellersId"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/size_40"
+                android:layout_weight="1"
+                android:background="@drawable/selectpic_title_right_bg"
+                android:button="@null"
+                android:checked="false"
+                android:gravity="center"
+                android:padding="@dimen/size_8"
+                android:text="@string/hint_tab_opposite_paymeng_title"
+                android:textColor="@color/select_pic_title_color" />
+        </RadioGroup>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_50"
+        android:layout_marginTop="@dimen/size_1"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/size_15"
+            android:gravity="center"
+            android:text="@string/tv_search_payment_buy_name"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/create_setttlement_tv_buyersId"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/size_20"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:textColor="@color/black" />
+
+        <ImageView
+            android:id="@+id/create_setttlement_img_buyersId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="@dimen/size_15"
+            android:src="@mipmap/jt3"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_50"
+        android:layout_marginTop="@dimen/size_1"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/size_15"
+            android:gravity="center"
+            android:text="@string/hint_btn_sellersId_title"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/create_setttlement_tv_sellersId"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/size_20"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:textColor="@color/black" />
+
+        <ImageView
+            android:id="@+id/create_setttlement_img_sellersId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="@dimen/size_15"
+            android:src="@mipmap/jt3" />
+    </LinearLayout>
+
+    <mehdi.sakout.fancybuttons.FancyButton
+        android:id="@+id/create_setttlement_btn_next"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/btn_height"
+        android:layout_below="@+id/layout"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/size_10"
+        android:layout_marginLeft="@dimen/main_margin"
+        android:layout_marginRight="@dimen/main_margin"
+        android:layout_marginTop="@dimen/size_20"
+        android:paddingLeft="@dimen/size_20"
+        android:paddingRight="@dimen/size_20"
+        app:fb_borderColor="@color/title_bg"
+        app:fb_borderWidth="1dp"
+        app:fb_defaultColor="@color/title_bg"
+        app:fb_focusColor="@color/title_bg"
+        app:fb_radius="@dimen/size_5"
+        app:fb_text="@string/hint_btn_affirm_next_title"
+        app:fb_textColor="@color/white"
+        app:fb_textSize="@dimen/btn_size" />
+</LinearLayout>

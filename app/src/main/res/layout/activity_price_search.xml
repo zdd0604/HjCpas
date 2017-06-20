@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_bg"
+    android:focusableInTouchMode="true">
+    <!--<ScrollView
+        android:id="@+id/price_search_Ll"
+        android:layout_width="wrap_content"
+        android:layout_height="600dp"
+        android:overScrollMode="never"
+        android:scrollbars="none">-->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <TextView
+            android:id="@+id/price_search_class_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:gravity="center"
+            android:padding="@dimen/size_15"
+            android:text="@string/buy"
+            android:textColor="@color/black"
+            android:textSize="@dimen/font_size_18"
+            android:visibility="visible" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_10"
+            android:background="@color/main_bg" />
+
+        <!--<com.hj.casps.ui.MyGridView-->
+        <!--android:id="@+id/price_search_grid"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:background="@color/transParent"-->
+        <!--android:horizontalSpacing="@dimen/size_3"-->
+        <!--android:numColumns="2"-->
+        <!--android:overScrollMode="never"-->
+        <!--android:scrollbars="none"-->
+        <!--android:verticalSpacing="@dimen/size_3"></com.hj.casps.ui.MyGridView>-->
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+    <!--  </ScrollView>-->
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="@dimen/size_20"
+        android:layout_marginRight="@dimen/size_10"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="@dimen/size_40"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/price_search_shopcar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:paddingRight="@dimen/size_5"
+                android:src="@mipmap/c_shop"
+                android:visibility="visible" />
+
+            <TextView
+                android:id="@+id/price_search_shopcart_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignRight="@id/price_search_shopcar"
+                android:background="@drawable/circle_text"
+                android:gravity="center"
+                android:text="1"
+                android:textColor="@color/white"
+                android:textSize="10sp" />
+        </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/price_search_totop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_15"
+            android:src="@mipmap/c_top"
+            android:visibility="visible" />
+    </LinearLayout>
+</RelativeLayout>

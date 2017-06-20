@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_10"
+        android:background="@color/lineColor" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_45"
+        android:background="@color/white"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="@dimen/size_80"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="@string/cooperate_name"
+            android:textSize="@dimen/font_size_16" />
+
+
+        <TextView
+            android:id="@+id/cooperate_name_contents"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/size_15"
+            android:paddingRight="@dimen/size_10"
+            android:textSize="@dimen/font_size_16" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_1"
+        android:background="@color/lineColor" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_45"
+        android:background="@color/white"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="@dimen/size_80"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="@string/cooperate_address"
+            android:textSize="@dimen/font_size_16" />
+
+
+        <TextView
+            android:id="@+id/cooperate_address_contents"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/size_15"
+            android:paddingRight="@dimen/size_10"
+            android:textSize="@dimen/font_size_16" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_1"
+        android:background="@color/lineColor" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_45"
+        android:background="@color/white"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="@dimen/size_80"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="@string/cooperate_grade"
+            android:textSize="@dimen/font_size_16" />
+
+
+        <Button
+            android:id="@+id/cooperate_grade_reduce"
+            android:layout_width="@dimen/size_35"
+            android:layout_height="@dimen/size_35"
+            android:layout_marginLeft="@dimen/size_15"
+            android:background="@drawable/button_contains_border_grey"
+            android:text="—"
+            android:textColor="@color/input_bg"
+            android:textSize="@dimen/font_size_24" />
+
+        <TextView
+            android:id="@+id/cooperate_grade_tv"
+            android:layout_width="@dimen/size_55"
+            android:layout_height="@dimen/size_35"
+            android:background="@drawable/button_contains_border_grey"
+            android:gravity="center"
+            android:textSize="@dimen/font_size_16" />
+
+        <Button
+            android:id="@+id/cooperate_grade_plus"
+            android:layout_width="@dimen/size_35"
+            android:layout_height="@dimen/size_35"
+            android:background="@drawable/button_contains_border_grey"
+            android:text="+"
+            android:textColor="@color/input_bg"
+            android:textSize="@dimen/font_size_24" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_1"
+        android:background="@color/lineColor" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_60"
+        android:background="@color/white">
+
+        <mehdi.sakout.fancybuttons.FancyButton
+            android:id="@+id/cancel_cooperate"
+            android:layout_width="@dimen/size_120"
+            android:layout_height="@dimen/size_40"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="@dimen/main_margin"
+            android:layout_marginRight="@dimen/size_10"
+            android:layout_marginTop="@dimen/size_15"
+            android:gravity="center"
+            android:paddingLeft="@dimen/size_20"
+            android:paddingRight="@dimen/size_20"
+            app:fb_borderColor="@color/title_bg"
+            app:fb_borderWidth="1dp"
+            app:fb_defaultColor="@color/white"
+            app:fb_focusColor="@color/title_bg"
+            app:fb_radius="@dimen/size_5"
+            app:fb_text="@string/cooperate_cancel"
+            app:fb_textColor="@color/title_bg"
+            app:fb_textSize="@dimen/btn_size" />
+
+        <mehdi.sakout.fancybuttons.FancyButton
+            android:id="@+id/upgrade_cooperate"
+            android:layout_width="@dimen/size_120"
+            android:layout_height="@dimen/size_40"
+            android:layout_marginLeft="@dimen/main_margin"
+            android:layout_marginTop="@dimen/size_15"
+            android:layout_toLeftOf="@id/cancel_cooperate"
+            android:gravity="center"
+            app:fb_borderColor="@color/title_bg"
+            app:fb_borderWidth="1dp"
+            app:fb_defaultColor="@color/title_bg"
+            app:fb_focusColor="@color/title_bg"
+            app:fb_radius="@dimen/size_5"
+            app:fb_text="@string/cooperate_upgrade"
+            app:fb_textColor="@color/white"
+            app:fb_textSize="@dimen/font_size_12" />
+    </RelativeLayout>
+</LinearLayout>

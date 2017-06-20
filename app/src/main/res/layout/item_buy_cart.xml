@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_10"
+        android:background="@color/activity_bg_color" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_45"
+        android:background="@color/white"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:id="@+id/image_buy_cart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="@dimen/size_10"
+            android:scaleType="fitCenter"
+            android:src="@mipmap/icon_d_user" />
+
+        <TextView
+            android:id="@+id/text_name_buy_cart"
+            android:layout_width="@dimen/size_80"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/image_buy_cart"
+            android:text="@string/cooperate_buy_part"
+            android:textColor="@color/black"
+            android:textSize="@dimen/font_size_16" />
+
+
+        <TextView
+            android:id="@+id/order_buy_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/text_name_buy_cart"
+            android:paddingRight="@dimen/size_10"
+            android:text="长城商行"
+            android:textColor="@color/black"
+            android:textSize="@dimen/font_size_16" />
+
+        <TextView
+            android:id="@+id/order_buy_product"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/size_10"
+            android:text="@string/order_buy_sort"
+            android:textSize="@dimen/font_size_12" />
+
+        <TextView
+            android:id="@+id/order_buy_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@id/order_buy_product"
+            android:text="180"
+            android:textColor="@color/red"
+            android:textSize="@dimen/font_size_12" />
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_1"
+        android:background="@color/activity_bg_color" />
+
+    <RelativeLayout
+        android:id="@+id/buy_cart_contents_rl"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_45"
+        android:background="@color/white"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/buy_cart_info_contents"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="@dimen/size_10"
+            android:layout_marginRight="@dimen/size_40"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="散装农场青菜        冷冻大肉        葵花油       五常大米       中国"
+            android:textSize="@dimen/font_size_16" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="@dimen/size_20"
+            android:layout_marginRight="@dimen/size_10"
+            android:layout_marginTop="@dimen/size_5"
+            android:scaleType="fitCenter"
+            android:src="@mipmap/jt1" />
+
+    </RelativeLayout>
+</LinearLayout>

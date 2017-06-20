@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_10"
+        android:background="@color/lineColor" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_45"
+        android:background="@color/white"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="@dimen/size_50"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="@string/protocol_title" />
+
+
+        <TextView
+            android:id="@+id/protocol_title"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="7"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/size_10"
+            android:paddingRight="@dimen/size_10"
+            android:textColor="@color/title_bg" />
+
+        <TextView
+            android:id="@+id/protocol_waiting_sure"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/size_10"
+            android:layout_weight="2"
+            android:background="@color/reset_bg_color"
+            android:gravity="center"
+            android:text="@string/protocol_waiting_sure"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_size_14" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_1"
+        android:background="@color/lineColor" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_40"
+        android:background="@color/white"
+        android:gravity="center"
+        android:paddingTop="@dimen/size_10">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="@string/protocol_begin_time" />
+
+            <TextView
+                android:id="@+id/protocol_begin_time"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:textSize="@dimen/font_size_14" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="@string/protocol_end_time" />
+
+
+            <TextView
+                android:id="@+id/protocol_end_time"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="2016-06-04"
+                android:textSize="@dimen/font_size_14" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_30"
+        android:background="@color/white"
+        android:gravity="center">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="@string/protocol_object"
+                android:textSize="@dimen/font_size_14" />
+
+            <TextView
+                android:id="@+id/protocol_object"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:maxLines="1"
+                android:textSize="@dimen/font_size_14" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="@string/protocol_transport_type" />
+
+
+            <TextView
+                android:id="@+id/protocol_transport_type"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:textSize="@dimen/font_size_14" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_30"
+        android:background="@color/white"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="@string/protocol_buy_time"
+            android:textSize="@dimen/font_size_14" />
+
+        <TextView
+            android:id="@+id/protocol_buy_time"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/size_10"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/size_10"
+            android:textSize="@dimen/font_size_14" />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/protocol_view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_1"
+        android:background="@color/lineColor" />
+
+    <RelativeLayout
+        android:id="@+id/protocol_item_relative"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white">
+
+        <mehdi.sakout.fancybuttons.FancyButton
+            android:id="@+id/fancyButton_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="@dimen/size_10"
+            android:layout_marginRight="@dimen/size_10"
+            android:layout_marginTop="@dimen/size_10"
+            android:gravity="center"
+            app:fb_borderColor="@color/title_bg"
+            app:fb_borderWidth="1dp"
+            app:fb_defaultColor="@color/white"
+            app:fb_focusColor="@color/title_bg"
+            app:fb_radius="@dimen/size_5"
+            app:fb_text="@string/cooperate_cancel"
+            app:fb_textColor="@color/title_bg"
+            app:fb_textSize="@dimen/btn_size" />
+
+        <mehdi.sakout.fancybuttons.FancyButton
+            android:id="@+id/fancyButton_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/size_10"
+            android:layout_marginRight="@dimen/size_10"
+            android:layout_marginTop="@dimen/size_10"
+            android:layout_toLeftOf="@id/fancyButton_1"
+            android:gravity="center"
+            app:fb_borderColor="@color/title_bg"
+            app:fb_borderWidth="1dp"
+            app:fb_defaultColor="@color/title_bg"
+            app:fb_focusColor="@color/title_bg"
+            app:fb_radius="@dimen/size_5"
+            app:fb_text="@string/cooperate_cancel"
+            app:fb_textColor="@color/white"
+            app:fb_textSize="@dimen/btn_size" />
+
+        <mehdi.sakout.fancybuttons.FancyButton
+            android:id="@+id/fancyButton_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/size_10"
+            android:layout_marginRight="@dimen/size_10"
+            android:layout_marginTop="@dimen/size_10"
+            android:layout_toLeftOf="@id/fancyButton_2"
+            android:gravity="center"
+            app:fb_borderColor="@color/title_bg"
+            app:fb_borderWidth="1dp"
+            app:fb_defaultColor="@color/title_bg"
+            app:fb_focusColor="@color/title_bg"
+            app:fb_radius="@dimen/size_5"
+            app:fb_text="@string/cooperate_cancel"
+            app:fb_textColor="@color/white"
+            app:fb_textSize="@dimen/btn_size" />
+    </RelativeLayout>
+
+</LinearLayout>

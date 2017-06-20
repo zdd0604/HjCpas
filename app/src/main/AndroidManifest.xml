@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.hj.casps">
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <application
+        android:name=".app.HejiaApp"
+        android:allowBackup="true"
+        android:icon="@mipmap/android_template"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="58fd4f9db27b0a42860026cf" />
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="channel" />
+        <meta-data
+            android:name="BMOB_KEY"
+            android:value="fddff8ca349d2066c57d494c3a670777" />
+        <meta-data
+            android:name="BMOB_CHANNEL"
+            android:value="${applicationId}" />
+
+        <activity
+            android:name=".user.ActivityStartPage"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".user.ActivityLogin"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".commodity.ActivityEditGoods"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".commodity.ActivityManageGoods"
+            android:exported="true"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".commodity.SelectPicture01"
+            android:exported="true"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".commodity.SelectPicture_new"
+            android:exported="true"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".commodity.SelectPicture02"
+            android:exported="true"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".commodity.PeoplePicture"
+            android:exported="true"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".commodity.ActivityGoodDetail"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".commodity.SelectClass"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".commodity.ActivityGoodsClass"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".reception.ActivityPriceSearch"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".reception.ActivityPriceSearchPage"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".reception.ActivityGoodsDetailed"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".reception.ActivityPriceGoodsDetail"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".user.ActivityLoginAfter"
+            android:screenOrientation="portrait" />
+        <activity
+            android:launchMode="singleTop"
+            android:name=".user.ActivityLoginAfter2"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".user.ActivitySetting"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".user.ActivityAboutVersion"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".user.ActivityAboutUs"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".backstage.ActivityBackStage"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".bankmanage.BankBillsActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".bankmanage.EditCardActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".bankmanage.PaymentActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".bankmanage.BillsSearchActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".bankmanage.BillsDetailsActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity android:name=".bankmanage.ReceiptActivity" />
+        <activity
+            android:name=".commodity.SelectPictureAddLibActivity"
+            android:label="@string/title_activity_select_picture_add_lib"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name="cn.finalteam.rxgalleryfinal.ui.activity.MediaActivity"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme_Light.Hejia" />
+        <activity
+            android:name="com.yalantis.ucrop.UCropActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme_Light.Hejia" />
+        <activity
+            android:name=".commodity.SelectPicture03"
+            android:label="@string/title_activity_select_picture03"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".bankmanage.RefundActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize|stateHidden" />
+        <activity
+            android:name=".quotes.QuoteQuery"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".bankmanage.ReceiveRefundMoenyActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".quotes.QuotesSearch"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".quotes.CreateQuotes"
+            android:screenOrientation="portrait" />
+
+        <receiver android:name=".base.NetBroadcastReceiver">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
+
+        <activity
+            android:name=".operatormanager.OperatorListActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".operatormanager.OperatorPassWord"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".operatormanager.OperatorAdd"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".cooperate.CooperateDirectory"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".cooperate.CooperateDetail"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".cooperate.CooperateCreate"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".expressmanager.HarvestExpress"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".expressmanager.SendExpress"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity android:name=".cooperate.ProtocalProductItem" />
+        <activity
+            android:name=".expressmanager.QuitExpress"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".cooperate.CooperateContents"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".expressmanager.QuitHarvestExpress"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".overdealmanager.CreateSectionBills"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".overdealmanager.BillsSectionDetailsActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".cooperate.CooperateSearch"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".cooperate.CooperateRequest"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".cooperate.GroupManager"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".cooperate.CooperateGroupSearch"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".protocolmanager.RequestProtocol"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".protocolmanager.ProtocolSearch"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".protocolmanager.ProtocolDetail"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".protocolmanager.ProtocolAgree"
+            android:screenOrientation="portrait" />
+        <activity android:name=".overdealmanager.NewCreateSettlement" />
+        <activity android:name=".overdealmanager.NewCreateSettlDetails" />
+        <activity
+            android:name=".ordermanager.BuyCart"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ordermanager.OrderSearch"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ordermanager.BuyShell"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustPan"/>
+        <activity android:name=".ordermanager.OrderDetail" />
+        <activity
+            android:name=".overdealmanager.CheckWaitBills"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".overdealmanager.ExecuteBills"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".overdealmanager.RegisterAssureBills"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".user.ActivityLoginBefore"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity android:name=".quotes.MmbActivity" />
+        <activity android:name=".quotes.ShowMmbActivity" />
+        <activity
+            android:name=".commodity.ShowPhotoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".overdealmanager.AddCommodityInfo"
+            android:screenOrientation="portrait" />
+        <activity android:name=".commodity.ActivityPictureSearch" />
+        <activity android:name=".commodity.ActivityAddPicRes"></activity>
+    </application>
+
+</manifest>

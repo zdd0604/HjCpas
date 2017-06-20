@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#000</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="white">#ffffff</color>
+    <color name="black">#2a2a2a</color>
+    <color name="lineColor">#eaeaea</color>
+    <color name="transParent">#00000000</color>
+    <color name="blue">#204c9b</color>
+    <color name="grey">#888888</color>
+    <color name="transLucent">#60000000</color>
+    <color name="title_bg">#4099e9</color>
+    <color name="main_bg">#f1f2f6</color>
+    <color name="btn_blue">#00cccb</color>
+    <color name="light_green">#55cc99</color>
+    <color name="hint_color">#c3c3c3</color>
+    <color name="edit_border">#cfcfcf</color>
+    <color name="orange">#ff6600</color>
+    <color name="pink">#ffbb99</color>
+    <color name="light_orange">#ffaa00</color>
+    <color name="light_yellow">#66ffaa00</color>
+    <color name="red">#ff001e</color>
+    <color name="tv_blue">#0099FF</color>
+    <color name="actionbar_bg_color">#27a4e3</color>
+    <color name="activity_bg_color">#F2F2F2</color>
+    <color name="dialog_bg_color">#9d16161b</color>
+    <color name="reset_bg_color">#FFCC9A</color>
+    <color name="view_bg">#E5E9EC</color>
+    <color name="bills_id_tv_color">#2F91E6</color>
+    <color name="bills_title_tv_color">#424242</color>
+    <color name="bills_tv_color">#505050</color>
+    <color name="bills_ed_color">#ABABAB</color>
+    <color name="tv_hint_color">#A1A1A1</color>
+    <color name="tv_delete_color">#4D4D4D</color>
+    <color name="lsitview_color">#F1F2F6</color>
+    <color name="details_title_color">#969696</color>
+    <color name="input_bg">#C5C5C5</color>
+    <color name="reset_bg">#50DCFF</color>
+    <color name="reset_bg_pink">#DDEE99</color>
+    <color name="text_color">#3D3D3D</color>
+    <color name="text_color_blue">#61A9EC</color>
+    <color name="text_color_blue2">#9ED1E4</color>
+
+
+</resources>

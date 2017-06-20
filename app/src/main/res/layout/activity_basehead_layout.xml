@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/base_header_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:orientation="vertical">
+    <!--正文内容-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <!--头部-->
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/base_tool_bar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/title_height"
+            android:background="@color/title_bg"
+            android:navigationContentDescription="back">
+
+            <ImageView
+                android:id="@+id/base_nav_menu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/dp_10"
+                android:src="@mipmap/nav_menu" />
+
+            <TextView
+                android:id="@+id/base_toolbar_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:textColor="@android:color/white"
+                android:textSize="20sp" />
+
+            <ImageView
+                android:id="@+id/base_nav_search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:paddingRight="@dimen/dp_10"
+                android:src="@mipmap/nav_ser" />
+
+        </android.support.v7.widget.Toolbar>
+
+        <TextView
+            android:id="@+id/base_net_error"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#ffeed0"
+            android:visibility="gone"
+            android:drawableLeft="@mipmap/icon_prompt"
+            android:drawablePadding="@dimen/size_10"
+            android:layout_below="@+id/base_tool_bar"
+            android:paddingBottom="@dimen/size_10"
+            android:paddingLeft="@dimen/size_15"
+            android:paddingRight="@dimen/size_15"
+            android:paddingTop="@dimen/size_10"
+            android:text="@string/no_net" />
+
+        <View
+            android:id="@+id/base_view"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/base_net_error"
+            android:background="@color/lineColor" />
+        <!--内容容器-->
+        <FrameLayout
+            android:id="@+id/base_content"
+            android:layout_width="match_parent"
+            android:layout_below="@+id/base_view"
+            android:layout_height="match_parent"/>
+        <RelativeLayout
+            android:id="@+id/base_empty_Re"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/main_bg"
+            android:visibility="gone"
+            android:layout_below="@+id/base_view">
+            <ImageView
+                android:id="@+id/base_empty_Re_pic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/default1"
+                android:layout_marginTop="@dimen/size_100"
+                android:layout_centerHorizontal="true"
+                />
+            <TextView
+                android:id="@+id/base_empty_Re_tx"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="没有订单"
+                android:layout_below="@+id/base_empty_Re_pic"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/size_5"
+                android:textSize="@dimen/font_size_16"
+                android:textColor="@color/grey"/>
+        </RelativeLayout>
+    </RelativeLayout>
+    <!--左边菜单-->
+    <FrameLayout
+        android:id="@+id/navigation"
+        android:layout_width="300dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="left" />
+</android.support.v4.widget.DrawerLayout>

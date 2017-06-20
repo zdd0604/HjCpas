@@ -1,0 +1,65 @@
+apply plugin: 'com.android.application'
+apply plugin: 'org.greenrobot.greendao'
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.2"
+    defaultConfig {
+        applicationId "com.hj.casps"
+        minSdkVersion 15
+        targetSdkVersion 25
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        manifestPlaceholders = [
+                JPUSH_PKGNAME: "com.hj.casps",
+                JPUSH_APPKEY : "85601c2910d9f86a089c7606", //JPush上注册的包名对应的appkey.
+                JPUSH_CHANNEL: "Casps", //暂时填写默认值即可.
+        ]
+        multiDexEnabled true
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile project(':libcommon')
+    compile project(':libbanner')
+    compile project(':librefresh')
+    compile project(':magicindicator')
+
+    //版本号使用 + 可以自动引用最新版
+    compile 'cn.jiguang:jpush:2.1.8'
+    compile 'org.greenrobot:greendao:3.2.2'
+    compile 'com.android.support:appcompat-v7:25.2.0'
+    compile 'com.google.code.gson:gson:2.8.0'
+    compile 'com.android.support:animated-vector-drawable:25.3.1'
+    compile 'com.android.support:design:25.2.0'
+    compile 'com.github.medyo:fancybuttons:1.8.1'
+    compile 'org.ow2.util.base64:base64:2.0.0'
+    compile 'com.madgag.spongycastle:prov:1.54.0.0'
+    compile 'com.android.support:recyclerview-v7:25.1.0'
+    compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.12'
+    compile 'com.jakewharton:butterknife:8.5.1'
+    compile 'com.android.support.constraint:constraint-layout:1.0.0-beta3'
+    compile 'com.android.support:multidex:1.0.1'
+    compile 'cn.finalteam.rxgalleryfinal:library:1.0.2'
+    compile 'com.android.support:support-v4:25.3.1'
+    compile 'org.greenrobot:eventbus:3.0.0'
+    testCompile 'junit:junit:4.12'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
+}

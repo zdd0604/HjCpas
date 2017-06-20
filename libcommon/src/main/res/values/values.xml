@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bmob_BMAppUpdate">Apply the update</string>
+    <string name="bmob_BMBreak_Network">Not connected</string>
+    <string name="bmob_BMDialog_InstallAPK">The latest version has been downloaded, is installed?</string>
+    <string name="bmob_BMGprsCondition">（TIP: Non-WIFI environment）</string>
+    <string name="bmob_BMIgnore">Ignore this version</string>
+    <string name="bmob_BMNewVersion">The latest version: </string>
+    <string name="bmob_BMNotNow">Cancle</string>
+    <string name="bmob_BMTargetSize">New version size:</string>
+    <string name="bmob_BMToast_IsUpdating">Updating....</string>
+    <string name="bmob_BMUpdateCheck">v3.1.4Beta</string>
+    <string name="bmob_BMUpdateContent">update content</string>
+    <string name="bmob_BMUpdateNow">OK</string>
+    <string name="bmob_BMUpdateSize">Only need to download:</string>
+    <string name="bmob_BMUpdateTitle">Found a new version</string>
+    <string name="bmob_common_action_cancel">Cancle</string>
+    <string name="bmob_common_action_continue">Continue</string>
+    <string name="bmob_common_action_info_exist">Downloading.</string>
+    <string name="bmob_common_action_pause">Pause</string>
+    <string name="bmob_common_download_failed">download failed</string>
+    <string name="bmob_common_download_finish">When the download is complete, click Install</string>
+    <string name="bmob_common_download_notification_prefix">downloading: </string>
+    <string name="bmob_common_info_interrupt">Download error, please check the network and continue.</string>
+    <string name="bmob_common_network_break_alert">Please connect to the network and try again！</string>
+    <string name="bmob_common_patch_finish">When the update is complete, click Install</string>
+    <string name="bmob_common_pause_notification_prefix">Pause: </string>
+    <string name="bmob_common_silent_download_finish">The new version is ready, click Install</string>
+    <string name="bmob_common_start_download_notification">Downloading app</string>
+    <string name="bmob_common_start_patch_notification">The installation package is being updated</string>
+</resources>

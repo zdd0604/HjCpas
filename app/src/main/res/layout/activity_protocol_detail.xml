@@ -1,0 +1,409 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/activity_bg_color"
+    android:orientation="vertical"
+    tools:context="com.hj.casps.protocolmanager.ProtocolDetail">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_40"
+        android:background="@color/white"
+        android:gravity="center">
+
+        <View
+            android:layout_width="@dimen/size_3"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/size_10"
+            android:layout_marginLeft="@dimen/size_15"
+            android:layout_marginTop="@dimen/size_10"
+            android:background="@color/actionbar_bg_color" />
+
+        <TextView
+            android:id="@+id/protocol_contract_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/size_5"
+            android:layout_weight="1"
+            android:text="四月份的临时采购任务"
+            android:textColor="@color/black"
+            android:textSize="@dimen/font_size_16" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_1"
+        android:background="@color/activity_bg_color" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_30"
+        android:background="@color/white"
+        android:gravity="center"
+        android:paddingTop="@dimen/size_5">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="2"
+            android:text="@string/protocol_type_text"
+            android:textSize="@dimen/font_size_14" />
+
+
+        <TextView
+            android:id="@+id/protocol_contract_type"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/size_15"
+            android:paddingRight="@dimen/size_10"
+            android:text="采购"
+            android:textSize="@dimen/font_size_14" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_25"
+        android:background="@color/white"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="2"
+            android:text="@string/cooperate_buy_role"
+            android:textSize="@dimen/font_size_14" />
+
+
+        <TextView
+            android:id="@+id/protocol_buy_membername"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/size_15"
+            android:paddingRight="@dimen/size_10"
+            android:text="奥森学院"
+            android:textSize="@dimen/font_size_14" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_25"
+        android:background="@color/white"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="2"
+            android:text="@string/cooperate_sell_role"
+            android:textSize="@dimen/font_size_14" />
+
+
+        <TextView
+            android:id="@+id/protocol_sell_membername"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/size_15"
+            android:paddingRight="@dimen/size_10"
+            android:text="长城商行"
+            android:textSize="@dimen/font_size_14" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_25"
+        android:background="@color/white"
+        android:gravity="center"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="2"
+            android:text="@string/cooperate_handler_role"
+            android:textSize="@dimen/font_size_14" />
+
+
+        <TextView
+            android:id="@+id/protocol_operate_user"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/size_15"
+            android:paddingRight="@dimen/size_10"
+            android:text="2017-04-26"
+            android:textSize="@dimen/font_size_14" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_25"
+        android:background="@color/white"
+        android:gravity="center"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="2"
+            android:text="@string/cooperate_protocol_time_text"
+            android:textSize="@dimen/font_size_14" />
+
+
+        <TextView
+            android:id="@+id/protocol_operate_time"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/size_15"
+            android:paddingRight="@dimen/size_10"
+            android:text="2017-04-27    16:48:06"
+            android:textSize="@dimen/font_size_14" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_25"
+        android:background="@color/white"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="2"
+            android:text="@string/cooperate_protocol_valid_time_text"
+            android:textSize="@dimen/font_size_14" />
+
+
+        <TextView
+            android:id="@+id/protocol_user_time"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/size_15"
+            android:paddingRight="@dimen/size_10"
+            android:text="2017-04-28—2017-06-30"
+            android:textSize="@dimen/font_size_14" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_25"
+        android:background="@color/white"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="2"
+            android:text="@string/cooperate_protocol_settle_rule_text"
+            android:textSize="@dimen/font_size_14" />
+
+
+        <TextView
+            android:id="@+id/protocol_pay_type"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/size_15"
+            android:paddingRight="@dimen/size_10"
+            android:text="每月"
+            android:textSize="@dimen/font_size_14" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_25"
+        android:background="@color/white"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="2"
+            android:text="@string/cooperate_protocol_ship_rule_text"
+            android:textSize="@dimen/font_size_14" />
+
+
+        <TextView
+            android:id="@+id/protocol_flow_type"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/size_15"
+            android:paddingRight="@dimen/size_10"
+            android:text="自取"
+            android:textSize="@dimen/font_size_14" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_25"
+        android:background="@color/white"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="2"
+            android:text="@string/cooperate_products_transport_mode_text"
+            android:textSize="@dimen/font_size_14" />
+
+
+        <TextView
+            android:id="@+id/protocol_sendgoods_type"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/size_15"
+            android:paddingRight="@dimen/size_10"
+            android:text="行运"
+            android:textSize="@dimen/font_size_14" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_50"
+        android:background="@color/white"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/bank_account_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="2"
+            android:text="@string/cooperate_products_buy_account_text"
+            android:textSize="@dimen/font_size_14" />
+
+
+        <TextView
+            android:id="@+id/protocol_payer_code"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/size_15"
+            android:paddingRight="@dimen/size_10"
+            android:text="建设银行\n23985200425"
+            android:textSize="@dimen/font_size_14" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_50"
+        android:background="@color/white"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/address_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="2"
+            android:text="@string/cooperate_products_ship_address_text"
+            android:textSize="@dimen/font_size_14" />
+
+
+        <TextView
+            android:id="@+id/protocol_getgoods_address"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/size_15"
+            android:paddingRight="@dimen/size_10"
+            android:text="奥森学院教工食堂奥森学院教工食堂"
+            android:textSize="@dimen/font_size_14" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_10"
+        android:background="@color/activity_bg_color" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_60"
+        android:background="@color/white"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/size_10"
+            android:layout_marginTop="@dimen/size_10"
+            android:text="@string/cooperate_products_list"
+            android:textColor="@color/black"
+            android:textSize="@dimen/font_size_14" />
+
+
+        <TextView
+            android:id="@+id/protocol_goods"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/size_15"
+            android:paddingRight="@dimen/size_10"
+            android:text="禽类鲜品；禽类鲜品；叶花类菜；根茎类菜"
+            android:textSize="@dimen/font_size_14" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_10"
+        android:background="@color/activity_bg_color" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_60"
+        android:background="@color/white"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/size_10"
+            android:layout_marginTop="@dimen/size_10"
+            android:text="@string/quotes_create_more"
+            android:textColor="@color/black"
+            android:textSize="@dimen/font_size_14" />
+
+
+        <TextView
+            android:id="@+id/protocol_note"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/size_15"
+            android:paddingRight="@dimen/size_10"
+            android:text="临时采购计划"
+            android:textSize="@dimen/font_size_14" />
+    </LinearLayout>
+</LinearLayout>

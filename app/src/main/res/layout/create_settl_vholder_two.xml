@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/view_bg"
+    android:orientation="vertical">
+
+    <include
+        layout="@layout/layout_order_title"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_1"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/layout_left_settl_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_25"
+                android:layout_marginTop="@dimen/size_10">
+
+                <TextView
+                    android:id="@+id/layout_left_tv_title_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/size_10"
+                    android:gravity="center_vertical"
+                    android:text="@string/hint_tv_commodity_name_title"
+                    android:textColor="@color/details_title_color" />
+
+                <TextView
+                    android:id="@+id/layout_left_tv_content_1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/bills_tv_color" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_25"
+                android:layout_marginBottom="@dimen/size_10"
+                android:layout_marginTop="@dimen/size_5">
+
+                <TextView
+                    android:id="@+id/layout_left_tv_title_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/size_10"
+                    android:gravity="center_vertical"
+                    android:text="@string/hint_settl_bills_money_title"
+                    android:textColor="@color/details_title_color" />
+
+                <TextView
+                    android:id="@+id/layout_left_tv_content_2"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/bills_tv_color" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_right_settl_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/layout_right_layout_1"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_25"
+                android:layout_marginRight="@dimen/size_10"
+                android:layout_marginTop="@dimen/size_10">
+
+                <TextView
+                    android:id="@+id/layout_right_tv_title_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/size_10"
+                    android:gravity="center_vertical"
+                    android:text="@string/hint_settl_await_money_title"
+                    android:textColor="@color/details_title_color" />
+
+                <TextView
+                    android:id="@+id/layout_right_tv_content_1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/bills_tv_color" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_right_layout_2"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_25"
+                android:layout_marginBottom="@dimen/size_10"
+                android:layout_marginRight="@dimen/size_10"
+                android:layout_marginTop="@dimen/size_5">
+
+                <TextView
+                    android:id="@+id/layout_right_tv_title_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/size_10"
+                    android:gravity="center_vertical"
+                    android:text="@string/hint_settl_bills_reality_money_title"
+                    android:textColor="@color/details_title_color" />
+
+                <TextView
+                    android:id="@+id/layout_right_tv_content_2"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:inputType="numberDecimal"
+                    android:textColor="@color/bills_tv_color" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_right_layout_3"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_25"
+                android:layout_marginBottom="@dimen/size_10"
+                android:layout_marginRight="@dimen/size_10"
+                android:layout_marginTop="@dimen/size_5"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/layout_right_tv_title_3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/size_10"
+                    android:gravity="center_vertical"
+                    android:text="@string/hint_settl_bills_reality_money_title"
+                    android:textColor="@color/details_title_color" />
+
+                <EditText
+                    android:id="@+id/layout_right_tv_content_3"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/input_money_bg"
+                    android:gravity="center_vertical"
+                    android:inputType="numberDecimal"
+                    android:textColor="@color/bills_tv_color" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_8"
+        android:background="@color/view_bg" />
+</LinearLayout>

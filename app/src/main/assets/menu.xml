@@ -1,0 +1,388 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+
+
+    <dict>
+        <dircode>1011</dircode>
+        <dirname>业务平台</dirname>
+        <dirvc></dirvc>
+        <icon></icon>
+    </dict>
+
+    <dict>
+        <dircode>10110021</dircode>
+        <dirname>基础配置</dirname>
+        <dirvc></dirvc>
+        <icon>1</icon>
+    </dict>
+
+    <dict>
+        <dircode>101100210001</dircode>
+        <dirname>商品管理</dirname>
+        <dirvc>CommodityManagerController</dirvc>
+        <icon></icon>
+    </dict>
+
+
+    <dict>
+        <dircode>10110028</dircode>
+        <dirname>报价管理</dirname>
+        <dirvc>OfferManagerViewController</dirvc>
+        <icon>2</icon>
+    </dict>
+
+
+    <dict>
+        <dircode>10110031</dircode>
+        <dirname>关系管理</dirname>
+        <dirvc></dirvc>
+        <icon>3</icon>
+    </dict>
+
+    <dict>
+        <dircode>101100310001</dircode>
+        <dirname>业务合作会员目录</dirname>
+        <dirvc>VipContentsViewController</dirvc>
+        <icon></icon>
+    </dict>
+
+    <dict>
+        <dircode>101100310002</dircode>
+        <dirname>关注会员目录</dirname>
+        <dirvc>FollowVipViewController</dirvc>
+        <icon></icon>
+    </dict>
+
+    <dict>
+        <dircode>101100310003</dircode>
+        <dirname>待审批申请</dirname>
+        <dirvc>RelationCheckViewController</dirvc>
+        <icon></icon>
+    </dict>
+
+    <dict>
+        <dircode>101100310004</dircode>
+        <dirname>群组管理</dirname>
+        <dirvc>GroupManagerViewController</dirvc>
+        <icon></icon>
+    </dict>
+
+    <dict>
+        <dircode>101100310011</dircode>
+        <dirname>企业会员</dirname>
+        <dirvc>BusinessVipController</dirvc>
+        <icon></icon>
+    </dict>
+
+    <dict>
+        <dircode>101100310012</dircode>
+        <dirname>关注会员</dirname>
+        <dirvc>FollowViewController</dirvc>
+        <icon></icon>
+    </dict>
+
+
+    <dict>
+        <dircode>10110035</dircode>
+        <dirname>协议管理</dirname>
+        <dirvc></dirvc>
+        <icon>4</icon>
+    </dict>
+
+    <dict>
+        <dircode>101100350005</dircode>
+        <dirname>执行中合作协议</dirname>
+        <dirvc>ProtocolViewController</dirvc>
+        <icon></icon>
+    </dict>
+
+    <dict>
+        <dircode>101100350004</dircode>
+        <dirname>待审批合作协议</dirname>
+        <dirvc>ProtocolViewController</dirvc>
+        <icon></icon>
+    </dict>
+
+    <dict>
+
+        <dircode>101100350003</dircode>
+
+        <dirname>已提交合作协议</dirname>
+
+        <dirvc>ProtocolViewController</dirvc>
+
+        <icon></icon>
+    </dict>
+
+
+    <dict>
+
+        <dircode>10110041</dircode>
+
+        <dirname>订单管理</dirname>
+
+        <dirvc></dirvc>
+
+        <icon>5</icon>
+    </dict>
+
+    <dict>
+
+        <dircode>101100410002</dircode>
+
+        <dirname>采购拣单车</dirname>
+
+        <dirvc>OrderManagerViewController</dirvc>
+
+        <icon></icon>
+    </dict>
+
+    <dict>
+
+        <dircode>101100410003</dircode>
+
+        <dirname>销售拣单车</dirname>
+
+        <dirvc>OrderManagerViewController</dirvc>
+
+        <icon></icon>
+    </dict>
+
+    <dict>
+
+        <dircode>101100410004</dircode>
+
+        <dirname>新建订单</dirname>
+
+        <dirvc>NewOrderViewController</dirvc>
+
+        <icon></icon>
+    </dict>
+
+    <dict>
+
+        <dircode>101100410005</dircode>
+
+        <dirname>待审批订单</dirname>
+
+        <dirvc>CheckOrderViewController</dirvc>
+
+        <icon></icon>
+    </dict>
+
+    <dict>
+
+        <dircode>101100410006</dircode>
+
+        <dirname>执行中订单</dirname>
+
+        <dirvc>RunningOrderViewController</dirvc>
+
+        <icon></icon>
+    </dict>
+
+
+    <dict>
+
+        <dircode>10110051</dircode>
+
+        <dirname>收发货管理</dirname>
+
+        <dirvc></dirvc>
+
+        <icon>6</icon>
+    </dict>
+
+    <dict>
+
+        <dircode>101100510001</dircode>
+
+        <dirname>地址管理</dirname>
+
+        <dirvc>AddressManagerViewController</dirvc>
+
+        <icon></icon>
+    </dict>
+
+    <dict>
+
+        <dircode>101100510002</dircode>
+
+        <dirname>收货</dirname>
+
+        <dirvc>SignmentViewController</dirvc>
+
+        <icon></icon>
+    </dict>
+
+    <dict>
+
+        <dircode>101100510003</dircode>
+
+        <dirname>发货</dirname>
+
+        <dirvc>SignmentViewController</dirvc>
+
+        <icon></icon>
+    </dict>
+
+    <dict>
+
+        <dircode>101100510004</dircode>
+
+        <dirname>退货</dirname>
+
+        <dirvc>SignmentViewController</dirvc>
+
+        <icon></icon>
+    </dict>
+
+    <dict>
+
+        <dircode>101100510005</dircode>
+
+        <dirname>收退货</dirname>
+
+        <dirvc>SignmentViewController</dirvc>
+
+        <icon></icon>
+    </dict>
+
+
+    <dict>
+
+        <dircode>10110061</dircode>
+
+        <dirname>收付款管理</dirname>
+
+        <dirvc></dirvc>
+
+        <icon>7</icon>
+    </dict>
+
+    <dict>
+
+        <dircode>101100610001</dircode>
+
+        <dirname>银行账号管理</dirname>
+
+        <dirvc>BankAccountManagerViewController</dirvc>
+
+        <icon></icon>
+    </dict>
+
+    <dict>
+
+        <dircode>101100610002</dircode>
+
+        <dirname>付款</dirname>
+
+        <dirvc>PayViewController</dirvc>
+
+        <icon></icon>
+    </dict>
+
+    <dict>
+
+        <dircode>101100610003</dircode>
+
+        <dirname>收款</dirname>
+
+        <dirvc>CollectionViewController</dirvc>
+
+        <icon></icon>
+    </dict>
+
+    <dict>
+
+        <dircode>101100610004</dircode>
+
+        <dirname>退款</dirname>
+
+        <dirvc>PayViewController</dirvc>
+
+        <icon></icon>
+    </dict>
+
+    <dict>
+
+        <dircode>101100610005</dircode>
+
+        <dirname>收退款</dirname>
+
+        <dirvc>CollectionViewController</dirvc>
+
+        <icon></icon>
+    </dict>
+
+
+    <dict>
+
+        <dircode>10110081</dircode>
+
+        <dirname>结款单管理</dirname>
+
+        <dirvc></dirvc>
+
+        <icon>8</icon>
+    </dict>
+
+    <dict>
+
+        <dircode>101100810001</dircode>
+
+        <dirname>新创建的结款单</dirname>
+
+        <dirvc>NewReceiptListViewController</dirvc>
+
+        <icon></icon>
+    </dict>
+
+    <dict>
+
+        <dircode>101100810002</dircode>
+
+        <dirname>待审批结款单</dirname>
+
+        <dirvc>WaitingApprovalReceiptViewController</dirvc>
+
+        <icon></icon>
+    </dict>
+
+    <dict>
+
+        <dircode>101100810003</dircode>
+
+        <dirname>执行中结款单</dirname>
+
+        <dirvc>PerformingReceiptViewController</dirvc>
+
+        <icon></icon>
+    </dict>
+
+    <dict>
+
+        <dircode>101100810005</dircode>
+
+        <dirname>登记担保资源</dirname>
+
+        <dirvc>RegistrationGuaranteeResourcesViewController</dirvc>
+
+        <icon></icon>
+    </dict>
+
+
+    <dict>
+
+        <dircode>1021</dircode>
+
+        <dirname>操作员管理</dirname>
+
+        <dirvc>UserListViewController</dirvc>
+
+        <icon>9</icon>
+    </dict>
+
+
+</root>
+

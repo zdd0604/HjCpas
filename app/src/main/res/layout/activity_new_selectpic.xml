@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?><!--新版更改的布局  tab-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <net.lucode.hackware.magicindicator.MagicIndicator
+        android:id="@+id/mi_magicIndicator"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_55">
+
+    </net.lucode.hackware.magicindicator.MagicIndicator>
+
+    <com.hj.casps.ui.NoScrollViewPager
+        android:id="@+id/selectpic01_vp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</LinearLayout>

@@ -1,0 +1,645 @@
+<resources>
+    <string name="app_name">Casps</string>
+    <string name="app_name_big">CASPS</string>
+    <string name="apps_name">CSPS公共服务平台</string>
+    <string name="action_settings">Settings</string>
+    <string name="settings_notice">通知提醒</string>
+    <string name="clean_cache">清除缓存</string>
+    <string name="new_version">最新版本下载</string>
+    <string name="about_version">关于版本</string>
+    <string name="about_us">关于我们</string>
+    <string name="cleanfast">一键清理</string>
+    <string name="cleanask">是否清理缓存</string>
+    <string name="resname">资源名称</string>
+    <string name="ple_resname">请输入资源名称</string>
+    <string name="cleancomplete">清理完成</string>
+    <string name="settings">设置</string>
+    <string name="inputusername">请输入用户名</string>
+    <string name="inputpassword">请输入密码</string>
+    <string name="inputcheckcode">请输入验证码</string>
+    <string name="editext_input_type">0123456789zxcvbnmasdfghjklqwertyuiopZXCVBNMASDFGHJKLQWERTYUIOP</string>
+    <string name="login">登录</string>
+    <string name="pleaselogin">请登录</string>
+    <string name="hint_tv_request_stop_titleedit">编辑</string>
+    <string name="delete">删除</string>
+    <string name="editgood">编辑商品</string>
+    <string name="Sign_out">退出</string>
+    <string name="save">保存</string>
+    <string name="True">确定</string>
+    <string name="add">添加</string>
+    <string name="dodesc">操作说明</string>
+    <string name="cancel">取消</string>
+    <string name="gooddetail">商品详情</string>
+    <string name="detail">详情</string>
+    <string name="goodmanage">商品管理</string>
+    <string name="selectclass">选择分类</string>
+    <string name="titlepic">标题图片</string>
+    <string name="select">选择</string>
+    <string name="name">名称</string>
+    <string name="screen">筛选</string>
+    <string name="user_PleaseOpenPermission">请开启相关的用户权限</string>
+    <string name="names">名称:</string>
+    <string name="Class">种类:</string>
+    <string name="pro_time">生产日期</string>
+    <string name="pro_times">生产日期:</string>
+    <string name="pro_addr">生产地址</string>
+    <string name="pro_addrS">生产地址:</string>
+    <string name="stop_use">已停用</string>
+    <string name="pro_pre">生产产家</string>
+    <string name="pro_num">生产编号</string>
+    <string name="pro_brand">品牌</string>
+    <string name="pro_stock">库存</string>
+    <string name="pro_pres">生产产家:</string>
+    <string name="pro_nums">生产编号:</string>
+    <string name="pro_brands">品牌:</string>
+    <string name="pro_stocks">库存:</string>
+    <string name="pro_price">价格</string>
+    <string name="pro_prices">价格:</string>
+    <string name="prices_search">报价检索</string>
+    <string name="pro_desc">描述</string>
+    <string name="pro_descs">备注</string>
+    <string name="search">查询</string>
+    <string name="pro_shelf_life">保质期</string>
+    <string name="pro_shelf_lifes">保质期:</string>
+    <string name="pro_Specificationss">规格:</string>
+    <string name="addcart">加入购物车</string>
+    <string name="pro_Specifications">规格</string>
+    <string name="ple_input_goodsname">请输入商品名称</string>
+    <string name="ple_input_time">请输入生产日期</string>
+    <string name="banner_pic">轮播图片</string>
+    <string name="select_title_pic">选择标题图片</string>
+    <string name="select_banner_pic">选择轮播图片</string>
+    <string name="temporary_pic">临时素材库</string>
+    <string name="platform_pic">平台素材库</string>
+    <string name="my_pic">我的素材库</string>
+    <string name="Classs">分类</string>
+    <string name="select_class">选择分类</string>
+    <string name="pic_manege">图片库管理</string>
+    <string name="doit">启用</string>
+    <string name="stopit">停用</string>
+    <string name="buy">采购</string>
+    <string name="sale">销售</string>
+    <string name="startuse">开始使用</string>
+    <string name="loginout_msg">确认要退出账号吗？</string>
+    <string name="isnew_version">当前最新版本</string>
+    <string name="have_new_version">有新版本</string>
+    <string name="userExit">退出</string>
+    <string name="about_us_tv01">CASPS 公共服务电子商务平台是农校对接项目专属电子商务平台。平台囊括 B2B、B2C 、B2M 、 B2T、 B2G 、 C2C 、 C2G 、 ERP等多种新型商业模式。通过对接校企双方，提供良好优质的交易渠道，为企业间搭建资源联盟，解决整个产业链资源交换的数据整合问题。</string>
+    <string name="about_us_tv02">中联联合投资控股集团有限公司</string>
+    <string name="about_us_tv03">联系电话:010-62513620</string>
+    <string name="about_us_tv04">企业邮箱:zhouyi@nxdjfuw.org.cn</string>
+    <string name="testStr">JOKER</string>
+    <string name="UserBack1">返回系统</string>
+    <string name="cart1">采购拣单车</string>
+
+    <!-- 收付款管理 -->
+    <string name="bank_add_card_btn">+新增账户</string>
+    <string name="item_account_name">账户全称：</string>
+    <string name="item_account_number">账户号码：</string>
+    <string name="item_bank_name">银行名称：</string>
+    <string name="item_contacts_name">联系人：</string>
+    <string name="item_mobile_number">手机号：</string>
+    <string name="item_telephone_number">电话号码：</string>
+
+    <string name="item_account_name2">账户全称</string>
+    <string name="item_account_number2">账户号码</string>
+    <string name="item_bank_name2">银行名称</string>
+    <string name="item_bank_name3">账户名称</string>
+
+    <string name="item_contacts_name2">联系人</string>
+    <string name="item_mobile_number2">手机号</string>
+    <string name="item_telephone_number2">电话号码</string>
+
+    <string name="edhint_account_name">请输入账户全称</string>
+    <string name="edhint_account_number">请输入账户号码</string>
+    <string name="edhint_bank_name">请输入账户名称</string>
+    <string name="edhint_bank_name1">请输银行名称</string>
+    <string name="edhint_contacts_name">请输入联系人</string>
+    <string name="edhint_mobile_number">请输入手机号</string>
+    <string name="edhint_telephone_number">请输入电话号码</string>
+
+    <string name="activity_title_bank_bills_tv">银行账户管理</string>
+    <string name="activity_title_card_edit_tv">账户编辑</string>
+    <string name="activity_title_card_add_tv">新增账户</string>
+    <string name="dialog_card_delete_msg">确认要删除吗？</string>
+    <string name="title_activity_card__search">查询</string>
+
+    <string name="dialog_card_delete_succeed">删除银行账户成功</string>
+
+    <!-- 订单详情 -->
+    <string name="tv_bills_id_title">订单号：</string>
+    <string name="tv_bills_type_title">类型：</string>
+    <string name="tv_bills_flow_id_title">流程：</string>
+    <string name="tv_bills_buy_name_title">买方：</string>
+    <string name="tv_bills_contract_time_title">签约时间：</string>
+    <string name="tv_bills_contract_time_title_text">签约时间</string>
+    <string name="tv_bills_payment_time_title">付款时间：</string>
+    <string name="tv_bills_start_delivery_time_title">送货开始时间：</string>
+    <string name="tv_bills_end_delivery_time_title">送货结束时间：</string>
+    <string name="tv_bank_name_title">付款方：</string>
+    <string name="tv_sum_money_title">总金额：</string>
+    <string name="tv_payment_card_id_title">支付账号：</string>
+    <string name="tv_gathering_card_title">收款账号：</string>
+    <string name="tv_payment_address_title">收货地址：</string>
+    <string name="tv_ment_address_title">发货地址：</string>
+    <string name="tv_already_money_title">已付金额：</string>
+    <string name="tv_now_money_title">付款金额：</string>
+    <string name="tv_payment_id_title">本次付款账号：</string>
+    <string name="ed_hint_title">备注</string>
+    <string name="ed_edit_title">关闭</string>
+
+
+    <string name="tv_commodity_name_title">商品：</string>
+    <string name="tv_commodity_money_title">金额：</string>
+    <string name="tv_commodity_one_money_title">单价(元)：</string>
+    <string name="tv_commodity_one_money_title_text">单价(元)</string>
+    <string name="tv_commodity_count_title">数量：</string>
+
+    <string name="tv_await_count_title">待发货数量：</string>
+    <string name="tv_reality_count_title">实际收货数量：</string>
+    <string name="tv_await_money_title">待付金额：</string>
+    <string name="tv_reality_money_title">实际收金额：</string>
+
+    <string name="tv_search_payment_id">订单号</string>
+    <string name="tv_search_payment_goods_name">商品名</string>
+    <string name="tv_search_payment_buy_name">付款方</string>
+
+    <string name="ed_search_hint_id">请输入订单号</string>
+    <string name="ed_search_hint_goods_name">请输入商品名</string>
+    <string name="ed_search_hint_buy_name">请输入付款方</string>
+    <!--收付款-->
+    <string name="pay_people">付款方:</string>
+    <string name="pay_already_money">已付金额:</string>
+    <string name="pay_await_money">待付金额:</string>
+    <string name="pay_now_money">付款金额:</string>
+    <string name="pay_ment_id">本次付款账号:</string>
+    <string name="refund_ment_id">本次退款账号:</string>
+    <string name="pay_sum_money">总金额:</string>
+
+
+    <string name="ck_payment_all_title">全选</string>
+    <string name="bt_offline_payment_title">线下付款</string>
+    <string name="activity_panment_title">付款</string>
+    <string name="dialog_pay_msg">确认要付款吗？</string>
+    <string name="dialog_receipe_msg">确认要收款吗？</string>
+    <string name="dialog_refund_msg">确认要退款吗？</string>
+    <string name="dialog_reset_msg">重置将清除所有编辑数据</string>
+    <string name="dialog_receipe_bills_count_title">订单数：</string>
+    <string name="dialog_receipe_bills_money_title">总金额：</string>
+    <string name="activity_bills_details_title">订单详情</string>
+
+    <string name="head_payee_title">收款方：</string>
+    <string name="head_payment_money_title">付款金额：</string>
+    <string name="head_payment_time_title">付款时间：</string>
+    <string name="head_remark_hint_title">备注：</string>
+
+    <string name="head_harvest_money_title">收款</string>
+    <string name="head_retreat_money_title">退款</string>
+    <string name="head_retreat_money_verify_title">退款确认</string>
+    <string name="head_operation_explain_title">操作说明</string>
+    <string name="head_refund_payment_buy_name">付款方：</string>
+    <string name="head_refund_money_title">可退金额：</string>
+    <string name="head_operator_add_title">添加</string>
+
+
+    <string name="activity_receiv_refund_money_title">收退款</string>
+    <string name="head_receive_refund_title">退款方：</string>
+    <string name="head_receive_refund_money_title">退款金额：</string>
+    <string name="dialog_refund_money_msg">确认要收退款吗？</string>
+    <string name="tv_receive_refund_title">退款方</string>
+    <string name="hint_receive_refund_title">请输入退款方</string>
+    <string name="hint_reset_title">重置</string>
+
+    <!-- 操作员管理 -->
+    <string name="activity_operator_title">业务操作员管理</string>
+    <string name="activity_add_operator_title">添加操作员</string>
+    <string name="activity_edit_operator_title">修改操作员</string>
+    <string name="hint_layout_right_btn_title">设置密码</string>
+    <string name="hint_tv_name_title">名称：</string>
+    <string name="hint_tv_account_name_title">账号：</string>
+    <string name="hint_tv_password_title">密码</string>
+    <string name="hint_tv_affirm_pword_title">确认密码</string>
+    <string name="hint_ed_password_title">用户密码</string>
+    <string name="hint_ed_affirm_pword_title">确认用户密码</string>
+    <string name="hint_ed_affirm_title">确认</string>
+
+    <string name="hint_tv_caount_title">账户</string>
+    <string name="hint_ed_caoun_title">用户账户</string>
+    <string name="hint_tv_opr_name_title">名称</string>
+    <string name="hint_ed_opr_name_title">用户名称</string>
+    <string name="hint_tv_amobile_title">电话</string>
+    <string name="hint_ed_amobile_title">用户号码</string>
+    <string name="hint_tv_email_title">邮箱</string>
+
+    <string name="hint_block_up_title">停用</string>
+    <string name="hint_about_role_title">关联角色</string>
+
+    <!-- 收发货管理 -->
+    <string name="hint_tv_express_activity_title">收发货地址</string>
+    <string name="hint_tv_express_address_title">地址：</string>
+    <string name="hint_ed_express_address_title">请输入地址位置</string>
+    <string name="hint_tv_express_area_title">所属区域：</string>
+    <string name="hint_ed_express_area_title"></string>
+    <string name="hint_tv_express_postcode_title">邮编：</string>
+    <string name="hint_ed_express_postcode_title">请输入邮编</string>
+    <string name="hint_tv_express_contacts_title">联系人：</string>
+    <string name="hint_ed_express_contacts_title">请输入联系人</string>
+    <string name="hint_tv_express_mobile_title">手机号：</string>
+    <string name="hint_ed_express_mobile_title">请输入手机号</string>
+    <string name="hint_tv_express_phone_title">电话号码：</string>
+    <string name="hint_ed_express_phone_title">请输入电话号码</string>
+    <string name="hint_ed_express_add_title">+新增地址</string>
+    <string name="activity_express_add_title">新增地址</string>
+    <string name="activity_express_edit_title">地址修改</string>
+    <string name="dialog_express_msg">确认要收货吗？</string>
+
+    <!-- 收货 -->
+    <string name="activity_express_harvest_title">收货</string>
+    <string name="hint_tv_deliver_title">发货方：</string>
+    <string name="hint_tv_sum_deliver_title">总数：</string>
+    <string name="hint_tv_already_deliver_title">已收：</string>
+    <string name="hint_tv_await_deliver_title">待收：</string>
+    <string name="hint_tv_new_express_title">本次收货数量：</string>
+    <string name="hint_tv_express_addr_title">收货地址：</string>
+
+    <!-- 发货 -->
+    <string name="activity_send_express_harvest_title">发货</string>
+    <string name="hint_tv_send_deliver_title">收货方：</string>
+    <string name="hint_tv_send_already_deliver_title">已发：</string>
+    <string name="hint_tv_send_await_deliver_title">待发：</string>
+    <string name="hint_tv_send_new_express_title">本次发货数量：</string>
+    <string name="dialog_send_express_msg">确认要发货吗？</string>
+
+    <!-- 退货 -->
+    <string name="activity_quit_express_harvest_title">退货</string>
+    <string name="hint_tv_quit_deliver_title">退到：</string>
+    <string name="hint_tv_quit_already_deliver_title">总数：</string>
+    <string name="hint_tv_quit_await_deliver_title">待退数：</string>
+    <string name="hint_tv_quit_new_express_title">本次退货数量：</string>
+    <string name="dialog_quit_express_msg">确认要退货吗？</string>
+
+    <!-- 退货签收 -->
+    <string name="activity_quit_harvest_express_title">收退货</string>
+    <string name="hint_tv_quit_harvest_express_name_title">退货方：</string>
+    <string name="hint_tv_quit_harvest_express_title">签收退货</string>
+    <string name="hint_tv_quit_harvest_express_title_1">总数：</string>
+    <string name="hint_tv_quit_harvest_express_title_2">已收：</string>
+    <string name="hint_tv_quit_harvest_express_title_3">待收：</string>
+    <string name="hint_tv_quit_express_title">本次收货数量：</string>
+    <string name="hint_tv_get_quit_express_title">收货地址:</string>
+    <string name="dialog_harvest_express_msg">确认签收退货吗？</string>
+
+    <!-- 结款单管理 -->
+    <string name="activity_create_section_bills_title">新建结款单列表</string>
+    <string name="hint_tv_create_section_bills_title">创建结款单</string>
+    <string name="hint_tv_section_bills_id_title">结款单号：</string>
+    <string name="hint_tv_section_bills_opposite_title">结款对方：</string>
+    <string name="hint_tv_section_bills_my_propose_time_title">我的提议时间：</string>
+    <string name="hint_tv_section_bills_bills_money_title">结款订单金额：</string>
+    <string name="hint_tv_section_bills_my_propose_moey_title">我的提议金额：</string>
+
+    <string name="hint_tv_over_bills_id_title">结款单号：</string>
+    <string name="hint_ed_over_bills_id_title">请输入结款单号</string>
+    <string name="hint_tv_over_opposite_title">结款对方：</string>
+    <string name="hint_ed_over_opposite_title1">请输入结款对方</string>
+    <string name="hint_ed_over_opposite_title">我的提议金额金额：</string>
+
+    <!-- 结款单详情 -->
+    <string name="activity_over_bills_details_title">结款单详情</string>
+    <string name="hint_tv_sell_name_title">卖方</string>
+    <string name="hint_tv_over_bills_money_title">结款金额：</string>
+    <string name="hint_tv_appoint_over_bills_time_title">约定结款时间：</string>
+    <string name="hint_tv_appoint_over_bills_money_title">约定结款金额：</string>
+    <string name="hint_tv_bills_affirm_type_title">确认状态：</string>
+    <string name="hint_tv_bills_signature_type_title">签章状态：</string>
+    <string name="hint_tv_guarantee_register_type_title">担保登记状态：</string>
+    <string name="hint_tv_over_bills_details_title">结款单清单</string>
+    <string name="hint_tv_reality_over_bills_money_title">实际结款金额：</string>
+    <string name="hint_tv_time_title">请选择具体时间</string>
+
+    <!-- 创建结款单 -->
+    <string name="hint_tab_my_payment_money_title">本方付款</string>
+    <string name="hint_tab_opposite_paymeng_title">对方付款</string>
+    <string name="hint_btn_affirm_next_title">确认，下一步</string>
+    <string name="hint_btn_sellersId_title">收款方</string>
+    <string name="hint_tv_ctrTime_title">结款时间</string>
+    <string name="hint_tv_add_bills_title">添加订单</string>
+
+    <!-- 添加订单 -->
+    <string name="activity_add_bills_title">添加订单</string>
+    <string name="hint_tv_bills_money_title">订单清单</string>
+    <string name="hint_tv_commodity_name_title">商品名：</string>
+    <string name="hint_settl_details_del_btn_title">删除订单行</string>
+    <string name="hint_settl_details_add_btn_title">添加订单行</string>
+    <string name="hint_settl_details_affirm_btn_title">确认结款</string>
+    <string name="hint_settl_paymoneyNum_title">已付金额：</string>
+    <string name="hint_settl_await_money_title">待付金额：</string>
+    <string name="hint_settl_bills_money_title">订单金额：</string>
+    <string name="hint_settl_bills_reality_money_title">结款实付金额：</string>
+
+    <!-- 待审批结款单 -->
+    <string name="activity_wiat_check_bills_title">待审批结款单</string>
+    <string name="hint_wait_layout_title_1">对方提议时间：</string>
+    <string name="hint_wait_layout_title_2">对方提议金额：</string>
+    <string name="hint_wait_layout_title_3">编辑提交</string>
+    <string name="dialog_wait_layout_title_4">确认拒绝结款单吗？</string>
+    <string name="dialog_wait_layout_title_5">确认同意结款单吗？</string>
+
+    <!-- 登记担保资源 -->
+    <string name="hint_tv_commit_apply_title">提交申请待审</string>
+    <string name="hint_tv_register_title">登记担保资源</string>
+
+    <!-- 执行中结款单 -->
+    <string name="activity_request_bills_title">执行中结款单</string>
+    <string name="hint_tv_request_stop_title">请求终止</string>
+    <string name="hint_status_type_title_1">没有确认</string>
+    <string name="hint_status_type_title_2">付款方确认</string>
+    <string name="hint_status_type_title_3">收款方确认</string>
+    <string name="hint_status_type_title_4">双方确认</string>
+    <string name="hint_status_type_title_5">付款方确认终止</string>
+    <string name="hint_status_type_title_6">收款方确认终止</string>
+    <string name="hint_status_type_title_7">双方确认终止</string>
+    <string name="hint_status_type_title_8">撤回终止请求</string>
+    <string name="hint_status_type_title_9">同意终止</string>
+
+    <string name="hint_status_singn_title_1">双方未签</string>
+    <string name="hint_status_singn_title_2">付款方已签</string>
+    <string name="hint_status_singn_title_3">收款方已签</string>
+    <string name="hint_status_singn_title_4">双方已签</string>
+
+    <string name="hint_status_regist_title_1">没有登记</string>
+    <string name="hint_status_regist_title_2">申请待定</string>
+    <string name="hint_status_regist_title_3">已登记</string>
+    <string name="hint_status_regist_title_4">已拒绝</string>
+
+    <string name="hint_textview_title_1">交易对方：</string>
+    <string name="hint_textview_title_2">创建时间：</string>
+    <string name="hint_textview_title_3">结款订单金额：</string>
+    <string name="hint_textview_title_4">约定金额：</string>
+    <string name="hint_textview_title_5">已付金额：</string>
+
+    <string name="dialog_stop_msg">确认要终止吗？</string>
+    <string name="dialog_revokeToStop_msg">确认要撤回终止吗？</string>
+    <string name="toast_stop_msg">请求终止结款单成功</string>
+    <!-- 搜索 -->
+    <string name="hint_search_execyte_title_1">结款单号</string>
+    <string name="hint_search_execyte_title_2">请输入结款单号</string>
+    <string name="hint_search_execyte_title_3">结款对方</string>
+    <string name="hint_search_execyte_title_4">请输入结款对方</string>
+    <string name="hint_search_execyte_title_5">状态</string>
+    <string name="hint_search_execyte_title_6">开始时间</string>
+    <string name="hint_search_execyte_title_7">请选择开始时间</string>
+    <string name="hint_search_execyte_title_8">结束时间</string>
+    <string name="hint_search_execyte_title_9">请选择结束时间</string>
+
+    <!-- 结款单登记担保列表 -->
+    <string name="activity_register_bills_title">结款单登记担保列表</string>
+    <string name="hint_status_regist_assure_title_1">交易对方：</string>
+    <string name="hint_status_regist_assure_title_2">创建时间：</string>
+    <string name="hint_status_regist_assure_title_3">结款订单金额：</string>
+    <string name="hint_status_regist_assure_title_4">约定金额：</string>
+    <string name="hint_status_regist_assure_title_5">已付金额：</string>
+    <string name="hint_status_regist_assure_title_6">申请登记</string>
+    <string name="hint_status_regist_assure_title_7">担保登记状态</string>
+
+    <string name="startpage_msg_01">创新机制体制   整合社会资源</string>
+    <string name="startpage_msg_02">打造可持续发展的战略性新兴产业体系</string>
+    <string name="star">*</string>
+    <string name="msg">说明：我们会为你提供最优质的服务，祝你购物愉快！</string>
+    <string name="goodnames">商品名称:</string>
+    <string name="stock">库存:</string>
+    <string name="publisher">发布人:</string>
+    <string name="usetime">适用期间:</string>
+    <string name="uselocation">适用地区:</string>
+    <string name="shopcart">购物车</string>
+    <string name="detailed">报价详情</string>
+    <string name="address">产地：</string>
+    <string name="user_NetError">网络错误</string>
+    <string name="pic_catalog_name">图片目录名称</string>
+    <string name="pic_catalog_name_hint">请填写图片目录名称</string>
+    <string name="title_activity_select_picture_add_lib">SelectPictureAddLibActivity</string>
+    <string name="title_activity_select_picture03">SelectPicture03</string>
+
+    <!--报价管理-->
+    <string name="quotes_manage">报价管理</string>
+    <string name="create_quotes">创建报价</string>
+    <string name="quotes_no_name">序号：</string>
+    <string name="quotes_quantity_name">数量：</string>
+    <string name="quotes_price_name">报价：</string>
+    <string name="quotes_price_name_2">价格范围：</string>
+    <string name="quotes_period_name">有效期：</string>
+    <string name="quotes_person_name">发布人：</string>
+    <string name="quotes_status_sp">指定报价</string>
+    <string name="quotes_status_product">指定商品</string>
+    <string name="quotes_status_pub">公开报价</string>
+    <string name="quotes_status_mmb_pub">公开</string>
+    <string name="quotes_status_no">未报价</string>
+    <string name="quotes_assign">指定发布范围</string>
+    <string name="quotes_assign_mmb">选择发布范围</string>
+    <string name="quotes_edit">编辑</string>
+    <string name="edit">编辑</string>
+    <string name="search_quote_group">搜索群组</string>
+    <string name="search_quote_mmb">搜索会员</string>
+    <!--报价查询-->
+    <string name="quotes_search">报价查询</string>
+    <string name="quotes_search_name">名称</string>
+    <string name="quotes_search_name_hint">商品名称</string>
+    <string name="quotes_search_type">类型</string>
+    <string name="quotes_search_type_hint">报价类型</string>
+    <string name="quotes_search_status">状态</string>
+    <string name="quotes_search_status_hint">全部</string>
+    <string name="quotes_search_pubtime">发布时间</string>
+    <string name="quotes_search_period">有效期</string>
+    <string name="no_net">网络不给力，请检查网络设置</string>
+    <!--创建报价-->
+    <string name="quotes_create">创建报价</string>
+    <string name="quotes_edit_t">编辑报价</string>
+    <string name="quotes_create_type">报价类型</string>
+    <string name="quotes_create_type_hint">请选择类型</string>
+    <string name="quotes_create_pic">标题图片</string>
+    <string name="quotes_create_number">数量</string>
+    <string name="quotes_create_price">单价</string>
+    <string name="quotes_create_price1">最低单价</string>
+    <string name="quotes_create_price2">最高单价</string>
+    <string name="quotes_create_price_text">单价：</string>
+    <string name="quotes_create_period">有效期</string>
+    <string name="quotes_create_more">备注</string>
+    <!--合作会员目录-->
+    <string name="cooperate_direct">合作会员目录</string>
+    <string name="cooperate_contents">关注会员目录</string>
+    <string name="cooperate_buy">买（采购）</string>
+    <string name="cooperate_sell">卖（销售）</string>
+    <string name="cooperate_person">合作会员：</string>
+    <string name="cooperate_person_text">合作会员</string>
+    <string name="cooperate_name">会员名称：</string>
+    <string name="cooperate_name_text">会员名称</string>
+    <string name="cooperate_relation_request">业务关系：</string>
+    <string name="cooperate_address">注册地址：</string>
+    <string name="cooperate_grade">关注等级：</string>
+    <string name="cooperate_request_num">序号：</string>
+    <string name="cooperate_detail">会员详情</string>
+    <string name="cooperate_can_buy">我能采购</string>
+    <string name="cooperate_can_sell">我能销售</string>
+    <string name="cooperate_create_protocol">创建合作协议</string>
+    <string name="cooperate_edit_protocol">编辑合作协议</string>
+    <string name="cooperate_create_buy">创建采购协议</string>
+    <string name="cooperate_create_sell">创建销售协议</string>
+    <string name="cooperate_downgrade">降级为仅关注</string>
+    <string name="cooperate_downgrade_dialog">确定要降级为仅关注吗？</string>
+    <string name="cooperate_cancel_dialog">确定要取消关注吗？</string>
+    <string name="cooperate_add_dialog">确定要关注会员吗？</string>
+    <string name="cooperate_buy_dialog">确定要建立采购关系吗？</string>
+    <string name="cooperate_sell_dialog">确定要建立销售关系吗？</string>
+    <string name="cooperate_downgrade_OK">降级成功</string>
+    <string name="cooperate_type">业务类型：</string>
+    <string name="cooperate_buy_role">采购方：</string>
+    <string name="cooperate_buy_part">销售方：</string>
+    <string name="cooperate_sell_role">供货方：</string>
+    <string name="cooperate_handler_role">操作人：</string>
+    <string name="cooperate_handler_role_text">操作人</string>
+    <string name="cooperate_products_list">已选商品列表</string>
+    <string name="cooperate_products_choose_type">选择商品</string>
+    <string name="cooperate_protocol_object">协议对方</string>
+    <string name="cooperate_protocol_time">操作时间</string>
+    <string name="cooperate_protocol_time_text">操作时间：</string>
+    <string name="cooperate_protocol_title">标题</string>
+    <string name="cooperate_protocol_valid_time">有效时间</string>
+    <string name="cooperate_protocol_valid_time_text">有效时间：</string>
+    <string name="cooperate_protocol_settle_rule">结款规则</string>
+    <string name="cooperate_protocol_settle_rule_text">结款规则：</string>
+    <string name="cooperate_protocol_ship_rule">发货规则</string>
+    <string name="cooperate_protocol_ship_rule_text">发货规则：</string>
+    <string name="cooperate_products_transport_mode">运输方式</string>
+    <string name="cooperate_products_transport_mode_text">运输方式：</string>
+    <string name="cooperate_products_buy_account">付款账号</string>
+    <string name="cooperate_products_buy_account_text">付款账号：</string>
+    <string name="cooperate_products_ship_address">收货地址</string>
+    <string name="cooperate_products_ship_address_text">收货地址：</string>
+    <string name="cooperate_products_receipt_account">收款账号</string>
+    <string name="cooperate_products_delivery_address">发货地址</string>
+    <string name="cooperate_products_remarks">备注</string>
+    <string name="cooperate_products_save">保存</string>
+    <string name="cooperate_products_buy">采购</string>
+    <string name="cooperate_products_sell">销售</string>
+    <string name="cooperate_products_protocol_type">协议商品品类</string>
+    <string name="cooperate_cancel">取消关注</string>
+    <string name="cooperate_care">关注</string>
+    <string name="cooperate_agree">同意</string>
+    <string name="cooperate_deny">拒绝</string>
+    <string name="cooperate_deny_done">已拒绝</string>
+    <string name="cooperate_reject_done">已撤回</string>
+    <string name="cooperate_agree_done">已同意</string>
+    <string name="cooperate_request_done">已申请</string>
+    <string name="cooperate_upgrade">升级到业务合作</string>
+    <string name="cooperate_dialog_agree">确认要同意吗？</string>
+    <string name="cooperate_dialog_gone">确认要退出吗？</string>
+    <string name="cooperate_dialog_deny">确认要拒绝吗？</string>
+    <string name="cooperate_dialog_ok">操作成功</string>
+    <string name="cooperate_dialog_gone_ok">操作成功</string>
+    <string name="cooperate_request">待审批申请</string>
+    <string name="cooperate_group">群组管理</string>
+    <string name="cooperate_mmb_care">谁在关注我</string>
+    <string name="cooperate_mmb_buy">建立采购关系</string>
+    <string name="cooperate_mmb_sell">建立销售关系</string>
+    <string name="cooperate_mmb_search">搜索供应商</string>
+    <string name="cooperate_group_text">群组</string>
+    <string name="cooperate_group_name">群组名称：</string>
+    <string name="cooperate_group_name_text">群组名称</string>
+    <string name="cooperate_group_add">申请加群</string>
+    <string name="cooperate_group_gone">申请退群</string>
+    <string name="cooperate_group_checking">审核中</string>
+    <string name="cooperate_group_names">群组名</string>
+    <string name="cooperate_care_names">企业名</string>
+    <string name="cooperate_province_names">省份</string>
+    <string name="cooperate_group_grant">申请成功，等待审核</string>
+
+    <!-- 协议管理 -->
+    <string name="all_protocol">全部</string>
+    <string name="buy_protocol">采购协议</string>
+    <string name="sell_protocol">销售协议</string>
+    <string name="protocol_type">协议类型</string>
+    <string name="protocol_type_text">协议类型：</string>
+    <string name="protocol_state">协议状态</string>
+    <string name="protocol_detail">协议详情</string>
+    <string name="protocol_request_title">已提交合作协议</string>
+    <string name="protocol_require_title">待审批合作协议</string>
+    <string name="protocol_got_title">执行中合作协议</string>
+    <string name="protocol_agree">同意中合作协议</string>
+    <string name="protocol_title">标题：</string>
+    <string name="protocol_waiting_sure">待确认</string>
+    <string name="protocol_waiting_refuse">已拒绝</string>
+    <string name="protocol_waiting_stop">已终止</string>
+    <string name="protocol_object">协议对方：</string>
+    <string name="protocol_object_text">协议对方</string>
+    <string name="protocol_object_input">请输入协议对方</string>
+    <string name="protocol_transport_type">运输方式：</string>
+    <string name="protocol_buy_time">付款期：</string>
+    <string name="protocol_begin_time">开始时间：</string>
+    <string name="protocol_end_time">结束时间：</string>
+    <string name="protocol_edit">编辑</string>
+    <string name="protocol_sure">同意</string>
+    <string name="protocol_refuse">拒绝</string>
+    <string name="protocol_refuse_reject">撤回中止</string>
+    <string name="protocol_agree_reject">同意终止</string>
+    <string name="protocol_refuse_re">拒绝终止</string>
+    <string name="protocol_request_reject">申请终止</string>
+    <string name="protocol_get_order">下订单</string>
+    <string name="protocol_create_order">创建订单</string>
+
+    <!--输入的错误提示-->
+    <string name="error_user_name">用户名不能为空</string>
+    <string name="error_password">密码不能为空</string>
+    <string name="error_good_class">选择分类不能为空白</string>
+    <string name="error_good_name">名称不能为空</string>
+    <string name="error_good_price">价格不能为空</string>
+    <string name="error_lengtn_50">最多50个字符</string>
+    <string name="error_lengtn_200">最多200个字符</string>
+
+    <!--订单管理-->
+    <string name="order_buy_sort">类商品</string>
+    <string name="order_buy_cart">采购拣单车</string>
+    <string name="order_sell_cart">销售拣单车</string>
+    <string name="order_buy">下单</string>
+    <string name="order_detail_time_pay">付款时间</string>
+    <string name="order_detail_time_start">送货开始时间</string>
+    <string name="order_detail_time_end">送货结束时间</string>
+    <string name="order_detail_process">订单流程</string>
+    <string name="order_detail_pay_account">支付账号</string>
+    <string name="order_detail_get_account">收款账号</string>
+    <string name="order_detail_pay_address">收货地址</string>
+    <string name="order_detail_get_address">发货地址</string>
+    <string name="order_detail_product">商品清单</string>
+    <string name="order_detail_product_num">件商品</string>
+    <string name="order_detail_product_pay">总金额</string>
+    <string name="order_detail_product_grid">订单表</string>
+    <string name="order_new">新建订单</string>
+    <string name="order_buy_type">订单类型</string>
+    <string name="order_buy_state">订单状态</string>
+    <string name="order_request">待审批订单</string>
+    <string name="order_doing">执行中订单</string>
+    <string name="order_doing_object">交易对方：</string>
+    <string name="order_doing_object_text">交易对方</string>
+    <string name="order_doing_create_time">创建时间：</string>
+    <string name="order_doing_all_price">总金额：</string>
+    <string name="order_doing_request_stop">请求终止</string>
+    <string name="order_doing_reject_request">撤回终止请求</string>
+    <string name="order_doing_sure_stop">同意终止</string>
+    <string name="order_doing_going">执行中</string>
+    <string name="order_doing_finished">已完成</string>
+    <string name="order_locked">锁定</string>
+    <string name="order_abandon">作废</string>
+    <string name="order_input_object_name">请输入交易对方的名称</string>
+    <string name="order_locked_ask">确认要锁定订单吗？</string>
+    <string name="order_abandon_ask">确认要作废订单吗？</string>
+    <string name="order_stop_ask">确认要终止吗？</string>
+    <string name="order_stop_agree_ask">确认要同意终止吗？</string>
+    <string name="order_stop_refuse_ask">确认要拒绝终止吗？</string>
+    <string name="order_stop_reject_ask">确认要撤回终止吗？</string>
+    <string name="verfy_password">验证码不能为空</string>
+    <string name="product_order_choose">选择商品分类</string>
+    <string name="order_choose">商品分类</string>
+    <string name="input_name">请输入名称</string>
+    <string name="goods_class">商品列表页</string>
+    <string name="time_out">你操作太快了，慢点</string>
+
+</resources>

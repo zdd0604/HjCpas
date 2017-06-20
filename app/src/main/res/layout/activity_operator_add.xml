@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/activity_bg_color"
+    android:orientation="vertical">
+
+    <include
+        layout="@layout/layout_head_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_40"
+        android:layout_marginTop="@dimen/size_10"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/size_15"
+            android:layout_weight="3"
+            android:text="@string/hint_tv_caount_title"
+            android:textColor="@color/bills_tv_color"
+            android:textSize="@dimen/font_size_16" />
+
+        <EditText
+            android:id="@+id/operator_ed_account"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:maxLines="1"
+            android:background="@null"
+            android:hint="@string/hint_ed_caoun_title"
+            android:textSize="@dimen/font_size_16" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_40"
+        android:layout_marginTop="@dimen/size_1"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/size_15"
+            android:layout_weight="3"
+            android:text="@string/hint_tv_opr_name_title"
+            android:textColor="@color/bills_tv_color"
+            android:textSize="@dimen/font_size_16" />
+
+        <EditText
+            android:id="@+id/operator_ed_account_name"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@null"
+            android:hint="@string/hint_ed_opr_name_title"
+            android:maxLines="1"
+            android:maxLength="6"
+            android:textSize="@dimen/font_size_16" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_40"
+        android:layout_marginTop="@dimen/size_1"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/size_15"
+            android:layout_weight="3"
+            android:text="@string/hint_tv_amobile_title"
+            android:textColor="@color/bills_tv_color"
+            android:textSize="@dimen/font_size_16" />
+
+        <EditText
+            android:id="@+id/operator_ed_account_mobile"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@null"
+            android:inputType="number"
+            android:maxLines="1"
+            android:maxLength="11"
+            android:hint="@string/hint_ed_amobile_title"
+            android:textSize="@dimen/font_size_16" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_40"
+        android:layout_marginTop="@dimen/size_1"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/size_15"
+            android:layout_weight="3"
+            android:text="@string/hint_tv_email_title"
+            android:textColor="@color/bills_tv_color"
+            android:textSize="@dimen/font_size_16" />
+
+        <EditText
+            android:id="@+id/operator_ed_account_emial"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@null"
+            android:hint="@string/hint_tv_email_title"
+            android:textSize="@dimen/font_size_16" />
+    </LinearLayout>
+
+    <include
+        layout="@layout/rl_bills_title_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_150"
+        android:background="@color/white">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/relation_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <mehdi.sakout.fancybuttons.FancyButton
+        android:id="@+id/operator_btn_commit"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/btn_height"
+        android:layout_below="@+id/layout"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/size_10"
+        android:layout_marginLeft="@dimen/main_margin"
+        android:layout_marginRight="@dimen/main_margin"
+        android:layout_marginTop="@dimen/size_20"
+        android:paddingLeft="@dimen/size_20"
+        android:paddingRight="@dimen/size_20"
+        app:fb_borderColor="@color/title_bg"
+        app:fb_borderWidth="1dp"
+        app:fb_defaultColor="@color/title_bg"
+        app:fb_focusColor="@color/title_bg"
+        app:fb_radius="@dimen/size_5"
+        app:fb_text="@string/save"
+        app:fb_textColor="@color/white"
+        app:fb_textSize="@dimen/btn_size" />
+</LinearLayout>

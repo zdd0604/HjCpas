@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/activity_bg_color"
+    tools:context="com.hj.casps.protocolmanager.ProtocolAgree">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_45"
+        android:background="@color/white"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="@dimen/size_80"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="@string/cooperate_products_receipt_account"
+            android:textSize="@dimen/font_size_16" />
+
+
+        <Spinner
+            android:id="@+id/protocol_receipt_account"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:paddingLeft="@dimen/size_15"
+            android:paddingRight="@dimen/size_10"
+            android:textSize="@dimen/font_size_16" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_1"
+        android:background="@color/activity_bg_color" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_45"
+        android:background="@color/white"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="@dimen/size_80"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="@string/cooperate_products_delivery_address"
+            android:textSize="@dimen/font_size_16" />
+
+
+        <Spinner
+            android:id="@+id/protocol_delivery_address"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:paddingLeft="@dimen/size_15"
+            android:paddingRight="@dimen/size_10"
+            android:textSize="@dimen/font_size_16" />
+    </LinearLayout>
+
+    <mehdi.sakout.fancybuttons.FancyButton
+        android:id="@+id/protocol_sure"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_45"
+        android:layout_marginLeft="@dimen/main_margin"
+        android:layout_marginRight="@dimen/main_margin"
+        android:layout_marginTop="@dimen/size_30"
+        android:paddingLeft="@dimen/size_20"
+        android:paddingRight="@dimen/size_20"
+        app:fb_borderColor="@color/title_bg"
+        app:fb_borderWidth="1dp"
+        app:fb_defaultColor="@color/title_bg"
+        app:fb_focusColor="@color/title_bg"
+        app:fb_radius="@dimen/size_5"
+        app:fb_text="@string/True"
+        app:fb_textColor="@color/white"
+        app:fb_textSize="@dimen/btn_size" />
+</LinearLayout>

@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/activity_bg_color"
+    android:orientation="vertical"
+    tools:context="com.hj.casps.ordermanager.OrderSearch">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_45"
+        android:background="@color/white"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="@dimen/size_80"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="@string/tv_search_payment_id"
+            android:textSize="@dimen/font_size_16" />
+
+
+        <EditText
+            android:id="@+id/order_buy_id"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@null"
+            android:hint="@string/ed_search_hint_id"
+            android:paddingLeft="@dimen/size_15"
+            android:textColorHint="@color/hint_color"
+            android:textSize="@dimen/font_size_16" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_45"
+        android:layout_marginTop="@dimen/size_1"
+        android:background="@color/white"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="@dimen/size_80"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="@string/order_buy_type"
+            android:textSize="@dimen/font_size_16" />
+
+
+        <Spinner
+            android:id="@+id/order_buy_type"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:paddingLeft="@dimen/size_15"
+            android:paddingRight="@dimen/size_10"
+            android:textSize="@dimen/font_size_16" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/order_state_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_45"
+        android:layout_marginTop="@dimen/size_1"
+        android:background="@color/white"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="@dimen/size_80"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="@string/order_buy_state"
+            android:textSize="@dimen/font_size_16" />
+
+
+        <Spinner
+            android:id="@+id/order_buy_state"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:paddingLeft="@dimen/size_15"
+            android:paddingRight="@dimen/size_10"
+            android:textSize="@dimen/font_size_16" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_45"
+        android:layout_marginTop="@dimen/size_1"
+        android:background="@color/white"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="@dimen/size_80"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="@string/order_doing_object_text"
+            android:textSize="@dimen/font_size_16" />
+
+
+        <EditText
+            android:id="@+id/order_doing_object_text"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@null"
+            android:hint="@string/order_input_object_name"
+            android:paddingLeft="@dimen/size_15"
+            android:textColorHint="@color/hint_color"
+            android:textSize="@dimen/font_size_16" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/order_time_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_45"
+        android:layout_marginTop="@dimen/size_1"
+        android:background="@color/white"
+        android:gravity="center"
+        android:paddingRight="@dimen/size_10">
+
+        <TextView
+            android:layout_width="@dimen/size_80"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="@string/tv_bills_contract_time_title_text"
+            android:textSize="@dimen/font_size_16" />
+
+        <EditText
+            android:id="@+id/order_time_from"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/size_5"
+            android:layout_weight="1"
+            android:background="@drawable/edittext_contains_border"
+            android:drawableRight="@mipmap/fo_calendar"
+            android:focusable="false"
+            android:gravity="center"
+            android:paddingRight="@dimen/size_10" />
+
+        <ImageView
+            android:layout_width="@dimen/size_15"
+            android:layout_height="@dimen/size_20"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:scaleType="fitXY"
+            android:src="@mipmap/uc_reduce" />
+
+        <EditText
+            android:id="@+id/order_time_to"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/size_5"
+            android:layout_weight="1"
+            android:background="@drawable/edittext_contains_border"
+            android:drawableRight="@mipmap/fo_calendar"
+            android:focusable="false"
+            android:gravity="center"
+            android:paddingRight="@dimen/size_10" />
+
+    </LinearLayout>
+
+    <mehdi.sakout.fancybuttons.FancyButton
+        android:id="@+id/order_search"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_45"
+        android:layout_marginLeft="@dimen/main_margin"
+        android:layout_marginRight="@dimen/main_margin"
+        android:layout_marginTop="@dimen/size_30"
+        android:paddingLeft="@dimen/size_20"
+        android:paddingRight="@dimen/size_20"
+        app:fb_borderColor="@color/title_bg"
+        app:fb_borderWidth="1dp"
+        app:fb_defaultColor="@color/title_bg"
+        app:fb_focusColor="@color/title_bg"
+        app:fb_radius="@dimen/size_5"
+        app:fb_text="@string/True"
+        app:fb_textColor="@color/white"
+        app:fb_textSize="@dimen/btn_size" />
+</LinearLayout>

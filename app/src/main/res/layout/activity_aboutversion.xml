@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_bg">
+
+    <ImageView
+        android:id="@+id/aboutversion_img"
+        android:layout_width="@dimen/size_80"
+        android:layout_height="@dimen/size_80"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/size_130"
+        android:src="@mipmap/android_template" />
+    <TextView
+        android:id="@+id/aboutversion_name"
+        android:layout_width="wrap_content"
+        style="@style/text_style"
+        android:text="@string/apps_name"
+        android:layout_below="@+id/aboutversion_img"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/size_10"
+        android:textSize="@dimen/font_size_16"/>
+    <View
+        android:id="@+id/aboutversion_view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/line_height"
+        android:layout_below="@+id/aboutversion_name"
+        android:background="@color/lineColor"
+        android:layout_marginLeft="@dimen/size_40"
+        android:layout_marginRight="@dimen/size_40"/>
+    <TextView
+        android:id="@+id/aboutversion_msg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/aboutversion_view"
+        android:layout_centerHorizontal="true"
+        style="@style/text_style"
+        android:text="当前版本检测最新：V1.0000000"
+        android:textColor="@color/grey"
+        android:layout_marginTop="@dimen/size_15"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/main_bg"
+        android:layout_below="@+id/aboutversion_msg"/>
+</RelativeLayout>

@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/activity_bg_color"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_75"
+        android:background="@color/white"
+        android:gravity="center_vertical">
+
+        <CheckBox
+            android:id="@+id/shell_ck_buy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/size_10"
+            android:background="@drawable/check_bg"
+            android:button="@null" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/size_10"
+            android:layout_weight="4"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/size_5"
+                android:layout_marginTop="@dimen/size_15">
+
+                <TextView
+                    android:id="@+id/buy_shell_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="散装农场青菜"
+                    android:textSize="@dimen/font_size_16" />
+
+                <TextView
+                    android:id="@+id/view_status_product"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/size_10"
+                    android:background="@color/pink"
+                    android:paddingLeft="@dimen/size_5"
+                    android:paddingRight="@dimen/size_5"
+                    android:text="@string/quotes_status_product"
+                    android:textColor="@color/white" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/size_10">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/quotes_create_price_text"
+                    android:textSize="@dimen/font_size_16" />
+
+                <TextView
+                    android:id="@+id/buy_shell_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/size_10"
+                    android:text="￥2-￥6"
+                    android:textSize="@dimen/font_size_16" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/size_10"
+            android:layout_weight="2">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/quotes_create_number"
+                android:textSize="@dimen/font_size_16" />
+
+            <EditText
+                android:id="@+id/buy_shell_num"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/size_30"
+                android:layout_marginLeft="@dimen/size_5"
+                android:layout_weight="1"
+                android:background="@drawable/edittext_contains_border"
+                android:gravity="center"
+                android:inputType="number"
+                android:text="126"
+                android:textSize="@dimen/font_size_16" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/delete_buy_shell"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/size_10"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:gravity="right"
+            android:text="@string/delete"
+            android:textSize="@dimen/font_size_14" />
+    </LinearLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/buy_shell_item_relative1"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_70"
+        android:layout_marginTop="@dimen/size_1"
+        android:background="@color/white">
+
+        <mehdi.sakout.fancybuttons.FancyButton
+            android:id="@+id/buy_shell_delete"
+            android:layout_width="@dimen/size_100"
+            android:layout_height="@dimen/size_40"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="@dimen/main_margin"
+            android:layout_marginRight="@dimen/size_10"
+            android:layout_marginTop="@dimen/size_15"
+            android:gravity="center"
+            app:fb_borderColor="@color/title_bg"
+            app:fb_borderWidth="1dp"
+            app:fb_defaultColor="@color/white"
+            app:fb_focusColor="@color/title_bg"
+            app:fb_radius="@dimen/size_5"
+            app:fb_text="@string/delete"
+            app:fb_textColor="@color/title_bg"
+            app:fb_textSize="@dimen/btn_size" />
+
+        <mehdi.sakout.fancybuttons.FancyButton
+            android:id="@+id/status_buy_shell_product"
+            android:layout_width="@dimen/size_100"
+            android:layout_height="@dimen/size_40"
+            android:layout_marginLeft="@dimen/main_margin"
+            android:layout_marginTop="@dimen/size_15"
+            android:layout_toLeftOf="@id/buy_shell_delete"
+            android:gravity="center"
+            app:fb_borderColor="@color/title_bg"
+            app:fb_borderWidth="1dp"
+            app:fb_defaultColor="@color/title_bg"
+            app:fb_focusColor="@color/title_bg"
+            app:fb_radius="@dimen/size_5"
+            app:fb_text="@string/quotes_status_product"
+            app:fb_textColor="@color/white"
+            app:fb_textSize="@dimen/btn_size" />
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_10"
+        android:background="@color/activity_bg_color" />
+
+
+</LinearLayout>

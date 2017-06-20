@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_bg"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/user_head"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/size_10"
+        android:background="@mipmap/uc_c_bj">
+
+        <TextView
+            android:id="@+id/user_head_set"
+            android:layout_width="@dimen/size_55"
+            android:layout_height="@dimen/size_55"
+            android:drawablePadding="@dimen/size_3"
+            android:drawableTop="@mipmap/uc_set"
+            android:gravity="center"
+            android:paddingTop="@dimen/size_5"
+            android:clickable="true"
+            android:text="@string/settings"
+            android:textColor="@color/white" />
+
+        <TextView
+            android:id="@+id/user_head_cancel"
+            android:layout_width="@dimen/size_55"
+            android:layout_height="@dimen/size_55"
+            android:layout_alignParentRight="true"
+            android:drawablePadding="@dimen/size_3"
+            android:drawableTop="@mipmap/uc_signout"
+            android:paddingTop="@dimen/size_5"
+            android:gravity="center"
+            android:text="@string/Sign_out"
+            android:clickable="true"
+            android:textColor="@color/white" />
+
+        <com.hj.casps.ui.CircleImage
+            android:id="@+id/user_head_img"
+            android:layout_width="@dimen/size_80"
+            android:layout_height="@dimen/size_80"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/size_65"
+            android:src="@mipmap/uc_hpb"
+            app:border_color="@color/transParent"
+            app:border_width="1dp" />
+
+        <TextView
+            android:id="@+id/user_head_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/user_head_img"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/size_20"
+            android:text="JOKER"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_size_16" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/user_buy_tv"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_80"
+        android:layout_below="@+id/user_head"
+        android:layout_margin="@dimen/main_margin"
+        android:background="@color/white"
+        android:clickable="true"
+        android:drawableLeft="@mipmap/uc_rk1"
+        android:drawableRight="@mipmap/jt1"
+        android:gravity="center_vertical"
+        android:drawablePadding="@dimen/size_65"
+        android:padding="@dimen/size_15"
+        android:text="@string/buy"
+        android:textColor="@color/black"
+        android:textSize="@dimen/font_size_24"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/user_sale_tv"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_80"
+        android:layout_below="@+id/user_buy_tv"
+        android:layout_margin="@dimen/main_margin"
+        android:background="@color/white"
+        android:clickable="true"
+        android:textColor="@color/black"
+        android:drawableLeft="@mipmap/uc_rk2"
+        android:drawableRight="@mipmap/jt1"
+        android:gravity="center_vertical"
+        android:drawablePadding="@dimen/size_65"        android:paddingLeft="@dimen/size_15"
+        android:paddingRight="@dimen/size_15"
+        android:text="@string/sale"
+        android:textSize="@dimen/font_size_24"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/user_btn"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/btn_height"
+        android:layout_alignParentBottom="true"
+        android:background="@color/title_bg"
+        android:text="@string/startuse"
+        android:textColor="@color/white"
+        android:textSize="@dimen/font_size_16" />
+</RelativeLayout>

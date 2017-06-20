@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.hj.casps.cooperate.CooperateContents">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_50"
+        android:background="@drawable/bottom_line_bg_line">
+
+        <TextView
+            android:id="@+id/cooperate_contents_info"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/btn_height"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="@dimen/size_10"
+            android:layout_marginRight="@dimen/main_margin"
+            android:layout_marginTop="@dimen/size_10"
+            android:clickable="true"
+            android:gravity="center"
+            android:text="@string/dodesc"
+            android:textColor="@color/title_bg"
+            android:textSize="@dimen/btn_size" />
+    </RelativeLayout>
+
+    <ListView
+        android:id="@+id/contents_list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:dividerHeight="@dimen/size_1" />
+</LinearLayout>

@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/app_bj">
+
+    <ImageView
+        android:id="@+id/login_img"
+        android:layout_width="@dimen/size_100"
+        android:layout_height="@dimen/size_100"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/size_80"
+        android:src="@mipmap/sign_logo" />
+
+    <TextView
+        android:id="@+id/login_toast"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/login_img"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/size_15"
+        android:background="@drawable/toast_bg"
+        android:padding="@dimen/size_10"
+        android:text="验证码错误"
+        android:textColor="@color/white"
+        android:visibility="gone" />
+
+    <EditText
+        android:id="@+id/login_inputname_Et"
+        style="@style/EditText_pic"
+        android:layout_height="@dimen/input_hignt"
+        android:layout_below="@+id/login_img"
+        android:layout_marginTop="@dimen/size_80"
+        android:background="@color/transParent"
+        android:drawableLeft="@mipmap/sign_user"
+        android:drawablePadding="@dimen/size_10"
+        android:hint="@string/inputusername"
+        android:maxLines="1"
+        android:textColor="@color/white" />
+
+    <ImageView
+        android:id="@+id/login_inputname_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:tint="@color/white"
+        android:layout_alignBottom="@id/login_inputname_Et"
+        android:layout_alignRight="@id/login_inputname_Et"
+        android:layout_alignTop="@id/login_inputname_Et"
+        android:padding="@dimen/size_10"
+        android:scaleType="fitCenter"
+        android:visibility="gone"
+        android:src="@mipmap/jt3" />
+
+    <View
+        android:id="@+id/login_inputname_view01"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/line_height"
+        android:layout_below="@+id/login_inputname_Et"
+        android:layout_marginLeft="@dimen/size_25"
+        android:layout_marginRight="@dimen/size_25"
+        android:background="@color/white" />
+
+    <EditText
+
+        android:id="@+id/login_inputps_Et"
+        style="@style/EditText_pic"
+        android:layout_height="@dimen/input_hignt"
+        android:layout_below="@+id/login_inputname_view01"
+        android:layout_marginTop="@dimen/size_15"
+        android:background="@color/transParent"
+        android:drawableLeft="@mipmap/sign_pw"
+        android:drawablePadding="@dimen/size_10"
+        android:hint="@string/inputpassword"
+        android:maxLines="1"
+        android:inputType="textPassword"
+        android:textColor="@color/white" />
+
+    <View
+        android:id="@+id/login_inputname_view02"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/line_height"
+        android:layout_below="@+id/login_inputps_Et"
+        android:layout_marginLeft="@dimen/size_25"
+        android:layout_marginRight="@dimen/size_25"
+        android:background="@color/white" />
+
+    <RelativeLayout
+        android:visibility="gone"
+        android:id="@+id/login_inputps_verfy_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/login_inputps_Et">
+
+        <EditText
+            android:id="@+id/login_inputps_verfy_Et"
+            style="@style/EditText_pic"
+            android:layout_height="@dimen/input_hignt"
+            android:layout_marginTop="@dimen/size_15"
+            android:background="@color/transParent"
+            android:drawableLeft="@mipmap/sign_pw"
+            android:drawablePadding="@dimen/size_10"
+            android:hint="@string/inputcheckcode"
+            android:maxLines="1"
+            android:inputType="textPassword"
+            android:textColor="@color/white" />
+
+        <TextView
+            android:id="@+id/login_inputps_verfy_Tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/login_inputps_verfy_Et"
+            android:layout_alignRight="@id/login_inputps_verfy_Et"
+            android:layout_alignTop="@id/login_inputps_verfy_Et"
+            android:layout_marginTop="10dp"
+            android:background="@color/white"
+            android:gravity="center"
+            android:padding="@dimen/size_5"
+            android:text="获取验证码" />
+
+        <View
+            android:id="@+id/login_inputname_view03"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/line_height"
+            android:layout_below="@+id/login_inputps_verfy_Et"
+            android:layout_marginLeft="@dimen/size_25"
+            android:layout_marginRight="@dimen/size_25"
+            android:background="@color/white" />
+    </RelativeLayout>
+
+    <mehdi.sakout.fancybuttons.FancyButton
+        android:id="@+id/login_true_Btn"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/btn_height"
+        android:layout_below="@+id/login_inputps_verfy_layout"
+        android:layout_marginLeft="@dimen/size_25"
+        android:layout_marginRight="@dimen/size_25"
+        android:layout_marginTop="@dimen/size_25"
+        app:fb_borderColor="@color/transParent"
+        app:fb_borderWidth="1dp"
+        app:fb_defaultColor="@color/white"
+        app:fb_focusColor="@color/white"
+        app:fb_radius="@dimen/size_5"
+        app:fb_text="@string/login"
+        app:fb_textColor="@color/title_bg"
+        app:fb_textSize="@dimen/btn_size"/>
+</RelativeLayout>

@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_30">
+
+        <ImageView
+            android:id="@+id/quotes_prompt"
+            android:layout_width="@dimen/size_15"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:scaleType="fitCenter"
+            android:src="@mipmap/icon_prompt" />
+
+        <TextView
+            android:id="@+id/quotes_query_no_name"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/size_5"
+            android:layout_toRightOf="@id/quotes_prompt"
+            android:gravity="center"
+            android:text="@string/quotes_no_name"
+            android:textSize="@dimen/font_size_14" />
+
+        <TextView
+            android:id="@+id/quotes_query_no"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/size_5"
+            android:layout_toRightOf="@id/quotes_query_no_name"
+            android:gravity="center"
+            android:text="30162005689720"
+            android:textSize="@dimen/font_size_14" />
+
+        <TextView
+            android:id="@+id/quotes_query_status"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/size_20"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/size_10"
+            android:background="@color/red"
+            android:gravity="center"
+            android:padding="@dimen/size_3"
+            android:text="@string/quotes_status_sp"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_size_10" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_1"
+        android:background="@color/main_bg" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_25"
+        android:layout_marginTop="@dimen/size_10">
+
+        <TextView
+            android:id="@+id/quotes_name"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/size_10"
+            android:gravity="center"
+            android:text="绿源大白菜"
+            android:textSize="@dimen/font_size_16"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/quotes_person"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/size_10"
+            android:gravity="center"
+            android:text="天美商行操作员"
+            android:textSize="@dimen/font_size_10" />
+
+        <TextView
+            android:id="@+id/quotes_person_name"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_toLeftOf="@id/quotes_person"
+            android:gravity="center"
+            android:text="@string/quotes_person_name"
+            android:textSize="@dimen/font_size_10" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_20">
+
+        <TextView
+            android:id="@+id/quotes_query_quantity_name"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/size_10"
+            android:gravity="center"
+            android:text="@string/quotes_quantity_name"
+            android:textSize="@dimen/font_size_14" />
+
+        <TextView
+            android:id="@+id/quotes_query_quantity"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/size_5"
+            android:layout_toRightOf="@id/quotes_query_quantity_name"
+            android:gravity="center"
+            android:text="1000"
+            android:textSize="@dimen/font_size_14" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_20">
+
+        <TextView
+            android:id="@+id/quotes_query_price_name"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/size_10"
+            android:gravity="center"
+            android:text="@string/quotes_price_name_2"
+            android:textSize="@dimen/font_size_14" />
+
+        <TextView
+            android:id="@+id/quotes_query_price"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/size_5"
+            android:layout_toRightOf="@id/quotes_query_price_name"
+            android:gravity="center"
+            android:text="3000-4000"
+            android:textSize="@dimen/font_size_14" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_20">
+
+        <TextView
+            android:id="@+id/quotes_query_period_name"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/size_10"
+            android:gravity="center"
+            android:text="@string/quotes_period_name"
+            android:textSize="@dimen/font_size_14" />
+
+        <TextView
+            android:id="@+id/quotes_query_period"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/size_5"
+            android:layout_toRightOf="@id/quotes_query_period_name"
+            android:gravity="center"
+            android:text="2017-05-01至2017-05-30"
+            android:textSize="@dimen/font_size_14" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_1"
+        android:layout_marginTop="@dimen/size_10"
+        android:background="@color/main_bg" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_60">
+
+        <mehdi.sakout.fancybuttons.FancyButton
+            android:id="@+id/quote_edit_Btn"
+            android:layout_width="@dimen/size_80"
+            android:layout_height="@dimen/size_40"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="@dimen/size_10"
+            android:layout_marginLeft="@dimen/main_margin"
+            android:layout_marginRight="@dimen/size_10"
+            android:layout_marginTop="@dimen/size_15"
+            android:gravity="center"
+            android:paddingLeft="@dimen/size_20"
+            android:paddingRight="@dimen/size_20"
+            app:fb_borderColor="@color/title_bg"
+            app:fb_borderWidth="1dp"
+            app:fb_defaultColor="@color/white"
+            app:fb_focusColor="@color/title_bg"
+            app:fb_radius="@dimen/size_5"
+            app:fb_text="@string/quotes_edit"
+            app:fb_textColor="@color/title_bg"
+            app:fb_textSize="@dimen/btn_size" />
+
+        <mehdi.sakout.fancybuttons.FancyButton
+            android:id="@+id/quote_assign_Btn"
+            android:layout_width="@dimen/size_100"
+            android:layout_height="@dimen/size_40"
+            android:layout_marginBottom="@dimen/size_10"
+            android:layout_marginLeft="@dimen/main_margin"
+            android:layout_marginTop="@dimen/size_15"
+            android:layout_toLeftOf="@id/quote_edit_Btn"
+            android:gravity="center"
+            app:fb_borderColor="@color/title_bg"
+            app:fb_borderWidth="1dp"
+            app:fb_defaultColor="@color/title_bg"
+            app:fb_focusColor="@color/title_bg"
+            app:fb_radius="@dimen/size_5"
+            app:fb_text="@string/quotes_assign"
+            app:fb_textColor="@color/white"
+            app:fb_textSize="@dimen/font_size_12" />
+    </RelativeLayout>
+</LinearLayout>

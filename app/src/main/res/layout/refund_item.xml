@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:descendantFocusability="beforeDescendants"
+    android:orientation="vertical">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_5"
+        android:background="@color/view_bg" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_45"
+        android:layout_marginLeft="@dimen/size_10"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <CheckBox
+            android:id="@+id/ck_refund_bills"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/check_bg"
+            android:button="@null"
+            android:focusable="false" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/size_5"
+            android:text="@string/tv_bills_id_title"
+            android:textColor="@color/bills_title_tv_color" />
+
+        <TextView
+            android:id="@+id/tv_refund_bills_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="12365482855885"
+            android:textColor="@color/bills_id_tv_color" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_1"
+        android:background="@color/view_bg" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/size_10"
+        android:layout_marginTop="@dimen/size_10"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/size_5"
+            android:layout_marginLeft="@dimen/size_10"
+            android:layout_marginTop="@dimen/size_5"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_refund_title_one"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="土鸡"
+                android:textColor="@color/bills_title_tv_color"
+                android:textSize="@dimen/font_size_18" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_5"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/head_refund_payment_buy_name"
+                    android:textColor="@color/bills_tv_color" />
+
+                <TextView
+                    android:id="@+id/tv_refund_payee_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/bills_tv_color" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_5"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/head_refund_money_title"
+                    android:textColor="@color/bills_tv_color" />
+
+                <TextView
+                    android:id="@+id/tv_refund_money_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/bills_tv_color" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="@dimen/size_10"
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tv_now_money_title"
+                    android:textColor="@color/bills_tv_color" />
+
+                <EditText
+                    android:inputType="numberDecimal"
+                    android:id="@+id/ed_refund_money_content"
+                    android:layout_width="@dimen/size_90"
+                    android:layout_height="@dimen/size_30"
+                    android:background="@drawable/input_money_bg"
+                    android:gravity="center" />
+            </LinearLayout>
+        </RelativeLayout>
+    </LinearLayout>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_1"
+        android:layout_marginBottom="@dimen/size_5"
+        android:layout_marginTop="@dimen/size_5"
+        android:background="@color/view_bg" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_40"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/size_10"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/tv_payment_id_title"
+                android:textColor="@color/bills_tv_color" />
+
+            <TextView
+                android:id="@+id/ed_payment_card_id_content"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="sdfsd"
+                android:textColor="@color/bills_ed_color" />
+
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="@dimen/size_15"
+            android:src="@mipmap/jt3" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_1"
+        android:layout_marginBottom="@dimen/size_5"
+        android:layout_marginTop="@dimen/size_5"
+        android:background="@color/view_bg" />
+
+    <EditText
+        android:id="@+id/ed_refund_remark_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:gravity="top"
+        android:hint="@string/ed_hint_title"
+        android:minLines="3"
+        android:paddingLeft="@dimen/size_10"
+        android:paddingRight="@dimen/size_10"
+        android:textColor="@color/black"
+        android:textSize="@dimen/font_size_16" />
+</LinearLayout>

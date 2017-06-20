@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_bg"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_55"
+        android:id="@+id/rtl"
+        android:background="@color/white">
+
+        <RadioGroup
+            android:id="@+id/selectpic01_rg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/selectpic01_temporary_rb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/selectpic_title_left_bg"
+                android:button="@null"
+                android:checked="true"
+                android:gravity="center"
+                android:minWidth="100dp"
+                android:maxWidth="130dp"
+                android:padding="@dimen/size_10"
+                android:text="@string/temporary_pic"
+                android:textColor="@color/select_pic_title_color" />
+            <RadioButton
+                android:id="@+id/selectpic01_platform_rb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/selectpic_title_center_bg"
+                android:button="@null"
+                android:checked="false"
+                android:gravity="center"
+                android:maxWidth="130dp"
+                android:minWidth="100dp"
+                android:padding="@dimen/size_10"
+                android:paddingTop="@dimen/size_10"
+                android:text="@string/platform_pic"
+                android:textColor="@color/select_pic_title_color" />
+            <RadioButton
+                android:id="@+id/selectpic01_my_rb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/selectpic_title_right_bg"
+                android:button="@null"
+                android:checked="false"
+                android:maxWidth="130dp"
+                android:minWidth="100dp"
+                android:gravity="center"
+                android:padding="@dimen/size_10"
+                android:paddingTop="@dimen/size_10"
+                android:text="@string/my_pic"
+                android:textColor="@color/select_pic_title_color" />
+
+        </RadioGroup>
+    </RelativeLayout>
+
+    <com.hj.casps.ui.NoScrollViewPager
+        android:id="@+id/selectpic01_vp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></com.hj.casps.ui.NoScrollViewPager>
+</LinearLayout>

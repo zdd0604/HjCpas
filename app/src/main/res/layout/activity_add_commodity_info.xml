@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_35"
+        android:background="@color/view_bg"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/size_15"
+        android:text="订单清单"
+        android:textColor="@color/black" />
+
+    <ListView
+        android:id="@+id/add_commodity_info"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <include
+        layout="@layout/layout_bottom_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</LinearLayout>

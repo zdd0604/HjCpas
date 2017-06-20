@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_5"
+        android:background="@color/view_bg" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <include
+            layout="@layout/layout_order_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_1"
+            android:background="@color/view_bg" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_30"
+            android:background="@color/white"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/size_15"
+                android:gravity="center"
+                android:text="@string/hint_tv_section_bills_opposite_title"
+                android:textColor="@color/tv_delete_color" />
+
+            <TextView
+                android:id="@+id/layout_check_tv_content_1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@null"
+                android:gravity="center_vertical"
+                android:textColor="@color/tv_delete_color" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_30"
+            android:background="@color/white"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/size_15"
+                android:gravity="center"
+                android:text="@string/hint_wait_layout_title_1"
+                android:textColor="@color/tv_delete_color" />
+
+            <TextView
+                android:id="@+id/layout_check_tv_content_2"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@null"
+                android:gravity="center_vertical"
+                android:textColor="@color/tv_delete_color" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_30"
+            android:background="@color/white"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/size_15"
+                android:gravity="center"
+                android:text="@string/hint_tv_section_bills_my_propose_time_title"
+                android:textColor="@color/tv_delete_color" />
+
+            <EditText
+                android:id="@+id/layout_check_ed_content_3"
+                android:layout_width="@dimen/size_150"
+                android:layout_height="match_parent"
+                android:background="@drawable/input_money_bg"
+                android:focusable="false"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/size_10"
+                android:textColor="@color/tv_delete_color" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_30"
+            android:background="@color/white"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/size_15"
+                android:gravity="center"
+                android:text="@string/hint_tv_section_bills_bills_money_title"
+                android:textColor="@color/tv_delete_color" />
+
+            <TextView
+                android:id="@+id/layout_check_tv_content_4"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@null"
+                android:gravity="center_vertical"
+                android:textColor="@color/tv_delete_color" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_30"
+            android:background="@color/white"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/size_15"
+                android:gravity="center"
+                android:text="@string/hint_wait_layout_title_2"
+                android:textColor="@color/tv_delete_color" />
+
+            <TextView
+                android:id="@+id/layout_check_tv_content_5"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@null"
+                android:gravity="center_vertical"
+                android:textColor="@color/tv_delete_color" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_30"
+            android:layout_marginBottom="@dimen/size_10"
+            android:background="@color/white"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/size_15"
+                android:gravity="center"
+                android:text="@string/hint_tv_section_bills_my_propose_moey_title"
+                android:textColor="@color/tv_delete_color" />
+
+            <EditText
+                android:id="@+id/layout_check_ed_content_6"
+                android:layout_width="@dimen/size_150"
+                android:layout_height="match_parent"
+                android:background="@drawable/input_money_bg"
+                android:gravity="center_vertical"
+                android:inputType="numberDecimal"
+                android:paddingLeft="@dimen/size_10"
+                android:textColor="@color/tv_delete_color" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
