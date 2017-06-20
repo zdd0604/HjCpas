@@ -1,20 +1,23 @@
 package com.hj.casps.util;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.widget.Toast;
 
+import com.hj.casps.app.HejiaApp;
 import com.hj.casps.common.Constant;
+import com.hj.casps.cooperate.DaoSession;
 import com.hj.casps.entity.PublicArg;
 import com.hj.casps.http.LoginBean;
 import com.hj.casps.user.ActivityLogin;
 import com.hj.casps.user.LoginJsonCallBack;
 import com.hj.casps.user.UserBean;
+import com.hj.casps.user.UserBeanDao;
 import com.hj.casps.user.UserBeanUtils;
 import com.lzy.okgo.OkGo;
-
 import okhttp3.Call;
 import okhttp3.Response;
 
@@ -108,4 +111,21 @@ public class LogoutUtils {
                     }
                 });
     }
+
+    public static void jumpLogin(){
+        Context context = HejiaApp.getContext();
+        DaoSession daoSession = HejiaApp.daoSession;
+        if(daoSession!=null){
+            UserBeanDao userBeanDao = daoSession.getUserBeanDao();
+            UserBean userBean = userBeanDao.queryBuilder()
+                    .where(UserBeanDao.Properties.TokenIsActive.eq(true))
+                    .build().unique();
+            userBean.setTokenIsActive(false);
+            userBeanDao.update(userBean);
+            Intent intent = new Intent();
+            intent.setAction("com.hj.casps.user.ActivityLogin");
+            context.startActivity(intent);
+        }
+    }
+
 }
