@@ -17,6 +17,7 @@ import com.hj.casps.common.Constant;
 import com.hj.casps.entity.PublicArg;
 import com.hj.casps.entity.appUser.ReturnMessageRespon;
 import com.hj.casps.entity.appordergoods.CreateMmbWarehouseLoading;
+import com.hj.casps.entity.appordergoods.GetTreeModalEntity;
 import com.hj.casps.entity.appordergoods.GetTreeModalRespon;
 import com.hj.casps.entity.appordergoods.ToEditMmbWarehouseLoading;
 import com.hj.casps.entity.appordergoods.WarehouseEntity;
@@ -641,9 +642,16 @@ public class EditCardActivity extends ActivityBaseHeader2 implements View.OnClic
      */
     private void getAddress() {
         waitDialogRectangle.show();
+        GetTreeModalEntity getTreeModalEntity = new GetTreeModalEntity(
+                publicArg.getSys_token(),
+                Constant.getUUID(),
+                Constant.SYS_FUNC101100510001,
+                publicArg.getSys_user(),
+                publicArg.getSys_member()
+        );
         OkGo.post(Constant.GetTreeModalUrl)
                 .tag(this)
-                .params("param", mGson.toJson(publicArg))
+                .params("param", mGson.toJson(getTreeModalEntity))
                 .execute(new JsonCallBack<GetTreeModalRespon<List<AreaTreeBean>>>() {
                     @Override
                     public void onSuccess(GetTreeModalRespon<List<AreaTreeBean>> listGetTreeModalRespon,

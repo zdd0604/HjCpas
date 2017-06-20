@@ -14,7 +14,14 @@ public class NoteEntity implements Serializable{
     /**
      * categoryId : 1002
      * categoryName : 副食品
-     * nodes : [{"categoryId":"1002005","categoryName":"水产","nodes":[{"categoryId":"1002005003","categoryName":"水产干品","nodes":[]},{"categoryId":"1002005001","categoryName":"水产鲜品","nodes":[]},{"categoryId":"1002005002","categoryName":"水产冻品","nodes":[]}]},{"categoryId":"1002004","categoryName":"禽类","nodes":[{"categoryId":"1002004001","categoryName":"禽类鲜品","nodes":[]}]},{"categoryId":"1002003","categoryName":"畜类","nodes":[{"categoryId":"1002003002","categoryName":"畜类冻品","nodes":[]},{"categoryId":"1002003001","categoryName":"畜类鲜品","nodes":[]}]},{"categoryId":"1002001","categoryName":"蔬菜","nodes":[{"categoryId":"1002001001","categoryName":"叶花类菜","nodes":[]},{"categoryId":"1002001003","categoryName":"根茎类菜","nodes":[]}]},{"categoryId":"1002002","categoryName":"果品","nodes":[{"categoryId":"1002002001","categoryName":"鲜果","nodes":[]}]}]
+     * nodes : [{"categoryId":"1002005","categoryName":"水产",
+     * "nodes":[
+     * {"categoryId":"1002005003","categoryName":"水产干品","nodes":[]},
+     * {"categoryId":"1002005001","categoryName":"水产鲜品","nodes":[]},
+     * {"categoryId":"1002005002","categoryName":"水产冻品","nodes":[]}]},
+     * {"categoryId":"1002004","categoryName":"禽类","nodes":[{"categoryId":"1002004001","categoryName":"禽类鲜品","nodes":[]}]},、{"categoryId":"1002003","categoryName":"畜类",
+     * "nodes":[{"categoryId":"1002003002","categoryName":"畜类冻品","nodes":[]},{"categoryId":"1002003001","categoryName":"畜类鲜品","nodes":[]}]},
+     * {"categoryId":"1002001","categoryName":"蔬菜","nodes":[{"categoryId":"1002001001","categoryName":"叶花类菜","nodes":[]},{"categoryId":"1002001003","categoryName":"根茎类菜","nodes":[]}]},{"categoryId":"1002002","categoryName":"果品","nodes":[{"categoryId":"1002002001","categoryName":"鲜果","nodes":[]}]}]
      */
 
     private String categoryId;
