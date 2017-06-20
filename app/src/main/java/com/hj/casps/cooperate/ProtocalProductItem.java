@@ -255,19 +255,21 @@ public class ProtocalProductItem extends ActivityBaseHeader2 implements View.OnC
     //三级菜单加载
     private ArrayList<ProtocalProductItem.GoodLevelEntity> generateData1() {
         ArrayList<ProtocalProductItem.GoodLevelEntity> res = new ArrayList<>();
-//        if(entityList!=null&&entityList.size()>0)
-        for (int i = 0; i < categoryList.size(); i++) {
-            ProtocalProductItem.GoodLevelEntity lv0 = new ProtocalProductItem.GoodLevelEntity(categoryList.get(i).getCategoryName(), categoryList.get(i).getCategoryId());
-            for (int j = 0; j < categoryList.get(i).getNodes().size(); j++) {
-                ProtocalProductItem.GoodLevelEntity lv1 = new ProtocalProductItem.GoodLevelEntity(categoryList.get(i).getNodes().get(j).getCategoryName(), categoryList.get(i).getNodes().get(j).getCategoryId());
-                for (int x = 0; x < categoryList.get(i).getNodes().get(j).getNodes().size(); x++) {
-                    ProtocalProductItem.GoodLevelEntity lv2 = new ProtocalProductItem.GoodLevelEntity(categoryList.get(i).getNodes().get(j).getNodes().get(x).getCategoryName(), categoryList.get(i).getNodes().get(j).getNodes().get(x).getCategoryId());
-                    lv1.addSubItem(lv2);
+        if (categoryList != null && categoryList.size() > 0)
+            for (int i = 0; i < categoryList.size(); i++) {
+                ProtocalProductItem.GoodLevelEntity lv0 = new ProtocalProductItem.
+                        GoodLevelEntity(categoryList.get(i).getCategoryName(),
+                        categoryList.get(i).getCategoryId());
+                for (int j = 0; j < categoryList.get(i).getNodes().size(); j++) {
+                    ProtocalProductItem.GoodLevelEntity lv1 = new ProtocalProductItem.GoodLevelEntity(categoryList.get(i).getNodes().get(j).getCategoryName(), categoryList.get(i).getNodes().get(j).getCategoryId());
+                    for (int x = 0; x < categoryList.get(i).getNodes().get(j).getNodes().size(); x++) {
+                        ProtocalProductItem.GoodLevelEntity lv2 = new ProtocalProductItem.GoodLevelEntity(categoryList.get(i).getNodes().get(j).getNodes().get(x).getCategoryName(), categoryList.get(i).getNodes().get(j).getNodes().get(x).getCategoryId());
+                        lv1.addSubItem(lv2);
+                    }
+                    lv0.addSubItem(lv1);
                 }
-                lv0.addSubItem(lv1);
+                res.add(lv0);
             }
-            res.add(lv0);
-        }
         return res;
     }
 

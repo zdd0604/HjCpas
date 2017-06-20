@@ -164,7 +164,7 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
                             order_detail_process.setSelection(appOrderCheckOrderOrdertitle.workflowTypeId - 1);
                             order_detail_time_start.setText(Constant.stmpToDate(appOrderCheckOrderOrdertitle.executeStartTime));
                             order_detail_time_end.setText(Constant.stmpToDate(appOrderCheckOrderOrdertitle.executeEndTime));
-                            order_detail_product_pay.setText(appOrderCheckOrderOrdertitle.totalMoney+"");
+                            order_detail_product_pay.setText(appOrderCheckOrderOrdertitle.totalMoney + "");
                             buy_id = appOrderCheckOrderOrdertitle.buyersId;
                             if (state == 2) {
                                 if (buy_id.equalsIgnoreCase(publicArg.getSys_member())) {
@@ -424,10 +424,10 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
                             end, start, "", "",
 //                            mList.get(order_detail_pay_account.getSelectedItemPosition()).getAccountno(),
 //                            mList.get(order_detail_pay_account.getSelectedItemPosition()).getBankname(),
-                            StringUtils.isStrTrue(mList.get(order_detail_pay_account.getSelectedItemPosition()).getAccountno())
+                            mList.get(order_detail_pay_account.getSelectedItemPosition()).getAccountno() == null
                                     ? "" : mList.get(order_detail_pay_account.getSelectedItemPosition()).getAccountno(),
 
-                            StringUtils.isStrTrue(mList.get(order_detail_pay_account.getSelectedItemPosition()).getBankname())
+                            mList.get(order_detail_pay_account.getSelectedItemPosition()).getBankname() == null
                                     ? "" : mList.get(order_detail_pay_account.getSelectedItemPosition()).getBankname(),
                             pay, "", "",
                             buy_id, buy_name, String.valueOf(allPrice),
