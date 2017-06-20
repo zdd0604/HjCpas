@@ -263,7 +263,7 @@ public class ProtocalProductItem extends ActivityBaseHeader2 implements View.OnC
             ProtocalProductItem.GoodLevelEntity lv0 = new ProtocalProductItem.GoodLevelEntity(categoryList.get(i).getCategoryName(), categoryList.get(i).getCategoryId());
             if (categoryList.get(i).getNodes() != null && categoryList.get(i).getNodes().size() > 0)
                 for (int j = 0; j < categoryList.get(i).getNodes().size(); j++) {
-                    if (categoryList.get(i).getNodes().get(j).getNodes() != null && categoryList.get(i).getNodes().get(j).getNodes().size() > 0) {
+                    if (categoryList.get(i).getNodes().get(j)!= null) {
                         ProtocalProductItem.GoodLevelEntity lv1 = new ProtocalProductItem.GoodLevelEntity(categoryList.get(i).getNodes().get(j).getCategoryName(), categoryList.get(i).getNodes().get(j).getCategoryId());
                         for (int x = 0; x < categoryList.get(i).getNodes().get(j).getNodes().size(); x++) {
                             if (categoryList.get(i).getNodes().get(j).getNodes().get(x).getNodes() != null && categoryList.get(i).getNodes().get(j).getNodes().get(x).getNodes().size() > 0) {

@@ -594,7 +594,6 @@ public class PeoplePicture extends ActivityBaseHeader2 implements OnPullListener
                         if (pub.getReturn_code() == 0) {
                             new MyToast(PeoplePicture.this, "上传图片成功");
                             //刷新图片列表
-                            initData(pageno);
                         } else {
                             toast(pub.getReturn_message());
                         }
