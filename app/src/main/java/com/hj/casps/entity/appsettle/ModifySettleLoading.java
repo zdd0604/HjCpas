@@ -34,7 +34,7 @@ public class ModifySettleLoading implements Serializable {
         private static final long serialVersionUID = -3549582358148625666L;
 
         private String id;//string	结款单id
-        private String settleCode;//int		结款单号
+        private String ordertitleCode;//int		结款单号
         private String myTime;//datetime		我的提议时间
         private String myMoney;//double	我的提议金额
 
@@ -43,9 +43,19 @@ public class ModifySettleLoading implements Serializable {
 
         public ModifySettleEntity(String id, String settleCode, String myTime, String myMoney) {
             this.id = id;
-            this.settleCode = settleCode;
+            this.ordertitleCode = settleCode;
             this.myTime = myTime;
             this.myMoney = myMoney;
+        }
+
+        @Override
+        public String toString() {
+            return "ModifySettleEntity{" +
+                    "id='" + id + '\'' +
+                    ", settleCode='" + ordertitleCode + '\'' +
+                    ", myTime='" + myTime + '\'' +
+                    ", myMoney='" + myMoney + '\'' +
+                    '}';
         }
     }
 }

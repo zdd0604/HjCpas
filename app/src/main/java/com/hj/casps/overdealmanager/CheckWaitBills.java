@@ -88,6 +88,11 @@ public class CheckWaitBills extends ActivityBaseHeader implements View.OnClickLi
                 case Constant.HANDLERTYPE_1:
                     saveData();
                     break;
+                case Constant.HANDLERTYPE_2:
+                    pageNo = 0;
+                    if (hasInternetConnected())
+                        getQueryMmbBankAccountGainDatas(pageNo);
+                    break;
             }
         }
     };
@@ -201,10 +206,11 @@ public class CheckWaitBills extends ActivityBaseHeader implements View.OnClickLi
                 commitEdit();
                 break;
             case R.id.layout_bottom_tv_3:
-                //编辑提交
+                //待审批结款单-同意
                 commitAgreeSettle(getString(R.string.dialog_wait_layout_title_5), Constant.AgreeSettleUrl);
                 break;
             case R.id.layout_bottom_tv_4:
+                //待审批结款单-拒绝
                 commitAgreeSettle(getString(R.string.dialog_wait_layout_title_4), Constant.RefuseSettleUrl);
                 break;
         }
@@ -283,6 +289,7 @@ public class CheckWaitBills extends ActivityBaseHeader implements View.OnClickLi
             toastSHORT("请选择数据");
             return;
         }
+        LogShow("=============" + modifySettleList.toString());
         commitModifySettle();
     }
 
@@ -309,7 +316,8 @@ public class CheckWaitBills extends ActivityBaseHeader implements View.OnClickLi
                 .execute(new JsonCallBack<QueryPendingSttleRespon<List<QueryPendingSttleGain>>>() {
 
                     @Override
-                    public void onSuccess(QueryPendingSttleRespon<List<QueryPendingSttleGain>> listQueryOppositeListRespon, Call call, Response response) {
+                    public void onSuccess(QueryPendingSttleRespon<List<QueryPendingSttleGain>>
+                                                  listQueryOppositeListRespon, Call call, Response response) {
                         if (listQueryOppositeListRespon.list != null) {
                             total = listQueryOppositeListRespon.total;
                             mList = listQueryOppositeListRespon.list;
@@ -345,10 +353,10 @@ public class CheckWaitBills extends ActivityBaseHeader implements View.OnClickLi
                 .tag(this)
                 .params("param", mGson.toJson(param))
                 .execute(new JsonCallBack<ReturnMessageRespon<Void>>() {
-
                     @Override
                     public void onSuccess(ReturnMessageRespon<Void> voidReturnMessageRespon, Call call, Response response) {
                         toastSHORT(voidReturnMessageRespon.return_message);
+                        mHandler.sendEmptyMessage(Constant.HANDLERTYPE_2);
                         waitDialogRectangle.dismiss();
                     }
 
@@ -384,6 +392,7 @@ public class CheckWaitBills extends ActivityBaseHeader implements View.OnClickLi
                     @Override
                     public void onSuccess(ReturnMessageRespon<Void> voidReturnMessageRespon, Call call, Response response) {
                         toastSHORT(voidReturnMessageRespon.return_message);
+                        mHandler.sendEmptyMessage(Constant.HANDLERTYPE_2);
                         waitDialogRectangle.dismiss();
                     }
 

@@ -275,7 +275,13 @@ public class CooperateRequest extends ActivityBaseHeader implements View.OnClick
         //提交审核结果
         private void postVerify(boolean agree, String relationship_id) {
 //            String url = HTTPURL + "appMemberRelationship/verifyMmbRelationship.app";
-            QueryMMBConcerns queryMMBConcerns = new QueryMMBConcerns(publicArg.getSys_token(), "", SYS_FUNC101100310003, publicArg.getSys_user(), publicArg.getSys_member(), relationship_id, agree ? "0" : "1");
+            QueryMMBConcerns queryMMBConcerns = new QueryMMBConcerns(
+                    publicArg.getSys_token(),
+                    Constant.getUUID(),
+                    SYS_FUNC101100310003,
+                    publicArg.getSys_user(),
+                    publicArg.getSys_member(),
+                    relationship_id, agree ? "0" : "1");
             String s = mGson.toJson(queryMMBConcerns);
             s = s.replace("pageno", "relationship_id");
             s = s.replace("pagesize", "type");

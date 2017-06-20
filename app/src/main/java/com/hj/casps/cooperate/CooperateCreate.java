@@ -176,7 +176,7 @@ public class CooperateCreate extends ActivityBaseHeader2 implements View.OnClick
         CreateData data = new CreateData(
                 publicArg.getSys_token(),
                 getUUID(),
-                Constant.SYS_FUNC10110035,
+                Constant.SYS_FUNC101100310001,
                 publicArg.getSys_user(),
                 publicArg.getSys_member(),
                 contract_id,
@@ -316,7 +316,7 @@ public class CooperateCreate extends ActivityBaseHeader2 implements View.OnClick
         CreateData data = new CreateData(
                 Constant.publicArg.getSys_token(),
                 getUUID(),
-                Constant.SYS_FUNC10110035,
+                Constant.SYS_FUNC10110031,
                 Constant.publicArg.getSys_user(),
                 Constant.publicArg.getSys_member(),
                 relation_member,
@@ -568,12 +568,13 @@ public class CooperateCreate extends ActivityBaseHeader2 implements View.OnClick
         waitDialogRectangle.setText("正在提交");
         CreateData data = null;
         switch (type) {
+            //创建合作协议
             case 0:
                 if (buy_type) {
                     data = new CreateData(
                             Constant.publicArg.getSys_token(),
                             getUUID(),
-                            Constant.SYS_FUNC10110035,
+                            Constant.SYS_FUNC101100310001,
                             Constant.publicArg.getSys_user(),
                             Constant.publicArg.getSys_member(),
                             goods,
@@ -589,7 +590,7 @@ public class CooperateCreate extends ActivityBaseHeader2 implements View.OnClick
                     data = new CreateData(
                             Constant.publicArg.getSys_token(),
                             getUUID(),
-                            Constant.SYS_FUNC10110035,
+                            Constant.SYS_FUNC101100310001,
                             Constant.publicArg.getSys_user(),
                             Constant.publicArg.getSys_member(),
                             goods,
@@ -610,12 +611,13 @@ public class CooperateCreate extends ActivityBaseHeader2 implements View.OnClick
                 }
                 gotoNet(Constant.CreatCTRUrl, data);
                 break;
+            //编辑协议
             case 1:
                 if (buy_type) {
                     data = new CreateData(
                             Constant.publicArg.getSys_token(),
                             getUUID(),
-                            Constant.SYS_FUNC10110035,
+                            Constant.SYS_FUNC101100310004,
                             Constant.publicArg.getSys_user(),
                             Constant.publicArg.getSys_member(),
                             contract_id,
@@ -637,7 +639,7 @@ public class CooperateCreate extends ActivityBaseHeader2 implements View.OnClick
                 } else {
                     data = new CreateData(Constant.publicArg.getSys_token(),
                             getUUID(),
-                            Constant.SYS_FUNC10110035,
+                            Constant.SYS_FUNC101100310004,
                             Constant.publicArg.getSys_user(),
                             Constant.publicArg.getSys_member(),
                             contract_id,
@@ -658,6 +660,7 @@ public class CooperateCreate extends ActivityBaseHeader2 implements View.OnClick
                 }
                 gotoNet(Constant.updateCTRUrl, data);
                 break;
+            //下订单
             case 2:
                 gotoOrder();
                 break;

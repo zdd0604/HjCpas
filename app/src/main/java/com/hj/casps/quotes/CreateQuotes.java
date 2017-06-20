@@ -23,6 +23,7 @@ import com.hj.casps.commodity.ActivityManageGoods;
 import com.hj.casps.commodity.ImageData;
 import com.hj.casps.commodity.SelectPicture_new;
 import com.hj.casps.common.Constant;
+import com.hj.casps.entity.appQuote.EditQuoteEntity;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 
@@ -38,6 +39,7 @@ import okhttp3.Response;
 import static com.hj.casps.common.Constant.HTTPURLIMAGE;
 import static com.hj.casps.common.Constant.SHORTHTTPURL;
 import static com.hj.casps.common.Constant.getUUID;
+import static com.hj.casps.common.Constant.publicArg;
 import static com.hj.casps.common.Constant.stmpToDate;
 
 //新建或者编辑报价管理
@@ -114,16 +116,37 @@ public class CreateQuotes extends ActivityBaseHeader2 implements View.OnClickLis
         } else {
             newOne = false;
             setTitle(getString(R.string.quotes_edit_t));
-
-//            url = HTTPURL + QUOTE_URL;
-            OkGo.post(Constant.EditQuoteUrl).params("param",
-                    "{\"quoteId\":\"" + id + "\"}").
+//            this.sys_token = sys_token;
+//            this.sys_uuid = sys_uuid;
+//            this.sys_func = sys_func;
+//            this.sys_user = sys_user;
+//            this.sys_member = sys_member;
+//            this.quoteId = quoteId;
+            EditQuoteEntity editQuoteEntity = new EditQuoteEntity(
+                    publicArg.getSys_token(),
+                    Constant.getUUID(),
+                    Constant.SYS_FUNC10110028,
+                    publicArg.getSys_user(),
+                    publicArg.getSys_member(),
+                    id
+            );
+            OkGo.post(Constant.EditQuoteUrl)
+                    .params("param",mGson.toJson(editQuoteEntity)).
                     execute(new StringCallback() {
                         @Override
                         public void onSuccess(String s, Call call, Response response) {
                             initGson(s);
                         }
                     });
+//            url = HTTPURL + QUOTE_URL;
+//            OkGo.post(Constant.EditQuoteUrl)
+//                    .params("param","{\"quoteId\":\"" + id + "\"}").
+//                    execute(new StringCallback() {
+//                        @Override
+//                        public void onSuccess(String s, Call call, Response response) {
+//                            initGson(s);
+//                        }
+//                    });
         }
 
     }
