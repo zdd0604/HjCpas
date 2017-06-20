@@ -30,7 +30,7 @@ public class OrderShellDetailAdapter extends WZYBaseAdapter<OrderShellModel> {
     }
 
     @Override
-    public void bindData(ViewHolder holder, final OrderShellModel orderShellModel, final int indexPos) {
+    public void bindData(final ViewHolder holder, final OrderShellModel orderShellModel, final int indexPos) {
 
         final TextView order_item_detail_name = (TextView) holder.getView(R.id.order_item_detail_name);
         order_item_detail_name.setText(orderShellModel.getName());
@@ -103,12 +103,14 @@ public class OrderShellDetailAdapter extends WZYBaseAdapter<OrderShellModel> {
                 if (!hasFocus) {
                     try {
                         orderShellModel.setNum(Integer.parseInt(order_detail_item_number.getText().toString()));
-                        item_detail_order_price.setText(String.valueOf(Double.parseDouble(orderShellModel.getFinalprice()) * orderShellModel.getNum()));
+                        item_detail_order_price.setText(
+                                String.valueOf(Double.parseDouble(orderShellModel.getFinalprice())
+                                        * orderShellModel.getNum()));
                         OrderDetail.orderDetail.refreshAllPrice();
+                        //让输入框失去焦点随便那个空间获取焦点都可以
+                        holder.getView(R.id.order_detail_item_size).requestFocusFromTouch();
                     } catch (Exception e) {
                     }
-                    //让输入框失去焦点随便那个空间获取焦点都可以
-                    order_item_detail_name.requestFocusFromTouch();
                 }
             }
         });

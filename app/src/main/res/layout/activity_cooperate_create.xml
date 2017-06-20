@@ -151,7 +151,7 @@
                 app:fb_defaultColor="@color/white"
                 app:fb_focusColor="@color/title_bg"
                 app:fb_radius="@dimen/size_5"
-                app:fb_text="@string/cooperate_products_choose_type"
+                app:fb_text="@string/cooperate_products_choose_type1"
                 app:fb_textColor="@color/title_bg"
                 app:fb_textSize="@dimen/btn_size" />
         </RelativeLayout>

@@ -498,7 +498,8 @@
     <string name="cooperate_handler_role">操作人：</string>
     <string name="cooperate_handler_role_text">操作人</string>
     <string name="cooperate_products_list">已选商品列表</string>
-    <string name="cooperate_products_choose_type">选择商品</string>
+    <string name="cooperate_products_choose_type1">选择商品品类</string>
+    <string name="cooperate_products_choose_type2">选择商品</string>
     <string name="cooperate_protocol_object">协议对方</string>
     <string name="cooperate_protocol_time">操作时间</string>
     <string name="cooperate_protocol_time_text">操作时间：</string>

@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/activity_bg_color"
@@ -41,7 +39,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/edittext_contains_border"
                     android:drawableRight="@mipmap/fo_calendar"
-                    android:editable="false"
+                    android:focusable="false"
                     android:gravity="center"
                     android:paddingRight="@dimen/size_10" />
             </LinearLayout>
@@ -256,11 +254,10 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:orientation="vertical"
-            android:paddingLeft="@dimen/size_10">
+            android:orientation="vertical">
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1">
 
@@ -268,6 +265,7 @@
                     android:id="@+id/order_detail_num"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/size_10"
                     android:text="2"
                     android:textColor="@color/red"
                     android:textSize="@dimen/font_size_14" />
@@ -281,20 +279,22 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/size_10"
                     android:text="@string/order_detail_product_pay"
                     android:textSize="@dimen/font_size_14" />
 
                 <TextView
                     android:id="@+id/order_detail_product_pay"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:text="0.00元"
                     android:textColor="@color/red"
                     android:textSize="@dimen/font_size_14" />

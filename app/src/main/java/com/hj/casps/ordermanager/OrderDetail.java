@@ -34,6 +34,7 @@ import com.hj.casps.entity.paymentmanager.RequestBackAccount;
 import com.hj.casps.entity.protocalproductentity.CreateOrder;
 import com.hj.casps.entity.protocalproductentity.OrderBack;
 import com.hj.casps.ui.MyListView;
+import com.hj.casps.util.StringUtils;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.exception.OkGoException;
@@ -163,7 +164,7 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
                             order_detail_process.setSelection(appOrderCheckOrderOrdertitle.workflowTypeId - 1);
                             order_detail_time_start.setText(Constant.stmpToDate(appOrderCheckOrderOrdertitle.executeStartTime));
                             order_detail_time_end.setText(Constant.stmpToDate(appOrderCheckOrderOrdertitle.executeEndTime));
-                            order_detail_product_pay.setText(String.valueOf(appOrderCheckOrderOrdertitle.totalMoney));
+                            order_detail_product_pay.setText(appOrderCheckOrderOrdertitle.totalMoney+"");
                             buy_id = appOrderCheckOrderOrdertitle.buyersId;
                             if (state == 2) {
                                 if (buy_id.equalsIgnoreCase(publicArg.getSys_member())) {
@@ -287,7 +288,7 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
         for (OrderShellModel order : orders) {
             allPrice += Double.parseDouble(order.getAllprice());
         }
-        order_detail_product_pay.setText(String.valueOf(allPrice));
+        order_detail_product_pay.setText(allPrice + "");
     }
 
     //已经订单
@@ -336,16 +337,16 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
                     buy_id, buy_name, end, start,
 //                    mList.get(order_detail_get_account.getSelectedItemPosition()).getAccountno(),
 //                    mList.get(order_detail_get_account.getSelectedItemPosition()).getBankname(),
-                    mList.get(order_detail_get_account.getSelectedItemPosition()).getAccountno() ==
-                            null ? "" : mList.get(order_detail_get_account.getSelectedItemPosition()).getAccountno(),
+                    StringUtils.isStrTrue(mList.get(order_detail_get_account.getSelectedItemPosition()).getAccountno())
+                            ? "" : mList.get(order_detail_get_account.getSelectedItemPosition()).getAccountno(),
 
-                    mList.get(order_detail_get_account.getSelectedItemPosition()).getBankname() ==
-                            null ? "" : mList.get(order_detail_get_account.getSelectedItemPosition()).getBankname(),
+                    StringUtils.isStrTrue(mList.get(order_detail_get_account.getSelectedItemPosition()).getBankname())
+                            ? "" : mList.get(order_detail_get_account.getSelectedItemPosition()).getBankname(),
                     "", "", pay,
-                    mAddressList.get(order_detail_get_address.getSelectedItemPosition()).getId() ==
-                            null ? "" : mAddressList.get(order_detail_get_address.getSelectedItemPosition()).getId(),
-                    mAddressList.get(order_detail_get_address.getSelectedItemPosition()).getAddress() ==
-                            null ? "" : mAddressList.get(order_detail_get_address.getSelectedItemPosition()).getAddress(),
+                    StringUtils.isStrTrue(mAddressList.get(order_detail_get_address.getSelectedItemPosition()).getId())
+                            ? "" : mAddressList.get(order_detail_get_address.getSelectedItemPosition()).getId(),
+                    StringUtils.isStrTrue(mAddressList.get(order_detail_get_address.getSelectedItemPosition()).getAddress())
+                            ? "" : mAddressList.get(order_detail_get_address.getSelectedItemPosition()).getAddress(),
                     sell_id, sell_name, String.valueOf(allPrice),
                     String.valueOf(order_detail_process.getSelectedItemPosition() + 1), listBeen, id);
         } else {
@@ -353,7 +354,16 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
             switch (state) {
                 case 0://销售拣单车
                     for (int i = 0; i < orders.size(); i++) {
-                        CreateOrder.OrderListBean orderListBean = new CreateOrder.OrderListBean(buy_id, buy_name, publicArg.getSys_member(), publicArg.getSys_mmbname(), orders.get(i).getCategoryId(), orders.get(i).getGoodsId(), orders.get(i).getName(), String.valueOf(orders.get(i).getNum()), orders.get(i).getAllprice(), orders.get(i).getFinalprice(), orders.get(i).getQuoteId());
+                        CreateOrder.OrderListBean orderListBean = new CreateOrder.OrderListBean(buy_id, buy_name,
+                                publicArg.getSys_member(),
+                                publicArg.getSys_mmbname(),
+                                orders.get(i).getCategoryId(),
+                                orders.get(i).getGoodsId(),
+                                orders.get(i).getName(),
+                                String.valueOf(orders.get(i).getNum()),
+                                orders.get(i).getAllprice(),
+                                orders.get(i).getFinalprice(),
+                                orders.get(i).getQuoteId());
                         listBeen.add(orderListBean);
                     }
                     post = new CreateOrder(publicArg.getSys_token(),
@@ -364,18 +374,18 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
                             publicArg.getSys_member(),
                             "", "", buy_id, buy_name,
                             end, start,
-                            mList.get(order_detail_get_account.getSelectedItemPosition()).getAccountno() ==
-                                    null ? "" : mList.get(order_detail_get_account.getSelectedItemPosition()).getAccountno(),
+                            StringUtils.isStrTrue(mList.get(order_detail_get_account.getSelectedItemPosition()).getAccountno())
+                                    ? "" : mList.get(order_detail_get_account.getSelectedItemPosition()).getAccountno(),
 
-                            mList.get(order_detail_get_account.getSelectedItemPosition()).getBankname() ==
-                                    null ? "" : mList.get(order_detail_get_account.getSelectedItemPosition()).getBankname(),
+                            StringUtils.isStrTrue(mList.get(order_detail_get_account.getSelectedItemPosition()).getBankname())
+                                    ? "" : mList.get(order_detail_get_account.getSelectedItemPosition()).getBankname(),
                             "", "", pay,
 //                            mAddressList.get(order_detail_get_address.getSelectedItemPosition()).getId(),
 //                            mAddressList.get(order_detail_get_address.getSelectedItemPosition()).getAddress(),
-                            mAddressList.get(order_detail_get_address.getSelectedItemPosition()).getId() ==
-                                    null ? "" : mAddressList.get(order_detail_get_address.getSelectedItemPosition()).getId(),
-                            mAddressList.get(order_detail_get_address.getSelectedItemPosition()).getAddress() ==
-                                    null ? "" : mAddressList.get(order_detail_get_address.getSelectedItemPosition()).getAddress(),
+                            StringUtils.isStrTrue(mAddressList.get(order_detail_get_address.getSelectedItemPosition()).getId())
+                                    ? "" : mAddressList.get(order_detail_get_address.getSelectedItemPosition()).getId(),
+                            StringUtils.isStrTrue(mAddressList.get(order_detail_get_address.getSelectedItemPosition()).getAddress())
+                                    ? "" : mAddressList.get(order_detail_get_address.getSelectedItemPosition()).getAddress(),
                             publicArg.getSys_member(),
                             publicArg.getSys_mmbname(),
                             String.valueOf(allPrice),
@@ -405,20 +415,20 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
                             publicArg.getSys_member(),
 //                            mAddressList.get(order_detail_pay_address.getSelectedItemPosition()).getId(),
 //                            mAddressList.get(order_detail_pay_address.getSelectedItemPosition()).getAddress(),
-                            mAddressList.get(order_detail_pay_address.getSelectedItemPosition()).getId() ==
-                                    null ? "" : mAddressList.get(order_detail_pay_address.getSelectedItemPosition()).getId(),
-                            mAddressList.get(order_detail_pay_address.getSelectedItemPosition()).getAddress() ==
-                                    null ? "" : mAddressList.get(order_detail_pay_address.getSelectedItemPosition()).getAddress(),
+                            StringUtils.isStrTrue(mAddressList.get(order_detail_pay_address.getSelectedItemPosition()).getId())
+                                    ? "" : mAddressList.get(order_detail_pay_address.getSelectedItemPosition()).getId(),
+                            StringUtils.isStrTrue(mAddressList.get(order_detail_pay_address.getSelectedItemPosition()).getAddress())
+                                    ? "" : mAddressList.get(order_detail_pay_address.getSelectedItemPosition()).getAddress(),
                             publicArg.getSys_member(),
                             publicArg.getSys_mmbname(),
                             end, start, "", "",
 //                            mList.get(order_detail_pay_account.getSelectedItemPosition()).getAccountno(),
 //                            mList.get(order_detail_pay_account.getSelectedItemPosition()).getBankname(),
-                            mList.get(order_detail_pay_account.getSelectedItemPosition()).getAccountno() ==
-                                    null ? "" : mList.get(order_detail_pay_account.getSelectedItemPosition()).getAccountno(),
+                            StringUtils.isStrTrue(mList.get(order_detail_pay_account.getSelectedItemPosition()).getAccountno())
+                                    ? "" : mList.get(order_detail_pay_account.getSelectedItemPosition()).getAccountno(),
 
-                            mList.get(order_detail_pay_account.getSelectedItemPosition()).getBankname() ==
-                                    null ? "" : mList.get(order_detail_pay_account.getSelectedItemPosition()).getBankname(),
+                            StringUtils.isStrTrue(mList.get(order_detail_pay_account.getSelectedItemPosition()).getBankname())
+                                    ? "" : mList.get(order_detail_pay_account.getSelectedItemPosition()).getBankname(),
                             pay, "", "",
                             buy_id, buy_name, String.valueOf(allPrice),
                             String.valueOf(order_detail_process.getSelectedItemPosition() + 1),
@@ -428,6 +438,7 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
 
         }
 
+        LogShow(mGson.toJson(post));
         OkGo.post(url_get)
                 .params("param", mGson.toJson(post))
                 .execute(new StringCallback() {

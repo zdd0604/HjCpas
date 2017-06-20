@@ -429,7 +429,7 @@ public class CooperateCreate extends ActivityBaseHeader2 implements View.OnClick
                     products_ship_address.setVisibility(View.GONE);
                 }
                 setTitle(getString(R.string.cooperate_create_protocol));
-
+                cooperate_products_list.setText(getString(R.string.cooperate_products_choose_type1));
                 break;
             case 1:
                 if (buy_type) {
@@ -438,7 +438,7 @@ public class CooperateCreate extends ActivityBaseHeader2 implements View.OnClick
                     cooperate_type.setText(R.string.cooperate_products_sell);
                 }
                 setTitle(getString(R.string.cooperate_edit_protocol));
-
+                cooperate_products_list.setText(getString(R.string.cooperate_products_choose_type1));
                 break;
             case 2:
                 if (buy_type) {
@@ -452,6 +452,7 @@ public class CooperateCreate extends ActivityBaseHeader2 implements View.OnClick
                 }
                 setTitle(getString(R.string.protocol_create_order));
                 cooperate_create_submit.setText(getString(R.string.protocol_get_order));
+                cooperate_products_list.setText(getString(R.string.cooperate_products_choose_type2));
                 break;
         }
 
