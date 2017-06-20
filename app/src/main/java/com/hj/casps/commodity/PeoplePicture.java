@@ -590,7 +590,7 @@ public class PeoplePicture extends ActivityBaseHeader2 implements OnPullListener
                 + "&sys_member=" + publicArg.getSys_member()
                 + "&divId=" + divId
                 + "&imgName=" + imageName;
-
+        System.out.println("imagePathList ="+imagePathList.size());
         OkGo.post(Constant.ImageUploadUrl + paramStr)//
                 .tag(this)//
                 .isMultipart(true)
@@ -601,6 +601,9 @@ public class PeoplePicture extends ActivityBaseHeader2 implements OnPullListener
                         Pub pub = GsonTools.changeGsonToBean(s, Pub.class);
                         if (pub.getReturn_code() == 0) {
                             new MyToast(PeoplePicture.this, "上传图片成功");
+                            //刷新图片列表
+                            pageno=0;
+                            initData(pageno);
                         } else {
                             toast(pub.getReturn_message());
                         }

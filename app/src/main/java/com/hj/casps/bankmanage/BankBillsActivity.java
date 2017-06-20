@@ -502,12 +502,16 @@ public class BankBillsActivity extends ActivityBaseHeader implements View.OnClic
                 .params("param", mGson.toJson(queryMmbWareHouseLoading))
                 .execute(new JsonCallBack<SimpleResponse<List<WarehouseEntity>>>() {
                     @Override
-                    public void onSuccess(SimpleResponse<List<WarehouseEntity>> listQueryMmbWareHouseGain, Call call, Response response) {
-                        total = listQueryMmbWareHouseGain.total;
+                    public void onSuccess(SimpleResponse<List<WarehouseEntity>> data, Call call, Response response) {
+                        total = data.total;
                         //获取数据成功后更新UI 界面
-                        if (listQueryMmbWareHouseGain.rows != null) {
-                            mAddressList = listQueryMmbWareHouseGain.rows;
+                        if (data.rows != null) {
+                            mAddressList = data.rows;
                             mHandler.sendEmptyMessage(Constant.HANDLERTYPE_1);
+                        }else if(data.return_code==1101){
+                            toastSHORT("被别的设备登录了");
+                        }else if(data.return_code==1102){
+                            toastSHORT("令牌超时或者退出登录失效了");
                         }
                     }
 

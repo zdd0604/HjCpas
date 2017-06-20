@@ -65,7 +65,7 @@ public class UserBeanUtils {
     public UserBean getCurrentUser() {
         if (currentUserBean == null) {
             UserBean userBean = userBeanDao.queryBuilder()
-                    .where(UserBeanDao.Properties.IsActive.eq(true))
+                    .where(UserBeanDao.Properties.TokenIsActive.eq(true))
                     .build().unique();
             currentUserBean = userBean;
         }

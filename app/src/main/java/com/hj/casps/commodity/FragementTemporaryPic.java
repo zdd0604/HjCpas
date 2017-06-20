@@ -552,7 +552,6 @@ public class FragementTemporaryPic extends FragmentBase {
 
         ShowPopupClick click = new ShowPopupClick(entity);
         contentView.findViewById(R.id.add).setOnClickListener(click);
-
         contentView.findViewById(R.id.edit).setOnClickListener(click);
         contentView.findViewById(R.id.del).setOnClickListener(click);
         contentView.findViewById(R.id.cancel).setOnClickListener(click);
