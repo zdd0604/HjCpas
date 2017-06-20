@@ -505,13 +505,9 @@ public class BankBillsActivity extends ActivityBaseHeader implements View.OnClic
                     public void onSuccess(SimpleResponse<List<WarehouseEntity>> data, Call call, Response response) {
                         total = data.total;
                         //获取数据成功后更新UI 界面
-                        if (data.rows != null) {
+                        if (data.return_code==0&&data.rows != null) {
                             mAddressList = data.rows;
                             mHandler.sendEmptyMessage(Constant.HANDLERTYPE_1);
-                        }else if(data.return_code==1101){
-                            toastSHORT("被别的设备登录了");
-                        }else if(data.return_code==1102){
-                            toastSHORT("令牌超时或者退出登录失效了");
                         }
                     }
 

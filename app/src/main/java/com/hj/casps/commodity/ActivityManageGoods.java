@@ -30,6 +30,7 @@ import com.hj.casps.entity.goodsmanager.goodsmanagerCallBack.GoodsCategoryCallBa
 import com.hj.casps.entity.goodsmanager.request.RequestPub;
 import com.hj.casps.entity.goodsmanager.response.GoodsCategoryEntity;
 import com.hj.casps.entity.goodsmanager.response.NoteEntity;
+import com.hj.casps.util.LogoutUtils;
 import com.lzy.okgo.OkGo;
 
 import java.util.ArrayList;
@@ -91,6 +92,7 @@ public class ActivityManageGoods extends ActivityBaseHeader implements View.OnCl
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_selectclass);
         findViewById(R.id.head_title).setVisibility(View.VISIBLE);
+
         FancyButton addGoods = (FancyButton) findViewById(R.id.layout_head_left_btn);
         addGoods.setBackgroundColor(getResources().getColor(R.color.white));
         addGoods.setTextColor(getResources().getColor(R.color.title_bg));

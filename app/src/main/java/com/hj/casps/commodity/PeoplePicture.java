@@ -30,6 +30,7 @@ import com.hj.casps.entity.picturemanager.request.RequestShowPic;
 import com.hj.casps.entity.picturemanager.response.ShowPicEntity;
 import com.hj.casps.ui.MyToast;
 import com.hj.casps.util.BitmapUtils;
+import com.hj.casps.util.BitmapUtils2;
 import com.hj.casps.util.GsonTools;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
@@ -72,7 +73,7 @@ public class PeoplePicture extends ActivityBaseHeader2 implements OnPullListener
     private final int RequestCodeForEditImageRes = 1028;
     private String divId;
     private int pageno = 0;
-    private int pagesize = 12;
+    private int pagesize = 9;
     private List<File> imagePathList = new ArrayList<>();
 
     private SelectPicture02Adapter adapter;
@@ -119,7 +120,6 @@ public class PeoplePicture extends ActivityBaseHeader2 implements OnPullListener
             adapter = new SelectPicture02Adapter();
         }
         adapter.getData().clear();
-//  BaseQuickAdapter  adapter = (BaseQuickAdapter) recycleView.getAdapter();
         recycleView.setAdapter(adapter);
         if (mList != null)
             for (int i = 0; i < mList.size(); i++) {
@@ -138,7 +138,6 @@ public class PeoplePicture extends ActivityBaseHeader2 implements OnPullListener
         if (adapter == null) {
             adapter = new SelectPicture02Adapter();
         }
-//  BaseQuickAdapter  adapter = (BaseQuickAdapter) recycleView.getAdapter();
         recycleView.setAdapter(adapter);
         if (mList != null)
             for (int i = 0; i < mList.size(); i++) {
@@ -180,7 +179,6 @@ public class PeoplePicture extends ActivityBaseHeader2 implements OnPullListener
                             toastSHORT(showPicEntity.getReturn_message());
                             return;
                         }
-
                         total = showPicEntity.getTotalCount();
                         mList = showPicEntity.getDataList();
                         mHadler.sendEmptyMessage(Constant.HANDLERTYPE_0);
@@ -317,7 +315,7 @@ public class PeoplePicture extends ActivityBaseHeader2 implements OnPullListener
                             for (int i = 0; i < imageMultipleResultEvent.getResult().size(); i++) {
                                 String imagePath = imageMultipleResultEvent.getResult().get(i).getOriginalPath();
                                 LogShow(imagePath);
-                                imagePathList.add(new File(imagePath));
+                                imagePathList.add(new File(BitmapUtils2.getCompressFile(imagePath)));
                             }
                             onSelectImage();
                         }
@@ -548,13 +546,6 @@ public class PeoplePicture extends ActivityBaseHeader2 implements OnPullListener
 //                String image = data.getStringExtra(SelectPicture03.ExtraImagePath);
                 String imageName = data.getStringExtra(SelectPicture03.ExtraImageName);
                 uploadImage(divId, imageName);
-//                uploadImage2(divId, imageName);
-                //TODO 上传成功之后再更新adapter
-//              BaseQuickAdapter adapter = (BaseQuickAdapter) recycleView.getAdapter();
-//                SelectPicture02ListEntity data1 = new SelectPicture02ListEntity();
-//                data1.setImageName(imageName);
-//                data1.setImagePath(image);
-//                adapter.addData(data1);
             }
             //点击查询图片名字
             if (requestCode == QUERY_PICTRUE_NAME) {
@@ -598,11 +589,11 @@ public class PeoplePicture extends ActivityBaseHeader2 implements OnPullListener
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(String s, Call call, Response response) {
+                        System.out.println("s = [" + s + "], call = [" + call + "], response = [" + response + "]");
                         Pub pub = GsonTools.changeGsonToBean(s, Pub.class);
                         if (pub.getReturn_code() == 0) {
                             new MyToast(PeoplePicture.this, "上传图片成功");
                             //刷新图片列表
-                            pageno=0;
                             initData(pageno);
                         } else {
                             toast(pub.getReturn_message());
@@ -623,9 +614,9 @@ public class PeoplePicture extends ActivityBaseHeader2 implements OnPullListener
                         super.upProgress(currentSize, totalSize, progress, networkSpeed);
                         prdialog.setProgress((int) (progress * 100));
                         if (((int) (progress * 100)) == 100) {
-                            toastSHORT("上传成功");
                             prdialog.dismiss();
                             imagePathList.clear();
+
                         }
                     }
 
@@ -639,60 +630,6 @@ public class PeoplePicture extends ActivityBaseHeader2 implements OnPullListener
                 });      // 这种方式为同一个key，上传多个文件
     }
 
-//    //上传图片
-//    private void uploadImage2(String divId, String imageName) {
-//        PublicArg p = Constant.publicArg;
-//        String timeUUID = Constant.getTimeUUID();
-//        if (timeUUID.equals("")) {
-//            toastSHORT(getString(R.string.time_out));
-//            return;
-//        }
-//        OkHttpClient client = new OkHttpClient();
-//        // mImgUrls为存放图片的url集合
-//        MultipartBody.Builder builder = new MultipartBody.Builder().setType(MultipartBody.FORM);
-//        if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
-//            System.out.println("外置卡正常");
-//        }
-//        for (int i = 0; i < imagePathList.size(); i++) {
-//            builder.addFormDataPart("image", imageName, RequestBody.create(MediaType.parse("image/jpeg"), imagePathList.get(i)));
-//        }
-////        builder.addFormDataPart("sys_token", p.getSys_token());
-////        builder.addFormDataPart("sys_uuid", sys_uuid);
-////        builder.addFormDataPart("sys_func",Constant.SYS_FUNC101100210001);
-////        builder.addFormDataPart("sys_user", p.getSys_user());
-////        builder.addFormDataPart("sys_member", p.getSys_member());
-////        builder.addFormDataPart("divId", divId);
-////        builder.addFormDataPart("imgName", imageName);
-//
-//        String paramStr = "?sys_token=" + p.getSys_token()
-//                + "&sys_uuid=" + p.getSys_uuid()
-//                + "&sys_func=" + Constant.SYS_FUNC101100210001
-//                + "&sys_user=" + p.getSys_user()
-//                + "&sys_member=" + p.getSys_member()
-//                + "&divId=" + divId
-//                + "&imgName=" + imageName;
-//        LogShow(Constant.ImageUploadUrl + paramStr);
-//        MultipartBody requestBody = builder.build();
-//        //构建请求
-//        Request request = new Request.Builder()
-//                .url(Constant.ImageUploadUrl + paramStr)//地址
-//                .post(requestBody)//添加请求体\
-//                .header("Content-Type", "multipart/form-data")
-//                .build();
-//        LogShow("" + requestBody.toString());
-//        client.newCall(request).enqueue(new Callback() {
-//            @Override
-//            public void onFailure(Call call, IOException e) {
-//                System.out.println("上传失败:e.getLocalizedMessage() = " + e.getLocalizedMessage());
-//            }
-//
-//            @Override
-//            public void onResponse(Call call, Response response) throws IOException {
-//                System.out.println("thread=" + Thread.currentThread().getName());
-//                System.out.println("上传照片成功：response = " + response.body().string());
-//            }
-//        });
-//    }
-//
+
 
 }
