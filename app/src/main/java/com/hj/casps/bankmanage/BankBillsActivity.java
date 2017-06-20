@@ -30,6 +30,7 @@ import com.hj.casps.entity.paymentmanager.RequestBackAccount;
 import com.hj.casps.entity.paymentmanager.response.WytUtils;
 import com.hj.casps.ui.MyDialog;
 import com.hj.casps.ui.MyToast;
+import com.hj.casps.util.LogoutUtils;
 import com.hj.casps.util.StringUtils;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.exception.OkGoException;
@@ -592,9 +593,10 @@ public class BankBillsActivity extends ActivityBaseHeader implements View.OnClic
                     @Override
                     public void onError(Call call, Response response, Exception e) {
                         super.onError(call, response, e);
-                        if (e instanceof OkGoException) {
                             toastSHORT(e.getMessage());
-                        }
+                       if(Constant.public_code){
+                           LogoutUtils.exitUser(BankBillsActivity.this);
+                       }
                     }
                 });
     }

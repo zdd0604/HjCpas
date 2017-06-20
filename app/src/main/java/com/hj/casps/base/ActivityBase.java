@@ -93,9 +93,7 @@ public class ActivityBase extends ActivityCommBase implements
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         ActivityUtils.addActivity(this);
-
         initViewBaseView();
     }
 

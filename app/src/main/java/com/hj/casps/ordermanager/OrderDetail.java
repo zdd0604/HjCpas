@@ -34,6 +34,7 @@ import com.hj.casps.entity.paymentmanager.RequestBackAccount;
 import com.hj.casps.entity.protocalproductentity.CreateOrder;
 import com.hj.casps.entity.protocalproductentity.OrderBack;
 import com.hj.casps.ui.MyListView;
+import com.hj.casps.util.LogoutUtils;
 import com.hj.casps.util.StringUtils;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
@@ -528,9 +529,11 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
                     @Override
                     public void onError(Call call, Response response, Exception e) {
                         super.onError(call, response, e);
-                        if (e instanceof OkGoException) {
                             toastSHORT(e.getMessage());
+                        if(Constant.public_code){
+                            LogoutUtils.exitUser(OrderDetail.this);
                         }
+
                     }
                 });
     }

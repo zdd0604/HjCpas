@@ -45,8 +45,7 @@ public class Constant {
     public static final String HOME_HTTP_URL = HTTPURLALL + "/v2/app/index.html";
     //图片的url
     public static final String HTTPURLIMAGE = HTTPURLALL + "/v2content/upload/";
-    //公共的跳转到登录的返回码
-    public static  boolean PubCode=false;
+
     //当前会员地址列表
     public static final String QueryMmbWareHouseUrl = HTTPURL + "appOrderGoods/queryMmbWareHouse.app";
     //编辑查询
@@ -313,7 +312,7 @@ public class Constant {
     //商品信息确定
     public static final String UpdateQuoteSHPCUrl = HTTPURL + "appOrder/updateQuoteSHPC.app";
 
-
+    public static  boolean isFreshGood=false;
     //s商品管理的页面跳转到编辑页面的intent 值
     public static final String INTENTISADDGOODS = "INTENTISADDGOODS";
     public static final String INTENT_GOODCATEGORYID = "INTENT_GOODCATEGORYID";

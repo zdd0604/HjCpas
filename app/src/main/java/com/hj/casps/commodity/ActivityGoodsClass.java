@@ -261,8 +261,18 @@ public class ActivityGoodsClass extends ActivityBaseHeader2 implements View.OnCl
 
     @Override
     protected void onRestart() {
-        super.onRestart();
 
+        super.onRestart();
+        if(Constant.isFreshGood){
+            initData(pageno);
+        }
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Constant.isFreshGood=false;
     }
 
     private void showSharePopupWindow() {

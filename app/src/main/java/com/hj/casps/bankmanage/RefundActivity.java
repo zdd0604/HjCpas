@@ -297,12 +297,20 @@ public class RefundActivity extends ActivityBaseHeader implements OnPullListener
         }
         for (int i = 0; i < dbList.size(); i++) {
             ResRefundMoneyOfflineEntity entity = dbList.get(i);
+
             if (entity.isChecked()) {
+                System.out.println("entity.getPayNum()"+entity.getPayNum());
                 if (entity.getPayNum() == null || !StringUtils.isStrTrue(entity.getPayNum())) {
+
                     toastSHORT("请输入退款金额");
                     return;
                 }
-                if (entity.getExeRefundNum() < Integer.valueOf(entity.getPayNum())) {
+              if(entity.getPayNum().equals("0")||entity.getPayNum().equals("0.0")){
+                    toastSHORT("金额不能为0");
+                    return;
+                }
+
+                if (entity.getExeRefundNum() < Double.valueOf(entity.getPayNum())) {
                     toastSHORT("超出可退金额");
                     return;
 

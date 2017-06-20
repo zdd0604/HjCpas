@@ -126,5 +126,16 @@ public class ShowPicEntity {
         public void setPicPath(String picPath) {
             this.picPath = picPath;
         }
+
+        @Override
+        public String toString() {
+            return "DataListBean{" +
+                    "materialId='" + materialId + '\'' +
+                    ", materialPath='" + materialPath + '\'' +
+                    ", name='" + name + '\'' +
+                    ", picPath='" + picPath + '\'' +
+                    '}';
+        }
     }
+
 }

@@ -156,12 +156,15 @@ public class ActivityEditGoods extends ActivityBaseHeader2 implements View.OnCli
                     break;
                 case 3:
                     toast("商品添加提交成功");
-                    ActivityEditGoods.this.finish();
                     int i = 0;
+                    Constant.isFreshGood=true;
+                    ActivityEditGoods.this.finish();
                     break;
                 case 4:
-                    ActivityEditGoods.this.finish();
+
                     toast("商品编辑提交成功");
+                    Constant.isFreshGood=true;
+                    ActivityEditGoods.this.finish();
                     break;
             }
         }

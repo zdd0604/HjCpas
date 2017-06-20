@@ -85,8 +85,8 @@ public class ResToUpdateEntity {
         private String factory;
         private String imgId;
         private String imgPath;
-        private int maxPrice;
-        private int minPrice;
+        private double maxPrice;
+        private double minPrice;
         private String name;
         private String productNum;
         private String productTime;
@@ -168,15 +168,15 @@ public class ResToUpdateEntity {
             this.imgPath = imgPath;
         }
 
-        public int getMaxPrice() {
+        public double getMaxPrice() {
             return maxPrice;
         }
 
-        public void setMaxPrice(int maxPrice) {
+        public void setMaxPrice(double maxPrice) {
             this.maxPrice = maxPrice;
         }
 
-        public int getMinPrice() {
+        public double getMinPrice() {
             return minPrice;
         }
 

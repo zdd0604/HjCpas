@@ -80,7 +80,7 @@ public class PeoplePicture extends ActivityBaseHeader2 implements OnPullListener
     private final int QUERY_PICTRUE_NAME = 111;
     //删除图片
     private FancyButton del;
-    private List<ShowPicEntity.DataListBean> mList;
+    private List<ShowPicEntity.DataListBean> mList=new ArrayList<>();
     private ArrayList<SelectPicture02ListEntity> checkListEntity;
     public ProgressDialog prdialog;
 
@@ -90,6 +90,9 @@ public class PeoplePicture extends ActivityBaseHeader2 implements OnPullListener
             super.handleMessage(msg);
             switch (msg.what) {
                 case Constant.HANDLERTYPE_0:
+                 /*   System.out.println("pageno=" + pageno);
+                    System.out.println("mlist="+mList.size());
+                    System.out.println("mlist="+mList.toString());*/
                     setAdapter();
                     break;
                 case Constant.HANDLERTYPE_1:
@@ -169,19 +172,20 @@ public class PeoplePicture extends ActivityBaseHeader2 implements OnPullListener
                 Constant.MaterialName,
                 String.valueOf(pageno + 1),
                 String.valueOf(pagesize));
+        System.out.println("r PeoplePicture="+r);
         OkGo.post(Constant.ShowPicUrl)
                 .params("param", mGson.toJson(r))
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(String s, Call call, Response response) {
                         showPicEntity = GsonTools.changeGsonToBean(s, ShowPicEntity.class);
-                        if (showPicEntity == null && showPicEntity.getReturn_code() != 0) {
+                        if (showPicEntity.getReturn_code() == 0&&showPicEntity != null ) {
+                        mList = showPicEntity.getDataList();
+                        mHadler.sendEmptyMessage(Constant.HANDLERTYPE_0);
+                        }else{
                             toastSHORT(showPicEntity.getReturn_message());
                             return;
                         }
-                        total = showPicEntity.getTotalCount();
-                        mList = showPicEntity.getDataList();
-                        mHadler.sendEmptyMessage(Constant.HANDLERTYPE_0);
                     }
                 });
 
@@ -315,7 +319,9 @@ public class PeoplePicture extends ActivityBaseHeader2 implements OnPullListener
                             for (int i = 0; i < imageMultipleResultEvent.getResult().size(); i++) {
                                 String imagePath = imageMultipleResultEvent.getResult().get(i).getOriginalPath();
                                 LogShow(imagePath);
-                                imagePathList.add(new File(BitmapUtils2.getCompressFile(imagePath)));
+                                File e = new File(BitmapUtils2.getCompressFile(imagePath));
+                                System.out.println("e="+e.length());
+                                imagePathList.add(e);
                             }
                             onSelectImage();
                         }
@@ -611,6 +617,7 @@ public class PeoplePicture extends ActivityBaseHeader2 implements OnPullListener
                     @Override
                     public void upProgress(long currentSize, long totalSize, float progress, long networkSpeed) {
                         super.upProgress(currentSize, totalSize, progress, networkSpeed);
+                            System.out.println("currentSize = [" + currentSize + "], totalSize = [" + totalSize + "], progress = [" + progress + "], networkSpeed = [" + networkSpeed + "]");
                         prdialog.setProgress((int) (progress * 100));
                         if (((int) (progress * 100)) == 100) {
                             prdialog.dismiss();

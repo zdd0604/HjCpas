@@ -24,6 +24,7 @@ import com.hj.casps.base.ActivityBase;
 import com.hj.casps.common.Constant;
 import com.hj.casps.entity.PublicArg;
 import com.hj.casps.http.LoginBean;
+import com.hj.casps.util.LogoutUtils;
 import com.hj.casps.util.SubmitClickUtils;
 import com.hj.casps.util.ToastUtils;
 import com.hj.casps.widget.ListPopupWindow;
@@ -281,6 +282,9 @@ public class ActivityLogin extends ActivityBase {
                                      if (httploginBean.getReturn_code() == 0) {
                                          //判断数据库有没有该用户数据，有就直接登录
                                          httpGetContext(httploginBean, username, password);
+                                     }else if (httploginBean.getReturn_code() == 1101 || httploginBean.getReturn_code() == 2101) {
+                                         toastSHORT(httploginBean.getReturn_message());
+                                         LogoutUtils.exitUser(ActivityLogin.this);
                                      }
                                      else {
                                          toastSHORT(httploginBean.getReturn_message());
@@ -325,8 +329,7 @@ public class ActivityLogin extends ActivityBase {
         if ("".equals(reToken) || reToken == null) {
             httpLogin();
         } else {
-//            http://192.168.1.120:8081/v2/appSecurity/reLogin.app?param=
-//            "{\"sys_account\":\"app03\",\"sys_pwd\":\"app1234\",\"sys_user\":\"e6ae4ad55d5b44769d2a54a0fedbfff7\",\"sys_token\":\"x4jiwtk2eyq8bsg9\"}"
+
             String url = Constant.ReLoginUrl;
             OkGo.post(url).params("param", "{\"sys_account\":\"" + et_userName + "\",\"sys_pwd\":\"" + et_password + "\",\"sys_user\":\"" + sys_user + "\",\"sys_token\":\"" + reToken + "\"}")
                     .execute(new LoginJsonCallBack<LoginBean<Void>>() {
@@ -341,7 +344,7 @@ public class ActivityLogin extends ActivityBase {
                                     UserBeanUtils.getInstance(ActivityLogin.this).setCurrentUserBean(reUserBean);
                                     setPublicArg(reUserBean);
                                     goNext();
-                                } /*else if (loginBean.getReturn_code() == 101) {
+                                } else if (loginBean.getReturn_code() == 101) {
                                     ToastUtils.showToast(ActivityLogin.this, "用户不存在");
                                     return;
                                 } else if (loginBean.getReturn_code() == 102) {
@@ -353,11 +356,14 @@ public class ActivityLogin extends ActivityBase {
                                 } else if (loginBean.getReturn_code() == 999) {
                                     ToastUtils.showToast(ActivityLogin.this, "未知错误");
                                     return;
-                                }*/
+                                }
+                                else if (loginBean.getReturn_code() == 1101 || loginBean.getReturn_code() == 2101) {
+                                    toastSHORT(loginBean.getReturn_message());
+                                    LogoutUtils.exitUser(ActivityLogin.this);
+                                }
                                 else{
                                     ToastUtils.showToast(ActivityLogin.this, loginBean.getReturn_message());
                                 }
-
                             }
                         }
 

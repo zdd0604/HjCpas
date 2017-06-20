@@ -30,4 +30,20 @@ public class RequestShowPic {
         this.pageno = pageno;
         this.pagesize = pagesize;
     }
+
+    @Override
+    public String toString() {
+        return "RequestShowPic{" +
+                "sys_token='" + sys_token + '\'' +
+                ", sys_uuid='" + sys_uuid + '\'' +
+                ", sys_func='" + sys_func + '\'' +
+                ", sys_user='" + sys_user + '\'' +
+                ", sys_member='" + sys_member + '\'' +
+                ", divId='" + divId + '\'' +
+                ", type='" + type + '\'' +
+                ", materialName='" + materialName + '\'' +
+                ", pageno='" + pageno + '\'' +
+                ", pagesize='" + pagesize + '\'' +
+                '}';
+    }
 }

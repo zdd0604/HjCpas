@@ -27,47 +27,17 @@ import okhttp3.Response;
 
 public class LogoutUtils {
 
-    public static boolean handle(Activity context, int returnCode) {
-        if (returnCode == 1101) {
-            ToastUtils.showToast(context, "被别的设备登录了");
-            exitUser(context);
-            return true;
-        } else if (returnCode == 1102) {
-            ToastUtils.showToast(context, "令牌超时或者退出登录失效了");
-            exitUser(context);
-            return true;
-        } else if (returnCode == 2101) {
-            ToastUtils.showToast(context, "没当前功能的授权");
-            return true;
-        } else if (returnCode == 3101) {
-            ToastUtils.showToast(context, "重复提交");
-            return true;
-        }
-
-        return false;
-    }
-
-    public static boolean handle(Fragment fragment, int returnCode) {
-        FragmentActivity context = fragment.getActivity();
-        if (returnCode == 1101) {
-            ToastUtils.showToast(context, "被别的设备登录了");
-            exitUser(context);
-            return true;
-        } else if (returnCode == 1102) {
-            ToastUtils.showToast(context, "令牌超时或者退出登录失效了");
-            exitUser(context);
-            return true;
-        } else if (returnCode == 2101) {
-            ToastUtils.showToast(context, "没当前功能的授权");
-            return true;
-        } else if (returnCode == 3101) {
-            ToastUtils.showToast(context, "重复提交");
-            return true;
-        }
-        return false;
-    }
 
     public static void exitUser(Activity context) {
+        Constant.public_code=false;
+        UserBean currentUser = UserBeanUtils.getInstance(context).getCurrentUser();
+        currentUser.setTokenIsActive(false);
+        UserBeanUtils.getInstance(context).updateToken(currentUser);
+        httpExitApp(context);
+    }
+    public static void exitUser(Fragment fragment) {
+        Constant.public_code=false;
+        FragmentActivity context = fragment.getActivity();
         UserBean currentUser = UserBeanUtils.getInstance(context).getCurrentUser();
         currentUser.setTokenIsActive(false);
         UserBeanUtils.getInstance(context).updateToken(currentUser);

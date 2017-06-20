@@ -172,7 +172,7 @@ public class EditCardActivity extends ActivityBaseHeader2 implements View.OnClic
                             cardInfo.getBankname(), cardInfo.getContact(),
                             cardInfo.getMobilephone(), cardInfo.getPhone());
                 }
-                getCARD_EDIT("id");
+
                 break;
             case Constant.CARD_ADD:
                 //新增账户
@@ -672,38 +672,7 @@ public class EditCardActivity extends ActivityBaseHeader2 implements View.OnClic
                 });
     }
 
-    /**
-     * 查询银行账户信息
-     *
-     * @param id
-     */
-    private void getCARD_EDIT(String id) {
-        //TODO
-        Constant.JSONFATHERRESPON = "AddressEditRespon";
-        OkGo.post(Constant.QueryMmbBankAccountUrl)
-                .tag(this)
-                .params("param", "{\"accountname\":\"1212\",\n" +
-                        "\"pageno\":\"0\",\n" +
-                        "\"pagesize\":\"10\",\n" +
-                        "\"sys_func\":\"121\",\n" +
-                        "\"sys_member\":\"1212\",\n" +
-                        "\"sys_token\":\"1212\",\n" +
-                        "\"sys_user\":\"475814ffe832455dba6ecdf4306b3642\",\n" +
-                        "\"sys_uuid\":\"00003\"}")
-                .execute(new JsonCallBack<AddressEditRespon<List<MmbBankAccountEntity>>>() {
 
-                    @Override
-                    public void onSuccess(AddressEditRespon<List<MmbBankAccountEntity>> listSimpleResponseGain, Call call, Response response) {
-
-                    }
-
-                    @Override
-                    public void onError(Call call, Response response, Exception e) {
-                        super.onError(call, response, e);
-
-                    }
-                });
-    }
 
     /**
      * 编辑提交

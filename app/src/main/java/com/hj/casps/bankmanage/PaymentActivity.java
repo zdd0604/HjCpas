@@ -430,6 +430,11 @@ public class PaymentActivity extends ActivityBaseHeader implements View.OnClickL
                     toastSHORT("请输入付款金额");
                     return;
                 }
+                if(entity.getPayNum().equals("0")||entity.getPayNum().equals("0.0")){
+                    toastSHORT("金额不能为0");
+                    return;
+                }
+
                 if (entity.getExePaymoneyNum() < Double.valueOf(entity.getPayNum())) {
                     toast("超出待付款金额");
                     return;
