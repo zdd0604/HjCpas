@@ -24,6 +24,18 @@ public class XinTest {
         Thread.sleep(1000);
         System.out.println(NetUtil2.checkEnableDo(this));
     }
+
     @Test
-    public void test2(){}
+    public void name()   {
+        fsd();
+    }
+
+    private void fsd() {
+        System.out.print("dfs");
+    }
+
+    @Test
+    public void test2(){
+
+    }
 }
