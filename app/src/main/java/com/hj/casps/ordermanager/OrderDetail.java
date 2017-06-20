@@ -227,18 +227,26 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
     private void searchPrice(final OrderShellModel orderShellModel) {
         final String[] result = {""};
         PublicArg p = Constant.publicArg;
-        RequestProtocal r = new RequestProtocal(p.getSys_token(), Constant.getUUID(), Constant.SYS_FUNC10110041, p.getSys_user(), p.getSys_member(), orderShellModel.getGoodsId());
+        RequestProtocal r = new RequestProtocal(p.getSys_token(),
+                Constant.getUUID(),
+                Constant.SYS_FUNC10110041,
+                p.getSys_user(),
+                p.getSys_member(),
+                orderShellModel.getGoodsId());
         String param = mGson.toJson(r);
         OkGo.post(Constant.LookGoodUrl)
                 .params("param", param)
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(String s, Call call, Response response) {
-
+                        LogShow(s);
                         GoodsBack databack = mGson.fromJson(s, GoodsBack.class);
                         if (databack == null) {
                             return;
                         }
+
+                        LogShow(databack.toString());
+
                         if (databack.getReturn_code() != 0) {
                             Toast.makeText(context, databack.getReturn_message(), Toast.LENGTH_SHORT).show();
                         } else {
@@ -665,10 +673,10 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
              * unitSpecification : 1
              */
 
-            private int maxPrice;
-            private int minPrice;
+            private double maxPrice;
+            private double minPrice;
 
-            public int getMaxPrice() {
+            public double getMaxPrice() {
                 return maxPrice;
             }
 
@@ -676,13 +684,31 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
                 this.maxPrice = maxPrice;
             }
 
-            public int getMinPrice() {
+            public double getMinPrice() {
                 return minPrice;
             }
 
             public void setMinPrice(int minPrice) {
                 this.minPrice = minPrice;
             }
+
+            @Override
+            public String toString() {
+                return "GoodsInfoBean{" +
+                        "maxPrice=" + maxPrice +
+                        ", minPrice=" + minPrice +
+                        '}';
+            }
+        }
+
+        @Override
+        public String toString() {
+            return "GoodsBack{" +
+                    "goodsInfo=" + goodsInfo +
+                    ", return_code=" + return_code +
+                    ", return_message='" + return_message + '\'' +
+                    ", goodsImages=" + goodsImages +
+                    '}';
         }
     }
 }

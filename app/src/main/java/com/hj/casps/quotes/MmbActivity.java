@@ -229,9 +229,23 @@ public class MmbActivity extends ActivityBaseHeader2 implements View.OnClickList
         switch (rangType) {
             case 0:
                 layout_check_mmb_pub.setChecked(true);
+                if (layout_check_mmb_pub.isChecked()) {
+                    layout_check_mmb_choose.setChecked(false);
+                    pub = true;
+                    choose = false;
+                } else {
+                    pub = false;
+                }
                 break;
             case 1:
                 layout_check_mmb_choose.setChecked(true);
+                if (layout_check_mmb_choose.isChecked()) {
+                    layout_check_mmb_pub.setChecked(false);
+                    choose = true;
+                    pub = false;
+                } else {
+                    choose = false;
+                }
                 break;
         }
         layout_check_mmb_pub.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {

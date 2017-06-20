@@ -30,7 +30,6 @@ import okhttp3.Call;
  * 报价管理的当前会员报价列表，即报价管理页面
  */
 public class QuoteQuery extends ActivityBaseHeader implements View.OnClickListener, OnPullListener {
-
     private FancyButton quote_create_Btn;//提交按钮
     private TextView quote_do_desc_tv;
     private ListView quotes_list;//报价列表
@@ -60,7 +59,6 @@ public class QuoteQuery extends ActivityBaseHeader implements View.OnClickListen
         setTitle(getString(R.string.quotes_manage));
         setContentView(R.layout.activity_quote_query);
         initView();
-
         if (hasInternetConnected()) {
             initData(intentString, i);
         } else {
@@ -70,7 +68,6 @@ public class QuoteQuery extends ActivityBaseHeader implements View.OnClickListen
 
     //加载报价管理列表数据
     private void initData(String s, final int i) {
-
         if (s == null || s.isEmpty()) {
             ModeltoJson modeltoJson = new ModeltoJson();
 //        modeltoJson.goodname = "";
@@ -79,7 +76,7 @@ public class QuoteQuery extends ActivityBaseHeader implements View.OnClickListen
             modeltoJson.sys_user = publicArg.getSys_user();
             modeltoJson.sys_func = Constant.SYS_FUNC10110028;
             modeltoJson.startTime = "";
-            modeltoJson.sys_uuid = "";
+            modeltoJson.sys_uuid = Constant.getUUID();
             modeltoJson.sys_member = publicArg.getSys_member();
             modeltoJson.endTime = "";
             modeltoJson.createTime2 = "";
@@ -87,25 +84,36 @@ public class QuoteQuery extends ActivityBaseHeader implements View.OnClickListen
             modeltoJson.pagesize = "10";
             modeltoJson.status = "0";
             modeltoJson.type = "0";
-
             type = 0;
-            Gson gson = new Gson();
-            String s1 = gson.toJson(modeltoJson);
-            Log.d("s1", s1);
-            url = Constant.ShowQuoteListUrl + "?param=" + s1;
+//            Gson gson = new Gson();
+//            String s1 = gson.toJson(modeltoJson);
+//            url = Constant.ShowQuoteListUrl + "?param=" + s1;
+            getDatas(Constant.ShowQuoteListUrl, mGson.toJson(modeltoJson));
         } else {
             s = s.replace("\"pageNo\":\"1\"", "\"pageNo\":\"" + String.valueOf(i + 1) + "\"");
-            url = Constant.ShowQuoteListUrl + "?param=" + s;
-
-//            toast(s);
+//            url = Constant.ShowQuoteListUrl + "?param=" + s;
+            getDatas(Constant.ShowQuoteListUrl, s);
         }
 
-        OkGo.get(url).execute(new StringCallback() {
-            @Override
-            public void onSuccess(String s, Call call, okhttp3.Response response) {
-                initGson(s, i);
-            }
-        });
+
+    }
+
+    /**
+     * 加载报价管理列表数据
+     * @param url
+     *          网址
+     * @param param
+     *          请求参数
+     */
+    private void getDatas(String url, String param) {
+        OkGo.get(url)
+                .params("param", param)
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(String s, Call call, okhttp3.Response response) {
+                        initGson(s, i);
+                    }
+                });
     }
 
     /**
@@ -190,9 +198,7 @@ public class QuoteQuery extends ActivityBaseHeader implements View.OnClickListen
                 intentActivity(CreateQuotes.class, 11);
                 break;
             case R.id.quote_do_desc_tv:
-
                 //操作说明
-
                 CreateDialog(Constant.DIALOG_CONTENT_9);
                 break;
         }
@@ -225,7 +231,6 @@ public class QuoteQuery extends ActivityBaseHeader implements View.OnClickListen
         i = 0;
         initData(intentString, i);
         mLoader.onLoadFinished();//加载结束
-
     }
 
     //上拉加载
@@ -235,7 +240,6 @@ public class QuoteQuery extends ActivityBaseHeader implements View.OnClickListen
         i++;
         initData(intentString, i);
         mLoader.onLoadFinished();//加载结束
-
     }
 
 

@@ -78,7 +78,6 @@ public class ExecuteBills extends ActivityBaseHeader {
                     public void onClick(View v) {
                         execute_viewpager.setCurrentItem(index);
                         Constant.Fragment_Postion = execute_viewpager.getCurrentItem();
-                        toastSHORT(Constant.FRGMENT_TYPE + 1 + "t");
                     }
                 });
                 return simplePagerTitleView;

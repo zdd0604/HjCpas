@@ -51,7 +51,6 @@ import static com.hj.casps.common.Constant.PROTOCOL_STATUS;
 import static com.hj.casps.common.Constant.PROTOCOL_TITLE;
 import static com.hj.casps.common.Constant.START_TIME;
 import static com.hj.casps.common.Constant.SYS_FUNC101100350001;
-import static com.hj.casps.common.Constant.SYS_FUNC101100350002;
 import static com.hj.casps.common.Constant.SYS_FUNC101100350003;
 import static com.hj.casps.common.Constant.SYS_FUNC101100410004;
 import static com.hj.casps.common.Constant.SYS_FUNC101100410005;
@@ -1085,7 +1084,14 @@ public class ProtocolFragment extends ViewPagerFragment1 implements View.OnClick
 
         //提交协议各种请求
         private void postOperate(String id, String refuse, int i, final String string) {
-            ProtocolModelForPost post = new ProtocolModelForPost(publicArg.getSys_token(), getUUID(), SYS_FUNC101100350001, publicArg.getSys_user(), publicArg.getSys_member(), id, refuse, String.valueOf(i), String.valueOf(protocol_type_j));
+            ProtocolModelForPost post = new ProtocolModelForPost(
+                    publicArg.getSys_token(),
+                    getUUID(),
+                    Constant.SYS_FUNC101100350005,
+                    publicArg.getSys_user(),
+                    publicArg.getSys_member(),
+                    id, refuse, String.valueOf(i),
+                    String.valueOf(protocol_type_j));
             OkGo.post(Constant.OperateContractUrl)
                     .params("param", mGson.toJson(post))
                     .execute(new StringCallback() {

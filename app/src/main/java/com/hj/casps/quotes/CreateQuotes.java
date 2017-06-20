@@ -44,7 +44,6 @@ import static com.hj.casps.common.Constant.stmpToDate;
 
 //新建或者编辑报价管理
 public class CreateQuotes extends ActivityBaseHeader2 implements View.OnClickListener {
-
     private TextView quote_create_info;
     private EditText product_name;
     private Spinner product_type;
@@ -108,20 +107,12 @@ public class CreateQuotes extends ActivityBaseHeader2 implements View.OnClickLis
     private void initData() {
         id = getIntent().getStringExtra("data");
         if (id == null || id.isEmpty()) {
-
             newOne = true;
             product_name.setOnClickListener(this);
             setTitle(getString(R.string.quotes_create));
-
         } else {
             newOne = false;
             setTitle(getString(R.string.quotes_edit_t));
-//            this.sys_token = sys_token;
-//            this.sys_uuid = sys_uuid;
-//            this.sys_func = sys_func;
-//            this.sys_user = sys_user;
-//            this.sys_member = sys_member;
-//            this.quoteId = quoteId;
             EditQuoteEntity editQuoteEntity = new EditQuoteEntity(
                     publicArg.getSys_token(),
                     Constant.getUUID(),
@@ -138,15 +129,6 @@ public class CreateQuotes extends ActivityBaseHeader2 implements View.OnClickLis
                             initGson(s);
                         }
                     });
-//            url = HTTPURL + QUOTE_URL;
-//            OkGo.post(Constant.EditQuoteUrl)
-//                    .params("param","{\"quoteId\":\"" + id + "\"}").
-//                    execute(new StringCallback() {
-//                        @Override
-//                        public void onSuccess(String s, Call call, Response response) {
-//                            initGson(s);
-//                        }
-//                    });
         }
 
     }
@@ -167,20 +149,16 @@ public class CreateQuotes extends ActivityBaseHeader2 implements View.OnClickLis
             product_time_from.setText(stmpToDate(quotesBack.getStartTime()));
             if (quotesBack.getImgPath() != null) {
                 Glide.with(this).load(quotesBack.getImgPath().startsWith("/v2content") ? SHORTHTTPURL + quotesBack.getImgPath() : HTTPURLIMAGE + quotesBack.getImgPath()).into(chooose_product_pic);
-
             }
             goodsId = quotesBack.getGoodsId();
             if (!product_time_from.getText().toString().isEmpty()) {
                 product_time_from.setCompoundDrawables(null, null, null, null);
-
             }
             product_time_to.setText(stmpToDate(quotesBack.getStartEnd()));
             if (!product_time_to.getText().toString().isEmpty()) {
                 product_time_to.setCompoundDrawables(null, null, null, null);
-
             }
             product_more.setText(quotesBack.getExplan());
-
 
             switch (quotesBack.getType()) {
                 default:
@@ -235,10 +213,8 @@ public class CreateQuotes extends ActivityBaseHeader2 implements View.OnClickLis
             case R.id.quote_create_info:
                 if (newOne) {
                     CreateDialog(Constant.DIALOG_CONTENT_11);
-
                 } else {
                     CreateDialog(Constant.DIALOG_CONTENT_10);
-
                 }
                 break;
             case R.id.create_quotes_commit:
@@ -260,7 +236,6 @@ public class CreateQuotes extends ActivityBaseHeader2 implements View.OnClickLis
                 break;
             case R.id.product_time_to:
                 showCalendar(product_time_to);
-
                 break;
         }
     }
@@ -387,8 +362,7 @@ public class CreateQuotes extends ActivityBaseHeader2 implements View.OnClickLis
             waitDialogRectangle.dismiss();
         }
         if (returnBean.getReturn_code() == 0) {
-
-            toast("提交完成");
+            toast(returnBean.getReturn_message());
             setResult(33);
             finish();
         } else {

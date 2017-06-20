@@ -96,12 +96,21 @@ public class QuotesSearch extends ActivityBaseHeader2 implements View.OnClickLis
         String period_from = period_time_from.getText().toString().trim();
         String period_to = period_time_to.getText().toString().trim();
         // TODO validate success, do something
-        ModeltoJson modeltoJson = new ModeltoJson(publicArg.getSys_token(), "", Constant.SYS_FUNC10110028, publicArg.getSys_user(), publicArg.getSys_name(), publicArg.getSys_member(),
-                name, period_from, period_to, from, to, "1", "10", String.valueOf((quotes_search_status.getSelectedItemPosition() - 1) == -1 ? null : (quotes_search_status.getSelectedItemPosition() - 1))
-                , String.valueOf(product_type.getSelectedItemPosition()));
+        ModeltoJson modeltoJson = new ModeltoJson(
+                publicArg.getSys_token(),
+                Constant.getUUID(),
+                Constant.SYS_FUNC10110028,
+                publicArg.getSys_user(),
+                publicArg.getSys_name(),
+                publicArg.getSys_member(),
+                name, period_from,
+                period_to, from,
+                to, "1", "10",
+                String.valueOf((quotes_search_status.getSelectedItemPosition() - 1) == -1 ? null :
+                        (quotes_search_status.getSelectedItemPosition() - 1)),
+                String.valueOf(product_type.getSelectedItemPosition()));
         Bundle bundle = new Bundle();
         bundle.putInt("type", product_type.getSelectedItemPosition());
-
         bundle.putString("searchjson", mGson.toJson(modeltoJson));
         setResult(22, getIntent().putExtras(bundle));
         finish();

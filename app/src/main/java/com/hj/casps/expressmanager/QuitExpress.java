@@ -378,9 +378,9 @@ public class QuitExpress extends ActivityBaseHeader implements OnPullListener,
                 .tag(this)
                 .params("param", mGson.toJson(querySendGoodsLoading))
                 .execute(new JsonCallBack<HarvestExpressRespon<List<QueryReturnGoodsEntity>>>() {
-
                     @Override
-                    public void onSuccess(HarvestExpressRespon<List<QueryReturnGoodsEntity>> listHarvestExpressRespon, Call call, Response response) {
+                    public void onSuccess(HarvestExpressRespon<List<QueryReturnGoodsEntity>> listHarvestExpressRespon,
+                                          Call call, Response response) {
                         if (listHarvestExpressRespon.rows != null) {
                             total = listHarvestExpressRespon.total;
                             mList = listHarvestExpressRespon.rows;
