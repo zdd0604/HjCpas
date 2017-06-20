@@ -2,11 +2,9 @@ package com.hj.casps.quotes;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.widget.DrawerLayout;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -228,7 +226,7 @@ public class MmbActivity extends ActivityBaseHeader2 implements View.OnClickList
         person_list.setAdapter(adapter_person);
         adapter_group = new MmbAdapter(mmbModelGroup, this, R.layout.item_mmb, 2);
         group_list.setAdapter(adapter_group);
-        switch (rangType){
+        switch (rangType) {
             case 0:
                 layout_check_mmb_pub.setChecked(true);
                 break;
@@ -356,8 +354,7 @@ public class MmbActivity extends ActivityBaseHeader2 implements View.OnClickList
         @Override
         public void bindData(ViewHolder holder, final MmbModelPerson mmbModelPerson, final int indexPos) {
             TextView mmb_name = (TextView) holder.getView(R.id.mmb_name);
-            final DrawerLayout drawer_layout = (DrawerLayout) holder.getView(R.id.drawer_layout);
-            drawer_layout.setScrimColor(Color.TRANSPARENT);
+
             switch (i) {
                 case 1:
                     mmb_name.setText(mmbModelPerson.getMmbSname());
@@ -368,6 +365,12 @@ public class MmbActivity extends ActivityBaseHeader2 implements View.OnClickList
             }
 
             final TextView delete_mmb_item = (TextView) holder.getView(R.id.delete_mmb_item);
+            mmb_name.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    delete_mmb_item.setVisibility(View.VISIBLE);
+                }
+            });
             delete_mmb_item.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -391,7 +394,6 @@ public class MmbActivity extends ActivityBaseHeader2 implements View.OnClickList
                                         return;
                                     } else {
                                         refreshData();
-                                        drawer_layout.closeDrawer(delete_mmb_item);
                                     }
                                 }
                             });
