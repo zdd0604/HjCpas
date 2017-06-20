@@ -341,7 +341,7 @@ public class ActivityLogin extends ActivityBase {
                                     UserBeanUtils.getInstance(ActivityLogin.this).setCurrentUserBean(reUserBean);
                                     setPublicArg(reUserBean);
                                     goNext();
-                                } else if (loginBean.getReturn_code() == 101) {
+                                } /*else if (loginBean.getReturn_code() == 101) {
                                     ToastUtils.showToast(ActivityLogin.this, "用户不存在");
                                     return;
                                 } else if (loginBean.getReturn_code() == 102) {
@@ -353,6 +353,9 @@ public class ActivityLogin extends ActivityBase {
                                 } else if (loginBean.getReturn_code() == 999) {
                                     ToastUtils.showToast(ActivityLogin.this, "未知错误");
                                     return;
+                                }*/
+                                else{
+                                    ToastUtils.showToast(ActivityLogin.this, loginBean.getReturn_message());
                                 }
 
                             }

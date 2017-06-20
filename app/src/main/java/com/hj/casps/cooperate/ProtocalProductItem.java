@@ -255,7 +255,6 @@ public class ProtocalProductItem extends ActivityBaseHeader2 implements View.OnC
         setResult(22);
         finish();
     }
-
     //三级菜单加载
     private ArrayList<ProtocalProductItem.GoodLevelEntity> generateData1() {
         ArrayList<ProtocalProductItem.GoodLevelEntity> res = new ArrayList<>();
