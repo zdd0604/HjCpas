@@ -24,6 +24,7 @@ import com.hj.casps.entity.appUser.ToEditUserPageEntity;
 import com.hj.casps.entity.appUser.ToEditUserPageLoading;
 import com.hj.casps.entity.appUser.ToEditUserPageRespon;
 import com.hj.casps.entity.appordergoodsCallBack.JsonCallBack;
+import com.hj.casps.util.LogoutUtils;
 import com.hj.casps.util.StringUtils;
 import com.lzy.okgo.OkGo;
 
@@ -249,6 +250,10 @@ public class OperatorAdd extends ActivityBaseHeader2 implements View.OnClickList
                         super.onError(call, response, e);
                         toastSHORT(e.getMessage());
                         waitDialogRectangle.dismiss();
+                        if (Constant.public_code){
+                            //退出操作
+
+                        }
                     }
                 });
     }

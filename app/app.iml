@@ -154,5 +154,28 @@
     <orderEntry type="module" module-name="librefresh" exported="" />
     <orderEntry type="module" module-name="libcommon" exported="" />
     <orderEntry type="module" module-name="magicindicator" exported="" />
+    <orderEntry type="library" exported="" name="support-compat-25.1.0" level="project" />
+    <orderEntry type="library" exported="" name="support-fragment-25.1.0" level="project" />
+    <orderEntry type="library" exported="" name="animated-vector-drawable-25.1.0" level="project" />
+    <orderEntry type="library" exported="" name="support-annotations-25.1.0" level="project" />
+    <orderEntry type="library" exported="" name="support-v4-25.1.0" level="project" />
+    <orderEntry type="library" exported="" name="support-core-ui-25.1.0" level="project" />
+    <orderEntry type="library" exported="" name="support-media-compat-25.1.0" level="project" />
+    <orderEntry type="library" exported="" name="support-vector-drawable-25.1.0" level="project" />
+    <orderEntry type="library" exported="" name="appcompat-v7-25.1.0" level="project" />
+    <orderEntry type="library" exported="" name="support-core-utils-25.1.0" level="project" />
+    <orderEntry type="library" exported="" name="converter-fastjson-2.1.0" level="project" />
+    <orderEntry type="library" exported="" name="fastjson-1.2.13" level="project" />
+    <orderEntry type="library" exported="" name="umeng-analytics-5.4.1" level="project" />
+    <orderEntry type="library" exported="" name="BmobSDK_3.5.3_20161109" level="project" />
+    <orderEntry type="library" exported="" name="glide-3.7.0" level="project" />
+    <orderEntry type="library" exported="" name="rxjava-1.1.5" level="project" />
+    <orderEntry type="library" exported="" name="retrofit-2.1.0" level="project" />
+    <orderEntry type="library" exported="" name="adapter-rxjava-2.1.0" level="project" />
+    <orderEntry type="library" exported="" name="support-annotations-23.4.0" level="project" />
+    <orderEntry type="library" exported="" name="animated-vector-drawable-23.4.0" level="project" />
+    <orderEntry type="library" exported="" name="support-v4-23.4.0" level="project" />
+    <orderEntry type="library" exported="" name="support-vector-drawable-23.4.0" level="project" />
+    <orderEntry type="library" exported="" name="appcompat-v7-23.4.0" level="project" />
   </component>
 </module>

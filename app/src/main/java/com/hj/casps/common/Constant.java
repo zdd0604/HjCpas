@@ -31,14 +31,10 @@ public class Constant {
     //内网正式 http://192.168.0.135:8081
 //    http://192.168.0.250:8080
 //
-    // public static final String HTTPURLALL = "http://192.168.0.120:8081";
+    public static final String HTTPURLALL = "http://192.168.0.120:8081";
     //    public static final String HTTPURLALL = "http://192.168.0.250:8080";
 //    public static final String HTTPURLALL = "http://192.168.1.120:8081";
-    //http://192.168.0.250:8080
-//    public static final String HTTPURLALL = "http://192.168.0.120:8081";
-    //    public static final String HTTPURLALL = "http://192.168.0.250:8080";
-//    public static final String HTTPURLALL = "http://192.168.1.120:8081";
-    public static final String HTTPURLALL = "http://123.126.109.166:2000";
+//    public static final String HTTPURLALL = "http://123.126.109.166:2000";
     //公共的请求头
     public static final String HTTPURL = HTTPURLALL + "/v2/";
     //短url
@@ -924,6 +920,10 @@ public class Constant {
 
     //  判断是否选择图片到商品编辑的标记
     public static boolean isAddPic = false;
+
+    //判断后台返回的值
+//    public static int public_code = 0;
+    public static boolean public_code = false;
 
     public static void clearDatas() {
         appOrderMoney_orderId = "";//string	订单号

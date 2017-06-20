@@ -211,6 +211,9 @@ public abstract class JsonCallBack<T> extends AbsCallback<T> {
                 throw new IllegalStateException(toEditUserPageRespon.return_message);
             } else if (code == 201) {
                 throw new IllegalStateException(toEditUserPageRespon.return_message);
+            } else if (code == 1101 || code == 2101) {
+                Constant.public_code = true;
+                throw new IllegalStateException(toEditUserPageRespon.return_message);
             } else {
                 throw new IllegalStateException("错误代码：" + code + "，错误信息：" + toEditUserPageRespon.return_message);
             }
