@@ -78,7 +78,6 @@ public class CooperateDetail extends ActivityBaseHeader2 implements View.OnClick
         switch (type) {
             case 0:
                 setTitle(getString(R.string.cooperate_detail));
-
                 relation_member = getIntent().getStringExtra("relation_member");
                 buztype = getIntent().getStringExtra("buztype");
                 CDLoading cdLoading = new CDLoading(Constant.publicArg.getSys_token(),
@@ -192,10 +191,8 @@ public class CooperateDetail extends ActivityBaseHeader2 implements View.OnClick
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (from_net) {
                     from_net = false;
-                } else {
-                    opencloseMMB(b, "1");
-
                 }
+                opencloseMMB(b, "1");
             }
         });
         toggle_coop_sell.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -203,10 +200,8 @@ public class CooperateDetail extends ActivityBaseHeader2 implements View.OnClick
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (from_net) {
                     from_net = false;
-                } else {
-                    opencloseMMB(b, "2");
-
                 }
+                opencloseMMB(b, "2");
             }
         });
     }
@@ -229,14 +224,11 @@ public class CooperateDetail extends ActivityBaseHeader2 implements View.OnClick
             if (this.type == 0) {
                 switch (type) {
                     case "1":
-
                         cooperate_create_buy.setVisibility(View.VISIBLE);
-
                         break;
                     case "2":
                         cooperate_create_sell.setVisibility(View.VISIBLE);
                         break;
-
                 }
             }
 

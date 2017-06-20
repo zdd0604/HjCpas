@@ -479,7 +479,7 @@ public class RefundActivity extends ActivityBaseHeader implements OnPullListener
     public void onLoading(AbsRefreshLayout listLoader) {
         pageno++;
         layout_bottom_check_1.setChecked(false);
-        selectAll(false);
+//        selectAll(false);
         isEmptyParam();
         initData(pageno);
         mLoader.onLoadFinished();//加载结束

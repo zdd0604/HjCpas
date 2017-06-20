@@ -446,15 +446,13 @@ public class ActivityBase extends ActivityCommBase implements
         myDialog.show();
     }
 
-    private void exitUser() {
+    public void exitUser() {
         UserBean currentUser = UserBeanUtils.getInstance(this).getCurrentUser();
         currentUser.setTokenIsActive(false);
         UserBeanUtils.getInstance(this).updateToken(currentUser);
         if (isNetConnect()) {
             httpExitApp();
         }
-//        Intent intent=new Intent();
-//        intent.putExtra(Constant.INTENT_IS_LOGINOUT,Constant.INTENT_IS_LOGINOUT);
         intentActivity(this, ActivityLogin.class);
         finish();
     }
@@ -481,6 +479,8 @@ public class ActivityBase extends ActivityCommBase implements
                                 toastSHORT(loginBean.getReturn_message());
                             } else if (loginBean.getReturn_code() == 999) {
                                 toastSHORT(loginBean.getReturn_message());
+                            }else{
+                                toastSHORT("其他异常");
                             }
                         }
                     }

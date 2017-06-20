@@ -41,7 +41,6 @@
             android:layout_marginTop="@dimen/size_10"
             android:background="@color/lineColor" />
         <Button
-
             android:id="@+id/add"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -92,10 +92,9 @@ public class HejiaApp extends MultiDexApplication {
 
     }
 
-    private DaoSession daoSession;
+    public  static DaoSession daoSession;
 
-
-    private void initGreenDao() {
+    private  void initGreenDao() {
         /*A flag to show how easily you can switch from standard SQLite to the encrypted SQLCipher.*/
         boolean ENCRYPTED = false;
         DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, ENCRYPTED ? "notes-db-encrypted" : "notes-db");

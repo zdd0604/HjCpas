@@ -137,4 +137,22 @@ public class QueryPendingSttleGain implements Serializable {
     public void setCheck(boolean check) {
         isCheck = check;
     }
+
+    @Override
+    public String toString() {
+        return "QueryPendingSttleGain{" +
+                "myTime='" + myTime + '\'' +
+                ", myMoney='" + myMoney + '\'' +
+                ", isCheck=" + isCheck +
+                ", ctrMoney=" + ctrMoney +
+                ", ctrTime=" + ctrTime +
+                ", id='" + id + '\'' +
+                ", mmbgetId='" + mmbgetId + '\'' +
+                ", mmbgetName='" + mmbgetName + '\'' +
+                ", mmbpayId='" + mmbpayId + '\'' +
+                ", mmbpayName='" + mmbpayName + '\'' +
+                ", settleCode=" + settleCode +
+                ", settleMoney=" + settleMoney +
+                '}';
+    }
 }

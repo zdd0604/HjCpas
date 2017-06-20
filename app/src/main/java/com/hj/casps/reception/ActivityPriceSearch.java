@@ -279,7 +279,7 @@ public class ActivityPriceSearch extends ActivityBaseHeader3 implements View.OnC
             public void onSuccess(String data, Call call, Response response) {
                 PubMap pubMap = GsonTools.changeGsonToBean(data, PubMap.class);
                 if (pubMap.getReturn_code() == 0) {
-                    new MyToast(ActivityPriceSearch.this, pubMap.getMsg());
+                    new MyToast(ActivityPriceSearch.this, "添加购物车成功");
                     refreshShopCar();
                 }
             }
@@ -407,7 +407,7 @@ public class ActivityPriceSearch extends ActivityBaseHeader3 implements View.OnC
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK &&resultCode == Constant.REQUEST_QUOTE){
+        if (resultCode == RESULT_OK &&requestCode == Constant.REQUEST_QUOTE){
             pageno = 0;
             isEmptyParam();
             isReSave = false;

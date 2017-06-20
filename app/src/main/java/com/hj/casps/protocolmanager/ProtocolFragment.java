@@ -63,6 +63,7 @@ import static com.hj.casps.common.Constant.publicArg;
  * 协议列表和订单列表都放在了这里。为了是软件不冗余，减少设计的界面，以用此法
  */
 public class ProtocolFragment extends ViewPagerFragment1 implements View.OnClickListener, OnPullListener {
+
     private int protocol_type;
     private ListView protocol_list;
     private List<ProtocolListBean> protocolModels = new ArrayList<>();
@@ -262,13 +263,39 @@ public class ProtocolFragment extends ViewPagerFragment1 implements View.OnClick
                 ProtocolModelForPost post = null;
                 switch (protocol_type) {
                     case 0:
-                        post = new ProtocolModelForPost(publicArg.getSys_token(), getUUID(), SYS_FUNC101100350001, publicArg.getSys_user(), publicArg.getSys_member(), String.valueOf(page + 1), "10", "submit", protocol_type_j == 0 ? "" : String.valueOf(protocol_type_j), PROTOCOL_TITLE, "");
+                        post = new ProtocolModelForPost(publicArg.getSys_token(),
+                                getUUID(),
+                                Constant.SYS_FUNC101100350005,
+                                publicArg.getSys_user(),
+                                publicArg.getSys_member(),
+                                String.valueOf(page + 1),
+                                "10",
+                                "submit",
+                                protocol_type_j == 0 ? "" : String.valueOf(protocol_type_j),
+                                PROTOCOL_TITLE, "");
                         break;
                     case 1:
-                        post = new ProtocolModelForPost(publicArg.getSys_token(), getUUID(), SYS_FUNC101100350002, publicArg.getSys_user(), publicArg.getSys_member(), String.valueOf(page + 1), "10", "pending", protocol_type_j == 0 ? "" : String.valueOf(protocol_type_j), PROTOCOL_TITLE, "");
+                        post = new ProtocolModelForPost(
+                                publicArg.getSys_token(),
+                                getUUID(),
+                                Constant.SYS_FUNC101100350004,
+                                publicArg.getSys_user(),
+                                publicArg.getSys_member(),
+                                String.valueOf(page + 1), "10", "pending",
+                                protocol_type_j == 0 ? "" : String.valueOf(protocol_type_j),
+                                PROTOCOL_TITLE, "");
                         break;
                     case 2:
-                        post = new ProtocolModelForPost(publicArg.getSys_token(), getUUID(), SYS_FUNC101100350003, publicArg.getSys_user(), publicArg.getSys_member(), String.valueOf(page + 1), "10", "running", protocol_type_j == 0 ? "" : String.valueOf(protocol_type_j), PROTOCOL_TITLE, PROTOCOL_STATUS);
+                        post = new ProtocolModelForPost(
+                                publicArg.getSys_token(),
+                                getUUID(),
+                                SYS_FUNC101100350003,
+                                publicArg.getSys_user(),
+                                publicArg.getSys_member(),
+                                String.valueOf(page + 1),
+                                "10", "running",
+                                protocol_type_j == 0 ? "" : String.valueOf(protocol_type_j),
+                                PROTOCOL_TITLE, PROTOCOL_STATUS);
                         break;
                 }
 
@@ -318,7 +345,19 @@ public class ProtocolFragment extends ViewPagerFragment1 implements View.OnClick
                 String url = null;
                 switch (protocol_type) {
                     case 0:
-                        post1 = new ProtocolModelForPost(publicArg.getSys_token(), getUUID(), SYS_FUNC101100410004, publicArg.getSys_user(), publicArg.getSys_name(), publicArg.getSys_member(), String.valueOf(page + 1), "10", "", ORDER_ORDER_ID, String.valueOf(protocol_type_j + 1), ORDER_NAME);
+                        post1 = new ProtocolModelForPost(
+                                publicArg.getSys_token(),
+                                getUUID(),
+                                SYS_FUNC101100410004,
+                                publicArg.getSys_user(),
+                                publicArg.getSys_name(),
+                                publicArg.getSys_member(),
+                                String.valueOf(page + 1),
+                                "10",
+                                "",
+                                ORDER_ORDER_ID,
+                                String.valueOf(protocol_type_j + 1),
+                                ORDER_NAME);
                         url = Constant.QueryMyPendingOrderUrl;
                         break;
                     case 1:
@@ -379,7 +418,6 @@ public class ProtocolFragment extends ViewPagerFragment1 implements View.OnClick
 
     //做初始化View的操作
     protected void initView(View layout) {
-
         order_divider = (View) layout.findViewById(R.id.order_divider);
         select_all_order = (CheckBox) layout.findViewById(R.id.select_all_order);
         order_lock = (TextView) layout.findViewById(R.id.order_lock);
