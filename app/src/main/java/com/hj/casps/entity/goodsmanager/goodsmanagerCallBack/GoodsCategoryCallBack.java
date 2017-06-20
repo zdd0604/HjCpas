@@ -1,6 +1,7 @@
 package com.hj.casps.entity.goodsmanager.goodsmanagerCallBack;
 
 import com.google.gson.stream.JsonReader;
+import com.hj.casps.common.Constant;
 import com.hj.casps.entity.appordermoney.JsonResponse;
 import com.hj.casps.entity.goodsmanager.response.GoodsCategoryEntity;
 import com.hj.casps.user.LoginContextBean;
@@ -66,7 +67,11 @@ public abstract class GoodsCategoryCallBack<T> extends AbsCallback<T> {
                 throw new IllegalStateException(goodsCategoryEntity.return_message);
             } else if (code == 201) {
                 throw new IllegalStateException(goodsCategoryEntity.return_message);
-            } else {
+            }/*else if(code==1101||code==1102){
+                Constant.PubCode=true;
+                throw new IllegalStateException(goodsCategoryEntity.return_message);
+            }*/
+            else {
                 throw new IllegalStateException("错误代码：" + code + "，错误信息：" + goodsCategoryEntity.return_message);
             }
         } else {

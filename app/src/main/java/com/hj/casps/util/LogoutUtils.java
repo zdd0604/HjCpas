@@ -67,7 +67,7 @@ public class LogoutUtils {
         return false;
     }
 
-    private static void exitUser(Activity context) {
+    public static void exitUser(Activity context) {
         UserBean currentUser = UserBeanUtils.getInstance(context).getCurrentUser();
         currentUser.setTokenIsActive(false);
         UserBeanUtils.getInstance(context).updateToken(currentUser);

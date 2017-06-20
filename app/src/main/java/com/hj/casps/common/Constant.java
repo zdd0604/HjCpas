@@ -45,6 +45,8 @@ public class Constant {
     public static final String HOME_HTTP_URL = HTTPURLALL + "/v2/app/index.html";
     //图片的url
     public static final String HTTPURLIMAGE = HTTPURLALL + "/v2content/upload/";
+    //公共的跳转到登录的返回码
+    public static  boolean PubCode=false;
     //当前会员地址列表
     public static final String QueryMmbWareHouseUrl = HTTPURL + "appOrderGoods/queryMmbWareHouse.app";
     //编辑查询

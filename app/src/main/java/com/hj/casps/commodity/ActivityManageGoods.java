@@ -144,10 +144,12 @@ public class ActivityManageGoods extends ActivityBaseHeader implements View.OnCl
                             mHandler.sendEmptyMessage(Constant.HANDLERTYPE_0);
                         }
                     }
-
                     @Override
                     public void onError(Call call, Response response, Exception e) {
                         super.onError(call, response, e);
+                       /* if(Constant.PubCode){
+                            LogoutUtils.exitUser(ActivityManageGoods.this);
+                        }*/
                     }
                 });
 

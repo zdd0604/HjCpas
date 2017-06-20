@@ -448,10 +448,40 @@ public abstract class JsonCallBack<T> extends AbsCallback<T> {
                 throw new IllegalStateException("错误代码：" + code + "，错误信息：" + respon.return_message);
             }
         }
+
+        /**
+         * 获取银行列表
+         */
+        else if (rawType == QueryMmbBankAccountRespon.class) {
+            //有数据类型，表示有data
+            QueryMmbBankAccountRespon respon = Convert.fromJson(jsonReader, type);
+            response.close();
+            int code = respon.return_code;
+            //这里的0是以下意思
+            //一般来说服务器会和客户端约定一个数表示成功，其余的表示失败，这里根据实际情况修改
+            if (code == 0) {
+                return (T) respon;
+            } else if (code == 101) {
+                throw new IllegalStateException(respon.return_message);
+            } else if (code == 201) {
+                throw new IllegalStateException(respon.return_message);
+            } else if (code == 999) {
+                throw new IllegalStateException(respon.return_message);
+            }
+            else if (code == 1101||code==1102) {
+                throw new IllegalStateException(respon.return_message);
+            }
+            else {
+                throw new IllegalStateException("错误代码：" + code + "，错误信息：" + respon.return_message);
+            }
+        }
+
+
         /**
          * 类无法解析
          */
         else {
+
             response.close();
             throw new IllegalStateException("基类错误无法解析!");
         }

@@ -281,33 +281,19 @@ public class ActivityLogin extends ActivityBase {
                                      if (httploginBean.getReturn_code() == 0) {
                                          //判断数据库有没有该用户数据，有就直接登录
                                          httpGetContext(httploginBean, username, password);
-//                                         UserBean userBean = new UserBean(1L, et_userName, et_password,userId,
-//                                                 loginBean.getToken(), "", "", "",
-//                                                 true, true);
-//                                         UserBeanUtils.getInstance(ActivityLogin.this).setCurrentUserBean(userBean);
-                                     } else {
+                                     }
+                                     else {
                                          toastSHORT(httploginBean.getReturn_message());
                                          return;
                                      }
-//                                     else if (httploginBean.getReturn_code() == 101) {
-//                                         ToastUtils.showToast(ActivityLogin.this, "用户不存在");
-//                                         return;
-//                                     } else if (httploginBean.getReturn_code() == 102) {
-//                                         ToastUtils.showToast(ActivityLogin.this, "密码错误");
-//                                         return;
-//                                     } else if (httploginBean.getReturn_code() == 103) {
-//                                         ToastUtils.showToast(ActivityLogin.this, "短信码错误");
-//                                         return;
-//                                     } else if (httploginBean.getReturn_code() == 104) {
-//                                         ToastUtils.showToast(ActivityLogin.this, "短信未发送");
-//                                         return;
-//                                     } else if (httploginBean.getReturn_code() == 999) {
-//                                         ToastUtils.showToast(ActivityLogin.this, "未知错误");
-//                                         return;
-//                                     }
                                  }
                              }
 
+                    /*else if(httploginBean.getReturn_code()==1101){
+                                toastSHORT("被别的设备登录了");
+                            }else if(httploginBean.getReturn_code()==1102){
+                                toastSHORT("令牌超时或者退出登录失效了");
+                            }*/
                              @Override
                              public void onError(Call call, Response response, Exception e) {
                                  super.onError(call, response, e);
