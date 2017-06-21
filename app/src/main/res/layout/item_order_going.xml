@@ -141,8 +141,7 @@
             <mehdi.sakout.fancybuttons.FancyButton
                 android:id="@+id/order_going_btn2"
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/size_40"
-                android:layout_marginLeft="@dimen/main_margin"
+                android:layout_height="@dimen/size_30"
                 android:gravity="center"
                 android:paddingLeft="@dimen/size_20"
                 android:paddingRight="@dimen/size_20"
@@ -153,13 +152,12 @@
                 app:fb_focusColor="@color/title_bg"
                 app:fb_radius="@dimen/size_5"
                 app:fb_text="@string/quotes_edit"
-                app:fb_textColor="@color/title_bg"
-                app:fb_textSize="@dimen/btn_size" />
+                app:fb_textColor="@color/title_bg" />
 
             <mehdi.sakout.fancybuttons.FancyButton
                 android:id="@+id/order_going_btn"
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/size_40"
+                android:layout_height="@dimen/size_30"
                 android:layout_marginLeft="@dimen/size_5"
                 android:layout_marginRight="@dimen/size_10"
                 android:gravity="center"
@@ -171,8 +169,7 @@
                 app:fb_focusColor="@color/title_bg"
                 app:fb_radius="@dimen/size_5"
                 app:fb_text="@string/quotes_edit"
-                app:fb_textColor="@color/title_bg"
-                app:fb_textSize="@dimen/btn_size" />
+                app:fb_textColor="@color/title_bg" />
         </LinearLayout>
     </LinearLayout>
 
