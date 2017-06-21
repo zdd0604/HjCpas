@@ -33,6 +33,7 @@ import com.hj.casps.ui.ChangeAddressPopwindow;
 import com.hj.casps.ui.MyToast;
 import com.hj.casps.util.CheckFormUtils;
 import com.hj.casps.util.GsonTools;
+import com.hj.casps.util.LogoutUtils;
 import com.hj.casps.util.StringUtils;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.AbsCallback;
@@ -370,7 +371,13 @@ public class EditCardActivity extends ActivityBaseHeader2 implements View.OnClic
                     setResult(Constant.CARD_EDIT);
                     mHandler.sendEmptyMessage(Constant.HANDLERTYPE_5);
                     EditCardActivity.this.finish();
-                } else {
+                }else if(return_code==1101||return_code==1102){
+                    toastSHORT("重复登录或令牌超时");
+                    LogoutUtils.exitUser(EditCardActivity.this);
+                }
+
+
+                else {
                     toast(return_message);
                 }
                 return null;
@@ -420,7 +427,11 @@ public class EditCardActivity extends ActivityBaseHeader2 implements View.OnClic
                     setResult(Constant.CARD_ADD);
                     mHandler.sendEmptyMessage(Constant.HANDLERTYPE_4);
                     EditCardActivity.this.finish();
-                } else {
+                }else if(return_code==1101||return_code==1102){
+                    LogoutUtils.exitUser(EditCardActivity.this);
+                }
+
+                else {
                     toast(return_message);
                 }
                 return null;
@@ -515,7 +526,12 @@ public class EditCardActivity extends ActivityBaseHeader2 implements View.OnClic
                         EditCardActivity.this.isOne = num == 0 ? true : false;
                         mHandler.sendEmptyMessage(Constant.HANDLERTYPE_1);
                         waitDialogRectangle.dismiss();
-                    } else {
+                    }else if(return_code==1101||return_code==1102){
+                        LogoutUtils.exitUser(EditCardActivity.this);
+                    }
+
+
+                    else {
                         toast(return_message);
                     }
                 }

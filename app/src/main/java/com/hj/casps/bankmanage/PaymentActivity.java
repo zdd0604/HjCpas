@@ -16,6 +16,7 @@ import com.hj.casps.R;
 import com.hj.casps.adapter.payadapter.PayMentAdapter;
 import com.hj.casps.adapter.payadapter.PayMentCodeAdapter;
 import com.hj.casps.base.ActivityBaseHeader;
+import com.hj.casps.base.QuotePriceNavLeftFragment;
 import com.hj.casps.common.Constant;
 import com.hj.casps.entity.PublicArg;
 import com.hj.casps.entity.appordergoodsCallBack.JsonCallBack;
@@ -31,6 +32,7 @@ import com.hj.casps.ui.MyDialog;
 import com.hj.casps.ui.MyListView;
 import com.hj.casps.ui.MyToast;
 import com.hj.casps.util.GsonTools;
+import com.hj.casps.util.LogoutUtils;
 import com.hj.casps.util.StringUtils;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
@@ -215,7 +217,10 @@ public class PaymentActivity extends ActivityBaseHeader implements View.OnClickL
                             PaymentActivity.this.mList = listData.list;
                             PaymentActivity.this.pageCount = listData.pagecount;
                             refreshUI();
-                        } else {
+                        }
+
+
+                        else {
                             toastSHORT("查询数据为空");
                         }
                     }
@@ -225,6 +230,9 @@ public class PaymentActivity extends ActivityBaseHeader implements View.OnClickL
                         super.onError(call, response, e);
                         toastSHORT(e.getMessage());
                         waitDialogRectangle.dismiss();
+                        if (Constant.public_code){
+                            LogoutUtils.exitUser(PaymentActivity.this);
+                        }
                     }
                 });
     }
@@ -480,7 +488,14 @@ public class PaymentActivity extends ActivityBaseHeader implements View.OnClickL
                     //传true是需要请求网络
                     clearDatas(true);
 
-                } else {
+                }
+                else if(pub.getReturn_code()==1101||pub.getReturn_code()==1102){
+                    toastSHORT("重复登录或令牌超时");
+                    LogoutUtils.exitUser(PaymentActivity.this);
+                }
+
+
+                else {
                     toastSHORT(pub.getReturn_message());
                 }
             }

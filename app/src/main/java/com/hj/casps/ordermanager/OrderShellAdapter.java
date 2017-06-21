@@ -17,6 +17,7 @@ import com.google.gson.Gson;
 import com.hj.casps.R;
 import com.hj.casps.adapter.WZYBaseAdapter;
 import com.hj.casps.common.Constant;
+import com.hj.casps.util.LogoutUtils;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 
@@ -165,7 +166,14 @@ public class OrderShellAdapter extends WZYBaseAdapter<OrderShellModel> {
                         }
                         if (backDetail.getReturn_code() != 0) {
                             Toast.makeText(context, backDetail.getReturn_message(), Toast.LENGTH_SHORT).show();
-                        } else {
+                        }
+                        else if(backDetail.getReturn_code()==1101||backDetail.getReturn_code()==1102){
+                            
+                            LogoutUtils.exitUser(activity);
+                        }
+
+
+                        else {
                             Toast.makeText(context, "已删除", Toast.LENGTH_SHORT).show();
                             orderShellModel.setDelete(true);
                             BuyShell.buyShell.refresh();

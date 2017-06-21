@@ -23,6 +23,7 @@ import com.hj.casps.common.Constant;
 import com.hj.casps.ordermanager.OrderDetail;
 import com.hj.casps.ordermanager.OrderShellModel;
 import com.hj.casps.ui.MyGridView;
+import com.hj.casps.util.LogoutUtils;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 
@@ -190,7 +191,11 @@ public class CooperateCreate extends ActivityBaseHeader2 implements View.OnClick
                         EditBack databack = mGson.fromJson(s, EditBack.class);
                         if (databack.getReturn_code() != 0) {
                             Toast.makeText(context, databack.getReturn_message(), Toast.LENGTH_SHORT).show();
-                        } else {
+                        }else if(databack.getReturn_code()==1101||databack.getReturn_code()==1102){
+                            toastSHORT("重复登录或令牌超时");
+                            LogoutUtils.exitUser(CooperateCreate.this);
+                        }
+                        else {
                             buy_mmb_id = databack.getData().getBuy_mmb_id();
                             sell_mmb_id = databack.getData().getSell_mmb_id();
                             cooperate_buy_role.setText(databack.getData().getBuy_membername());
@@ -330,7 +335,13 @@ public class CooperateCreate extends ActivityBaseHeader2 implements View.OnClick
                         DataBack databack = mGson.fromJson(s, DataBack.class);
                         if (databack.getReturn_code() != 0) {
                             Toast.makeText(context, databack.getReturn_message(), Toast.LENGTH_SHORT).show();
-                        } else {
+                        }else if(databack.getReturn_code()==1101||databack.getReturn_code()==1102){
+                            toastSHORT("重复登录或令牌超时");
+                            LogoutUtils.exitUser(CooperateCreate.this);
+                        }
+
+
+                        else {
                             buy_mmb_id = databack.getBuy_mmb_id();
                             sell_mmb_id = databack.getSell_mmb_id();
                             setView(databack);
@@ -714,7 +725,13 @@ public class CooperateCreate extends ActivityBaseHeader2 implements View.OnClick
                 DataBack databack = mGson.fromJson(s, DataBack.class);
                 if (databack.getReturn_code() != 0) {
                     Toast.makeText(context, databack.getReturn_message(), Toast.LENGTH_SHORT).show();
-                } else {
+                }else if(databack.getReturn_code()==1101||databack.getReturn_code()==1102){
+                    toastSHORT("重复登录或令牌超时");
+                    LogoutUtils.exitUser(CooperateCreate.this);
+                }
+
+
+                else {
                     toast("提交完成");
                     finalGoodLevelEntities.clear();
                     oldGoodLevelEntities.clear();

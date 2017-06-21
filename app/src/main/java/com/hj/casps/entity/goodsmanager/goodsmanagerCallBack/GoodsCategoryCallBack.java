@@ -67,10 +67,10 @@ public abstract class GoodsCategoryCallBack<T> extends AbsCallback<T> {
                 throw new IllegalStateException(goodsCategoryEntity.return_message);
             } else if (code == 201) {
                 throw new IllegalStateException(goodsCategoryEntity.return_message);
-            }/*else if(code==1101||code==1102){
-                Constant.PubCode=true;
+            }else if(code==1101||code==1102){
+                Constant.public_code=true;
                 throw new IllegalStateException(goodsCategoryEntity.return_message);
-            }*/
+            }
             else {
                 throw new IllegalStateException("错误代码：" + code + "，错误信息：" + goodsCategoryEntity.return_message);
             }

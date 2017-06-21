@@ -39,6 +39,7 @@ import com.hj.casps.quotes.CreateQuotes;
 import com.hj.casps.reception.ActivityPriceSearch;
 import com.hj.casps.util.GsonTools;
 import com.hj.casps.util.LogToastUtils;
+import com.hj.casps.util.LogoutUtils;
 import com.hj.casps.util.MenuUtils;
 import com.lzy.okgo.OkGo;
 
@@ -111,6 +112,9 @@ public class QuotePriceNavLeftFragment extends FragmentBase {
                     public void onError(Call call, Response response, Exception e) {
                         super.onError(call, response, e);
                         toastSHORT(e.getMessage());
+                        if (Constant.public_code){
+                            LogoutUtils.exitUser(QuotePriceNavLeftFragment.this);
+                        }
                     }
                 });
 

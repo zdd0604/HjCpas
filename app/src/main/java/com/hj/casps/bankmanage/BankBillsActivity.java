@@ -480,6 +480,15 @@ public class BankBillsActivity extends ActivityBaseHeader implements View.OnClic
                             getQueryMmbBankAccountGainDatas();
                         }
                     }
+
+                    @Override
+                    public void onError(Call call, Response response, Exception e) {
+                        super.onError(call, response, e);
+                        toastSHORT(e.getMessage());
+                        if (Constant.public_code){
+                            LogoutUtils.exitUser(BankBillsActivity.this);
+                        }
+                    }
                 });
     }
 

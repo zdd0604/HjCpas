@@ -26,6 +26,7 @@ import com.hj.casps.common.Constant;
 import com.hj.casps.cooperate.CooperateGroupSearch;
 import com.hj.casps.entity.appQuote.ChooseGoodsBack;
 import com.hj.casps.entity.appQuote.ChooseGoodsPost;
+import com.hj.casps.util.LogoutUtils;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 
@@ -177,7 +178,11 @@ public class BuyShell extends ActivityBaseHeader2 implements View.OnClickListene
                             }
                             if (backDetail.getReturn_code() != 0) {
                                 Toast.makeText(getApplicationContext(), backDetail.getReturn_message(), Toast.LENGTH_SHORT).show();
-                            } else {
+                            }else if(backDetail.getReturn_code()==1101||backDetail.getReturn_code()==1102){
+                                toastSHORT(backDetail.getReturn_message());
+                                LogoutUtils.exitUser(BuyShell.this);
+                            }
+                            else {
                                 mtlistbeans = backDetail.getMtList();
                                 if (mtlistbeans == null || mtlistbeans.isEmpty()) {
 //                                Toast.makeText(context, "没有订单", Toast.LENGTH_SHORT).show();
@@ -408,7 +413,12 @@ public class BuyShell extends ActivityBaseHeader2 implements View.OnClickListene
                             }
                             if (backDetail.getReturn_code() != 0) {
                                 Toast.makeText(getApplicationContext(), backDetail.getReturn_message(), Toast.LENGTH_SHORT).show();
-                            } else {
+                            }else if(backDetail.getReturn_code()==1101||backDetail.getReturn_code()==1102){
+                                toastSHORT("重复登录或令牌超时");
+                                LogoutUtils.exitUser(BuyShell.this);
+                            }
+
+                            else {
 //                                Toast.makeText(getApplicationContext(), backDetail.getReturn_message(), Toast.LENGTH_SHORT).show();
                                 bundle.putInt("no", no);
                                 bundle.putString("goodsId", finalChooseGood.getGoodsId());

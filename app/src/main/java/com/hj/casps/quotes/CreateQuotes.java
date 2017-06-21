@@ -24,6 +24,7 @@ import com.hj.casps.commodity.ImageData;
 import com.hj.casps.commodity.SelectPicture_new;
 import com.hj.casps.common.Constant;
 import com.hj.casps.entity.appQuote.EditQuoteEntity;
+import com.hj.casps.util.LogoutUtils;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 
@@ -365,7 +366,13 @@ public class CreateQuotes extends ActivityBaseHeader2 implements View.OnClickLis
             toast(returnBean.getReturn_message());
             setResult(33);
             finish();
-        } else {
+        }else if(returnBean.getReturn_code() ==1101||returnBean.getReturn_code() ==1102){
+            toastSHORT("重复登录或令牌超时");
+            LogoutUtils.exitUser(CreateQuotes.this);
+        }
+
+
+        else {
             toast(returnBean.getReturn_message());
         }
     }

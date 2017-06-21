@@ -43,6 +43,7 @@ import com.hj.casps.entity.picturemanager.request.ResUpdateDiv;
 import com.hj.casps.ui.MyDialog;
 import com.hj.casps.ui.MyToast;
 import com.hj.casps.util.GsonTools;
+import com.hj.casps.util.LogoutUtils;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.AbsCallback;
 import com.lzy.okgo.callback.StringCallback;
@@ -91,6 +92,8 @@ public class FragementTemporaryPic extends FragmentBase {
         }
 
     }
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -651,7 +654,12 @@ public class FragementTemporaryPic extends FragmentBase {
                     new MyToast(getActivity(), "删除成功");
                     SelectPicture_new context = (SelectPicture_new) FragementTemporaryPic.this.getContext();
                     context.setDelCallBack(baseId);
-                } else {
+                }else if(pub.getReturn_code()==1101||pub.getReturn_code()==1102){
+                    LogoutUtils.exitUser(FragementTemporaryPic.this);
+                }
+
+
+                else {
                     toastSHORT(pub.getReturn_message());
                     return;
                 }

@@ -247,7 +247,10 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
 
                         if (databack.getReturn_code() != 0) {
                             Toast.makeText(context, databack.getReturn_message(), Toast.LENGTH_SHORT).show();
-                        } else {
+                        }else if(databack.getReturn_code()==1101||databack.getReturn_code()==1102){
+                            LogoutUtils.exitUser(OrderDetail.this);
+                        }
+                        else {
                             result[0] = databack.getGoodsInfo().getMinPrice() + "-" + databack.getGoodsInfo().getMaxPrice();
                             orderShellModel.setPrice(result[0]);
                             adapter.notifyDataSetChanged();
@@ -462,7 +465,13 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
                         }
                         if (orderBack.getReturn_code() != 0) {
                             toast(orderBack.getReturn_message());
-                        } else {
+                        }else if(orderBack.getReturn_code()==1101||orderBack.getReturn_code()==1102){
+                            toastSHORT("重复登录或令牌超时");
+                            LogoutUtils.exitUser(OrderDetail.this);
+                        }
+
+
+                        else {
                             toast("订单提交成功");
                             finish();
                         }

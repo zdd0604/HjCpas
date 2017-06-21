@@ -12,6 +12,7 @@ import com.hj.casps.base.ActivityBaseHeader;
 import com.hj.casps.common.Constant;
 import com.hj.casps.ui.MyDialog;
 import com.hj.casps.ui.MyToast;
+import com.hj.casps.util.LogoutUtils;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 
@@ -54,7 +55,13 @@ public class CooperateRequest extends ActivityBaseHeader implements View.OnClick
                         CoopBackResult backDetail = mGson.fromJson(s, CoopBackResult.class);
                         if (backDetail.getReturn_code() != 0) {
                             toast(backDetail.getReturn_message());
-                        } else {
+                        }else if(backDetail.getReturn_code()==1101||backDetail.getReturn_code()==1102){
+                            toastSHORT("重复登录或令牌超时");
+                            LogoutUtils.exitUser(CooperateRequest.this);
+                        }
+
+
+                        else {
                             cooperateRequstModels = backDetail.getList();
                             if (cooperateRequstModels.isEmpty()) {
                                 toast("没有待审批申请");
@@ -294,7 +301,13 @@ public class CooperateRequest extends ActivityBaseHeader implements View.OnClick
                             CoopBackResult backDetail = mGson.fromJson(s, CoopBackResult.class);
                             if (backDetail.getReturn_code() != 0) {
                                 toast(backDetail.getReturn_message());
-                            } else {
+                            }else if(backDetail.getReturn_code()==1101||backDetail.getReturn_code()==1102){
+                                toastSHORT("重复登录或令牌超时");
+                                LogoutUtils.exitUser(CooperateRequest.this);
+                            }
+
+
+                            else {
                                 new MyToast(context, context.getString(R.string.cooperate_dialog_ok));
                                 initData();
                             }

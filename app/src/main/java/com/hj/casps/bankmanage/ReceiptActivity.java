@@ -26,6 +26,7 @@ import com.hj.casps.ui.MyDialog;
 import com.hj.casps.ui.MyListView;
 import com.hj.casps.ui.MyToast;
 import com.hj.casps.util.GsonTools;
+import com.hj.casps.util.LogoutUtils;
 import com.hj.casps.util.StringUtils;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
@@ -165,6 +166,9 @@ public class ReceiptActivity extends ActivityBaseHeader implements OnPullListene
                         super.onError(call, response, e);
                         toastSHORT(e.getMessage());
                         waitDialogRectangle.dismiss();
+                        if (Constant.public_code){
+                            LogoutUtils.exitUser(ReceiptActivity.this);
+                        }
                     }
                 });
     }
@@ -364,7 +368,14 @@ public class ReceiptActivity extends ActivityBaseHeader implements OnPullListene
                 if (pub != null && pub.getReturn_code() == 0) {
                     new MyToast(ReceiptActivity.this, "执行收款成功");
                     clearDatas(true, true);
-                } else {
+                }
+                else if(pub.getReturn_code()==1101||pub.getReturn_code()==1102){
+                    toastSHORT("重复登录或令牌超时");
+                    LogoutUtils.exitUser(ReceiptActivity.this);
+                }
+
+
+                else {
                     toastSHORT(pub.getReturn_message());
                 }
             }

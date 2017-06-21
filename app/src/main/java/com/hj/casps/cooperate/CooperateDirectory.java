@@ -13,6 +13,7 @@ import android.widget.RadioGroup;
 import com.hj.casps.R;
 import com.hj.casps.base.ActivityBaseHeader;
 import com.hj.casps.common.Constant;
+import com.hj.casps.util.LogoutUtils;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 
@@ -130,6 +131,11 @@ public class CooperateDirectory extends ActivityBaseHeader implements RadioGroup
                     public void onSuccess(String s, Call call, Response response) {
                         deleteData();
                         CooperateBack cooperateBack = mGson.fromJson(s, CooperateBack.class);
+                         if(cooperateBack.getReturn_code()==1101||cooperateBack.getReturn_code()==1102){
+                            toastSHORT("重复登录或令牌超时");
+                            LogoutUtils.exitUser(CooperateDirectory.this);
+                             return;
+                        }
                         switch (cooperateBack.getList().size()) {
                             case 0:
                                 toast("没有数据");

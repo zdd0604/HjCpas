@@ -29,6 +29,7 @@ import com.hj.casps.entity.appContract.ProtocolModelForPost;
 import com.hj.casps.ordermanager.OrderDetail;
 import com.hj.casps.ui.MyDialog;
 import com.hj.casps.ui.MyToast;
+import com.hj.casps.util.LogoutUtils;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 
@@ -308,7 +309,13 @@ public class ProtocolFragment extends ViewPagerFragment1 implements View.OnClick
                                 }
                                 if (backDetail.getReturn_code() != 0) {
                                     Toast.makeText(context, backDetail.getReturn_message(), Toast.LENGTH_SHORT).show();
-                                } else {
+                                }
+                                else if(backDetail.getReturn_code()==1101||backDetail.getReturn_code()==1102){
+                                    LogoutUtils.exitUser(ProtocolFragment.this);
+                                }
+
+
+                                else {
                                     protocolModels = backDetail.getList();
                                     if (protocolModels.isEmpty()) {
 //                                        Toast.makeText(context, "无协议", Toast.LENGTH_SHORT).show();
@@ -401,7 +408,12 @@ public class ProtocolFragment extends ViewPagerFragment1 implements View.OnClick
                                     }
                                     if (backDetail.getReturn_code() != 0) {
 //                                        Toast.makeText(context, backDetail.getReturn_message(), Toast.LENGTH_SHORT).show();
-                                    } else {
+                                    }else if(backDetail.getReturn_code()==1101||backDetail.getReturn_code()==1102){
+                                        LogoutUtils.exitUser(ProtocolFragment.this);
+                                    }
+
+
+                                    else {
                                         orderDoingModels = backDetail.getRows();
                                         if (orderDoingModels.isEmpty()) {
 //                                            Toast.makeText(context, "无订单", Toast.LENGTH_SHORT).show();
@@ -533,7 +545,12 @@ public class ProtocolFragment extends ViewPagerFragment1 implements View.OnClick
                         }
                         if (backDetail.getReturn_code() != 0) {
                             Toast.makeText(context, backDetail.getReturn_message(), Toast.LENGTH_SHORT).show();
-                        } else {
+                        }else if(backDetail.getReturn_code() ==1101||backDetail.getReturn_code() ==1102){
+                            LogoutUtils.exitUser(ProtocolFragment.this);
+                        }
+
+
+                        else {
                             Toast.makeText(context, backDetail.getReturn_message(), Toast.LENGTH_SHORT).show();
                             initData();
                         }
@@ -812,7 +829,12 @@ public class ProtocolFragment extends ViewPagerFragment1 implements View.OnClick
                             BackBean backDetail = mGson.fromJson(s, BackBean.class);
                             if (backDetail.getReturn_code() != 0) {
                                 Toast.makeText(context, backDetail.getReturn_message(), Toast.LENGTH_SHORT).show();
-                            } else {
+                            }else if(backDetail.getReturn_code()==1101||backDetail.getReturn_code()==1102){
+                                LogoutUtils.exitUser(ProtocolFragment.this);
+                            }
+
+
+                            else {
                                 new MyToast(context, string);
                                 initData();
                             }
@@ -852,7 +874,11 @@ public class ProtocolFragment extends ViewPagerFragment1 implements View.OnClick
                             }
                             if (backDetail.getReturn_code() != 0) {
                                 Toast.makeText(context, backDetail.getReturn_message(), Toast.LENGTH_SHORT).show();
-                            } else {
+                            }else if(backDetail.getReturn_code()==1101||backDetail.getReturn_code()==1102){
+                                LogoutUtils.exitUser(ProtocolFragment.this);
+                            }
+
+                            else {
                                 new MyToast(context, string);
                                 initData();
                             }

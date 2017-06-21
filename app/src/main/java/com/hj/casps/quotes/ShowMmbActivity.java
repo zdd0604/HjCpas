@@ -21,6 +21,7 @@ import com.hj.casps.cooperate.CooperateGroupSearch;
 import com.hj.casps.entity.appQuote.MmbBack;
 import com.hj.casps.entity.appQuote.ShowMmbModel;
 import com.hj.casps.ui.MyListView;
+import com.hj.casps.util.LogoutUtils;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 
@@ -137,6 +138,9 @@ public class ShowMmbActivity extends ActivityBaseHeader2 implements View.OnClick
                 if (mmbBack.getReturn_code() != 0) {
                     toast(mmbBack.getReturn_message());
                     return;
+                }else if(mmbBack.getReturn_code()==1101||mmbBack.getReturn_code()==1102){
+                    toastSHORT("重复登录或令牌超时");
+                    LogoutUtils.exitUser(ShowMmbActivity.this);
                 }
 //                showMmbModels = new ArrayList<>();
                 switch (group) {
@@ -271,7 +275,13 @@ public class ShowMmbActivity extends ActivityBaseHeader2 implements View.OnClick
                                     MmbBack mmbBack = gson.fromJson(s, MmbBack.class);
                                     if (mmbBack.getReturn_code() != 0) {
                                         toast(mmbBack.getReturn_message());
-                                    } else {
+                                    }else if(mmbBack.getReturn_code()==1101||mmbBack.getReturn_code()==1102){
+                                        toastSHORT("重复登录或令牌超时");
+                                        LogoutUtils.exitUser(ShowMmbActivity.this);
+                                    }
+
+
+                                    else {
                                         toast("添加成功");
                                         setResult(22);
                                         finish();
@@ -312,7 +322,12 @@ public class ShowMmbActivity extends ActivityBaseHeader2 implements View.OnClick
                                     MmbBack mmbBack = gson.fromJson(s, MmbBack.class);
                                     if (mmbBack.getReturn_code() != 0) {
                                         toast(mmbBack.getSuccessMsg());
-                                    } else {
+                                    }else if(mmbBack.getReturn_code()==1101||mmbBack.getReturn_code()==1102){
+                                        toastSHORT("重复登录或令牌超时");
+                                        LogoutUtils.exitUser(ShowMmbActivity.this);
+                                    }
+
+                                    else {
                                         toast("添加成功");
                                         setResult(22);
                                         finish();

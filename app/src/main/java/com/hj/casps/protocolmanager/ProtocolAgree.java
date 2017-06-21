@@ -8,6 +8,7 @@ import com.hj.casps.R;
 import com.hj.casps.adapter.TestArrayAdapter;
 import com.hj.casps.base.ActivityBaseHeader2;
 import com.hj.casps.common.Constant;
+import com.hj.casps.util.LogoutUtils;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 
@@ -57,7 +58,14 @@ public class ProtocolAgree extends ActivityBaseHeader2 implements View.OnClickLi
                         ShowAgreeBack backDetail = mGson.fromJson(s, ShowAgreeBack.class);
                         if (backDetail.getReturn_code() != 0) {
                             toast(backDetail.getReturn_message());
-                        } else {
+                        }
+                        else if(backDetail.getReturn_code()==1101||backDetail.getReturn_code()==1102){
+                            toastSHORT("重复登录或令牌超时");
+                            LogoutUtils.exitUser(ProtocolAgree.this);
+                        }
+
+
+                        else {
                             addresslistBeen = backDetail.getData().getAddresslist();
                             banklistBeen = backDetail.getData().getBanklist();
                             addressLists = new String[addresslistBeen.size()];
@@ -114,7 +122,12 @@ public class ProtocolAgree extends ActivityBaseHeader2 implements View.OnClickLi
                         ShowAgreeBack backDetail = mGson.fromJson(s, ShowAgreeBack.class);
                         if (backDetail.getReturn_code() != 0) {
                             toast(backDetail.getReturn_message());
-                        } else {
+                        }else if(backDetail.getReturn_code()==1101||backDetail.getReturn_code()==1102){
+                            toastSHORT("重复登录或令牌超时");
+                            LogoutUtils.exitUser(ProtocolAgree.this);
+                        }
+
+                        else {
 //                            ProtocolFragment.protocolFragment.refresh();
                             Constant.PROTOCOL_SEARCH = true;
                             finish();

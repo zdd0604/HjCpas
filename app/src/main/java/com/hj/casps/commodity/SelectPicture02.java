@@ -32,6 +32,7 @@ import com.hj.casps.entity.picturemanager.request.RequestShowPic;
 import com.hj.casps.entity.picturemanager.response.ShowPicEntity;
 import com.hj.casps.util.BitmapUtils;
 import com.hj.casps.util.GsonTools;
+import com.hj.casps.util.LogoutUtils;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 
@@ -155,7 +156,10 @@ public class SelectPicture02 extends ActivityBaseHeader2 implements OnPullListen
                         SelectPicture02.this.mList = showPicEntity.getDataList();
                         setData();
                     }
-                } else {
+                }else if(showPicEntity.getReturn_code()==1101||showPicEntity.getReturn_code()==1102){
+                    LogoutUtils.exitUser(SelectPicture02.this);
+                }
+                else {
                     toast(showPicEntity.getReturn_message());
                     return;
                 }

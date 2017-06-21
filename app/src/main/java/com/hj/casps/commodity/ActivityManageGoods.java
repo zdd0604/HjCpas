@@ -147,9 +147,9 @@ public class ActivityManageGoods extends ActivityBaseHeader implements View.OnCl
                     @Override
                     public void onError(Call call, Response response, Exception e) {
                         super.onError(call, response, e);
-                       /* if(Constant.PubCode){
+                       if(Constant.public_code){
                             LogoutUtils.exitUser(ActivityManageGoods.this);
-                        }*/
+                        }
                     }
                 });
 

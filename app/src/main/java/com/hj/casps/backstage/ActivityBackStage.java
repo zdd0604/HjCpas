@@ -40,6 +40,7 @@ import com.hj.casps.protocolmanager.RequestProtocol;
 import com.hj.casps.quotes.QuoteQuery;
 import com.hj.casps.util.GsonTools;
 import com.hj.casps.util.LogToastUtils;
+import com.hj.casps.util.LogoutUtils;
 import com.hj.casps.util.MenuUtils;
 import com.hj.casps.util.XmlUtils;
 import com.lzy.okgo.OkGo;
@@ -158,7 +159,10 @@ public class ActivityBackStage extends ActivityBaseHeader2 {
                     MenuUtils.Bean.MenusEntity menus = entity.getMenus();
                     ActivityBackStage.this.menus = menus;
                     handData(menus);
-                } else {
+                }else if(entity.getReturn_code()==1101||entity.getReturn_code()==1102){
+                    LogoutUtils.exitUser(ActivityBackStage.this);
+                }
+                else {
                     toastSHORT("获取用户菜单失败");
                     return;
                 }

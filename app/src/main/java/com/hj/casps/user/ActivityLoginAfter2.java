@@ -26,6 +26,7 @@ import com.hj.casps.entity.picturemanager.request.ResMmb;
 import com.hj.casps.reception.ActivityPriceSearch;
 import com.hj.casps.ui.MyToast;
 import com.hj.casps.util.GsonTools;
+import com.hj.casps.util.LogoutUtils;
 import com.hj.casps.util.MenuUtils;
 import com.hj.casps.util.StringUtils;
 import com.hj.casps.util.XmlUtils;
@@ -218,7 +219,12 @@ public class ActivityLoginAfter2 extends ActivityBaseHeader2 {
                     toast("不是合法会员");
                     return;
 
-                } else {
+                }else if(resMmb.getReturn_code()==1101||resMmb.getReturn_code()==1102){
+                    LogoutUtils.exitUser(ActivityLoginAfter2.this);
+                }
+
+
+                else {
                     toast("收藏失败");
                 }
             }
@@ -245,7 +251,10 @@ public class ActivityLoginAfter2 extends ActivityBaseHeader2 {
                 waitDialogRectangle.dismiss();
                 if (resMark.getReturn_code() == 0) {
                     new MyToast(ActivityLoginAfter2.this, "收藏店铺成功");
-                } else {
+                }else if(resMark.getReturn_code()==1101||resMark.getReturn_code()==1102){
+                    LogoutUtils.exitUser(ActivityLoginAfter2.this);
+                }
+                else {
                     waitDialogRectangle.dismiss();
                     toast(resMark.getReturn_message());
                 }

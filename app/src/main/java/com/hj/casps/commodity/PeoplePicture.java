@@ -21,6 +21,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.chad.library.adapter.base.listener.SimpleClickListener;
 import com.hj.casps.R;
 import com.hj.casps.base.ActivityBaseHeader2;
+import com.hj.casps.base.QuotePriceNavLeftFragment;
 import com.hj.casps.common.Constant;
 import com.hj.casps.entity.PublicArg;
 import com.hj.casps.entity.goodsmanager.Pub;
@@ -33,6 +34,7 @@ import com.hj.casps.util.BitmapUtils;
 import com.hj.casps.util.BitmapUtils2;
 import com.hj.casps.util.DataCleanManager;
 import com.hj.casps.util.GsonTools;
+import com.hj.casps.util.LogoutUtils;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 
@@ -184,7 +186,12 @@ public class PeoplePicture extends ActivityBaseHeader2 implements OnPullListener
                         if (showPicEntity.getReturn_code() == 0&&showPicEntity != null ) {
                         mList = showPicEntity.getDataList();
                         mHadler.sendEmptyMessage(Constant.HANDLERTYPE_0);
-                        }else{
+                        }else if(showPicEntity.getReturn_code()==1101||showPicEntity.getReturn_code()==1102){
+                            LogoutUtils.exitUser(PeoplePicture.this);
+                        }
+
+
+                        else{
                             toastSHORT(showPicEntity.getReturn_message());
                             return;
                         }
@@ -392,7 +399,13 @@ public class PeoplePicture extends ActivityBaseHeader2 implements OnPullListener
                         new MyToast(PeoplePicture.this, "删除图片成功");
                         map.clear();
                         adapter.remove(index);
-                    } else {
+                    }else if(pub.getReturn_code()==1101||pub.getReturn_code()==1102){
+                        LogoutUtils.exitUser(PeoplePicture.this);
+                    }
+
+
+
+                    else {
                         toast(pub.getReturn_message());
                     }
                 }
@@ -602,7 +615,12 @@ public class PeoplePicture extends ActivityBaseHeader2 implements OnPullListener
                         if (pub.getReturn_code() == 0) {
                             new MyToast(PeoplePicture.this, "上传图片成功");
                             //刷新图片列表
-                        } else {
+                        }else if(pub.getReturn_code()==1101||pub.getReturn_code()==1102){
+                            LogoutUtils.exitUser(PeoplePicture.this);
+                        }
+
+
+                        else {
                             toast(pub.getReturn_message());
                         }
                         prdialog.dismiss();

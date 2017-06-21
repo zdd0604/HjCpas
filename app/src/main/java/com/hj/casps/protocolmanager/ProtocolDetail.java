@@ -6,6 +6,7 @@ import android.widget.TextView;
 import com.hj.casps.R;
 import com.hj.casps.base.ActivityBaseHeader2;
 import com.hj.casps.common.Constant;
+import com.hj.casps.util.LogoutUtils;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 
@@ -65,7 +66,13 @@ public class ProtocolDetail extends ActivityBaseHeader2 {
                         DetailBack backDetail = mGson.fromJson(s, DetailBack.class);
                         if (backDetail.getReturn_code() != 0) {
                             toast(backDetail.getReturn_message());
-                        } else {
+                        }
+                        else if(backDetail.getReturn_code()==1101||backDetail.getReturn_code()==1102){
+                            toastSHORT("重复登录或令牌超时");
+                            LogoutUtils.exitUser(ProtocolDetail.this);
+                        }
+
+                        else {
                             protocol_contract_title.setText(backDetail.getData().getContract_title());
                             protocol_contract_type.setText(backDetail.getData().getContract_type().equalsIgnoreCase("1") ? "采购" : "销售");
                             protocol_buy_membername.setText(backDetail.getData().getBuy_membername());

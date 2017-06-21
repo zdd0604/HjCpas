@@ -41,6 +41,7 @@ import com.hj.casps.entity.goodsmanager.response.ResCheckName;
 import com.hj.casps.entity.goodsmanager.response.ResToUpdateEntity;
 import com.hj.casps.ui.MyGridView;
 import com.hj.casps.util.GsonTools;
+import com.hj.casps.util.LogoutUtils;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.AbsCallback;
 import com.lzy.okgo.callback.StringCallback;
@@ -282,7 +283,10 @@ public class ActivityEditGoods extends ActivityBaseHeader2 implements View.OnCli
                 if (entity != null && entity.getReturn_code() == 0) {
                     ActivityEditGoods.this.updateEntity = entity;
                     setDataAndRefrush();
-                } else {
+                }else if(entity.getReturn_code()==1101||entity.getReturn_code()==1102){
+                    LogoutUtils.exitUser(ActivityEditGoods.this);
+                }
+                else {
                     toastSHORT(entity.getReturn_message());
                 }
             }
@@ -525,7 +529,10 @@ public class ActivityEditGoods extends ActivityBaseHeader2 implements View.OnCli
                 waitDialogRectangle.dismiss();
                 if (return_code == 0) {
                     mHandler.sendEmptyMessage(3);
-                } else {
+                }else if(return_code==1101||return_code==1102){
+                    LogoutUtils.exitUser(ActivityEditGoods.this);
+                }
+                else {
                     waitDialogRectangle.dismiss();
                     toast(return_message);
                 }
@@ -589,8 +596,6 @@ public class ActivityEditGoods extends ActivityBaseHeader2 implements View.OnCli
         String param = mGson.toJson(r);
         waitDialogRectangle.show();
         OkGo.post(Constant.UpdateGoodDetailUrl).params("param", param).execute(new AbsCallback<Pub>() {
-
-
             @Override
             public Pub convertSuccess(Response response) throws Exception {
                 String data = response.body().string();
@@ -601,7 +606,13 @@ public class ActivityEditGoods extends ActivityBaseHeader2 implements View.OnCli
                 if (return_code == 0) {
 //                    toast("添加详情商品成功");
                     mHandler.sendEmptyMessage(4);
-                } else {
+                }else if(return_code==1101||return_code==1102){
+                    LogoutUtils.exitUser(ActivityEditGoods.this);
+                }
+
+
+
+                else {
                     toast(return_message);
                 }
                 return null;
@@ -669,6 +680,11 @@ public class ActivityEditGoods extends ActivityBaseHeader2 implements View.OnCli
                         if (checkName != null && checkName.getReturn_code() == 0) {
                             ActivityEditGoods.this.isRepeat = checkName.isRepeat();
                             mHandler.sendEmptyMessage(1);
+                        }
+                        else if(checkName.getReturn_code()==1101||checkName.getReturn_code()==1102){
+                            LogoutUtils.exitUser(ActivityEditGoods.this);
+                        }else{
+                            toastSHORT(checkName.getReturn_message());
                         }
                     }
                 });

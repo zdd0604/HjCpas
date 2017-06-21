@@ -18,6 +18,7 @@ import com.hj.casps.R;
 import com.hj.casps.adapter.WZYBaseAdapter;
 import com.hj.casps.base.ActivityBaseHeader2;
 import com.hj.casps.common.Constant;
+import com.hj.casps.util.LogoutUtils;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 
@@ -110,7 +111,11 @@ public class MmbActivity extends ActivityBaseHeader2 implements View.OnClickList
                 if (mmbBack.getReturn_code() != 0) {
                     toast(mmbBack.getReturn_message());
                     return;
+                }else if(mmbBack.getReturn_code()==1101||mmbBack.getReturn_code()==1102){
+                    toastSHORT("重复登录或令牌超时");
+                    LogoutUtils.exitUser(MmbActivity.this);
                 }
+
                 mmbModelPersons = new ArrayList<>();
                 mmbModelPersons = mmbBack.getList();
                 if (mmbModelPersons.isEmpty()) {
@@ -138,7 +143,11 @@ public class MmbActivity extends ActivityBaseHeader2 implements View.OnClickList
                 if (mmbBack2.getReturn_code() != 0) {
                     toast(mmbBack2.getReturn_message());
                     return;
+                }else if(mmbBack2.getReturn_code()==1101||mmbBack2.getReturn_code()==1102){
+                    toastSHORT("重复登录或令牌超时");
+                    LogoutUtils.exitUser(MmbActivity.this);
                 }
+
                 mmbModelGroup = new ArrayList<>();
                 mmbModelGroup = mmbBack2.getList();
                 if (mmbModelGroup.isEmpty()) {
@@ -311,6 +320,9 @@ public class MmbActivity extends ActivityBaseHeader2 implements View.OnClickList
                             bundle.putString("searchjson", "");
                             setResult(22, getIntent().putExtras(bundle));
                             finish();
+                        }else if(mmbBack.getReturn_code()==1101||mmbBack.getReturn_code()==1102){
+                            toastSHORT("重复登录或令牌超时");
+                            LogoutUtils.exitUser(MmbActivity.this);
                         }
                     }
                 });
@@ -414,7 +426,13 @@ public class MmbActivity extends ActivityBaseHeader2 implements View.OnClickList
                                     if (mmbBack.getReturn_code() != 0) {
                                         toast(mmbBack.getReturn_message());
                                         return;
-                                    } else {
+                                    }else if(mmbBack.getReturn_code()==1101||mmbBack.getReturn_code()==1102){
+                                        toastSHORT("重复登录或令牌超时");
+                                        LogoutUtils.exitUser(MmbActivity.this);
+                                    }
+
+
+                                    else {
                                         refreshData();
                                     }
                                 }

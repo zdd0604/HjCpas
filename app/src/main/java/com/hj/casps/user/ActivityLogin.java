@@ -216,7 +216,10 @@ public class ActivityLogin extends ActivityBase {
                         //处理短信登录返回结果
                         if (initloginBean != null) {
                             verfyLogin(initloginBean);
-                        } else {
+                        }else if (initloginBean.getReturn_code() == 1101 || initloginBean.getReturn_code() == 2101) {
+                           LogoutUtils.exitUser(ActivityLogin.this);
+                        }
+                        else {
                             new IllegalStateException("httpInit方法异常，获取短信失败接口失败");
                         }
                     }
@@ -362,7 +365,7 @@ public class ActivityLogin extends ActivityBase {
                                     LogoutUtils.exitUser(ActivityLogin.this);
                                 }
                                 else{
-                                    ToastUtils.showToast(ActivityLogin.this, loginBean.getReturn_message());
+                                    ToastUtils.showToast(ActivityLogin.this, "其他异常");
                                 }
                             }
                         }
@@ -409,23 +412,28 @@ public class ActivityLogin extends ActivityBase {
                     @Override
                     public void onSuccess(LoginContextBean<SubLoginBean> subLoginBeanLoginContextBean, Call call, Response response) {
                         super.onSuccess(subLoginBeanLoginContextBean, call, response);
+                        waitDialogRectangle.dismiss();
 //                        UserBean currentUser = UserBeanUtils.getInstance(ActivityLogin.this).getCurrentUser();
 //                        UserBean userBean1 = new UserBean();
 //                        userBean1.setSys_pwd("sdfd");
-                        waitDialogRectangle.dismiss();
-                        SubLoginBean context = subLoginBeanLoginContextBean.Context;
-                        UserBean userBean = new UserBean(null, et_username, et_pwd, sys_user, sys_token, context.getSys_mmb(),
-                                context.getSys_username(), context.getSys_mmbname(), true, true);
-                        UserBeanUtils.getInstance(ActivityLogin.this).setCurrentUserBean(userBean);
-                        setPublicArg(userBean);
-                        goNext();
+
+                            SubLoginBean context = subLoginBeanLoginContextBean.Context;
+                            UserBean userBean = new UserBean(null, et_username, et_pwd, sys_user, sys_token, context.getSys_mmb(),
+                                    context.getSys_username(), context.getSys_mmbname(), true, true);
+                            UserBeanUtils.getInstance(ActivityLogin.this).setCurrentUserBean(userBean);
+                            setPublicArg(userBean);
+                            goNext();
+
                     }
 
                     @Override
                     public void onError(Call call, Response response, Exception e) {
                         super.onError(call, response, e);
-                        toastSHORT(e.getMessage());
                         waitDialogRectangle.dismiss();
+                        toastSHORT(e.getMessage());
+                        if(Constant.public_code){
+                            LogoutUtils.exitUser(ActivityLogin.this);
+                        }
                     }
                 });
 

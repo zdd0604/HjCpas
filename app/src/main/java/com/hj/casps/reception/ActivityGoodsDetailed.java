@@ -24,6 +24,7 @@ import com.hj.casps.quotes.wyt.ResQuoteDetailEntity;
 import com.hj.casps.ui.MyToast;
 import com.hj.casps.util.BitmapUtils;
 import com.hj.casps.util.GsonTools;
+import com.hj.casps.util.LogoutUtils;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.AbsCallback;
 import com.lzy.okgo.callback.StringCallback;
@@ -169,6 +170,11 @@ public class ActivityGoodsDetailed extends ActivityBaseHeader2 implements View.O
                     ActivityGoodsDetailed.this.mEntity=entity;
                     setDatas(entity);
                     saveLocalData(entity);
+                }else if(entity.getReturn_code()==1101||entity.getReturn_code()==1102){
+                    toastSHORT("重复登录或令牌超时");
+                    LogoutUtils.exitUser(ActivityGoodsDetailed.this);
+                }else{
+                    toastSHORT(entity.getReturn_message());
                 }
             }
 
@@ -259,6 +265,13 @@ public class ActivityGoodsDetailed extends ActivityBaseHeader2 implements View.O
                     count = 0;
                     initShopCarData();
                 }
+                else if(pubMap.getReturn_code()==1101||pubMap.getReturn_code()==1102){
+                    toastSHORT("重复登录或令牌超时");
+                    LogoutUtils.exitUser(ActivityGoodsDetailed.this);
+                }
+                else{
+                    toastSHORT(pubMap.getReturn_message());
+                }
             }
 
             @Override
@@ -334,7 +347,13 @@ public class ActivityGoodsDetailed extends ActivityBaseHeader2 implements View.O
                         }
                         if (backDetail.getReturn_code() != 0) {
                             Toast.makeText(context, backDetail.getReturn_message(), Toast.LENGTH_SHORT).show();
-                        } else {
+                        }
+                        else if(backDetail.getReturn_code()==1101||backDetail.getReturn_code()==1102){
+                            toastSHORT("重复登录或令牌超时");
+                            LogoutUtils.exitUser(ActivityGoodsDetailed.this);
+                        }
+
+                        else {
 
                             List<BuyCart.BuyCartBack.ListBean> list = backDetail.getList();
                             for (int i = 0; i < list.size(); i++) {

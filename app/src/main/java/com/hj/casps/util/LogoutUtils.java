@@ -27,7 +27,6 @@ import okhttp3.Response;
 
 public class LogoutUtils {
 
-
     public static void exitUser(Activity context) {
         Constant.public_code=false;
         UserBean currentUser = UserBeanUtils.getInstance(context).getCurrentUser();

@@ -34,6 +34,7 @@ import com.hj.casps.entity.picturemanager.request.ResAddDiv;
 import com.hj.casps.ui.MyToast;
 import com.hj.casps.util.DensityUtil;
 import com.hj.casps.util.GsonTools;
+import com.hj.casps.util.LogoutUtils;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.AbsCallback;
 import com.lzy.okgo.callback.StringCallback;
@@ -164,13 +165,11 @@ public class SelectPicture_new extends ActivityBaseHeader2 {
                 if (showBaseEntity != null) {
                     if (showBaseEntity.getReturn_code() == 0) {
                         showBaseList = showBaseEntity.getDataList();
-                        /*         for (int i = 0; i < showBaseList.size(); i++) {
-                            initShowDivData(showBaseList.get(i).getBaseId());
-                        }*/
                         initShowDivData(showBaseList.get(mIndex).getBaseId());
-
-//                       toastSHORT("解析成功");
-                    } else {
+                    }
+                    else if(showBaseEntity.getReturn_code()==1101||showBaseEntity.getReturn_code()==1102){
+                        LogoutUtils.exitUser(SelectPicture_new.this);
+                    }else {
                         toastSHORT(showBaseEntity.getReturn_message());
                     }
                 }
@@ -185,6 +184,9 @@ public class SelectPicture_new extends ActivityBaseHeader2 {
     private void handleJson(String data) {
 
         Entity entity = JSONObject.parseObject(data, Entity.class);
+        if(entity.getReturn_code()==1101||entity.getReturn_code()==1102){
+            LogoutUtils.exitUser(SelectPicture_new.this);
+        }
         List<DataListEntity> sourceList = entity.getDataList();
         List<DataTreeListEntity> treeList = getChild(sourceList, "0");
         for (int i = 0, size = treeList.size(); i < size; i++) {

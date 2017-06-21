@@ -15,6 +15,7 @@ import com.hj.casps.R;
 import com.hj.casps.adapter.WZYBaseAdapter;
 import com.hj.casps.base.ActivityBaseHeader;
 import com.hj.casps.common.Constant;
+import com.hj.casps.util.LogoutUtils;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 
@@ -89,7 +90,13 @@ public class BuyCart extends ActivityBaseHeader implements View.OnClickListener 
                         }
                         if (backDetail.getReturn_code() != 0) {
                             Toast.makeText(context, backDetail.getReturn_message(), Toast.LENGTH_SHORT).show();
-                        } else {
+                        }
+                        else if(backDetail.getReturn_code()==1101||backDetail.getReturn_code()==1102){
+                            toastSHORT("重复登录或令牌超时");
+                            LogoutUtils.exitUser(BuyCart.this);
+                        }
+
+                        else {
                             orderBuyModels = backDetail.getList();
                             if (orderBuyModels.isEmpty()) {
 //                                Toast.makeText(context, "没有订单", Toast.LENGTH_SHORT).show();

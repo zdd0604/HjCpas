@@ -27,6 +27,7 @@ import com.hj.casps.entity.goodsmanager.goodsmanagerCallBack.GoodsCategoryCallBa
 import com.hj.casps.entity.goodsmanager.request.RequestPub;
 import com.hj.casps.entity.goodsmanager.response.GoodsCategoryEntity;
 import com.hj.casps.entity.goodsmanager.response.NoteEntity;
+import com.hj.casps.util.LogoutUtils;
 import com.lzy.okgo.OkGo;
 
 import java.util.ArrayList;
@@ -110,6 +111,10 @@ public class SelectClass extends ActivityBaseHeader2 implements View.OnClickList
                     @Override
                     public void onError(Call call, Response response, Exception e) {
                         super.onError(call, response, e);
+                        toastSHORT(e.getMessage());
+                        if (Constant.public_code){
+                            LogoutUtils.exitUser(SelectClass.this);
+                        }
                     }
                 });
 

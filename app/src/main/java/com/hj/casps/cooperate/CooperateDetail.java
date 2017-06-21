@@ -11,6 +11,7 @@ import com.hj.casps.R;
 import com.hj.casps.base.ActivityBaseHeader2;
 import com.hj.casps.common.Constant;
 import com.hj.casps.ui.MyDialog;
+import com.hj.casps.util.LogoutUtils;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 
@@ -96,7 +97,14 @@ public class CooperateDetail extends ActivityBaseHeader2 implements View.OnClick
                                 BackDetail backDetail = mGson.fromJson(s, BackDetail.class);
                                 if (backDetail.getReturn_code() != 0) {
                                     toast(backDetail.getReturn_message());
-                                } else {
+                                }
+                                else if(backDetail.getReturn_code()==1101||backDetail.getReturn_code()==1102){
+                                    toastSHORT("重复登录或令牌超时");
+                                    LogoutUtils.exitUser(CooperateDetail.this);
+                                }
+
+
+                                else {
                                     mmbfname = backDetail.getData().getMmbfname();
                                     cooperate_person_name.setText(mmbfname);
                                     mmbaddress = backDetail.getData().getMmbaddress();
@@ -145,7 +153,13 @@ public class CooperateDetail extends ActivityBaseHeader2 implements View.OnClick
                                 BackDetail backDetail = mGson.fromJson(s, BackDetail.class);
                                 if (backDetail.getReturn_code() != 0) {
                                     toast(backDetail.getReturn_message());
-                                } else {
+                                }
+                                else if(backDetail.getReturn_code()==1101||backDetail.getReturn_code()==1102){
+                                    toastSHORT("重复登录或令牌超时");
+                                    LogoutUtils.exitUser(CooperateDetail.this);
+                                }
+
+                                else {
                                     sellbiz = backDetail.getData().getSellBiz();
                                     buybiz = backDetail.getData().getBuyBiz();
                                     from_net = true;
@@ -241,8 +255,9 @@ public class CooperateDetail extends ActivityBaseHeader2 implements View.OnClick
                             BackDetail backDetail = mGson.fromJson(s, BackDetail.class);
                             if (backDetail.getReturn_code() != 0) {
                                 toast(backDetail.getReturn_message());
-                            } else {
-
+                            } else if(backDetail.getReturn_code()==1101||backDetail.getReturn_code()==1102){
+                                toastSHORT("重复登录或令牌超时");
+                                LogoutUtils.exitUser(CooperateDetail.this);
                             }
                         }
                     });
@@ -268,8 +283,9 @@ public class CooperateDetail extends ActivityBaseHeader2 implements View.OnClick
                             BackDetail backDetail = mGson.fromJson(s, BackDetail.class);
                             if (backDetail.getReturn_code() != 0) {
                                 toast(backDetail.getReturn_message());
-                            } else {
-
+                            } else if(backDetail.getReturn_code()==1101||backDetail.getReturn_code()==1102){
+                                toastSHORT("重复登录或令牌超时");
+                                LogoutUtils.exitUser(CooperateDetail.this);
                             }
                         }
                     });
@@ -324,9 +340,13 @@ public class CooperateDetail extends ActivityBaseHeader2 implements View.OnClick
                                 BackDetail backDetail = mGson.fromJson(s, BackDetail.class);
                                 if (backDetail.getReturn_code() != 0) {
                                     toast(backDetail.getReturn_message());
-                                } else {
-                                    showOKDialog();
+                                }else if(backDetail.getReturn_code()==1101||backDetail.getReturn_code()==1102){
+                                    toastSHORT("重复登录或令牌超时");
+                                    LogoutUtils.exitUser(CooperateDetail.this);
+                                }
 
+                                else {
+                                    showOKDialog();
                                 }
                             }
                         });

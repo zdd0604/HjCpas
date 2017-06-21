@@ -1,6 +1,7 @@
 package com.hj.casps.user;
 
 import com.google.gson.stream.JsonReader;
+import com.hj.casps.common.Constant;
 import com.hj.casps.entity.appordermoney.JsonResponse;
 import com.hj.casps.util.Convert;
 import com.lzy.okgo.callback.AbsCallback;
@@ -65,7 +66,13 @@ public abstract class LoginCallBack<T> extends AbsCallback<T> {
                 throw new IllegalStateException(loginSimpleGain.return_message);
             } else if (code == 201) {
                 throw new IllegalStateException(loginSimpleGain.return_message);
-            } else {
+            }
+            else if (code == 1101 || code == 2101) {
+                Constant.public_code = true;
+                throw new IllegalStateException(loginSimpleGain.return_message);
+            }
+
+            else {
                 throw new IllegalStateException("错误代码：" + code + "，错误信息：" + loginSimpleGain.return_message);
             }
         } else {

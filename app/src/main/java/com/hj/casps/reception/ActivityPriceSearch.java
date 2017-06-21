@@ -26,6 +26,7 @@ import com.hj.casps.quotes.wyt.RequestSearchQuote;
 import com.hj.casps.quotes.wyt.SearchQuoteGain;
 import com.hj.casps.ui.MyToast;
 import com.hj.casps.util.GsonTools;
+import com.hj.casps.util.LogoutUtils;
 import com.hj.casps.util.StringUtils;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
@@ -103,7 +104,13 @@ public class ActivityPriceSearch extends ActivityBaseHeader3 implements View.OnC
                         }
                         if (backDetail.getReturn_code() != 0) {
                             Toast.makeText(context, backDetail.getReturn_message(), Toast.LENGTH_SHORT).show();
-                        } else {
+                        }
+                        else if(backDetail.getReturn_code()==1101||backDetail.getReturn_code()==1102){
+                            toastSHORT("重复登录或令牌超时");
+                            LogoutUtils.exitUser(ActivityPriceSearch.this);
+                        }
+
+                        else {
                             List<BuyCart.BuyCartBack.ListBean> list = backDetail.getList();
                             for (int i = 0; i < list.size(); i++) {
                                 count += list.get(i).getListGoods().size();
@@ -239,9 +246,10 @@ public class ActivityPriceSearch extends ActivityBaseHeader3 implements View.OnC
             @Override
             public void onError(Call call, Response response, Exception e) {
                 super.onError(call, response, e);
-               /* if (!(e instanceof ConnectException))
-                    toastSHORT(e.getMessage());*/
                 waitDialogRectangle.dismiss();
+                if (Constant.public_code){
+                    LogoutUtils.exitUser(ActivityPriceSearch.this);
+                }
             }
         });
     }

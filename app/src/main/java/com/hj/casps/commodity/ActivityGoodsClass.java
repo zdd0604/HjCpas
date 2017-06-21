@@ -36,6 +36,7 @@ import com.hj.casps.entity.goodsmanager.response.GoodtoUpdateGain;
 import com.hj.casps.entity.goodsmanager.response.ResSearchGoodEntity;
 import com.hj.casps.entity.paymentmanager.response.WytUtils;
 import com.hj.casps.util.GsonTools;
+import com.hj.casps.util.LogoutUtils;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 
@@ -183,8 +184,12 @@ public class ActivityGoodsClass extends ActivityBaseHeader2 implements View.OnCl
                       mList = entity.getDataList();
                       totalCount = entity.getTotalCount();
                       refreshUi();
+                  }else if(entity.getReturn_code()==1101||entity.getReturn_code()==1102){
+                      toastSHORT(entity.getReturn_message());
+                      LogoutUtils.exitUser(ActivityGoodsClass.this);
                   }
-              }
+                     }
+
 
               @Override
               public void onError(Call call, Response response, Exception e) {
@@ -379,8 +384,18 @@ public class ActivityGoodsClass extends ActivityBaseHeader2 implements View.OnCl
                     adapter.setDatas(newDatas);
 //                    adapter.notifyItemChanged(mPostion);
                     toastSHORT("操作成功");
-                } else {
+                }
+
+                else {
                     toastSHORT(goodInfo.return_message);
+                }
+            }
+
+            @Override
+            public void onError(Call call, Response response, Exception e) {
+                super.onError(call, response, e);
+                if (Constant.public_code){
+                    LogoutUtils.exitUser(ActivityGoodsClass.this);
                 }
             }
         });

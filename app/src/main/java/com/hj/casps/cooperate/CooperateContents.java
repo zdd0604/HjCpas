@@ -16,6 +16,7 @@ import com.hj.casps.adapter.WZYBaseAdapter;
 import com.hj.casps.base.ActivityBaseHeader;
 import com.hj.casps.common.Constant;
 import com.hj.casps.ui.MyDialog;
+import com.hj.casps.util.LogoutUtils;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 
@@ -117,7 +118,12 @@ public class CooperateContents extends ActivityBaseHeader implements View.OnClic
                         QueryMMBConcernsBack backDetail = mGson.fromJson(s, QueryMMBConcernsBack.class);
                         if (backDetail.getReturn_code() != 0) {
                             toast(backDetail.getReturn_message());
-                        } else {
+                        }else if(backDetail.getReturn_code()==1101||backDetail.getReturn_code()==1102){
+                            toastSHORT("重复登录或令牌超时");
+                            LogoutUtils.exitUser(CooperateContents.this);
+                        }
+
+                        else {
                             cooperateModels = backDetail.getList();
                             if (cooperateModels.isEmpty()) {
                                 toast("没有合作会员");
@@ -425,9 +431,11 @@ public class CooperateContents extends ActivityBaseHeader implements View.OnClic
                     CooperateContents.QueryMMBConcernsBack backDetail = mGson.fromJson(s, CooperateContents.QueryMMBConcernsBack.class);
                     if (backDetail.getReturn_code() != 0) {
                         Toast.makeText(context, backDetail.getReturn_message(), Toast.LENGTH_SHORT).show();
-                    } else {
-
-//                    updateRes();
+                    } else if(backDetail.getReturn_code()==1101||backDetail.getReturn_code()==1102){
+                        toastSHORT("重复登录或令牌超时");
+                        LogoutUtils.exitUser(CooperateContents.this);
+                    }
+                    else {
                         initData(grade);
 
                     }
@@ -450,7 +458,12 @@ public class CooperateContents extends ActivityBaseHeader implements View.OnClic
                     CooperateContents.QueryMMBConcernsBack backDetail = mGson.fromJson(s, CooperateContents.QueryMMBConcernsBack.class);
                     if (backDetail.getReturn_code() != 0) {
                         Toast.makeText(context, backDetail.getReturn_message(), Toast.LENGTH_SHORT).show();
-                    } else {
+                    }else if(backDetail.getReturn_code()==1101||backDetail.getReturn_code()==1102){
+                        toastSHORT("重复登录或令牌超时");
+                        LogoutUtils.exitUser(CooperateContents.this);
+                    }
+
+                    else {
                     }
                 }
 

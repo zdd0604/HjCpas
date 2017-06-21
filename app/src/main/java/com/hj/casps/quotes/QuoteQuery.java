@@ -14,6 +14,7 @@ import com.hj.casps.R;
 import com.hj.casps.base.ActivityBaseHeader;
 import com.hj.casps.common.Constant;
 import com.hj.casps.cooperate.CooperateDirUtils;
+import com.hj.casps.util.LogoutUtils;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 
@@ -148,7 +149,12 @@ public class QuoteQuery extends ActivityBaseHeader implements View.OnClickListen
         QuotesBack quotesBack = gson.fromJson(response, QuotesBack.class);
         if (quotesBack.getReturn_code() != 0) {
             toast(quotesBack.getReturn_message());
-        } else {
+        }else if(quotesBack.getReturn_code()==1101||quotesBack.getReturn_code()==1102){
+            toastSHORT("重复登录或令牌超时");
+            LogoutUtils.exitUser(QuoteQuery.this);
+        }
+
+        else {
             quoteModels = quotesBack.getQtList();
         }
         if (quoteModels == null || quoteModels.isEmpty()) {

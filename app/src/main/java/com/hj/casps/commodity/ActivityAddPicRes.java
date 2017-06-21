@@ -17,6 +17,7 @@ import com.hj.casps.entity.picturemanager.request.ResUpdateDiv;
 import com.hj.casps.ui.MyDialog;
 import com.hj.casps.ui.MyToast;
 import com.hj.casps.util.GsonTools;
+import com.hj.casps.util.LogoutUtils;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 
@@ -130,7 +131,12 @@ public class ActivityAddPicRes extends ActivityBaseHeader2 {
                     intent.putExtra(BASE_ID, baseId);
                     setResult(RESULT_OK, intent);
                     ActivityAddPicRes.this.finish();
-                } else {
+                }else if(pub.getReturn_code()==1101||pub.getReturn_code()==1102){
+                    LogoutUtils.exitUser(ActivityAddPicRes.this);
+                }
+
+
+                else {
                     toastSHORT(pub.getReturn_message());
                     ActivityAddPicRes.this.finish();
                     return;
@@ -173,7 +179,11 @@ public class ActivityAddPicRes extends ActivityBaseHeader2 {
                     intent.putExtra(BASE_ID, baseId);
                     setResult(RESULT_OK, intent);
                     ActivityAddPicRes.this.finish();
-                } else {
+                } else if(pub.getReturn_code()==1101||pub.getReturn_code()==1102){
+                    LogoutUtils.exitUser(ActivityAddPicRes.this);
+                }
+
+                else {
                     toastSHORT(pub.getReturn_message());
                     return;
                 }
