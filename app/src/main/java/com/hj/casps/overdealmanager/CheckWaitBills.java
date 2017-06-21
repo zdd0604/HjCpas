@@ -23,7 +23,6 @@ import com.hj.casps.entity.appsettle.ModifySettleLoading;
 import com.hj.casps.entity.appsettle.QueryPendingSttleGain;
 import com.hj.casps.entity.appsettle.QueryPendingSttleLoading;
 import com.hj.casps.entity.appsettle.QueryPendingSttleRespon;
-import com.hj.casps.expressmanager.QuitHarvestExpress;
 import com.hj.casps.ui.MyDialog;
 import com.hj.casps.util.LogoutUtils;
 import com.hj.casps.util.StringUtils;
@@ -280,6 +279,15 @@ public class CheckWaitBills extends ActivityBaseHeader implements View.OnClickLi
 
         for (int i = 0; i < dbList.size(); i++) {
             if (dbList.get(i).isCheck()) {
+
+                if (!StringUtils.isStrTrue(dbList.get(i).getMyTime())) {
+                    toastSHORT("请选择我的提议时间");
+                    return;
+                }
+                if (!StringUtils.isStrTrue(dbList.get(i).getMyMoney())) {
+                    toastSHORT("请输入我的提议金额");
+                    return;
+                }
                 modifySettleList.add(new ModifySettleLoading.ModifySettleEntity(
                         dbList.get(i).getId(),
                         String.valueOf(dbList.get(i).getSettleCode()),
@@ -291,7 +299,7 @@ public class CheckWaitBills extends ActivityBaseHeader implements View.OnClickLi
             toastSHORT("请选择数据");
             return;
         }
-        commitModifySettle();
+        commitModifySettle(modifySettleList);
     }
 
 
@@ -332,7 +340,7 @@ public class CheckWaitBills extends ActivityBaseHeader implements View.OnClickLi
                         super.onError(call, response, e);
                         toastSHORT(e.getMessage());
                         waitDialogRectangle.dismiss();
-                        if (Constant.public_code){
+                        if (Constant.public_code) {
                             //退出操作
                             LogoutUtils.exitUser(CheckWaitBills.this);
                         }
@@ -344,14 +352,14 @@ public class CheckWaitBills extends ActivityBaseHeader implements View.OnClickLi
     /**
      * 待审批结款单-编辑提交
      */
-    private void commitModifySettle() {
+    private void commitModifySettle(List<ModifySettleLoading.ModifySettleEntity> modifySettle) {
         ModifySettleLoading param = new ModifySettleLoading(
                 publicArg.getSys_token(),
                 Constant.getUUID(),
                 Constant.SYS_FUNC101100810002,
                 publicArg.getSys_user(),
                 publicArg.getSys_member(),
-                modifySettleList);
+                modifySettle);
         LogShow(mGson.toJson(param));
         Constant.JSONFATHERRESPON = "ReturnMessageRespon";
         OkGo.post(Constant.ModifySettleUrl)
@@ -370,7 +378,7 @@ public class CheckWaitBills extends ActivityBaseHeader implements View.OnClickLi
                         super.onError(call, response, e);
                         toastSHORT(e.getMessage());
                         waitDialogRectangle.dismiss();
-                        if (Constant.public_code){
+                        if (Constant.public_code) {
                             //退出操作
                             LogoutUtils.exitUser(CheckWaitBills.this);
                         }
@@ -410,7 +418,7 @@ public class CheckWaitBills extends ActivityBaseHeader implements View.OnClickLi
                         super.onError(call, response, e);
                         toastSHORT(e.getMessage());
                         waitDialogRectangle.dismiss();
-                        if (Constant.public_code){
+                        if (Constant.public_code) {
                             //退出操作
                             LogoutUtils.exitUser(CheckWaitBills.this);
                         }

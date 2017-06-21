@@ -317,7 +317,7 @@ public class ExecuteFragment extends ViewPagerFragment implements
                 .execute(new JsonCallBack<ReturnMessageRespon<Void>>() {
                     @Override
                     public void onSuccess(ReturnMessageRespon<Void> voidReturnMessageRespon, Call call, Response response) {
-                        toastSHORT(voidReturnMessageRespon.return_message);
+//                        toastSHORT(voidReturnMessageRespon.return_message);
                         if (voidReturnMessageRespon.return_code != 999) {
                             //判断状态
                             new MyToast(getActivity(), getString(R.string.toast_stop_msg));
