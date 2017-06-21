@@ -31,6 +31,7 @@ import com.hj.casps.entity.picturemanager.response.ShowPicEntity;
 import com.hj.casps.ui.MyToast;
 import com.hj.casps.util.BitmapUtils;
 import com.hj.casps.util.BitmapUtils2;
+import com.hj.casps.util.DataCleanManager;
 import com.hj.casps.util.GsonTools;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
@@ -178,6 +179,7 @@ public class PeoplePicture extends ActivityBaseHeader2 implements OnPullListener
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(String s, Call call, Response response) {
+                        System.out.println("s=initData"+s);
                         showPicEntity = GsonTools.changeGsonToBean(s, ShowPicEntity.class);
                         if (showPicEntity.getReturn_code() == 0&&showPicEntity != null ) {
                         mList = showPicEntity.getDataList();
@@ -320,7 +322,7 @@ public class PeoplePicture extends ActivityBaseHeader2 implements OnPullListener
                                 String imagePath = imageMultipleResultEvent.getResult().get(i).getOriginalPath();
                                 LogShow(imagePath);
                                 File e = new File(BitmapUtils2.getCompressFile(imagePath));
-                                System.out.println("e="+e.length());
+                                System.out.println("e="+ DataCleanManager.getFormatSize(e.length()));
                                 imagePathList.add(e);
                             }
                             onSelectImage();
@@ -595,7 +597,7 @@ public class PeoplePicture extends ActivityBaseHeader2 implements OnPullListener
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(String s, Call call, Response response) {
-                        System.out.println("s = [" + s + "], call = [" + call + "], response = [" + response + "]");
+                        System.out.println("s=uploadImage"+ s );
                         Pub pub = GsonTools.changeGsonToBean(s, Pub.class);
                         if (pub.getReturn_code() == 0) {
                             new MyToast(PeoplePicture.this, "上传图片成功");
