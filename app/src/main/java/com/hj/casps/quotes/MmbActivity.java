@@ -358,7 +358,7 @@ public class MmbActivity extends ActivityBaseHeader2 implements View.OnClickList
 
     //发布范围适配器
     private class MmbAdapter extends WZYBaseAdapter<MmbModelPerson> {
-
+        private boolean isOpen = false;
         private int i;
 
         public MmbAdapter(List<MmbModelPerson> data, Context context, int layoutRes, int i) {
@@ -381,16 +381,15 @@ public class MmbActivity extends ActivityBaseHeader2 implements View.OnClickList
             }
 
             final TextView delete_mmb_item = (TextView) holder.getView(R.id.delete_mmb_item);
-            final boolean[] b = {true};
             relative_layout_1_mmb.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if (b[0]) {
-                        delete_mmb_item.setVisibility(View.VISIBLE);
-                        b[0] = false;
-                    } else {
+                    if (isOpen) {
                         delete_mmb_item.setVisibility(View.GONE);
-
+                        isOpen = false;
+                    } else {
+                        delete_mmb_item.setVisibility(View.VISIBLE);
+                        isOpen = true;
                     }
                 }
             });
