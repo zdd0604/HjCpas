@@ -302,6 +302,7 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
 
     //已经订单
     private void submit() {
+        order_detail_product_pay.requestFocusFromTouch();
         refreshAllPrice();
         if (allPrice <= 0) {
             Toast.makeText(this, "总价为零，不能下单", Toast.LENGTH_SHORT).show();
