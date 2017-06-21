@@ -381,10 +381,17 @@ public class MmbActivity extends ActivityBaseHeader2 implements View.OnClickList
             }
 
             final TextView delete_mmb_item = (TextView) holder.getView(R.id.delete_mmb_item);
+            final boolean[] b = {true};
             relative_layout_1_mmb.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    delete_mmb_item.setVisibility(View.VISIBLE);
+                    if (b[0]) {
+                        delete_mmb_item.setVisibility(View.VISIBLE);
+                        b[0] = false;
+                    } else {
+                        delete_mmb_item.setVisibility(View.GONE);
+
+                    }
                 }
             });
             delete_mmb_item.setOnClickListener(new View.OnClickListener() {
