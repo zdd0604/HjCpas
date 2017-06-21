@@ -328,6 +328,10 @@ public class OperatorAdd extends ActivityBaseHeader2 implements View.OnClickList
                         super.onError(call, response, e);
                         toastSHORT(e.getMessage());
                         waitDialogRectangle.dismiss();
+                        if (Constant.public_code){
+                            //退出操作
+                            LogoutUtils.exitUser(OperatorAdd.this);
+                        }
                     }
                 });
     }

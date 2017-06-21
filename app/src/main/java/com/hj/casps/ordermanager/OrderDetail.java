@@ -245,8 +245,6 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
                             return;
                         }
 
-                        LogShow(databack.toString());
-
                         if (databack.getReturn_code() != 0) {
                             Toast.makeText(context, databack.getReturn_message(), Toast.LENGTH_SHORT).show();
                         } else {

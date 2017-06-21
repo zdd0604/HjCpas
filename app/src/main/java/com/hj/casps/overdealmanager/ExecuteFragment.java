@@ -22,6 +22,7 @@ import com.hj.casps.entity.appsettle.StopSettleLoading;
 import com.hj.casps.protocolmanager.ViewPagerFragment;
 import com.hj.casps.ui.MyDialog;
 import com.hj.casps.ui.MyToast;
+import com.hj.casps.util.LogoutUtils;
 import com.hj.casps.widget.WaitDialogRectangle;
 import com.lzy.okgo.OkGo;
 
@@ -285,6 +286,10 @@ public class ExecuteFragment extends ViewPagerFragment implements
                         super.onError(call, response, e);
                         LogShow("错误");
                         waitDialogRectangle.dismiss();
+                        if (Constant.public_code){
+                            //退出操作
+                            LogoutUtils.exitUser(ExecuteFragment.this);
+                        }
                     }
                 });
     }
@@ -326,6 +331,10 @@ public class ExecuteFragment extends ViewPagerFragment implements
                         super.onError(call, response, e);
                         toastSHORT(e.getMessage());
                         waitDialogRectangle.dismiss();
+                        if (Constant.public_code){
+                            //退出操作
+                            LogoutUtils.exitUser(ExecuteFragment.this);
+                        }
                     }
                 });
     }

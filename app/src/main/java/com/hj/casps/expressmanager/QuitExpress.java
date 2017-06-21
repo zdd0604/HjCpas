@@ -26,6 +26,7 @@ import com.hj.casps.entity.appordergoodsCallBack.JsonCallBack;
 import com.hj.casps.ui.MyDialog;
 import com.hj.casps.ui.MyListView;
 import com.hj.casps.ui.MyToast;
+import com.hj.casps.util.LogoutUtils;
 import com.hj.casps.util.StringUtils;
 import com.lzy.okgo.OkGo;
 
@@ -397,6 +398,10 @@ public class QuitExpress extends ActivityBaseHeader implements OnPullListener,
                         super.onError(call, response, e);
                         toastSHORT(e.getMessage());
                         waitDialogRectangle.dismiss();
+                        if (Constant.public_code){
+                            //退出操作
+                            LogoutUtils.exitUser(QuitExpress.this);
+                        }
                     }
                 });
     }
@@ -438,6 +443,10 @@ public class QuitExpress extends ActivityBaseHeader implements OnPullListener,
                         super.onError(call, response, e);
                         toastSHORT(e.getMessage());
                         waitDialogRectangle.dismiss();
+                        if (Constant.public_code){
+                            //退出操作
+                            LogoutUtils.exitUser(QuitExpress.this);
+                        }
                     }
                 });
     }

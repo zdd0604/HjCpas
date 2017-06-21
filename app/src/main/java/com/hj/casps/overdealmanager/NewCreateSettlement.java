@@ -21,6 +21,7 @@ import com.hj.casps.entity.appordergoodsCallBack.JsonCallBack;
 import com.hj.casps.entity.appsettle.QueryOppositeListEntity;
 import com.hj.casps.entity.appsettle.QueryOppositeListLoading;
 import com.hj.casps.entity.appsettle.QueryOppositeListRespon;
+import com.hj.casps.util.LogoutUtils;
 import com.hj.casps.util.StringUtils;
 import com.lzy.okgo.OkGo;
 
@@ -180,6 +181,10 @@ public class NewCreateSettlement extends ActivityBaseHeader2
                         super.onError(call, response, e);
                         toastSHORT(e.getMessage());
                         waitDialogRectangle.dismiss();
+                        if (Constant.public_code){
+                            //退出操作
+                            LogoutUtils.exitUser(NewCreateSettlement.this);
+                        }
                     }
                 });
     }

@@ -23,7 +23,9 @@ import com.hj.casps.entity.appsettle.ModifySettleLoading;
 import com.hj.casps.entity.appsettle.QueryPendingSttleGain;
 import com.hj.casps.entity.appsettle.QueryPendingSttleLoading;
 import com.hj.casps.entity.appsettle.QueryPendingSttleRespon;
+import com.hj.casps.expressmanager.QuitHarvestExpress;
 import com.hj.casps.ui.MyDialog;
+import com.hj.casps.util.LogoutUtils;
 import com.hj.casps.util.StringUtils;
 import com.lzy.okgo.OkGo;
 
@@ -289,7 +291,6 @@ public class CheckWaitBills extends ActivityBaseHeader implements View.OnClickLi
             toastSHORT("请选择数据");
             return;
         }
-        LogShow("=============" + modifySettleList.toString());
         commitModifySettle();
     }
 
@@ -331,6 +332,10 @@ public class CheckWaitBills extends ActivityBaseHeader implements View.OnClickLi
                         super.onError(call, response, e);
                         toastSHORT(e.getMessage());
                         waitDialogRectangle.dismiss();
+                        if (Constant.public_code){
+                            //退出操作
+                            LogoutUtils.exitUser(CheckWaitBills.this);
+                        }
                     }
                 });
     }
@@ -365,6 +370,10 @@ public class CheckWaitBills extends ActivityBaseHeader implements View.OnClickLi
                         super.onError(call, response, e);
                         toastSHORT(e.getMessage());
                         waitDialogRectangle.dismiss();
+                        if (Constant.public_code){
+                            //退出操作
+                            LogoutUtils.exitUser(CheckWaitBills.this);
+                        }
                     }
                 });
     }
@@ -401,6 +410,10 @@ public class CheckWaitBills extends ActivityBaseHeader implements View.OnClickLi
                         super.onError(call, response, e);
                         toastSHORT(e.getMessage());
                         waitDialogRectangle.dismiss();
+                        if (Constant.public_code){
+                            //退出操作
+                            LogoutUtils.exitUser(CheckWaitBills.this);
+                        }
                     }
                 });
     }

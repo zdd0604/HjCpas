@@ -18,6 +18,8 @@ import com.hj.casps.entity.appUser.QueryUserEntity;
 import com.hj.casps.entity.appUser.QueryUserLoading;
 import com.hj.casps.entity.appUser.QueryUserRespon;
 import com.hj.casps.entity.appordergoodsCallBack.JsonCallBack;
+import com.hj.casps.expressmanager.SendExpress;
+import com.hj.casps.util.LogoutUtils;
 import com.lzy.okgo.OkGo;
 
 import java.util.List;
@@ -187,6 +189,7 @@ public class OperatorListActivity extends ActivityBaseHeader implements OnPullLi
      * 获取列表数据
      */
     private void getQueryMmbWareHouseGainDatas(int pageNo) {
+        waitDialogRectangle.dismiss();
         Constant.JSONFATHERRESPON = "QueryUserRespon";
         QueryUserLoading queryUserLoading = new QueryUserLoading(
                 Constant.publicArg.getSys_token(),
@@ -209,6 +212,7 @@ public class OperatorListActivity extends ActivityBaseHeader implements OnPullLi
                             mList = listQueryUserRespon.dataList;
                             mHandler.sendEmptyMessage(Constant.HANDLERTYPE_0);
                         }
+                        waitDialogRectangle.dismiss();
                     }
 
                     @Override
@@ -216,6 +220,11 @@ public class OperatorListActivity extends ActivityBaseHeader implements OnPullLi
                         super.onError(call, response, e);
                         if (e instanceof IllegalStateException)
                             toastSHORT(e.getMessage());
+                        waitDialogRectangle.dismiss();
+                        if (Constant.public_code) {
+                            //退出操作
+                            LogoutUtils.exitUser(OperatorListActivity.this);
+                        }
                     }
                 });
     }

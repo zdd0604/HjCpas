@@ -137,6 +137,9 @@ public abstract class JsonCallBack<T> extends AbsCallback<T> {
                 throw new IllegalStateException(queryMmbWareHouseGain.return_message);
             } else if (code == 201) {
                 throw new IllegalStateException(queryMmbWareHouseGain.return_message);
+            }else if (code == 1101 || code == 2101) {
+                Constant.public_code = true;
+                throw new IllegalStateException(queryMmbWareHouseGain.return_message);
             } else {
                 throw new IllegalStateException("错误代码：" + code + "，错误信息：" + queryMmbWareHouseGain.return_message);
             }
@@ -153,6 +156,9 @@ public abstract class JsonCallBack<T> extends AbsCallback<T> {
             } else if (code == 101) {
                 throw new IllegalStateException(addressEditRespon.return_message);
             } else if (code == 201) {
+                throw new IllegalStateException(addressEditRespon.return_message);
+            }else if (code == 1101 || code == 2101) {
+                Constant.public_code = true;
                 throw new IllegalStateException(addressEditRespon.return_message);
             } else {
                 throw new IllegalStateException("错误代码：" + code + "，错误信息：" + addressEditRespon.return_message);
@@ -174,6 +180,9 @@ public abstract class JsonCallBack<T> extends AbsCallback<T> {
                 throw new IllegalStateException(harvestExpressRespon.return_message);
             } else if (code == 201) {
                 throw new IllegalStateException(harvestExpressRespon.return_message);
+            } else if (code == 1101 || code == 2101) {
+                Constant.public_code = true;
+                throw new IllegalStateException(harvestExpressRespon.return_message);
             } else {
                 throw new IllegalStateException("错误代码：" + code + "，错误信息：" + harvestExpressRespon.return_message);
             }
@@ -194,13 +203,10 @@ public abstract class JsonCallBack<T> extends AbsCallback<T> {
                 throw new IllegalStateException("无权限");
             } else if (code == 201) {
                 throw new IllegalStateException("数据库错误");
-            }else if (code == 1101 || code == 2101) {
+            } else if (code == 1101 || code == 2101) {
                 Constant.public_code = true;
                 throw new IllegalStateException(queryMmbBankAccountGain.return_message);
-            }
-
-
-            else {
+            } else {
                 throw new IllegalStateException("错误代码：" + code);
             }
         }
@@ -237,7 +243,10 @@ public abstract class JsonCallBack<T> extends AbsCallback<T> {
                 throw new IllegalStateException(toAddUserPageRespon.return_message);
             } else if (code == 201) {
                 throw new IllegalStateException(toAddUserPageRespon.return_message);
-            } else {
+            }else if (code == 1101 || code == 2101) {
+                Constant.public_code = true;
+                throw new IllegalStateException(toAddUserPageRespon.return_message);
+            }  else {
                 throw new IllegalStateException("错误代码：" + code + "，错误信息：" + toAddUserPageRespon.return_message);
             }
         }
@@ -254,6 +263,9 @@ public abstract class JsonCallBack<T> extends AbsCallback<T> {
             } else if (code == 101) {
                 throw new IllegalStateException(toAddUserPageRespon.return_message);
             } else if (code == 201) {
+                throw new IllegalStateException(toAddUserPageRespon.return_message);
+            } else if (code == 1101 || code == 2101) {
+                Constant.public_code = true;
                 throw new IllegalStateException(toAddUserPageRespon.return_message);
             } else {
                 throw new IllegalStateException("错误代码：" + code + "，错误信息：" + toAddUserPageRespon.return_message);
@@ -273,6 +285,9 @@ public abstract class JsonCallBack<T> extends AbsCallback<T> {
                 throw new IllegalStateException(querysettleDetailRespon.return_message);
             } else if (code == 201) {
                 throw new IllegalStateException(querysettleDetailRespon.return_message);
+            } else if (code == 1101 || code == 2101) {
+                Constant.public_code = true;
+                throw new IllegalStateException(querysettleDetailRespon.return_message);
             } else {
                 throw new IllegalStateException("错误代码：" + code + "，错误信息：" + querysettleDetailRespon.return_message);
             }
@@ -290,6 +305,9 @@ public abstract class JsonCallBack<T> extends AbsCallback<T> {
             } else if (code == 101) {
                 throw new IllegalStateException(respon.return_message);
             } else if (code == 201) {
+                throw new IllegalStateException(respon.return_message);
+            } else if (code == 1101 || code == 2101) {
+                Constant.public_code = true;
                 throw new IllegalStateException(respon.return_message);
             } else {
                 throw new IllegalStateException("错误代码：" + code + "，错误信息：" + respon.return_message);
@@ -309,6 +327,9 @@ public abstract class JsonCallBack<T> extends AbsCallback<T> {
                 throw new IllegalStateException(respon.return_message);
             } else if (code == 201) {
                 throw new IllegalStateException(respon.return_message);
+            } else if (code == 1101 || code == 2101) {
+                Constant.public_code = true;
+                throw new IllegalStateException(respon.return_message);
             } else {
                 throw new IllegalStateException("错误代码：" + code + "，错误信息：" + respon.return_message);
             }
@@ -325,6 +346,9 @@ public abstract class JsonCallBack<T> extends AbsCallback<T> {
             } else if (code == 101) {
                 throw new IllegalStateException(respon.return_message);
             } else if (code == 201) {
+                throw new IllegalStateException(respon.return_message);
+            } else if (code == 1101 || code == 2101) {
+                Constant.public_code = true;
                 throw new IllegalStateException(respon.return_message);
             } else {
                 throw new IllegalStateException("错误代码：" + code + "，错误信息：" + respon.return_message);
@@ -347,6 +371,9 @@ public abstract class JsonCallBack<T> extends AbsCallback<T> {
                 throw new IllegalStateException(QueryUserRespon.return_message);
             } else if (code == 201) {
                 throw new IllegalStateException(QueryUserRespon.return_message);
+            } else if (code == 1101 || code == 2101) {
+                Constant.public_code = true;
+                throw new IllegalStateException(QueryUserRespon.return_message);
             } else {
                 throw new IllegalStateException("错误代码：" + code + "，错误信息：" + QueryUserRespon.return_message);
             }
@@ -364,6 +391,9 @@ public abstract class JsonCallBack<T> extends AbsCallback<T> {
             } else if (code == 101) {
                 throw new IllegalStateException(respon.return_message);
             } else if (code == 201) {
+                throw new IllegalStateException(respon.return_message);
+            } else if (code == 1101 || code == 2101) {
+                Constant.public_code = true;
                 throw new IllegalStateException(respon.return_message);
             } else {
                 throw new IllegalStateException("错误代码：" + code + "，错误信息：" + respon.return_message);
@@ -386,6 +416,9 @@ public abstract class JsonCallBack<T> extends AbsCallback<T> {
                 throw new IllegalStateException(searchGoodGain.return_message);
             } else if (code == 201) {
                 throw new IllegalStateException(searchGoodGain.return_message);
+            } else if (code == 1101 || code == 2101) {
+                Constant.public_code = true;
+                throw new IllegalStateException(searchGoodGain.return_message);
             } else {
                 throw new IllegalStateException("错误代码：" + code + "，错误信息：" + searchGoodGain.return_message);
             }
@@ -406,6 +439,9 @@ public abstract class JsonCallBack<T> extends AbsCallback<T> {
                 throw new IllegalStateException(searchGoodGain.return_message);
             } else if (code == 201) {
                 throw new IllegalStateException(searchGoodGain.return_message);
+            } else if (code == 1101 || code == 2101) {
+                Constant.public_code = true;
+                throw new IllegalStateException(searchGoodGain.return_message);
             } else {
                 throw new IllegalStateException("错误代码：" + code + "，错误信息：" + searchGoodGain.return_message);
             }
@@ -425,6 +461,9 @@ public abstract class JsonCallBack<T> extends AbsCallback<T> {
             } else if (code == 101) {
                 throw new IllegalStateException(querySttleManageRespon.return_message);
             } else if (code == 201) {
+                throw new IllegalStateException(querySttleManageRespon.return_message);
+            } else if (code == 1101 || code == 2101) {
+                Constant.public_code = true;
                 throw new IllegalStateException(querySttleManageRespon.return_message);
             } else if (code == 999) {
                 throw new IllegalStateException(querySttleManageRespon.return_message);
@@ -448,15 +487,15 @@ public abstract class JsonCallBack<T> extends AbsCallback<T> {
                 throw new IllegalStateException(respon.return_message);
             } else if (code == 201) {
                 throw new IllegalStateException(respon.return_message);
+            } else if (code == 1101 || code == 2101) {
+                Constant.public_code = true;
+                throw new IllegalStateException(respon.return_message);
             } else if (code == 999) {
                 throw new IllegalStateException(respon.return_message);
             } else {
                 throw new IllegalStateException("错误代码：" + code + "，错误信息：" + respon.return_message);
             }
         }
-
-
-
 
         /**
          * 类无法解析

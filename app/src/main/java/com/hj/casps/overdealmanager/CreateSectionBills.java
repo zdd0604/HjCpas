@@ -18,6 +18,7 @@ import com.hj.casps.entity.appordergoodsCallBack.JsonCallBack;
 import com.hj.casps.entity.appsettle.QueryMyPendingSttleEntity;
 import com.hj.casps.entity.appsettle.QueryMyPendingSttleLoading;
 import com.hj.casps.entity.appsettle.QueryMyPendingSttleRespon;
+import com.hj.casps.util.LogoutUtils;
 import com.hj.casps.util.StringUtils;
 import com.lzy.okgo.OkGo;
 
@@ -206,6 +207,10 @@ public class CreateSectionBills extends ActivityBaseHeader implements View.OnCli
                         super.onError(call, response, e);
                         toastSHORT(e.getMessage());
                         waitDialogRectangle.dismiss();
+                        if (Constant.public_code){
+                            //退出操作
+                            LogoutUtils.exitUser(CreateSectionBills.this);
+                        }
                     }
                 });
     }
