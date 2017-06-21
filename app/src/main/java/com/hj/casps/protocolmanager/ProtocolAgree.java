@@ -116,6 +116,7 @@ public class ProtocolAgree extends ActivityBaseHeader2 implements View.OnClickLi
                             toast(backDetail.getReturn_message());
                         } else {
 //                            ProtocolFragment.protocolFragment.refresh();
+                            Constant.PROTOCOL_SEARCH = true;
                             finish();
                         }
                     }

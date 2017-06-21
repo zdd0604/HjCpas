@@ -38,7 +38,6 @@ import com.hj.casps.util.LogoutUtils;
 import com.hj.casps.util.StringUtils;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
-import com.lzy.okgo.exception.OkGoException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -302,6 +301,7 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
 
     //已经订单
     private void submit() {
+        refreshAllPrice();
         // validate
         String pay = order_detail_time_pay.getText().toString().trim();
         if (TextUtils.isEmpty(pay)) {
@@ -529,8 +529,8 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
                     @Override
                     public void onError(Call call, Response response, Exception e) {
                         super.onError(call, response, e);
-                            toastSHORT(e.getMessage());
-                        if(Constant.public_code){
+                        toastSHORT(e.getMessage());
+                        if (Constant.public_code) {
                             LogoutUtils.exitUser(OrderDetail.this);
                         }
 
