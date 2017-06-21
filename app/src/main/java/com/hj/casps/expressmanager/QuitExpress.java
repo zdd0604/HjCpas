@@ -223,6 +223,7 @@ public class QuitExpress extends ActivityBaseHeader implements OnPullListener,
             }
         }
     }
+
     /**
      * 全局选择全选事件
      */
@@ -338,11 +339,13 @@ public class QuitExpress extends ActivityBaseHeader implements OnPullListener,
         if (dbList.size() > 0) {
             for (int i = 0; i < dbList.size(); i++) {
                 if (dbList.get(i).isCheck()) {
-                    if (dbList.get(i).getNum() == null &&
-                            !StringUtils.isStrTrue(dbList.get(i).getNum())) {
+                    if (!StringUtils.isStrTrue(dbList.get(i).getNum())
+                            || Integer.valueOf(dbList.get(i).getNum()) == 0) {
                         toastSHORT("请填写数量");
                         return;
                     }
+
+
                     if (dbList.get(i).getExe_returngoods_num() < Integer.valueOf(dbList.get(i).getNum())) {
                         toastSHORT("超出代收数量");
                         return;
@@ -405,12 +408,12 @@ public class QuitExpress extends ActivityBaseHeader implements OnPullListener,
     private void SubmitReturnExpress(List<ReturnGoodsLoading.OrderListBean> orderList) {
         waitDialogRectangle.show();
         ReturnGoodsLoading returnGoods = new ReturnGoodsLoading(
-                Constant.publicArg.getSys_token(),
-                Constant.getUUID(),
+                publicArg.getSys_user(),
+                publicArg.getSys_member(),
                 Constant.SYS_FUNC10110051,
-                Constant.publicArg.getSys_user(),
-                Constant.publicArg.getSys_name(),
-                Constant.publicArg.getSys_member(),
+                publicArg.getSys_token(),
+                Constant.getUUID(),
+                publicArg.getSys_name(),
                 orderList);
         LogShow(mGson.toJson(returnGoods));
         Constant.JSONFATHERRESPON = "ReturnMessageRespon";

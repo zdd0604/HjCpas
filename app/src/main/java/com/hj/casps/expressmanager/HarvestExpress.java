@@ -288,8 +288,8 @@ public class HarvestExpress extends ActivityBaseHeader implements OnPullListener
         for (int i = 0; i < dbList.size(); i++) {
             QueryGetGoodsEntity queryGetGoodsEntity = dbList.get(i);
             if (queryGetGoodsEntity.isCheck()) {
-                if (queryGetGoodsEntity.getNum() == null ||
-                        !StringUtils.isStrTrue(queryGetGoodsEntity.getNum())) {
+                if (!StringUtils.isStrTrue(queryGetGoodsEntity.getNum())
+                        || Integer.valueOf(queryGetGoodsEntity.getNum()) == 0) {
                     toastSHORT("请填写数量");
                     return;
                 }

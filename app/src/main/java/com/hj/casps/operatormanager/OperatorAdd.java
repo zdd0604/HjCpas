@@ -252,7 +252,7 @@ public class OperatorAdd extends ActivityBaseHeader2 implements View.OnClickList
                         waitDialogRectangle.dismiss();
                         if (Constant.public_code){
                             //退出操作
-
+                            LogoutUtils.exitUser(OperatorAdd.this);
                         }
                     }
                 });

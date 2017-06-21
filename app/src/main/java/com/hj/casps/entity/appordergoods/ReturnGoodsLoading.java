@@ -31,6 +31,9 @@ public class ReturnGoodsLoading implements Serializable {
     private String sys_name;
     private List<OrderListBean> orderList;
 
+    public ReturnGoodsLoading() {
+    }
+
     public ReturnGoodsLoading(String sys_user, String sys_member, String sys_func, String sys_token,
                               String sys_uuid, String sys_name, List<OrderListBean> orderList) {
         this.sys_user = sys_user;
@@ -39,62 +42,6 @@ public class ReturnGoodsLoading implements Serializable {
         this.sys_token = sys_token;
         this.sys_uuid = sys_uuid;
         this.sys_name = sys_name;
-        this.orderList = orderList;
-    }
-
-    public String getSys_user() {
-        return sys_user;
-    }
-
-    public void setSys_user(String sys_user) {
-        this.sys_user = sys_user;
-    }
-
-    public String getSys_member() {
-        return sys_member;
-    }
-
-    public void setSys_member(String sys_member) {
-        this.sys_member = sys_member;
-    }
-
-    public String getSys_func() {
-        return sys_func;
-    }
-
-    public void setSys_func(String sys_func) {
-        this.sys_func = sys_func;
-    }
-
-    public String getSys_token() {
-        return sys_token;
-    }
-
-    public void setSys_token(String sys_token) {
-        this.sys_token = sys_token;
-    }
-
-    public String getSys_uuid() {
-        return sys_uuid;
-    }
-
-    public void setSys_uuid(String sys_uuid) {
-        this.sys_uuid = sys_uuid;
-    }
-
-    public String getSys_name() {
-        return sys_name;
-    }
-
-    public void setSys_name(String sys_name) {
-        this.sys_name = sys_name;
-    }
-
-    public List<OrderListBean> getOrderList() {
-        return orderList;
-    }
-
-    public void setOrderList(List<OrderListBean> orderList) {
         this.orderList = orderList;
     }
 
@@ -107,24 +54,11 @@ public class ReturnGoodsLoading implements Serializable {
         private String orderId;
         private String num;
 
+        public OrderListBean() {
+        }
+
         public OrderListBean(String order_id, String num) {
             this.orderId = order_id;
-            this.num = num;
-        }
-
-        public String getOrder_id() {
-            return orderId;
-        }
-
-        public void setOrder_id(String order_id) {
-            this.orderId = order_id;
-        }
-
-        public String getNum() {
-            return num;
-        }
-
-        public void setNum(String num) {
             this.num = num;
         }
     }

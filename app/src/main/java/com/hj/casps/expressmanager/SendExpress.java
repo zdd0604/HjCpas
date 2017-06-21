@@ -321,8 +321,8 @@ public class SendExpress extends ActivityBaseHeader implements OnPullListener,
         for (int i = 0; i < dbList.size(); i++) {
             QuerySendGoodsEntity querySendGoodsEntity = dbList.get(i);
             if (querySendGoodsEntity.isCheck()) {
-                if (querySendGoodsEntity.getNum() == null ||
-                        !StringUtils.isStrTrue(querySendGoodsEntity.getNum())) {
+                if (!StringUtils.isStrTrue(querySendGoodsEntity.getNum())
+                        || Integer.valueOf(dbList.get(i).getNum()) == 0) {
                     toastSHORT("请输入本次发货数量");
                     return;
                 }

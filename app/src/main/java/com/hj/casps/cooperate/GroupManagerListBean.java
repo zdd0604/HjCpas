@@ -15,7 +15,6 @@ public class GroupManagerListBean {
      * id : gd001
      * remark : 1
      */
-
     private String groupName;
     private int groupStatus;
     private String id;

@@ -541,8 +541,8 @@ public class QuitHarvestExpress extends ActivityBaseHeader implements OnPullList
         if (dbList.size() > 0) {
             for (int i = 0; i < dbList.size(); i++) {
                 if (dbList.get(i).isCheck()) {
-                    if (dbList.get(i).getNum() == null &&
-                            !StringUtils.isStrTrue(dbList.get(i).getNum())) {
+                    if (!StringUtils.isStrTrue(dbList.get(i).getNum())
+                            || Integer.valueOf(dbList.get(i).getNum()) == 0) {
                         toastSHORT("请填写数量");
                         return;
                     }

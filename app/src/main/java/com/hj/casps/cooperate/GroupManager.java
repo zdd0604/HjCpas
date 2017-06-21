@@ -19,6 +19,9 @@ import com.hj.casps.R;
 import com.hj.casps.adapter.WZYBaseAdapter;
 import com.hj.casps.base.ActivityBaseHeader;
 import com.hj.casps.common.Constant;
+import com.hj.casps.entity.appnemberrelationship.GroupBack;
+import com.hj.casps.entity.appnemberrelationship.QueryMMBConcerns;
+import com.hj.casps.entity.appnemberrelationship.WhoCareMe;
 import com.hj.casps.ui.MyDialog;
 import com.hj.casps.ui.MyListView;
 import com.hj.casps.ui.MyToast;
@@ -37,9 +40,6 @@ import mehdi.sakout.fancybuttons.FancyButton;
 import okhttp3.Call;
 import okhttp3.Response;
 
-import static com.hj.casps.common.Constant.SYS_FUNC101100310004;
-import static com.hj.casps.common.Constant.SYS_FUNC101100410004;
-import static com.hj.casps.common.Constant.getUUID;
 
 //群组管理，选择供应商，谁关注我
 public class GroupManager extends ActivityBaseHeader implements View.OnClickListener, OnPullListener {
@@ -170,7 +170,7 @@ public class GroupManager extends ActivityBaseHeader implements View.OnClickList
             QueryMMBConcerns concerns = new QueryMMBConcerns(
                     publicArg.getSys_token(),
                     Constant.getUUID(),
-                    SYS_FUNC101100310004,
+                    Constant.SYS_FUNC101100310004,
                     publicArg.getSys_user(),
                     publicArg.getSys_member(),
                     groupName);
@@ -205,7 +205,8 @@ public class GroupManager extends ActivityBaseHeader implements View.OnClickList
             whocaremes = new ArrayList<>();
             QueryMMBConcerns concerns = new QueryMMBConcerns(
                     publicArg.getSys_token(),
-                    getUUID(), SYS_FUNC101100310004,
+                    Constant.getUUID(),
+                    Constant.SYS_FUNC101100310004,
                     publicArg.getSys_user(),
                     publicArg.getSys_member(),
                     member_name,
@@ -238,7 +239,6 @@ public class GroupManager extends ActivityBaseHeader implements View.OnClickList
                                     whoCareMeAdapter.updateRes(whocaremes);
                                     saveDaoData();
                                 }
-
                             }
                         }
 
@@ -421,7 +421,14 @@ public class GroupManager extends ActivityBaseHeader implements View.OnClickList
                 ids = ids.isEmpty() ? whocaremes.get(i).getMember_id() : ids + "," + whocaremes.get(i).getMember_id();
             }
         }
-        QueryMMBConcerns post = new QueryMMBConcerns(publicArg.getSys_token(), getUUID(), SYS_FUNC101100410004, publicArg.getSys_user(), publicArg.getSys_member(), ids, String.valueOf(type));
+        QueryMMBConcerns post = new QueryMMBConcerns(
+                publicArg.getSys_token(),
+                Constant.getUUID(),
+                Constant.SYS_FUNC101100410004,
+                publicArg.getSys_user(),
+                publicArg.getSys_member(),
+                ids,
+                String.valueOf(type));
         OkGo.post(url)
                 .params("param", mGson.toJson(post))
                 .execute(new StringCallback() {
@@ -433,13 +440,12 @@ public class GroupManager extends ActivityBaseHeader implements View.OnClickList
                             return;
                         }
                         if (backDetail.getReturn_code() != 0) {
-                            Toast.makeText(context, backDetail.getReturn_message(), Toast.LENGTH_SHORT).show();
+                            toastSHORT(backDetail.getReturn_message());
                         } else {
                             if (type == 0) {
                                 new MyToast(context, "已关注");
                             } else {
                                 new MyToast(context, "操作成功，待审核");
-
                             }
                             handler.sendEmptyMessage(0);
                             select_all_order.setChecked(false);
@@ -452,7 +458,6 @@ public class GroupManager extends ActivityBaseHeader implements View.OnClickList
                         Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
-
     }
 
     //搜索
@@ -479,155 +484,6 @@ public class GroupManager extends ActivityBaseHeader implements View.OnClickList
         mLoader.onLoadFinished();//加载结束
     }
 
-    /**
-     * 搜索群组提交类，搜索供应商，谁关注我，通用
-     */
-    public static class QueryMMBConcerns {
-        private String sys_token;
-        private String sys_uuid;
-        private String sys_func;
-        private String sys_user;
-        private String sys_member;
-        private String group_name;
-        private String goods_catergory;
-        private String member_name;
-        private String province;
-        private String pageno;
-        private String pagesize;
-        private String member_ids;
-        private String biz_type;
-
-        public QueryMMBConcerns(String sys_token, String sys_uuid, String sys_func, String sys_user, String sys_member, String member_ids, String biz_type) {
-            this.sys_token = sys_token;
-            this.sys_uuid = sys_uuid;
-            this.sys_func = sys_func;
-            this.sys_user = sys_user;
-            this.sys_member = sys_member;
-            this.member_ids = member_ids;
-            this.biz_type = biz_type;
-        }
-
-        //查询关注我的会员列表（企业专用）
-        public QueryMMBConcerns(String sys_token, String sys_uuid, String sys_func, String sys_user, String sys_member, String member_name, String province, String pageno, String pagesize) {
-            this.sys_token = sys_token;
-            this.sys_uuid = sys_uuid;
-            this.sys_func = sys_func;
-            this.sys_user = sys_user;
-            this.sys_member = sys_member;
-            this.member_name = member_name;
-            this.province = province;
-            this.pageno = pageno;
-            this.pagesize = pagesize;
-        }
-
-        //查询所有供应商（学校专用）
-        public QueryMMBConcerns(String sys_token, String sys_uuid, String sys_func, String sys_user, String sys_member, String goods_catergory, String member_name, String province, String pageno, String pagesize) {
-            this.sys_token = sys_token;
-            this.sys_uuid = sys_uuid;
-            this.sys_func = sys_func;
-            this.sys_user = sys_user;
-            this.sys_member = sys_member;
-            this.goods_catergory = goods_catergory;
-            this.member_name = member_name;
-            this.province = province;
-            this.pageno = pageno;
-            this.pagesize = pagesize;
-        }
-
-        public QueryMMBConcerns(String sys_token, String sys_uuid, String sys_func, String sys_user, String sys_member, String group_name) {
-            this.sys_token = sys_token;
-            this.sys_uuid = sys_uuid;
-            this.sys_func = sys_func;
-            this.sys_user = sys_user;
-            this.sys_member = sys_member;
-            this.group_name = group_name;
-        }
-    }
-
-    //群组管理返回类
-    private static class GroupBack {
-
-        /**
-         * list : [{"groupName":"广东高校群","groupStatus":1,"id":"gd001","remark":"1"},{"groupName":"广东教育厅认证供应商","groupStatus":1,"id":"gd002","remark":"1"},{"groupName":"广东教育厅认证生产商","groupStatus":1,"id":"gd003","remark":"1"},{"groupName":"广东中学群","groupStatus":1,"id":"gd004","remark":"1"},{"groupName":"测试群","groupStatus":1,"id":"gd005","remark":"1"},{"groupName":"云南高校","groupStatus":1,"id":"yn010","remark":"1"},{"groupName":"云南教育厅认证供应商","groupStatus":1,"id":"yn030","remark":"1"},{"groupName":"云南教育厅帮扶合作社","groupStatus":1,"id":"yn050","remark":"1"},{"groupName":"云南教育厅直供基地","groupStatus":1,"id":"yn031","remark":"1"}]
-         * return_code : 0
-         * return_message : 成功!
-         */
-
-        private int return_code;
-        private String return_message;
-        private List<GroupManagerListBean> list;
-
-        public int getReturn_code() {
-            return return_code;
-        }
-
-        public void setReturn_code(int return_code) {
-            this.return_code = return_code;
-        }
-
-        public String getReturn_message() {
-            return return_message;
-        }
-
-        public void setReturn_message(String return_message) {
-            this.return_message = return_message;
-        }
-
-        public List<GroupManagerListBean> getList() {
-            return list;
-        }
-
-        public void setList(List<GroupManagerListBean> list) {
-            this.list = list;
-        }
-
-//        public static class ListBean {
-//            /**
-//             * groupName : 广东高校群
-//             * groupStatus : 1
-//             * id : gd001
-//             * remark : 1
-//             */
-//
-//            private String groupName;
-//            private int groupStatus;
-//            private String id;
-//            private String remark;
-//
-//            public String getGroupName() {
-//                return groupName;
-//            }
-//
-//            public void setGroupName(String groupName) {
-//                this.groupName = groupName;
-//            }
-//
-//            public int getGroupStatus() {
-//                return groupStatus;
-//            }
-//
-//            public void setGroupStatus(int groupStatus) {
-//                this.groupStatus = groupStatus;
-//            }
-//
-//            public String getId() {
-//                return id;
-//            }
-//
-//            public void setId(String id) {
-//                this.id = id;
-//            }
-//
-//            public String getRemark() {
-//                return remark;
-//            }
-//
-//            public void setRemark(String remark) {
-//                this.remark = remark;
-//            }
-//        }
-    }
-
     //群组管理适配器
     private class CooperateGroupAdapter extends WZYBaseAdapter<GroupManagerListBean> {
         private Context context;
@@ -635,12 +491,10 @@ public class GroupManager extends ActivityBaseHeader implements View.OnClickList
         public CooperateGroupAdapter(List<GroupManagerListBean> data, Context context, int layoutRes) {
             super(data, context, layoutRes);
             this.context = context;
-
         }
 
         @Override
         public void bindData(ViewHolder holder, final GroupManagerListBean cooperateModel, final int indexPos) {
-
             TextView name = (TextView) holder.getView(R.id.cooperate_group_name);
             name.setText(cooperateModel.getGroupName());
             FancyButton state = (FancyButton) holder.getView(R.id.cooperate_group_state);
@@ -653,7 +507,6 @@ public class GroupManager extends ActivityBaseHeader implements View.OnClickList
                         @Override
                         public void onClick(View view) {
                             postAddGroup(true, cooperateModel.getId());
-
                         }
                     });
                     break;
@@ -689,8 +542,6 @@ public class GroupManager extends ActivityBaseHeader implements View.OnClickList
 
                     break;
             }
-
-
         }
 
         private void postAddGroup(final boolean b, String id) {
@@ -704,7 +555,7 @@ public class GroupManager extends ActivityBaseHeader implements View.OnClickList
             QueryMMBConcerns concerns = new QueryMMBConcerns(
                     publicArg.getSys_token(),
                     Constant.getUUID(),
-                    SYS_FUNC101100310004,
+                    Constant.SYS_FUNC101100310004,
                     publicArg.getSys_user(),
                     publicArg.getSys_member(),
                     id);
@@ -731,104 +582,9 @@ public class GroupManager extends ActivityBaseHeader implements View.OnClickList
                             }
                         }
                     });
-
         }
     }
 
-    /**
-     * 搜索供应商，谁关注我，返回参数
-     */
-    private static class WhoCareMe {
-
-        /**
-         * list : [{"member_id":"testschool001","member_name":"奥森学校","mmbhomepage":"http://members.nxdj.org.cn/奥森学校.html"},{"member_id":"c35e4315f7804f52b27e403a812deec6","member_name":"新美农业合作社","mmbhomepage":"http://members.nxdj.org.cn/新美农场.html"},{"member_id":"459f3498633d4952a293dc360e2b7c97","member_name":"天坛学院","mmbhomepage":"http://106.2.221.174:2000/v2content/mmbhtml/天坛学院.html"},{"member_id":"55da4721cd7049e186a17745a795a6cd","member_name":"天美贸易公司","mmbhomepage":""},{"member_id":"d5d1244c85d5478ca88a253b509f8bed","member_name":"北京交通大学","mmbhomepage":""},{"member_id":"19dae428c9ad44ce86011d786ead53f1","member_name":"北京冯氏商贸有限公司","mmbhomepage":"http://members.nxdj.org.cn/北京冯氏商贸.html"},{"member_id":"a9c1512052164391ab1fcc2ffa67b0ec","member_name":"北京试用的学校","mmbhomepage":""},{"member_id":"da4383de72494f5d98dc7836d25f526f","member_name":"cyh","mmbhomepage":"http://members.nxdj.org.cn/cyh.html"}]
-         * pagecount : 8
-         * return_code : 0
-         * return_message : 成功!
-         */
-
-        private int pagecount;
-        private int return_code;
-        private String return_message;
-        private List<WhoCareListBean> list;
-
-        public int getPagecount() {
-            return pagecount;
-        }
-
-        public void setPagecount(int pagecount) {
-            this.pagecount = pagecount;
-        }
-
-        public int getReturn_code() {
-            return return_code;
-        }
-
-        public void setReturn_code(int return_code) {
-            this.return_code = return_code;
-        }
-
-        public String getReturn_message() {
-            return return_message;
-        }
-
-        public void setReturn_message(String return_message) {
-            this.return_message = return_message;
-        }
-
-        public List<WhoCareListBean> getList() {
-            return list;
-        }
-
-        public void setList(List<WhoCareListBean> list) {
-            this.list = list;
-        }
-
-//        public static class ListBean {
-//            /**
-//             * member_id : testschool001
-//             * member_name : 奥森学校
-//             * mmbhomepage : http://members.nxdj.org.cn/奥森学校.html
-//             */
-//
-//            private String member_id;
-//            private String member_name;
-//            private String mmbhomepage;
-//            private boolean choice;
-//
-//            public boolean isChoice() {
-//                return choice;
-//            }
-//
-//            public void setChoice(boolean choice) {
-//                this.choice = choice;
-//            }
-//
-//            public String getMember_id() {
-//                return member_id;
-//            }
-//
-//            public void setMember_id(String member_id) {
-//                this.member_id = member_id;
-//            }
-//
-//            public String getMember_name() {
-//                return member_name;
-//            }
-//
-//            public void setMember_name(String member_name) {
-//                this.member_name = member_name;
-//            }
-//
-//            public String getMmbhomepage() {
-//                return mmbhomepage;
-//            }
-//
-//            public void setMmbhomepage(String mmbhomepage) {
-//                this.mmbhomepage = mmbhomepage;
-//            }
-//        }
-    }
 
     //选择供应商 谁关注我的适配器
     private class WhoCareMeAdapter extends WZYBaseAdapter<WhoCareListBean> {
@@ -857,9 +613,6 @@ public class GroupManager extends ActivityBaseHeader implements View.OnClickList
                 layout_check_order_going.setChecked(listBean.isChoice());
             }
 
-
         }
     }
-
-
 }
