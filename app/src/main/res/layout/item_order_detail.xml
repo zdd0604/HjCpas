@@ -84,6 +84,7 @@
             android:layout_margin="@dimen/size_5"
             android:background="@drawable/edittext_contains_border"
             android:digits="0123456789"
+            android:maxLength="9"
             android:gravity="center"
             android:inputType="number" />
     </LinearLayout>

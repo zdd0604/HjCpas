@@ -419,7 +419,7 @@ public class ActivityBase extends ActivityCommBase implements
      * @param textView
      * @return
      */
-    public String getTvVaule(TextView textView) {
+    public static String getTvVaule(TextView textView) {
         return textView.getText().toString().trim();
     }
 

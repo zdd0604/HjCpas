@@ -49,7 +49,8 @@ import static com.hj.casps.common.Constant.SYS_FUNC101100410002;
 import static com.hj.casps.common.Constant.getUUID;
 
 //下定单的页面
-public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickListener {
+public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickListener,
+        OrderShellDetailAdapter.upDataPrice {
 
     private EditText order_detail_time_pay;
     private Spinner order_detail_process;
@@ -247,10 +248,9 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
 
                         if (databack.getReturn_code() != 0) {
                             Toast.makeText(context, databack.getReturn_message(), Toast.LENGTH_SHORT).show();
-                        }else if(databack.getReturn_code()==1101||databack.getReturn_code()==1102){
+                        } else if (databack.getReturn_code() == 1101 || databack.getReturn_code() == 1102) {
                             LogoutUtils.exitUser(OrderDetail.this);
-                        }
-                        else {
+                        } else {
                             result[0] = databack.getGoodsInfo().getMinPrice() + "-" + databack.getGoodsInfo().getMaxPrice();
                             orderShellModel.setPrice(result[0]);
                             adapter.notifyDataSetChanged();
@@ -288,7 +288,7 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
         order_detail_submit = (Button) findViewById(R.id.order_detail_submit);
         order_detail_submit.setOnClickListener(this);
         order_detail_process.setAdapter(stringArrayAdapter3);
-
+        OrderShellDetailAdapter.setUpDataPrice(this);
     }
 
     //刷新报价结果
@@ -298,6 +298,11 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
             allPrice += Double.parseDouble(order.getAllprice());
         }
         order_detail_product_pay.setText(allPrice + "");
+    }
+
+    @Override
+    public void onRefresh() {
+        refreshAllPrice();
     }
 
     //已经订单
@@ -466,13 +471,10 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
                         }
                         if (orderBack.getReturn_code() != 0) {
                             toast(orderBack.getReturn_message());
-                        }else if(orderBack.getReturn_code()==1101||orderBack.getReturn_code()==1102){
+                        } else if (orderBack.getReturn_code() == 1101 || orderBack.getReturn_code() == 1102) {
                             toastSHORT("重复登录或令牌超时");
                             LogoutUtils.exitUser(OrderDetail.this);
-                        }
-
-
-                        else {
+                        } else {
                             toast("订单提交成功");
                             finish();
                         }
