@@ -1,23 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/lineColor"
-    android:orientation="vertical"
-    tools:context="com.hj.casps.cooperate.CooperateDetail">
-
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/size_60"
+        android:layout_height="@dimen/size_45"
+        android:layout_marginTop="@dimen/size_5"
         android:background="@color/white"
         android:gravity="center">
 
         <TextView
             android:id="@+id/member_name_text"
-            android:layout_width="@dimen/size_80"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:text="@string/cooperate_person"
@@ -37,9 +35,9 @@
     </LinearLayout>
 
     <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/size_15"
-        android:background="@color/lineColor" />
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/size_1"
+        android:background="@color/view_bg" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -48,12 +46,11 @@
         android:gravity="center">
 
         <TextView
-            android:layout_width="@dimen/size_80"
+            android:layout_width="@dimen/activity_toast_width"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:text="@string/cooperate_address"
             android:textSize="@dimen/font_size_16" />
-
 
         <TextView
             android:id="@+id/cooperate_address"
@@ -66,55 +63,42 @@
             android:textSize="@dimen/font_size_16" />
     </LinearLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/size_15"
-        android:background="@color/lineColor" />
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/size_60"
-        android:background="@color/white"
-        android:gravity="center">
+        android:layout_marginTop="@dimen/size_10"
+        android:background="@color/white">
 
         <TextView
-            android:layout_width="@dimen/size_80"
+            android:id="@+id/text_title1"
+            android:layout_width="@dimen/size_100"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
             android:text="@string/cooperate_can_buy"
             android:textSize="@dimen/font_size_16" />
 
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1" />
-
         <ToggleButton
             android:id="@+id/toggle_coop_buy"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/size_10"
+            android:layout_toRightOf="@id/text_title1"
             android:background="@android:color/transparent"
             android:button="@drawable/ios7_btn"
             android:text=""
             android:textOff=""
             android:textOn="" />
 
-        <View
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1" />
-
         <mehdi.sakout.fancybuttons.FancyButton
             android:id="@+id/cooperate_create_buy"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/size_40"
-            android:layout_marginBottom="@dimen/size_10"
-            android:layout_marginRight="@dimen/main_margin"
-            android:layout_marginTop="@dimen/size_10"
-            android:paddingLeft="@dimen/size_20"
-            android:paddingRight="@dimen/size_20"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/size_10"
             android:visibility="invisible"
             app:fb_borderColor="@color/title_bg"
             app:fb_borderWidth="1dp"
@@ -124,57 +108,45 @@
             app:fb_text="@string/cooperate_create_buy"
             app:fb_textColor="@color/white"
             app:fb_textSize="@dimen/btn_size" />
-    </LinearLayout>
+    </RelativeLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/size_1"
-        android:background="@color/lineColor" />
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/size_60"
-        android:background="@color/white"
-        android:gravity="center">
+        android:layout_marginTop="@dimen/size_1"
+        android:background="@color/white">
 
         <TextView
-            android:layout_width="@dimen/size_80"
+            android:id="@+id/text_title2"
+            android:layout_width="@dimen/size_100"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
             android:text="@string/cooperate_can_sell"
             android:textSize="@dimen/font_size_16" />
 
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1" />
-
         <ToggleButton
             android:id="@+id/toggle_coop_sell"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/size_10"
+            android:layout_toEndOf="@+id/text_title2"
+            android:layout_toRightOf="@+id/text_title2"
             android:background="@android:color/transparent"
             android:button="@drawable/ios7_btn"
-            android:text=""
+            android:text="tev"
             android:textOff=""
             android:textOn="" />
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1" />
 
         <mehdi.sakout.fancybuttons.FancyButton
             android:id="@+id/cooperate_create_sell"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/size_40"
-            android:layout_marginBottom="@dimen/size_10"
-            android:layout_marginRight="@dimen/main_margin"
-            android:layout_marginTop="@dimen/size_10"
-            android:paddingLeft="@dimen/size_20"
-            android:paddingRight="@dimen/size_20"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/size_10"
             android:visibility="invisible"
             app:fb_borderColor="@color/title_bg"
             app:fb_borderWidth="1dp"
@@ -184,23 +156,51 @@
             app:fb_text="@string/cooperate_create_sell"
             app:fb_textColor="@color/title_bg"
             app:fb_textSize="@dimen/btn_size" />
-    </LinearLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_60"
+        android:layout_marginTop="@dimen/size_1"
+        android:background="@color/white">
+
+        <TextView
+            android:id="@+id/text_title3"
+            android:layout_width="@dimen/size_100"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:text="@string/cooperate_downgrade"
+            android:textSize="@dimen/font_size_16" />
+
+        <ToggleButton
+            android:id="@+id/relation_change"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/size_10"
+            android:layout_toRightOf="@id/text_title3"
+            android:background="@android:color/transparent"
+            android:button="@drawable/ios7_btn"
+            android:text="tev"
+            android:textOff=""
+            android:textOn="" />
+    </RelativeLayout>
 
     <mehdi.sakout.fancybuttons.FancyButton
-        android:id="@+id/cooperate_detail_submit"
+        android:id="@+id/submit_fbtn"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/size_55"
-        android:layout_marginLeft="@dimen/main_margin"
-        android:layout_marginRight="@dimen/main_margin"
-        android:layout_marginTop="@dimen/size_30"
-        android:paddingLeft="@dimen/size_20"
-        android:paddingRight="@dimen/size_20"
+        android:layout_height="@dimen/size_50"
+        android:layout_margin="@dimen/size_15"
         app:fb_borderColor="@color/title_bg"
         app:fb_borderWidth="1dp"
         app:fb_defaultColor="@color/title_bg"
         app:fb_focusColor="@color/title_bg"
         app:fb_radius="@dimen/size_5"
-        app:fb_text="@string/cooperate_downgrade"
+        app:fb_text="@string/True"
         app:fb_textColor="@color/white"
         app:fb_textSize="@dimen/btn_size" />
 </LinearLayout>
