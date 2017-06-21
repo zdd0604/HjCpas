@@ -10,6 +10,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -368,6 +369,7 @@ public class MmbActivity extends ActivityBaseHeader2 implements View.OnClickList
         @Override
         public void bindData(ViewHolder holder, final MmbModelPerson mmbModelPerson, final int indexPos) {
             TextView mmb_name = (TextView) holder.getView(R.id.mmb_name);
+            RelativeLayout relative_layout_1_mmb = (RelativeLayout) holder.getView(R.id.relative_layout_1_mmb);
 
             switch (i) {
                 case 1:
@@ -379,7 +381,7 @@ public class MmbActivity extends ActivityBaseHeader2 implements View.OnClickList
             }
 
             final TextView delete_mmb_item = (TextView) holder.getView(R.id.delete_mmb_item);
-            mmb_name.setOnClickListener(new View.OnClickListener() {
+            relative_layout_1_mmb.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     delete_mmb_item.setVisibility(View.VISIBLE);
