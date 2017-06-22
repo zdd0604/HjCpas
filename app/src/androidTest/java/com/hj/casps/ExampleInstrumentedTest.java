@@ -1,8 +1,14 @@
 package com.hj.casps;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
+
+import com.hj.casps.commodity.FragementTemporaryPic;
+import com.hj.casps.ui.MyDialog;
+import com.hj.casps.user.UserBean;
+import com.hj.casps.user.UserBeanUtils;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,10 +28,11 @@ public class ExampleInstrumentedTest {
      /*   Context appContext = InstrumentationRegistry.getTargetContext();
         assertEquals("com.hj.casps", appContext.getPackageName());*/
 
-
+/*
     String s= "/v2content/upload/img/newImg/FD/min/383d7955cca54763bd19c7b2f226c306.jpg";
         String substring = s.substring(17);
-        System.out.println("su"+substring);
+        System.out.println("su"+substring);*/
+
 
     }
 }

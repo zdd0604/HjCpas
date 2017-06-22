@@ -1,6 +1,7 @@
 package com.hj.casps.util;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
@@ -12,6 +13,7 @@ import com.hj.casps.common.Constant;
 import com.hj.casps.cooperate.DaoSession;
 import com.hj.casps.entity.PublicArg;
 import com.hj.casps.http.LoginBean;
+import com.hj.casps.ui.MyDialog;
 import com.hj.casps.user.ActivityLogin;
 import com.hj.casps.user.LoginJsonCallBack;
 import com.hj.casps.user.UserBean;
@@ -27,20 +29,32 @@ import okhttp3.Response;
 
 public class LogoutUtils {
 
+    private static MyDialog dialog;
+
     public static void exitUser(Activity context) {
         Constant.public_code=false;
-        UserBean currentUser = UserBeanUtils.getInstance(context).getCurrentUser();
-        currentUser.setTokenIsActive(false);
-        UserBeanUtils.getInstance(context).updateToken(currentUser);
-        httpExitApp(context);
+        showDialog(context);
     }
     public static void exitUser(Fragment fragment) {
         Constant.public_code=false;
-        FragmentActivity context = fragment.getActivity();
-        UserBean currentUser = UserBeanUtils.getInstance(context).getCurrentUser();
-        currentUser.setTokenIsActive(false);
-        UserBeanUtils.getInstance(context).updateToken(currentUser);
-        httpExitApp(context);
+        showDialog(fragment.getActivity());
+    }
+    private static void showDialog(final Activity context) {
+        dialog = new MyDialog(context);
+        dialog.setMessage("此账号被别人登录或登录超时");
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.setCancelable(false);
+        dialog.setYesOnclickListener("确定", new MyDialog.onYesOnclickListener() {
+            @Override
+            public void onYesClick() {
+                dialog.dismiss();
+                UserBean currentUser = UserBeanUtils.getInstance(context).getCurrentUser();
+                currentUser.setTokenIsActive(false);
+                UserBeanUtils.getInstance(context).updateToken(currentUser);
+                httpExitApp(context);
+            }
+        });
+        dialog.show();
     }
 
     //用户退出

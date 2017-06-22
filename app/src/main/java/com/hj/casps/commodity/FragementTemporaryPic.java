@@ -10,20 +10,16 @@ import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
-import android.widget.TextView;
 
-import com.alibaba.fastjson.JSONObject;
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -35,37 +31,29 @@ import com.hj.casps.base.FragmentBase;
 import com.hj.casps.common.Constant;
 import com.hj.casps.entity.PublicArg;
 import com.hj.casps.entity.goodsmanager.Pub;
-import com.hj.casps.entity.picturemanager.ShowBaseEntity;
-import com.hj.casps.entity.picturemanager.ShowDivEntity;
-import com.hj.casps.entity.picturemanager.request.RequestShowBase;
 import com.hj.casps.entity.picturemanager.request.ResAddDiv;
 import com.hj.casps.entity.picturemanager.request.ResUpdateDiv;
 import com.hj.casps.ui.MyDialog;
 import com.hj.casps.ui.MyToast;
 import com.hj.casps.util.GsonTools;
 import com.hj.casps.util.LogoutUtils;
+import com.hj.casps.util.ToastUtils;
 import com.lzy.okgo.OkGo;
-import com.lzy.okgo.callback.AbsCallback;
 import com.lzy.okgo.callback.StringCallback;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import mehdi.sakout.fancybuttons.FancyButton;
 import okhttp3.Call;
 import okhttp3.Response;
-
-import static android.app.Activity.RESULT_OK;
 
 /**
  * Created by YaoChen on 2017/4/13.`
  * 临时素材库和平台素材库
  */
 
-public class FragementTemporaryPic extends FragmentBase {
+public class FragementTemporaryPic extends FragmentBase implements View.OnClickListener {
 
     private PopupWindow sharepopupWindow;
     private View contentView;
@@ -78,6 +66,8 @@ public class FragementTemporaryPic extends FragmentBase {
     private boolean isMyMaterial = true;
     public static final int ADD_PIC_RES_REQUES_CODE = 909;
     public static final int REQUES_CODE = 904;
+    private LinearLayout ll_content;
+    private EditText et_name;
 
 // 图片封装为一个数组
 
@@ -95,25 +85,30 @@ public class FragementTemporaryPic extends FragmentBase {
 
 
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         View view = inflater.inflate(R.layout.activity_selectclass, container, false);
-
+        ll_content = (LinearLayout) view.findViewById(R.id.ll_content);
+        FancyButton add = (FancyButton) view.findViewById(R.id.submit);
+        et_name = (EditText) view.findViewById(R.id.fragment_mypic_empty_class_Et);
+        add.setOnClickListener(this);
         recyclerView = (RecyclerView) view.findViewById(R.id.rv);
-      /*  Bundle bundle = getArguments();
-        pageFlag = bundle.getInt("PicStyle");
-        baseId = bundle.getString(Constant.INTENT_BASEID);
-        divList = bundle.getParcelableArrayList(Constant.INTENT_SHOW_DIV);*/
         initView();
         return view;
     }
 
 
     private void setData() {
+        //如果个人素材库没有数据，就显示一个可以添加一级目录的界面
+       if(divList!=null&&divList.size()<=0&&isMyMaterial){
+           ll_content.setVisibility(View.VISIBLE);
+           return;
+       }
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
-        ArrayList<GoodLevelEntity> goodLevelEntities = generateData();
-        recyclerView.setAdapter(new GoodListAdapter(goodLevelEntities));
+        ArrayList<GoodLevelEntity> arrayList = generateData();
+        recyclerView.setAdapter(new GoodListAdapter(arrayList));
         recyclerView.addItemDecoration(new GoodDividerItemDecoration(this.getActivity()));
         recyclerView.addOnItemTouchListener(new GoodSimpleItemClick());
     }
@@ -124,7 +119,6 @@ public class FragementTemporaryPic extends FragmentBase {
     }
 
     private ArrayList<FragementTemporaryPic.GoodLevelEntity> generateData() {
-
         ArrayList<FragementTemporaryPic.GoodLevelEntity> res = new ArrayList<>();
         for (int i = 0; i < divList.size(); i++) {
             SelectPicture_new.DataListEntity e1 = divList.get(i).getEntity();
@@ -144,6 +138,20 @@ public class FragementTemporaryPic extends FragmentBase {
 
 
         return res;
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.submit:
+                String name = et_name.getText().toString().trim();
+                if(name.equals("")){
+                    ToastUtils.showToast(FragementTemporaryPic.this.getActivity(),"目录不能为空");
+                    return;
+                }
+                addDivForNet(name,"0",baseId);
+                break;
+        }
     }
 
     private class GoodListAdapter extends BaseMultiItemQuickAdapter<FragementTemporaryPic.GoodLevelEntity, BaseViewHolder> {
@@ -549,11 +557,12 @@ public class FragementTemporaryPic extends FragmentBase {
                 R.layout.show_pictrue_popup, null);
 
         if (!entity.hasSubItem() && !entity.parentId.equals("0")) {
-            contentView.findViewById(R.id.add).setVisibility(View.GONE);
+            contentView.findViewById(R.id.ll_add).setVisibility(View.GONE);
+        }if(entity.parentId.equals("0")){
+            contentView.findViewById(R.id.ll_add_same).setVisibility(View.VISIBLE);
         }
-
-
         ShowPopupClick click = new ShowPopupClick(entity);
+        contentView.findViewById(R.id.add_same).setOnClickListener(click);
         contentView.findViewById(R.id.add).setOnClickListener(click);
         contentView.findViewById(R.id.edit).setOnClickListener(click);
         contentView.findViewById(R.id.del).setOnClickListener(click);
@@ -580,12 +589,12 @@ public class FragementTemporaryPic extends FragmentBase {
             Intent intent = new Intent(context, ActivityAddPicRes.class);
             intent.putExtra(Constant.INTENT_BASEID, entity.getBaseId());
             switch (v.getId()) {
-               /* case R.id.add_same:
+              case R.id.add_same:
                     intent.putExtra(Constant.INTENT_TYPE, Constant.PIC_ADD);
                     intent.putExtra(Constant.INTENT_PARENTID, entity.getParentId());
                     context.startActivityForResult(intent, ADD_PIC_RES_REQUES_CODE);
                     sharepopupWindow.dismiss();
-                    break;*/
+                    break;
                 case R.id.add:
                     intent.putExtra(Constant.INTENT_TYPE, Constant.PIC_ADD);
                     intent.putExtra(Constant.INTENT_PARENTID, entity.getDivId());
@@ -691,5 +700,53 @@ public class FragementTemporaryPic extends FragmentBase {
         }).show();
 
     }
+
+
+    //添加个人素材库分类
+    private void addDivForNet(String divName, String parentId, final String baseId) {
+        //如果增加顶级目录，parentId传空
+        if (parentId.equals("0")) parentId = "";
+
+        PublicArg p = Constant.publicArg;
+        String timeUUID = Constant.getTimeUUID();
+        if(timeUUID.equals("")){
+            toastSHORT(getString(R.string.time_out));
+            return;
+        }
+        ResAddDiv r = new ResAddDiv(p.getSys_token(), timeUUID,Constant.SYS_FUNC101100210001, p.getSys_user(), p.getSys_member(), divName, parentId, baseId);
+        String param = mGson.toJson(r);
+        waitDialogRectangle.show();
+        OkGo.post(Constant.AddDivUrl).params("param", param).execute(new StringCallback() {
+            @Override
+            public void onSuccess(String data, Call call, Response response) {
+                waitDialogRectangle.dismiss();
+                Pub pub = GsonTools.changeGsonToBean(data, Pub.class);
+                if (pub.getReturn_code() == 0) {
+                    SelectPicture_new context = (SelectPicture_new) FragementTemporaryPic.this.getContext();
+                    new MyToast(getActivity(), "添加图片目录成功");
+                    context.setDelCallBack(baseId);
+                   /* Intent intent = new Intent();
+                    intent.putExtra(IS_ADD, true);
+                    intent.putExtra(BASE_ID, baseId);
+                    setResult(RESULT_OK, intent);
+                    ActivityAddPicRes.this.finish();*/
+                } else if(pub.getReturn_code()==1101||pub.getReturn_code()==1102){
+                    LogoutUtils.exitUser(FragementTemporaryPic.this);
+                }
+                else {
+                    toastSHORT(pub.getReturn_message());
+                    return;
+                }
+            }
+            @Override
+            public void onError(Call call, Response response, Exception e) {
+                super.onError(call, response, e);
+                waitDialogRectangle.dismiss();
+            }
+        });
+        //添加个人素材库分类
+    }
+
+
 
 }

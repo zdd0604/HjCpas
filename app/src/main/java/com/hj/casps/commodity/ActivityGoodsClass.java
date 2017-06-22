@@ -97,6 +97,7 @@ public class ActivityGoodsClass extends ActivityBaseHeader2 implements View.OnCl
 
     private void refreshUi() {
 
+
         if (pageno == 0) {
             if (adapter == null) {
                 adapter = new GoodClassAdapter(context, null);

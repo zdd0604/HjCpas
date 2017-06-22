@@ -234,13 +234,35 @@ public class ActivityLogin extends ActivityBase {
     }
 
     private void verfyLogin(LoginBean loginBean) {
-        if (loginBean.getReturn_code() == 0) {
+        int return_code = loginBean.getReturn_code();
+        if (return_code == 0) {
             this.loginBean = loginBean;
             countDown(verfyBv, 30, "倒计时", "", "获取验证码");
 //                ToastUtils.showToast(ActivityLogin.this, "短信已发送");
-            toastSHORT("短信已发送");
+            ToastUtils.showToast(ActivityLogin.this, "短信已发送");
             return;
-        } else {
+        }else if(return_code==110){
+            ToastUtils.showToast(ActivityLogin.this, "用户未启用");
+            return;
+        }
+        else if(return_code==101){
+            ToastUtils.showToast(ActivityLogin.this, "用户名不存在");
+            return;
+        }
+        else if(return_code==102){
+            ToastUtils.showToast(ActivityLogin.this, "密码错误，无法获取验证码");
+            return;
+        }
+        else if(return_code==999){
+            ToastUtils.showToast(ActivityLogin.this, "用户名或密码错误，获取验证码失败");
+            return;
+        }else if(return_code==2101){
+            ToastUtils.showToast(ActivityLogin.this, getString(R.string.no_authorizations));
+        }
+        else if(return_code==3101){
+            ToastUtils.showToast(ActivityLogin.this, getString(R.string.repeat_submit));
+        }
+        else {
             toastSHORT(loginBean.getReturn_message());
             return;
         }
@@ -285,12 +307,38 @@ public class ActivityLogin extends ActivityBase {
                                      if (httploginBean.getReturn_code() == 0) {
                                          //判断数据库有没有该用户数据，有就直接登录
                                          httpGetContext(httploginBean, username, password);
-                                     }else if (httploginBean.getReturn_code() == 1101 || httploginBean.getReturn_code() == 2101) {
+                                     }else if(httploginBean.getReturn_code()==110){
+                                         ToastUtils.showToast(ActivityLogin.this, "用户未启用");
+                                         return;
+                                     }
+                                     else if (httploginBean.getReturn_code() == 101) {
+                                         ToastUtils.showToast(ActivityLogin.this, "用户不存在");
+                                         return;
+                                     } else if (httploginBean.getReturn_code() == 102) {
+                                         ToastUtils.showToast(ActivityLogin.this, "密码错误");
+                                         return;
+                                     } else if (httploginBean.getReturn_code() == 103) {
+                                         ToastUtils.showToast(ActivityLogin.this, "短信码错误");
+                                         return;
+                                     } else if (httploginBean.getReturn_code() == 104) {
+                                         ToastUtils.showToast(ActivityLogin.this, "短信未发送");
+                                         return;
+                                     } else if (httploginBean.getReturn_code() == 999) {
+                                         ToastUtils.showToast(ActivityLogin.this, "未知错误");
+                                         return;
+                                     }
+                                     else if(httploginBean.getReturn_code()==2101){
+                                         ToastUtils.showToast(ActivityLogin.this, getString(R.string.no_authorizations));
+                                     }
+                                     else if(httploginBean.getReturn_code()==3101){
+                                         ToastUtils.showToast(ActivityLogin.this, getString(R.string.repeat_submit));
+                                     }
+                                     else if (httploginBean.getReturn_code() == 1101 || httploginBean.getReturn_code() == 2101) {
                                          toastSHORT(httploginBean.getReturn_message());
                                          LogoutUtils.exitUser(ActivityLogin.this);
                                      }
                                      else {
-                                         toastSHORT(httploginBean.getReturn_message());
+                                         ToastUtils.showToast(ActivityLogin.this, httploginBean.getReturn_message());
                                          return;
                                      }
                                  }
@@ -365,7 +413,7 @@ public class ActivityLogin extends ActivityBase {
                                     LogoutUtils.exitUser(ActivityLogin.this);
                                 }
                                 else{
-                                    ToastUtils.showToast(ActivityLogin.this, "其他异常");
+                                    ToastUtils.showToast(ActivityLogin.this, loginBean.getReturn_message());
                                 }
                             }
                         }

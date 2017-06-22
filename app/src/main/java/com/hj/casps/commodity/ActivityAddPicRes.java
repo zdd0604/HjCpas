@@ -182,7 +182,6 @@ public class ActivityAddPicRes extends ActivityBaseHeader2 {
                 } else if(pub.getReturn_code()==1101||pub.getReturn_code()==1102){
                     LogoutUtils.exitUser(ActivityAddPicRes.this);
                 }
-
                 else {
                     toastSHORT(pub.getReturn_message());
                     return;
