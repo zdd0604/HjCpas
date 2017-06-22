@@ -43,14 +43,14 @@
         android:id="@+id/login_inputname_iv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:tint="@color/white"
         android:layout_alignBottom="@id/login_inputname_Et"
         android:layout_alignRight="@id/login_inputname_Et"
         android:layout_alignTop="@id/login_inputname_Et"
         android:padding="@dimen/size_10"
         android:scaleType="fitCenter"
-        android:visibility="gone"
-        android:src="@mipmap/jt3" />
+        android:src="@mipmap/jt3"
+        android:tint="@color/white"
+        android:visibility="gone" />
 
     <View
         android:id="@+id/login_inputname_view01"
@@ -72,8 +72,8 @@
         android:drawableLeft="@mipmap/sign_pw"
         android:drawablePadding="@dimen/size_10"
         android:hint="@string/inputpassword"
-        android:maxLines="1"
         android:inputType="textPassword"
+        android:maxLines="1"
         android:textColor="@color/white" />
 
     <View
@@ -86,11 +86,11 @@
         android:background="@color/white" />
 
     <RelativeLayout
-        android:visibility="gone"
         android:id="@+id/login_inputps_verfy_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/login_inputps_Et">
+        android:layout_below="@+id/login_inputps_Et"
+        android:visibility="gone">
 
         <EditText
             android:id="@+id/login_inputps_verfy_Et"
@@ -101,8 +101,9 @@
             android:drawableLeft="@mipmap/sign_pw"
             android:drawablePadding="@dimen/size_10"
             android:hint="@string/inputcheckcode"
-            android:maxLines="1"
             android:inputType="numberDecimal"
+            android:maxLength="6"
+            android:maxLines="1"
             android:textColor="@color/white" />
 
         <TextView
@@ -143,5 +144,5 @@
         app:fb_radius="@dimen/size_5"
         app:fb_text="@string/login"
         app:fb_textColor="@color/title_bg"
-        app:fb_textSize="@dimen/btn_size"/>
+        app:fb_textSize="@dimen/btn_size" />
 </RelativeLayout>

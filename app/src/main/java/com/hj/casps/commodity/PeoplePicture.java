@@ -580,8 +580,8 @@ public class PeoplePicture extends ActivityBaseHeader2 implements OnPullListener
         prdialog.setMax(100);
         prdialog.show();
 
-        final String paramStr = "?" +
-                "sys_token=" + publicArg.getSys_token()
+        final String paramStr = "?"
+                + "sys_token=" + publicArg.getSys_token()
                 + "&sys_uuid=" + publicArg.getSys_uuid()
                 + "&sys_func=" + Constant.SYS_FUNC
                 + "&sys_user=" + publicArg.getSys_user()
@@ -628,8 +628,8 @@ public class PeoplePicture extends ActivityBaseHeader2 implements OnPullListener
                         LogShow("当前大小:" + DataCleanManager.getFormatSize(currentSize));
                         prdialog.setProgress((int) (progress * 100));
                         if (((int) (progress * 100)) == 100) {
-                            pageNo = 0;
-                            mHadler.sendEmptyMessage(Constant.HANDLERTYPE_0);
+//                            pageNo = 0;
+//                            mHadler.sendEmptyMessage(Constant.HANDLERTYPE_0);
                             deleteDatas();
                         }
                     }
