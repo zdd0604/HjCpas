@@ -133,7 +133,7 @@ public class RefundActivity extends ActivityBaseHeader implements OnPullListener
         }
 
     }
-
+// 刷新UI
     private void refreshUI() {
         System.out.println("r=refreshUI" + pagecount);
         if (isSave) {
@@ -180,12 +180,12 @@ public class RefundActivity extends ActivityBaseHeader implements OnPullListener
         }
 
     }
-
+//请求数据接口
     private void initData(final int pageno) {
         waitDialogRectangle.show();
         PublicArg p = Constant.publicArg;
         Constant.JSONFATHERRESPON = "QueryMmbBankAccountRespon";
-        RequestQueryRefundMoney r = new RequestQueryRefundMoney(p.getSys_token(), Constant.getUUID(), Constant.SYS_FUNC101100610004, p.getSys_user(), p.getSys_member(), Constant.appOrderMoney_orderId, Constant.appOrderMoney_goodsName, Constant.appOrderMoney_buyersName, String.valueOf(pageno + 1), String.valueOf(pagesize));
+        RequestQueryRefundMoney r = new RequestQueryRefundMoney(p.getSys_token(), Constant.getUUID(), Constant.SYS_FUNC, p.getSys_user(), p.getSys_member(), Constant.appOrderMoney_orderId, Constant.appOrderMoney_goodsName, Constant.appOrderMoney_buyersName, String.valueOf(pageno + 1), String.valueOf(pagesize));
         String param = mGson.toJson(r);
         log("r=QueryReFundMoneyUrl" + r.toString());
         OkGo.post(Constant.QueryReFundMoneyUrl).params("param", param).execute(new JsonCallBack<QueryMmbBankAccountRespon<List<ResRefundMoneyOfflineEntity>>>() {
@@ -235,17 +235,7 @@ public class RefundActivity extends ActivityBaseHeader implements OnPullListener
         mLoader.setPullLoadEnable(true);
         mLoader.setPullRefreshEnable(true);
 
-        payment_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                Intent intent = new Intent(context, BillsDetailsActivity.class);
-                Bundle bundle = new Bundle();
-//                bundle.putSerializable(Constant.BUNDLE_TYPE, mList.get(position));
-                intent.putExtras(bundle);
-                startActivity(intent);
-            }
-        });
     }
 
     @Override
@@ -384,7 +374,7 @@ public class RefundActivity extends ActivityBaseHeader implements OnPullListener
             toastSHORT(getString(R.string.time_out));
             return;
         }
-        ResPayMoneyOffline r = new ResPayMoneyOffline(p.getSys_token(), timeUUID, Constant.SYS_FUNC101100610004, p.getSys_user(), p.getSys_member(), orderList);
+        ResPayMoneyOffline r = new ResPayMoneyOffline(p.getSys_token(), timeUUID, Constant.SYS_FUNC, p.getSys_user(), p.getSys_member(), orderList);
         String param = mGson.toJson(r);
         waitDialogRectangle.show();
         OkGo.post(Constant.RefundMoneyOffline).params("param", param).execute(new StringCallback() {

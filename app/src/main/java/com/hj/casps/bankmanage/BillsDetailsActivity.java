@@ -117,7 +117,7 @@ public class BillsDetailsActivity extends ActivityBaseHeader2 {
 //        AppOrderCheckOrderLoading getGoods = new AppOrderCheckOrderLoading(
 //                Constant.publicArg.getSys_token(),
 //                "00005",
-//                Constant.SYS_FUNC101100510002,
+//                Constant.SYS_FUNC,
 //                Constant.publicArg.getSys_user(),
 //                Constant.publicArg.getSys_name(),
 //                Constant.publicArg.getSys_member(),
@@ -155,7 +155,7 @@ public class BillsDetailsActivity extends ActivityBaseHeader2 {
         AppOrderCheckOrderLoading getGoods = new AppOrderCheckOrderLoading(
                 Constant.publicArg.getSys_token(),
                 Constant.getUUID(),
-                Constant.SYS_FUNC101100510002,
+                Constant.SYS_FUNC,
                 Constant.publicArg.getSys_user(),
                 Constant.publicArg.getSys_name(),
                 Constant.publicArg.getSys_member(),

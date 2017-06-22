@@ -74,7 +74,7 @@ public class ProtocalProductItem extends ActivityBaseHeader2 implements View.OnC
             requestProtocal = new RequestProtocal(
                     publicArg.getSys_token(),
                     Constant.getUUID(),
-                    Constant.SYS_FUNC10110035,
+                    Constant.SYS_FUNC,
                     publicArg.getSys_user(),
                     publicArg.getSys_member(),
                     ctrId,
@@ -84,7 +84,7 @@ public class ProtocalProductItem extends ActivityBaseHeader2 implements View.OnC
             requestProtocal = new RequestProtocal(
                     publicArg.getSys_token(),
                     Constant.getUUID(),
-                    Constant.SYS_FUNC10110035,
+                    Constant.SYS_FUNC,
                     publicArg.getSys_user(),
                     publicArg.getSys_member(),
                     sellMmbId);

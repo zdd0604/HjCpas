@@ -23,7 +23,7 @@ import mehdi.sakout.fancybuttons.FancyButton;
 import okhttp3.Call;
 import okhttp3.Response;
 
-import static com.hj.casps.common.Constant.SYS_FUNC101100310003;
+import static com.hj.casps.common.Constant.SYS_FUNC;
 
 //关系管理—待审批申请
 public class CooperateRequest extends ActivityBaseHeader implements View.OnClickListener {
@@ -45,7 +45,7 @@ public class CooperateRequest extends ActivityBaseHeader implements View.OnClick
     //加载待审批申请的目录
     private void initData() {
         cooperateRequstModels = new ArrayList<>();
-        QueryMMBConcerns queryMMBConcerns = new QueryMMBConcerns(publicArg.getSys_token(), "", SYS_FUNC101100310003, publicArg.getSys_user(), publicArg.getSys_member(), "1", "10");
+        QueryMMBConcerns queryMMBConcerns = new QueryMMBConcerns(publicArg.getSys_token(), "", SYS_FUNC, publicArg.getSys_user(), publicArg.getSys_member(), "1", "10");
         OkGo.post(Constant.QueryMmbRelationshipsUrl)
                 .tag(this)
                 .params("param", mGson.toJson(queryMMBConcerns))
@@ -285,7 +285,7 @@ public class CooperateRequest extends ActivityBaseHeader implements View.OnClick
             QueryMMBConcerns queryMMBConcerns = new QueryMMBConcerns(
                     publicArg.getSys_token(),
                     Constant.getUUID(),
-                    SYS_FUNC101100310003,
+                    SYS_FUNC,
                     publicArg.getSys_user(),
                     publicArg.getSys_member(),
                     relationship_id, agree ? "0" : "1");

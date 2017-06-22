@@ -94,7 +94,7 @@ public class SelectClass extends ActivityBaseHeader2 implements View.OnClickList
     private void initData() {
         fra_type = getIntent().getIntExtra("fra", 0);
         PublicArg p = Constant.publicArg;
-        RequestPub r = new RequestPub(p.getSys_token(), Constant.getUUID(), Constant.SYS_FUNC101100210001, p.getSys_user(), p.getSys_member());
+        RequestPub r = new RequestPub(p.getSys_token(), Constant.getUUID(), Constant.SYS_FUNC, p.getSys_user(), p.getSys_member());
         String param = mGson.toJson(r);
         OkGo.post(Constant.GetAllCategoryUrl)
                 .params("param", param)

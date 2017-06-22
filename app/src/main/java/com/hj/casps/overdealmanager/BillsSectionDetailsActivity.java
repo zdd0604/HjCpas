@@ -115,7 +115,7 @@ public class BillsSectionDetailsActivity extends ActivityBaseHeader2 {
         QuerysettleDetailLoading qEntity = new QuerysettleDetailLoading(
                 Constant.publicArg.getSys_token(),
                 Constant.getUUID(),
-                Constant.SYS_FUNC10110081,
+                Constant.SYS_FUNC,
                 Constant.publicArg.getSys_user(),
                 Constant.publicArg.getSys_member(),
                 id);

@@ -150,7 +150,7 @@ public class ExecuteFragment extends ViewPagerFragment implements
         QuerySttleManageLoading getGoods = new QuerySttleManageLoading(
                 Constant.publicArg.getSys_token(),
                 Constant.getUUID(),
-                Constant.SYS_FUNC101100810003,
+                Constant.SYS_FUNC,
                 Constant.publicArg.getSys_user(),
                 Constant.publicArg.getSys_member(),
                 Constant.appOrderMoney_settleCode,
@@ -305,7 +305,7 @@ public class ExecuteFragment extends ViewPagerFragment implements
         StopSettleLoading respon = new StopSettleLoading(
                 Constant.publicArg.getSys_token(),
                 Constant.getUUID(),
-                Constant.SYS_FUNC101100810003,
+                Constant.SYS_FUNC,
                 Constant.publicArg.getSys_user(),
                 Constant.publicArg.getSys_member(),
                 id);

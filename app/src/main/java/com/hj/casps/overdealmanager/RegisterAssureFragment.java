@@ -222,7 +222,7 @@ public class RegisterAssureFragment extends ViewPagerFragment implements
         QuerySttleRegistLoading getRespon = new QuerySttleRegistLoading(
                 Constant.publicArg.getSys_token(),
                 Constant.getUUID(),
-                Constant.SYS_FUNC101100810005,
+                Constant.SYS_FUNC,
                 Constant.publicArg.getSys_user(),
                 Constant.publicArg.getSys_member(),
                 Constant.SEARCH_sendgoods_OrdertitleCode,
@@ -272,7 +272,7 @@ public class RegisterAssureFragment extends ViewPagerFragment implements
         StopSettleLoading respon = new StopSettleLoading(
                 Constant.publicArg.getSys_token(),
                 Constant.getUUID(),
-                Constant.SYS_FUNC101100810003,
+                Constant.SYS_FUNC,
                 Constant.publicArg.getSys_user(),
                 Constant.publicArg.getSys_member(),
                 id);

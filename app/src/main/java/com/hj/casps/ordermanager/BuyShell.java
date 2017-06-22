@@ -38,7 +38,7 @@ import okhttp3.Response;
 
 import static com.hj.casps.common.Constant.HTTPURLIMAGE;
 import static com.hj.casps.common.Constant.SHORTHTTPURL;
-import static com.hj.casps.common.Constant.SYS_FUNC101100410003;
+import static com.hj.casps.common.Constant.SYS_FUNC;
 import static com.hj.casps.common.Constant.getUUID;
 
 //采购销售拣单车点击进入下单界面
@@ -157,7 +157,7 @@ public class BuyShell extends ActivityBaseHeader2 implements View.OnClickListene
             ChooseGoodsPost post = new ChooseGoodsPost(
                     publicArg.getSys_token(),
                     getUUID(),
-                    SYS_FUNC101100410003,
+                    SYS_FUNC,
                     publicArg.getSys_user(),
                     publicArg.getSys_mmbname(),
                     publicArg.getSys_member(),
@@ -399,7 +399,7 @@ public class BuyShell extends ActivityBaseHeader2 implements View.OnClickListene
         if (goods_id == null || goods_id.isEmpty()) {
             toast("请选择商品");
         } else {
-            ChooseGoodsPost post = new ChooseGoodsPost(publicArg.getSys_token(), getUUID(), SYS_FUNC101100410003, publicArg.getSys_user(), publicArg.getSys_name(), publicArg.getSys_member(), goods_id + "," + goods_name, "0", "0");
+            ChooseGoodsPost post = new ChooseGoodsPost(publicArg.getSys_token(), getUUID(), SYS_FUNC, publicArg.getSys_user(), publicArg.getSys_name(), publicArg.getSys_member(), goods_id + "," + goods_name, "0", "0");
             final ChooseGoodsBack.MtListBean finalChooseGood = chooseGood;
             OkGo.post(Constant.UpdateQuoteSHPCUrl)
                     .params("param", mGson.toJson(post))

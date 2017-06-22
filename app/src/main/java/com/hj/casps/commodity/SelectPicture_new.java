@@ -154,7 +154,7 @@ public class SelectPicture_new extends ActivityBaseHeader2 {
         PublicArg p = Constant.publicArg;
         RequestShowBase r = new RequestShowBase(
                 p.getSys_token(), Constant.getUUID(),
-                Constant.SYS_FUNC101100210001,
+                Constant.SYS_FUNC,
                 p.getSys_user(),
                 p.getSys_member());
         String param = mGson.toJson(r);
@@ -245,7 +245,7 @@ public class SelectPicture_new extends ActivityBaseHeader2 {
         PublicArg p = Constant.publicArg;
         RequestShowBase r = new RequestShowBase(p.getSys_token(),
                 Constant.getUUID(),
-                Constant.SYS_FUNC101100210001,
+                Constant.SYS_FUNC,
                 p.getSys_user(),
                 p.getSys_member(),
                 baseId);

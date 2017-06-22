@@ -18,7 +18,7 @@ import okhttp3.Response;
 import static com.hj.casps.common.Constant.GetFlowType;
 import static com.hj.casps.common.Constant.GetPayType;
 import static com.hj.casps.common.Constant.GetSendsGoodsType;
-import static com.hj.casps.common.Constant.SYS_FUNC101100350004;
+import static com.hj.casps.common.Constant.SYS_FUNC;
 import static com.hj.casps.common.Constant.getUUID;
 
 //协议详情页面
@@ -56,7 +56,7 @@ public class ProtocolDetail extends ActivityBaseHeader2 {
     private void initData() {
         contract_id = getIntent().getStringExtra("contract_id");
         contract_type = getIntent().getStringExtra("contract_type");
-        DetailPost detailPost = new DetailPost(publicArg.getSys_token(), getUUID(), SYS_FUNC101100350004, publicArg.getSys_user(), publicArg.getSys_member(), contract_id, contract_type);
+        DetailPost detailPost = new DetailPost(publicArg.getSys_token(), getUUID(), SYS_FUNC, publicArg.getSys_user(), publicArg.getSys_member(), contract_id, contract_type);
         OkGo.post(Constant.ToContractDetailPageUrl)
                 .tag(this)
                 .params("param", mGson.toJson(detailPost))

@@ -118,7 +118,7 @@ public class CooperateDirectory extends ActivityBaseHeader implements RadioGroup
         CooperateLoading cooperateLoading = new CooperateLoading(
                 publicArg.getSys_token(),
                 getUUID(),
-                Constant.SYS_FUNC101100310001,
+                Constant.SYS_FUNC,
                 publicArg.getSys_user(),
                 publicArg.getSys_name(),
                 publicArg.getSys_member());

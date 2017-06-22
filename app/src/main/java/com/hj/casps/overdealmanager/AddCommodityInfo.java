@@ -204,7 +204,7 @@ public class AddCommodityInfo extends ActivityBaseHeader2 implements View.OnClic
         QueryPayMoneyOrderForSettleLoading tEdit = new QueryPayMoneyOrderForSettleLoading(
                 publicArg.getSys_token(),
                 Constant.getUUID(),
-                Constant.SYS_FUNC101100810001,
+                Constant.SYS_FUNC,
                 publicArg.getSys_user(),
                 publicArg.getSys_member(),
                 Constant.appOrderMoney_buyersId,

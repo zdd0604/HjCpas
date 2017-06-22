@@ -168,7 +168,7 @@ public class PeoplePicture extends ActivityBaseHeader2 implements OnPullListener
         RequestShowPic r = new RequestShowPic(
                 publicArg.getSys_token(),
                 Constant.getUUID(),
-                Constant.SYS_FUNC101100210001,
+                Constant.SYS_FUNC,
                 publicArg.getSys_user(),
                 publicArg.getSys_member(),
                 divId, "",
@@ -382,7 +382,7 @@ public class PeoplePicture extends ActivityBaseHeader2 implements OnPullListener
             return;
         }
         ReqDelMal r = new ReqDelMal(p.getSys_token(),
-                timeUUID, Constant.SYS_FUNC101100210001,
+                timeUUID, Constant.SYS_FUNC,
                 p.getSys_user(),
                 p.getSys_member(),
                 imgId);
@@ -597,7 +597,7 @@ public class PeoplePicture extends ActivityBaseHeader2 implements OnPullListener
 
         final String paramStr = "?sys_token=" + publicArg.getSys_token()
                 + "&sys_uuid=" + publicArg.getSys_uuid()
-                + "&sys_func=" + Constant.SYS_FUNC101100210001
+                + "&sys_func=" + Constant.SYS_FUNC
                 + "&sys_user=" + publicArg.getSys_user()
                 + "&sys_member=" + publicArg.getSys_member()
                 + "&divId=" + divId
@@ -618,8 +618,6 @@ public class PeoplePicture extends ActivityBaseHeader2 implements OnPullListener
                         }else if(pub.getReturn_code()==1101||pub.getReturn_code()==1102){
                             LogoutUtils.exitUser(PeoplePicture.this);
                         }
-
-
                         else {
                             toast(pub.getReturn_message());
                         }
@@ -637,12 +635,12 @@ public class PeoplePicture extends ActivityBaseHeader2 implements OnPullListener
                     @Override
                     public void upProgress(long currentSize, long totalSize, float progress, long networkSpeed) {
                         super.upProgress(currentSize, totalSize, progress, networkSpeed);
-                            System.out.println("currentSize = [" + currentSize + "], totalSize = [" + totalSize + "], progress = [" + progress + "], networkSpeed = [" + networkSpeed + "]");
+                        System.out.println("currentSize = [" + currentSize + "], totalSize = [" + totalSize + "], progress = [" + progress + "], networkSpeed = [" + networkSpeed + "]");
+                        System.out.println("总大小:"+ DataCleanManager.getFormatSize(currentSize));
                         prdialog.setProgress((int) (progress * 100));
                         if (((int) (progress * 100)) == 100) {
                             prdialog.dismiss();
                             imagePathList.clear();
-
                         }
                     }
 

@@ -271,7 +271,7 @@ public class ActivityEditGoods extends ActivityBaseHeader2 implements View.OnCli
             toastSHORT(getString(R.string.time_out));
             return;
         }
-        RequestToUpdateGood requestToUpdateGood = new RequestToUpdateGood(publicArg.getSys_token(), timeUUID, Constant.SYS_FUNC101100210001, publicArg.getSys_user(), publicArg.getSys_member(), goodsId);
+        RequestToUpdateGood requestToUpdateGood = new RequestToUpdateGood(publicArg.getSys_token(), timeUUID, Constant.SYS_FUNC, publicArg.getSys_user(), publicArg.getSys_member(), goodsId);
         String param = mGson.toJson(requestToUpdateGood);
         waitDialogRectangle.show();
         OkGo.post(Constant.ToUpdateGoodUrl).params("param", param).execute(new StringCallback() {
@@ -511,7 +511,7 @@ public class ActivityEditGoods extends ActivityBaseHeader2 implements View.OnCli
         String imageIds = sb.toString();
 
         //TODO imageIds暂时没有传递值
-        RequestCreateGood r = new RequestCreateGood(p.getSys_token(),timeUUID, Constant.SYS_FUNC101100210001,
+        RequestCreateGood r = new RequestCreateGood(p.getSys_token(),timeUUID, Constant.SYS_FUNC,
                 p.getSys_user(), p.getSys_member(), categoryId, createTime, createAddress, factory, product_num,
                 brand, stockNum, productTime, specification, unitSpecification, minPrice, maxPrice, unitPrice, described, imageId, subImagePath, imageIds, name);
 
@@ -591,7 +591,7 @@ public class ActivityEditGoods extends ActivityBaseHeader2 implements View.OnCli
         String unitSpecification = sp_specification.getSelectedItem().toString();
         RequestDetailGood r = new RequestDetailGood(p.getSys_token(),
                 timeUUID,
-                Constant.SYS_FUNC101100210001,
+                Constant.SYS_FUNC,
                 p.getSys_user(), p.getSys_member(), goodsId, categoryId, createAddress, factory, product_num, brand, stockNum, productTime, specification, unitSpecification, minPrice, maxPrice, unitPrice, described, imageId, subImagePath, imageIds, name, createTime);
         String param = mGson.toJson(r);
         waitDialogRectangle.show();
@@ -668,7 +668,7 @@ public class ActivityEditGoods extends ActivityBaseHeader2 implements View.OnCli
         String goodname = et_goodname.getText().toString().trim();
 
         PublicArg publicArg = Constant.publicArg;
-        RequestCheckName requestCheckName = new RequestCheckName(publicArg.getSys_token(), Constant.getUUID(), Constant.SYS_FUNC101100210001, publicArg.getSys_user(), publicArg.getSys_member(), categoryId + "", goodname);
+        RequestCheckName requestCheckName = new RequestCheckName(publicArg.getSys_token(), Constant.getUUID(), Constant.SYS_FUNC, publicArg.getSys_user(), publicArg.getSys_member(), categoryId + "", goodname);
         String param = mGson.toJson(requestCheckName);
 //        String url="http://192.168.1.120:8081/v2/appGoods/checkName.app?param={\"sys_member\":\"testshop001\",\"sys_user\":\"e6ae4ad55d5b44769d2a54a0fedbfff7\",\"sys_token\":\"x4jiwtk2eyq8bsg9\",\"sys_func\":\"121212\",\"sys_uuid\":\"13123\",\"categoryId\":\"12123\",\"goodsName\":\"dfs\"}";
         OkGo.post(Constant.CheckGoodName).

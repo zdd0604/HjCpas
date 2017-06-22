@@ -441,7 +441,7 @@ public class NewCreateSettlDetails extends ActivityBaseHeader2 implements View.O
         QueryAddressAccountLoading tEdit = new QueryAddressAccountLoading(
                 publicArg.getSys_token(),
                 Constant.getUUID(),
-                Constant.SYS_FUNC101100810001,
+                Constant.SYS_FUNC,
                 publicArg.getSys_user(),
                 publicArg.getSys_member(),
                 Constant.appOrderMoney_buyersId);
@@ -480,7 +480,7 @@ public class NewCreateSettlDetails extends ActivityBaseHeader2 implements View.O
         QueryAddressAccountLoading tEdit = new QueryAddressAccountLoading(
                 publicArg.getSys_token(),
                 Constant.getUUID(),
-                Constant.SYS_FUNC101100810001,
+                Constant.SYS_FUNC,
                 publicArg.getSys_user(),
                 publicArg.getSys_member(),
                 Constant.appOrderMoney_sellersId);
@@ -520,7 +520,7 @@ public class NewCreateSettlDetails extends ActivityBaseHeader2 implements View.O
                 Constant.getUUID(),
                 publicArg.getSys_token(),
                 publicArg.getSys_user(),
-                Constant.SYS_FUNC101100810001,
+                Constant.SYS_FUNC,
                 Constant.appOrderMoney_mmbgetAccount,
                 Constant.appOrderMoney_mmbpayAccount,
                 Constant.appOrderMoney_buyersId,

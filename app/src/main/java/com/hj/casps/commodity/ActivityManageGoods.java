@@ -57,7 +57,6 @@ public class ActivityManageGoods extends ActivityBaseHeader implements View.OnCl
     private int fra_type;
     //多选添加按钮
     private ImageView et_add;
-
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -81,6 +80,7 @@ public class ActivityManageGoods extends ActivityBaseHeader implements View.OnCl
         ArrayList<GoodLevelEntity> dataList = generateData1();
         //如果数据为空，就跳到添加数据页面
         recyclerView.setAdapter(new GoodListAdapter(dataList));
+        //添加分割线
         recyclerView.addItemDecoration(new GoodDividerItemDecoration(ActivityManageGoods.this));
         recyclerView.addOnItemTouchListener(new GoodSimpleItemClick());
     }
@@ -108,9 +108,11 @@ public class ActivityManageGoods extends ActivityBaseHeader implements View.OnCl
         ButterKnife.bind(this);
         layout_head_right_tv.setOnClickListener(this);
         initView();
+        //判断是否有网络
         if (hasInternetConnected()) {
             initData();
         } else {
+            //公共的缓存商品分类
             categoryList = Constant.goodCategoryList;
             refrushUi();
         }
@@ -129,7 +131,7 @@ public class ActivityManageGoods extends ActivityBaseHeader implements View.OnCl
     //初始化数据
     private void initData() {
         PublicArg p = Constant.publicArg;
-        RequestPub r = new RequestPub(p.getSys_token(), Constant.getUUID(), Constant.SYS_FUNC101100210001, p.getSys_user(), p.getSys_member());
+        RequestPub r = new RequestPub(p.getSys_token(), Constant.getUUID(), Constant.SYS_FUNC, p.getSys_user(), p.getSys_member());
         String param = mGson.toJson(r);
         OkGo.post(Constant.GetUserCategoryUrl)
                 .params("param", param)
@@ -182,7 +184,7 @@ public class ActivityManageGoods extends ActivityBaseHeader implements View.OnCl
         return res;
     }
 
-
+//初始化菜单数据
     private ArrayList<GoodLevelEntity> generateData1() {
         ArrayList<ActivityManageGoods.GoodLevelEntity> res = new ArrayList<>();
 //        if(entityList!=null&&entityList.size()>0)
@@ -218,7 +220,6 @@ public class ActivityManageGoods extends ActivityBaseHeader implements View.OnCl
                 //    操作说明
                 CreateDialog(Constant.DIALOG_CONTENT_28);
                 break;
-
         }
     }
 
@@ -438,6 +439,7 @@ public class ActivityManageGoods extends ActivityBaseHeader implements View.OnCl
             if (!entity.hasSubItem()) {
                 onItemClick1(entity);
 //                intentActivity(ActivityManageGoods.this, ActivityGoodsClass.class);
+                //跳转到商品列表页
                 Intent intent = new Intent(ActivityManageGoods.this, ActivityGoodsClass.class);
                 intent.putExtra(Constant.CATEGORY_ID, entity.getCategoryId());
                 intent.putExtra("fra", fra_type);

@@ -372,7 +372,7 @@ public class QuitHarvestExpress extends ActivityBaseHeader implements OnPullList
         QueryGoodsListLoading getGoods = new QueryGoodsListLoading(
                 Constant.publicArg.getSys_token(),
                 Constant.getUUID(),
-                Constant.SYS_FUNC101100510005,
+                Constant.SYS_FUNC,
                 Constant.publicArg.getSys_user(),
                 Constant.publicArg.getSys_member(),
                 Constant.SEARCH_sendgoods_OrdertitleCode,
@@ -417,7 +417,7 @@ public class QuitHarvestExpress extends ActivityBaseHeader implements OnPullList
         GetReturnGoodsOperation returnGoods = new GetReturnGoodsOperation(
                 Constant.publicArg.getSys_token(),
                 Constant.getUUID(),
-                Constant.SYS_FUNC10110051,
+                Constant.SYS_FUNC,
                 Constant.publicArg.getSys_user(),
                 Constant.publicArg.getSys_name(),
                 Constant.publicArg.getSys_member(),

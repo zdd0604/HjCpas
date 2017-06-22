@@ -45,7 +45,7 @@ import java.util.List;
 import okhttp3.Call;
 import okhttp3.Response;
 
-import static com.hj.casps.common.Constant.SYS_FUNC101100410002;
+import static com.hj.casps.common.Constant.SYS_FUNC;
 import static com.hj.casps.common.Constant.getUUID;
 
 //下定单的页面
@@ -132,7 +132,7 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
         AppOrderCheckOrderLoading getGoods = new AppOrderCheckOrderLoading(
                 Constant.publicArg.getSys_token(),
                 getUUID(),
-                Constant.SYS_FUNC101100510002,
+                Constant.SYS_FUNC,
                 Constant.publicArg.getSys_user(),
                 Constant.publicArg.getSys_name(),
                 Constant.publicArg.getSys_member(),
@@ -230,7 +230,7 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
         PublicArg p = Constant.publicArg;
         RequestProtocal r = new RequestProtocal(p.getSys_token(),
                 Constant.getUUID(),
-                Constant.SYS_FUNC10110041,
+                Constant.SYS_FUNC,
                 p.getSys_user(),
                 p.getSys_member(),
                 orderShellModel.getGoodsId());
@@ -370,7 +370,7 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
                 listBeen.add(orderListBean);
             }
             post = new CreateOrder(publicArg.getSys_token(),
-                    getUUID(), SYS_FUNC101100410002, publicArg.getSys_user(),
+                    getUUID(), SYS_FUNC, publicArg.getSys_user(),
                     publicArg.getSys_name(), publicArg.getSys_member(), "", "",
                     buy_id, buy_name, end, start,
 //                    mList.get(order_detail_get_account.getSelectedItemPosition()).getAccountno(),
@@ -406,7 +406,7 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
                     }
                     post = new CreateOrder(publicArg.getSys_token(),
                             getUUID(),
-                            SYS_FUNC101100410002,
+                            SYS_FUNC,
                             publicArg.getSys_user(),
                             publicArg.getSys_name(),
                             publicArg.getSys_member(),
@@ -447,7 +447,7 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
                     }
                     post = new CreateOrder(publicArg.getSys_token(),
                             getUUID(),
-                            SYS_FUNC101100410002,
+                            SYS_FUNC,
                             publicArg.getSys_user(),
                             publicArg.getSys_name(),
                             publicArg.getSys_member(),
@@ -531,7 +531,7 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
      */
     private void getQueryMmbBankAccountGainDatas() {
         PublicArg p = Constant.publicArg;
-        RequestBackAccount r = new RequestBackAccount(p.getSys_token(), Constant.getUUID(), Constant.SYS_FUNC10110041, p.getSys_user(), p.getSys_member(), "1", "30");
+        RequestBackAccount r = new RequestBackAccount(p.getSys_token(), Constant.getUUID(), Constant.SYS_FUNC, p.getSys_user(), p.getSys_member(), "1", "30");
         String param = mGson.toJson(r);
         Constant.JSONFATHERRESPON = "QueryMmbBankAccountRespon";
         OkGo.post(Constant.QueryMmbBankAccountUrl)
@@ -577,7 +577,7 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
         QueryMmbWareHouseLoading queryMmbWareHouseLoading = new QueryMmbWareHouseLoading(
                 publicArg.getSys_token(),
                 "00520",
-                Constant.SYS_FUNC101100510001,
+                Constant.SYS_FUNC,
                 publicArg.getSys_user(),
                 publicArg.getSys_name(),
                 publicArg.getSys_member(),

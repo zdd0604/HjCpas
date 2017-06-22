@@ -166,7 +166,7 @@ public class ActivityGoodDetail extends ActivityBaseHeader2 implements View.OnCl
 
     private void initData() {
         PublicArg publicArg = Constant.publicArg;
-        RequestToUpdateGood requestToUpdateGood = new RequestToUpdateGood(publicArg.getSys_token(), Constant.getUUID(), Constant.SYS_FUNC101100210001, publicArg.getSys_user(), publicArg.getSys_member(), goodsId);
+        RequestToUpdateGood requestToUpdateGood = new RequestToUpdateGood(publicArg.getSys_token(), Constant.getUUID(), Constant.SYS_FUNC, publicArg.getSys_user(), publicArg.getSys_member(), goodsId);
         String param = mGson.toJson(requestToUpdateGood);
         OkGo.post(Constant.LookGoodUrl).params("param", param).execute(new GoodToUpdateCallBack<GoodtoUpdateGain<GoodInfoEntity>>() {
             @Override

@@ -117,7 +117,7 @@ public class CreateQuotes extends ActivityBaseHeader2 implements View.OnClickLis
             EditQuoteEntity editQuoteEntity = new EditQuoteEntity(
                     publicArg.getSys_token(),
                     Constant.getUUID(),
-                    Constant.SYS_FUNC10110028,
+                    Constant.SYS_FUNC,
                     publicArg.getSys_user(),
                     publicArg.getSys_member(),
                     id
@@ -296,7 +296,7 @@ public class CreateQuotes extends ActivityBaseHeader2 implements View.OnClickLis
             createBean.explan = more;
             createBean.type = String.valueOf(product_type.getSelectedItemPosition());
             createBean.sys_token = publicArg.getSys_token();
-            createBean.sys_func = Constant.SYS_FUNC10110028;
+            createBean.sys_func = Constant.SYS_FUNC;
             createBean.sys_uuid = getUUID();
             createBean.sys_user = publicArg.getSys_user();
             createBean.sys_name = publicArg.getSys_username();
@@ -327,7 +327,7 @@ public class CreateQuotes extends ActivityBaseHeader2 implements View.OnClickLis
             createBean.explan = more;
             createBean.type = String.valueOf(product_type.getSelectedItemPosition());
             createBean.sys_token = publicArg.getSys_token();
-            createBean.sys_func = Constant.SYS_FUNC10110028;
+            createBean.sys_func = Constant.SYS_FUNC;
             createBean.sys_uuid = getUUID();
             createBean.sys_user = publicArg.getSys_user();
             createBean.sys_name = publicArg.getSys_username();

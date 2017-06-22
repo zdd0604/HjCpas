@@ -134,7 +134,7 @@ public class ReceiptActivity extends ActivityBaseHeader implements OnPullListene
         RequestQueryGetRefundMoney r = new RequestQueryGetRefundMoney(
                 p.getSys_token(),
                 Constant.getUUID(),
-                Constant.SYS_FUNC101100610003,
+                Constant.SYS_FUNC,
                 p.getSys_user(),
                 p.getSys_member(),
                 Constant.appOrderMoney_orderId,
@@ -166,7 +166,7 @@ public class ReceiptActivity extends ActivityBaseHeader implements OnPullListene
                         super.onError(call, response, e);
                         toastSHORT(e.getMessage());
                         waitDialogRectangle.dismiss();
-                        if (Constant.public_code){
+                        if (Constant.public_code) {
                             LogoutUtils.exitUser(ReceiptActivity.this);
                         }
                     }
@@ -271,16 +271,6 @@ public class ReceiptActivity extends ActivityBaseHeader implements OnPullListene
         mLoader.setPullLoadEnable(true);
         mLoader.setPullRefreshEnable(true);
 
-//        payment_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                Intent intent = new Intent(context, BillsDetailsActivity.class);
-//                Bundle bundle = new Bundle();
-////                bundle.putSerializable(Constant.BUNDLE_TYPE, mList.get(position));
-//                intent.putExtras(bundle);
-//                startActivity(intent);
-//            }
-//        });
     }
 
     @Override
@@ -343,6 +333,7 @@ public class ReceiptActivity extends ActivityBaseHeader implements OnPullListene
         showBillsDialog();
     }
 
+    //收集请求参数
     private void CollectReqParam() {
         List<ResGetMoney.Sub> sList = new ArrayList<>();
         for (int i = 0; i < dbList.size(); i++) {
@@ -358,7 +349,7 @@ public class ReceiptActivity extends ActivityBaseHeader implements OnPullListene
     private void executeGetMoneyForNet(List<ResGetMoney.Sub> sList) {
         waitDialogRectangle.show();
         PublicArg p = Constant.publicArg;
-        ResGetMoney r = new ResGetMoney(p.getSys_token(), Constant.getUUID(), Constant.SYS_FUNC101100610003, p.getSys_user(), p.getSys_member(), sList);
+        ResGetMoney r = new ResGetMoney(p.getSys_token(), Constant.getUUID(), Constant.SYS_FUNC, p.getSys_user(), p.getSys_member(), sList);
         String param = mGson.toJson(r);
         OkGo.post(Constant.GetMoneyUrl).params("param", param).execute(new StringCallback() {
             @Override
@@ -368,14 +359,10 @@ public class ReceiptActivity extends ActivityBaseHeader implements OnPullListene
                 if (pub != null && pub.getReturn_code() == 0) {
                     new MyToast(ReceiptActivity.this, "执行收款成功");
                     clearDatas(true, true);
-                }
-                else if(pub.getReturn_code()==1101||pub.getReturn_code()==1102){
+                } else if (pub.getReturn_code() == 1101 || pub.getReturn_code() == 1102) {
                     toastSHORT("重复登录或令牌超时");
                     LogoutUtils.exitUser(ReceiptActivity.this);
-                }
-
-
-                else {
+                } else {
                     toastSHORT(pub.getReturn_message());
                 }
             }
@@ -497,7 +484,7 @@ public class ReceiptActivity extends ActivityBaseHeader implements OnPullListene
             mHandler.sendEmptyMessage(Constant.HANDLERTYPE_0);
         }
     }
-
+//查询搜索方法
     @Override
     protected void onNavSearchClick() {
         super.onNavSearchClick();
@@ -519,7 +506,7 @@ public class ReceiptActivity extends ActivityBaseHeader implements OnPullListene
             goodsMoeny -= Double.valueOf(dbList.get(pos).getMoney());
         }
     }
-
+//跳转到详情页
     @Override
     public void onBillsIDItemCilckListener(int pos) {
         //TODO
@@ -527,7 +514,7 @@ public class ReceiptActivity extends ActivityBaseHeader implements OnPullListene
         intentActivity(BillsDetailsActivity.class);
     }
 
-
+    //全选操作
     private void selectAll(boolean isck) {
         for (int i = 0; i < dbList.size(); i++) {
             // 改变boolean

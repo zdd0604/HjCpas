@@ -171,7 +171,7 @@ public class GroupManager extends ActivityBaseHeader implements View.OnClickList
             QueryMMBConcerns concerns = new QueryMMBConcerns(
                     publicArg.getSys_token(),
                     Constant.getUUID(),
-                    Constant.SYS_FUNC101100310004,
+                    Constant.SYS_FUNC,
                     publicArg.getSys_user(),
                     publicArg.getSys_member(),
                     groupName);
@@ -211,7 +211,7 @@ public class GroupManager extends ActivityBaseHeader implements View.OnClickList
             QueryMMBConcerns concerns = new QueryMMBConcerns(
                     publicArg.getSys_token(),
                     Constant.getUUID(),
-                    Constant.SYS_FUNC101100310004,
+                    Constant.SYS_FUNC,
                     publicArg.getSys_user(),
                     publicArg.getSys_member(),
                     member_name,
@@ -436,7 +436,7 @@ public class GroupManager extends ActivityBaseHeader implements View.OnClickList
         QueryMMBConcerns post = new QueryMMBConcerns(
                 publicArg.getSys_token(),
                 Constant.getUUID(),
-                Constant.SYS_FUNC101100410004,
+                Constant.SYS_FUNC,
                 publicArg.getSys_user(),
                 publicArg.getSys_member(),
                 ids,
@@ -573,7 +573,7 @@ public class GroupManager extends ActivityBaseHeader implements View.OnClickList
             QueryMMBConcerns concerns = new QueryMMBConcerns(
                     publicArg.getSys_token(),
                     Constant.getUUID(),
-                    Constant.SYS_FUNC101100310004,
+                    Constant.SYS_FUNC,
                     publicArg.getSys_user(),
                     publicArg.getSys_member(),
                     id);

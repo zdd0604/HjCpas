@@ -19,7 +19,7 @@ import java.util.List;
 import mehdi.sakout.fancybuttons.FancyButton;
 
 import static com.hj.casps.common.Constant.GOODS_NAME;
-import static com.hj.casps.common.Constant.SYS_FUNC10110028;
+import static com.hj.casps.common.Constant.SYS_FUNC;
 //群组管理的搜索页面
 public class CooperateGroupSearch extends ActivityBaseHeader2 implements View.OnClickListener {
 
@@ -169,13 +169,13 @@ public class CooperateGroupSearch extends ActivityBaseHeader2 implements View.On
         switch (type) {
             case 0:
 
-                bundle.putString("searchjson", "{\"sys_func\":\"" + SYS_FUNC10110028 + "\",\"sys_member\":\"" + publicArg.getSys_member() + "\",\"mmbId\":\"" + publicArg.getSys_member() + "\",\"sys_name\":\"" + publicArg.getSys_name() + "\",\"sys_token\":\"" + publicArg.getSys_token() + "\",\"sys_user\":\"" + publicArg.getSys_user() + "\",\"sys_uuid\":\"\",\"mmbSname\":\"" + names + "\"," +
+                bundle.putString("searchjson", "{\"sys_func\":\"" + SYS_FUNC + "\",\"sys_member\":\"" + publicArg.getSys_member() + "\",\"mmbId\":\"" + publicArg.getSys_member() + "\",\"sys_name\":\"" + publicArg.getSys_name() + "\",\"sys_token\":\"" + publicArg.getSys_token() + "\",\"sys_user\":\"" + publicArg.getSys_user() + "\",\"sys_uuid\":\"\",\"mmbSname\":\"" + names + "\"," +
                         "\"pageno\":\"1\"," + "\"pagesize\":\"20\"," +
                         "\"type\":\"" + String.valueOf(typeQ) + "\"}");
 
                 break;
             case 1:
-                bundle.putString("searchjson", "{\"sys_func\":\"" + SYS_FUNC10110028 + "\",\"sys_member\":\"" + publicArg.getSys_member() + "\",\"mmbId\":\"" + publicArg.getSys_member() + "\",\"sys_name\":\"" + publicArg.getSys_name() + "\",\"sys_token\":\"" + publicArg.getSys_token() + "\",\"sys_user\":\"" + publicArg.getSys_user() + "\",\"sys_uuid\":\"\",\"groupName\":\"" + names + "\"," +
+                bundle.putString("searchjson", "{\"sys_func\":\"" + SYS_FUNC + "\",\"sys_member\":\"" + publicArg.getSys_member() + "\",\"mmbId\":\"" + publicArg.getSys_member() + "\",\"sys_name\":\"" + publicArg.getSys_name() + "\",\"sys_token\":\"" + publicArg.getSys_token() + "\",\"sys_user\":\"" + publicArg.getSys_user() + "\",\"sys_uuid\":\"\",\"groupName\":\"" + names + "\"," +
                         "\"pageno\":\"1\"," + "\"pagesize\":\"20\"," +
                         "\"type\":\"" + String.valueOf(typeQ) + "\"}");
                 break;

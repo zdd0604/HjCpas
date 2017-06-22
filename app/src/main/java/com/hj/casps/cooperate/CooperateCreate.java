@@ -177,7 +177,7 @@ public class CooperateCreate extends ActivityBaseHeader2 implements View.OnClick
         CreateData data = new CreateData(
                 publicArg.getSys_token(),
                 getUUID(),
-                Constant.SYS_FUNC101100310001,
+                Constant.SYS_FUNC,
                 publicArg.getSys_user(),
                 publicArg.getSys_member(),
                 contract_id,
@@ -321,7 +321,7 @@ public class CooperateCreate extends ActivityBaseHeader2 implements View.OnClick
         CreateData data = new CreateData(
                 Constant.publicArg.getSys_token(),
                 getUUID(),
-                Constant.SYS_FUNC10110031,
+                Constant.SYS_FUNC,
                 Constant.publicArg.getSys_user(),
                 Constant.publicArg.getSys_member(),
                 relation_member,
@@ -586,7 +586,7 @@ public class CooperateCreate extends ActivityBaseHeader2 implements View.OnClick
                     data = new CreateData(
                             Constant.publicArg.getSys_token(),
                             getUUID(),
-                            Constant.SYS_FUNC101100310001,
+                            Constant.SYS_FUNC,
                             Constant.publicArg.getSys_user(),
                             Constant.publicArg.getSys_member(),
                             goods,
@@ -602,7 +602,7 @@ public class CooperateCreate extends ActivityBaseHeader2 implements View.OnClick
                     data = new CreateData(
                             Constant.publicArg.getSys_token(),
                             getUUID(),
-                            Constant.SYS_FUNC101100310001,
+                            Constant.SYS_FUNC,
                             Constant.publicArg.getSys_user(),
                             Constant.publicArg.getSys_member(),
                             goods,
@@ -629,7 +629,7 @@ public class CooperateCreate extends ActivityBaseHeader2 implements View.OnClick
                     data = new CreateData(
                             Constant.publicArg.getSys_token(),
                             getUUID(),
-                            Constant.SYS_FUNC101100310004,
+                            Constant.SYS_FUNC,
                             Constant.publicArg.getSys_user(),
                             Constant.publicArg.getSys_member(),
                             contract_id,
@@ -651,7 +651,7 @@ public class CooperateCreate extends ActivityBaseHeader2 implements View.OnClick
                 } else {
                     data = new CreateData(Constant.publicArg.getSys_token(),
                             getUUID(),
-                            Constant.SYS_FUNC101100310004,
+                            Constant.SYS_FUNC,
                             Constant.publicArg.getSys_user(),
                             Constant.publicArg.getSys_member(),
                             contract_id,

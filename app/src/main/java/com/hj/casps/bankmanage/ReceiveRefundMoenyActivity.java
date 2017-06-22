@@ -98,7 +98,7 @@ public class ReceiveRefundMoenyActivity extends ActivityBaseHeader implements On
             getDataForLocal();
         }
     }
-
+            //从本地数据库加载数据
     private void getDataForLocal() {
         List<ResqueryGetRefundMoneyEntity> entityList = WytUtils.getInstance(this).QuerytgetRefundMoneyInfo();
         if (entityList != null && entityList.size() > 0) {
@@ -159,7 +159,7 @@ public class ReceiveRefundMoenyActivity extends ActivityBaseHeader implements On
             toastSHORT(getString(R.string.time_out));
             return;
         }
-        ResGetMoney r = new ResGetMoney(p.getSys_token(), timeUUID, Constant.SYS_FUNC101100610005, p.getSys_user(), p.getSys_member(), orderList);
+        ResGetMoney r = new ResGetMoney(p.getSys_token(), timeUUID, Constant.SYS_FUNC, p.getSys_user(), p.getSys_member(), orderList);
         String param = mGson.toJson(r);
         waitDialogRectangle.show();
         OkGo.post(Constant.GetRefundMoneyUrl).params("param", param).execute(new StringCallback() {
@@ -175,8 +175,6 @@ public class ReceiveRefundMoenyActivity extends ActivityBaseHeader implements On
                     toastSHORT("重复登录或令牌超时");
                     LogoutUtils.exitUser(ReceiveRefundMoenyActivity.this);
                 }
-
-
                 else {
                     toastSHORT(pub.getReturn_message());
                 }
@@ -196,7 +194,7 @@ public class ReceiveRefundMoenyActivity extends ActivityBaseHeader implements On
     private void initData(final int pageno) {
         Constant.JSONFATHERRESPON = "QueryMmbBankAccountRespon";
         PublicArg p = Constant.publicArg;
-        RequestQueryGetRefundMoney r = new RequestQueryGetRefundMoney(p.getSys_token(), Constant.getUUID(), Constant.SYS_FUNC101100610005, p.getSys_user(), p.getSys_member(), Constant.appOrderMoney_orderId, Constant.appOrderMoney_goodsName, Constant.appOrderMoney_buyersName, String.valueOf(pageno + 1), String.valueOf(pagesize));
+        RequestQueryGetRefundMoney r = new RequestQueryGetRefundMoney(p.getSys_token(), Constant.getUUID(), Constant.SYS_FUNC, p.getSys_user(), p.getSys_member(), Constant.appOrderMoney_orderId, Constant.appOrderMoney_goodsName, Constant.appOrderMoney_buyersName, String.valueOf(pageno + 1), String.valueOf(pagesize));
         String param = mGson.toJson(r);
         waitDialogRectangle.show();
         System.out.println("rfffffffffffffffffffff-----------------------------------------------------");
@@ -310,7 +308,7 @@ public class ReceiveRefundMoenyActivity extends ActivityBaseHeader implements On
             selectAll(false);
         }
     }
-
+//执行操作
     private void buyAll() {
         if (goodsCount <= 0) {
             toastSHORT("请勾选一条订单");
@@ -381,7 +379,7 @@ public class ReceiveRefundMoenyActivity extends ActivityBaseHeader implements On
             initData(pageno);
         }
     }
-
+//搜查查询方法
     @Override
     protected void onNavSearchClick() {
         super.onNavSearchClick();
@@ -400,7 +398,7 @@ public class ReceiveRefundMoenyActivity extends ActivityBaseHeader implements On
         if (goodsCount > 0)
             goodsCount--;
     }
-
+//跳转到详情页面
     @Override
     public void onBillsIDItemCilckListener(int pos) {
         Intent intent = new Intent(context, BillsDetailsActivity.class);
@@ -424,7 +422,7 @@ public class ReceiveRefundMoenyActivity extends ActivityBaseHeader implements On
         }
 
     }
-
+    //判断是否有参数来确定 是否缓存和清空集合数据
     public void isEmptyParam() {
         if (StringUtils.isStrTrue(Constant.appOrderMoney_orderId) ||
                 StringUtils.isStrTrue(Constant.appOrderMoney_goodsName)

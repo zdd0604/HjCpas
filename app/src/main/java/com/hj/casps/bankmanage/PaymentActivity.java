@@ -191,13 +191,13 @@ public class PaymentActivity extends ActivityBaseHeader implements View.OnClickL
             refreshUI();
         }
     }
-
+        //请求数据的接口
     private void initData(final int pageno) {
         Constant.JSONFATHERRESPON = "QueryMmbBankAccountRespon";
         PublicArg p = Constant.publicArg;
         RequestQueryPayMoney r = new RequestQueryPayMoney(p.getSys_token(),
                 Constant.getUUID(),
-                Constant.SYS_FUNC101100610002,
+                Constant.SYS_FUNC,
                 p.getSys_user(),
                 p.getSys_member(),
                 Constant.appOrderMoney_orderId,
@@ -291,7 +291,7 @@ public class PaymentActivity extends ActivityBaseHeader implements View.OnClickL
         bundle.putInt(Constant.BUNDLE_TYPE, Constant.PAYMENT_SEARCH_TYPE);
         intentActivity(BillsSearchActivity.class, Constant.PAYMENT_REQUEST_CODE, bundle);
     }
-
+        //跳转到详情界面的接口回调
     @Override
     public void onBillsIDItemCilckListener(int pos) {
 //        bundle.putSerializable(Constant.BUNDLE_TYPE, mList.get(pos));
@@ -300,7 +300,7 @@ public class PaymentActivity extends ActivityBaseHeader implements View.OnClickL
         intentActivity(BillsDetailsActivity.class);
 
     }
-
+        //获取金额的回调
     @Override
     public void onPayMentCodeItemClickListener(TextView view, int pos) {
         accountlist = dbList.get(pos).getAccountlist();
@@ -358,6 +358,7 @@ public class PaymentActivity extends ActivityBaseHeader implements View.OnClickL
                 isSave = false;
                 clearDatas(false);
                 break;
+            //执行操作
             case R.id.layout_bottom_tv_4:
                 buyAll();
                 break;
@@ -474,7 +475,7 @@ public class PaymentActivity extends ActivityBaseHeader implements View.OnClickL
             toastSHORT(getString(R.string.time_out));
             return;
         }
-        ResPayMoneyOffline r = new ResPayMoneyOffline(p.getSys_token(), timeUUID, Constant.SYS_FUNC101100610002, p.getSys_user(), p.getSys_member(), orderList);
+        ResPayMoneyOffline r = new ResPayMoneyOffline(p.getSys_token(), timeUUID, Constant.SYS_FUNC, p.getSys_user(), p.getSys_member(), orderList);
         String param = mGson.toJson(r);
         log(param);
         waitDialogRectangle.show();
@@ -507,7 +508,7 @@ public class PaymentActivity extends ActivityBaseHeader implements View.OnClickL
             }
         });
     }
-
+//全选
     private void selectAll(boolean isck) {
         for (int i = 0; i < dbList.size(); i++) {
             // 改变boolean
@@ -584,7 +585,7 @@ public class PaymentActivity extends ActivityBaseHeader implements View.OnClickL
         super.onDestroy();
         Constant.clearDatas();
     }
-
+        //判断参数是否为空 来设置是否缓存  是否清理数据集合
     public void isEmptyParam() {
         if (StringUtils.isStrTrue(Constant.appOrderMoney_orderId) || StringUtils.isStrTrue(Constant.appOrderMoney_goodsName) || StringUtils.isStrTrue(Constant.appOrderMoney_buyersName)) {
             isSave = true;

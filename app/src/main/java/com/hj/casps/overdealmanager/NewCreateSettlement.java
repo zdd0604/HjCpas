@@ -157,7 +157,7 @@ public class NewCreateSettlement extends ActivityBaseHeader2
         QueryOppositeListLoading qEntity = new QueryOppositeListLoading(
                 Constant.publicArg.getSys_token(),
                 Constant.getUUID(),
-                Constant.SYS_FUNC101100810001,
+                Constant.SYS_FUNC,
                 Constant.publicArg.getSys_user(),
                 Constant.publicArg.getSys_member(),
                 isbuy);

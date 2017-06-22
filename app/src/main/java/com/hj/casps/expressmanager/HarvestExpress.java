@@ -456,7 +456,7 @@ public class HarvestExpress extends ActivityBaseHeader implements OnPullListener
         QueryGoodsListLoading getGoods = new QueryGoodsListLoading(
                 Constant.publicArg.getSys_token(),
                 Constant.getUUID(),
-                Constant.SYS_FUNC101100510002,
+                Constant.SYS_FUNC,
                 Constant.publicArg.getSys_user(),
                 Constant.publicArg.getSys_member(),
                 Constant.SEARCH_sendgoods_OrdertitleCode,
@@ -501,7 +501,7 @@ public class HarvestExpress extends ActivityBaseHeader implements OnPullListener
         GetGoodsLoading returnGoods = new GetGoodsLoading(
                 Constant.publicArg.getSys_user(),
                 Constant.publicArg.getSys_member(),
-                Constant.SYS_FUNC10110051,
+                Constant.SYS_FUNC,
                 Constant.publicArg.getSys_token(),
                 Constant.getUUID(),
                 Constant.publicArg.getSys_name(),

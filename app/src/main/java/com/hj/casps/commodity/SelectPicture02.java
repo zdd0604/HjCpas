@@ -131,7 +131,7 @@ public class SelectPicture02 extends ActivityBaseHeader2 implements OnPullListen
         PublicArg p = Constant.publicArg;
         //TODO divId写死的
         RequestShowPic r = new RequestShowPic(p.getSys_token(),
-                Constant.getUUID(), Constant.SYS_FUNC101100210001,
+                Constant.getUUID(), Constant.SYS_FUNC,
                 p.getSys_user(), p.getSys_member(),
                 divId, "",
                 Constant.MaterialName,

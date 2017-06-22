@@ -41,7 +41,7 @@ import butterknife.OnClick;
 import okhttp3.Call;
 import okhttp3.Response;
 
-import static com.hj.casps.common.Constant.SYS_FUNC101100410002;
+import static com.hj.casps.common.Constant.SYS_FUNC;
 
 /**
  * Created by YaoChen on 2017/4/18.
@@ -159,7 +159,7 @@ public class ActivityGoodsDetailed extends ActivityBaseHeader2 implements View.O
 
     private void initData() {
         waitDialogRectangle.show();
-        ReqQuoteDetail r = new ReqQuoteDetail(publicArg.getSys_token(), Constant.getUUID(), Constant.SYS_FUNC101100210001, publicArg.getSys_user(), publicArg.getSys_name(), publicArg.getSys_member(), quoteId);
+        ReqQuoteDetail r = new ReqQuoteDetail(publicArg.getSys_token(), Constant.getUUID(), Constant.SYS_FUNC, publicArg.getSys_user(), publicArg.getSys_name(), publicArg.getSys_member(), quoteId);
         String param = mGson.toJson(r);
         OkGo.post(Constant.QuoteDetailGoodUrl).params("param", param).execute(new StringCallback() {
             @Override
@@ -251,7 +251,7 @@ public class ActivityGoodsDetailed extends ActivityBaseHeader2 implements View.O
             toastSHORT(getString(R.string.time_out));
             return;
         }
-        ReqQuoteDetail r = new ReqQuoteDetail(publicArg.getSys_token(), timeUUID, Constant.SYS_FUNC101100210001, publicArg.getSys_user(), publicArg.getSys_name(), publicArg.getSys_member(), quoteId);
+        ReqQuoteDetail r = new ReqQuoteDetail(publicArg.getSys_token(), timeUUID, Constant.SYS_FUNC, publicArg.getSys_user(), publicArg.getSys_name(), publicArg.getSys_member(), quoteId);
         final String param = mGson.toJson(r);
 
         waitDialogRectangle.show();
@@ -334,7 +334,7 @@ public class ActivityGoodsDetailed extends ActivityBaseHeader2 implements View.O
 
     //初始化购物车数据
     private void initShopCarData() {
-        BuyCart.BuyCartPost post = new BuyCart.BuyCartPost(publicArg.getSys_token(), Constant.getUUID(), SYS_FUNC101100410002, publicArg.getSys_user(), publicArg.getSys_name(), publicArg.getSys_member(), String.valueOf(type));
+        BuyCart.BuyCartPost post = new BuyCart.BuyCartPost(publicArg.getSys_token(), Constant.getUUID(), SYS_FUNC, publicArg.getSys_user(), publicArg.getSys_name(), publicArg.getSys_member(), String.valueOf(type));
 
         OkGo.post(Constant.SearchSHPCUrl)
                 .params("param", mGson.toJson(post))

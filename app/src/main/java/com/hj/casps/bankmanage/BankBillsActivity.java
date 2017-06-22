@@ -459,7 +459,7 @@ public class BankBillsActivity extends ActivityBaseHeader implements View.OnClic
         final ToEditMmbWarehouseLoading tEdit = new ToEditMmbWarehouseLoading(
                 Constant.publicArg.getSys_token(),
                 timeUUID,
-                Constant.SYS_FUNC101100510003,
+                Constant.SYS_FUNC,
                 Constant.publicArg.getSys_user(),
                 Constant.publicArg.getSys_name(),
                 Constant.publicArg.getSys_member(),
@@ -499,7 +499,7 @@ public class BankBillsActivity extends ActivityBaseHeader implements View.OnClic
         QueryMmbWareHouseLoading queryMmbWareHouseLoading = new QueryMmbWareHouseLoading(
                 publicArg.getSys_token(),
                 Constant.getUUID(),
-                Constant.SYS_FUNC101100510001,
+                Constant.SYS_FUNC,
                 publicArg.getSys_user(),
                 publicArg.getSys_name(),
                 publicArg.getSys_member(),
@@ -540,7 +540,7 @@ public class BankBillsActivity extends ActivityBaseHeader implements View.OnClic
         ToEditMmbWarehouseLoading tEdit = new ToEditMmbWarehouseLoading(
                 publicArg.getSys_token(),
                 Constant.getUUID(),
-                Constant.SYS_FUNC101100510001,
+                Constant.SYS_FUNC,
                 publicArg.getSys_user(),
                 publicArg.getSys_name(),
                 publicArg.getSys_member(),
@@ -574,7 +574,7 @@ public class BankBillsActivity extends ActivityBaseHeader implements View.OnClic
         RequestBackAccount r = new RequestBackAccount(
                 p.getSys_token(),
                 Constant.getUUID(),
-                Constant.SYS_FUNC101100610001,
+                Constant.SYS_FUNC,
                 p.getSys_user(),
                 p.getSys_member(),
                 Constant.SEARCH_Account_Name,

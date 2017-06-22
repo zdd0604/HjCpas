@@ -99,7 +99,7 @@ public class QuotesSearch extends ActivityBaseHeader2 implements View.OnClickLis
         ModeltoJson modeltoJson = new ModeltoJson(
                 publicArg.getSys_token(),
                 Constant.getUUID(),
-                Constant.SYS_FUNC10110028,
+                Constant.SYS_FUNC,
                 publicArg.getSys_user(),
                 publicArg.getSys_name(),
                 publicArg.getSys_member(),

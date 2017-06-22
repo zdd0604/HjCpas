@@ -169,7 +169,7 @@ public class ActivityLogin extends ActivityBase {
         }
         return true;
     }
-
+//验证用户名和密码
     private boolean isCheckGetVerfy() {
         if (user_name_Et.getText().toString().length() == 0) {
             ToastUtils.showToast(ActivityLogin.this, getString(R.string.error_user_name));
@@ -191,7 +191,6 @@ public class ActivityLogin extends ActivityBase {
         }
         if (timerTask != null) {
             timerTask.cancel();
-
         }
         verfyBv.setClickable(true);
         dismissPop();
@@ -232,7 +231,7 @@ public class ActivityLogin extends ActivityBase {
                 });
 //        String s="{\"sys_account\":\""+sys_account+"\",\"sys_pwd\":\""+sys_pwd+"\"}";
     }
-
+    //短信验证接口的状态码判断
     private void verfyLogin(LoginBean loginBean) {
         int return_code = loginBean.getReturn_code();
         if (return_code == 0) {
@@ -287,7 +286,7 @@ public class ActivityLogin extends ActivityBase {
 //                break;
 //        }
     }
-
+    //登录接口
     private void httpLogin() {
         waitDialogRectangle.show();
         String url = Constant.LoginUrl;
@@ -362,7 +361,7 @@ public class ActivityLogin extends ActivityBase {
 
 
     /**
-     * 接口URL：/ReLogin 请求
+     * 二次登录接口
      */
     private void httpReLogin() {
         waitDialogRectangle.show();
@@ -428,7 +427,7 @@ public class ActivityLogin extends ActivityBase {
         }
 
     }
-
+        //设置上传所需的公共参数
     private void setPublicArg(UserBean reUserBean) {
         Constant.publicArg = new PublicArg(
                 reUserBean.getToken(),
@@ -447,6 +446,7 @@ public class ActivityLogin extends ActivityBase {
      * sys_user	string	用户id
      * sys_token String	token
      */
+
     private void httpGetContext(final LoginBean initloginBean, final String et_username, final String et_pwd) {
         final String sys_user = this.loginBean.getUserId();
         final String sys_token = initloginBean.getToken();
@@ -588,7 +588,7 @@ public class ActivityLogin extends ActivityBase {
                 }
         }
     }
-
+        //判断本地数据库是否有该用户
     private void checkVerfyLayoutVisible(String userName) {
         UserBean _userBean = UserBeanUtils.getInstance(this).getUserBean(userName);
         verfyLayout.setVisibility(_userBean == null ? View.VISIBLE : View.GONE);
@@ -652,7 +652,7 @@ public class ActivityLogin extends ActivityBase {
      */
     private int countTime;
     private TimerTask timerTask;
-
+        //发送短信的倒计时方法
     public void countDown(final TextView view, final int sumTime, final String leftContent,
                           final String rightContent, final String content) {
         timer = new Timer();

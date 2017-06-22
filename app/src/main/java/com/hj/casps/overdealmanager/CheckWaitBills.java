@@ -311,7 +311,7 @@ public class CheckWaitBills extends ActivityBaseHeader implements View.OnClickLi
         QueryPendingSttleLoading param = new QueryPendingSttleLoading(
                 publicArg.getSys_token(),
                 Constant.getUUID(),
-                Constant.SYS_FUNC101100810002,
+                Constant.SYS_FUNC,
                 publicArg.getSys_user(),
                 publicArg.getSys_member(),
                 Constant.SEARCH_sendgoods_OrdertitleCode,
@@ -356,7 +356,7 @@ public class CheckWaitBills extends ActivityBaseHeader implements View.OnClickLi
         ModifySettleLoading param = new ModifySettleLoading(
                 publicArg.getSys_token(),
                 Constant.getUUID(),
-                Constant.SYS_FUNC101100810002,
+                Constant.SYS_FUNC,
                 publicArg.getSys_user(),
                 publicArg.getSys_member(),
                 modifySettle);
@@ -395,7 +395,7 @@ public class CheckWaitBills extends ActivityBaseHeader implements View.OnClickLi
         AgreeSettleLoading param = new AgreeSettleLoading(
                 publicArg.getSys_token(),
                 Constant.getUUID(),
-                Constant.SYS_FUNC101100810002,
+                Constant.SYS_FUNC,
                 publicArg.getSys_user(),
                 publicArg.getSys_member(),
                 iDEntityList);

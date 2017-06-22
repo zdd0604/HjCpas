@@ -23,7 +23,7 @@ import com.lzy.okgo.OkGo;
 import okhttp3.Call;
 import okhttp3.Response;
 
-/**
+/**退出登录的工具类
  * Created by Administrator on 2017/6/20.
  */
 

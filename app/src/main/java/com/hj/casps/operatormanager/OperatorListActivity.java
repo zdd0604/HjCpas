@@ -194,7 +194,7 @@ public class OperatorListActivity extends ActivityBaseHeader implements OnPullLi
         QueryUserLoading queryUserLoading = new QueryUserLoading(
                 Constant.publicArg.getSys_token(),
                 "00005",
-                Constant.SYS_FUNC1021,
+                Constant.SYS_FUNC,
                 Constant.publicArg.getSys_user(),
                 Constant.publicArg.getSys_member(),
                 String.valueOf(pageNo + 1),

@@ -32,7 +32,7 @@ import butterknife.ButterKnife;
 import okhttp3.Call;
 import okhttp3.Response;
 
-import static com.hj.casps.common.Constant.SYS_FUNC10110028;
+import static com.hj.casps.common.Constant.SYS_FUNC;
 
 //报价检索的会员列表，用来选择会员，选择群组
 public class ShowMmbActivity extends ActivityBaseHeader2 implements View.OnClickListener {
@@ -98,7 +98,7 @@ public class ShowMmbActivity extends ActivityBaseHeader2 implements View.OnClick
             case 0:
                 if (intentString == null || intentString.isEmpty()) {
                     url_show = Constant.ShowMmbUrl +
-                            "?param={\"sys_func\":\"" + SYS_FUNC10110028 + "\"," +
+                            "?param={\"sys_func\":\"" + SYS_FUNC + "\"," +
                             "\"sys_member\":\"" + publicArg.getSys_member() + "\"," +
                             "\"mmbId\":\"" + publicArg.getSys_member() + "\"," +
                             "\"sys_name\":\"" + publicArg.getSys_name() + "\"," +
@@ -114,7 +114,7 @@ public class ShowMmbActivity extends ActivityBaseHeader2 implements View.OnClick
             case 1:
                 if (intentString == null || intentString.isEmpty()) {
                     url_show = Constant.ShowGroupUrl +
-                            "?param={\"sys_func\":\"" + Constant.SYS_FUNC10110028 + "\"," +
+                            "?param={\"sys_func\":\"" + Constant.SYS_FUNC + "\"," +
                             "\"sys_member\":\"" + publicArg.getSys_member() + "\"," +
                             "\"mmbId\":\"" + publicArg.getSys_member() + "\"," +
                             "\"sys_name\":\"" + publicArg.getSys_name() + "\"," +
@@ -259,12 +259,12 @@ public class ShowMmbActivity extends ActivityBaseHeader2 implements View.OnClick
                     }
 
                     OkGo.post(Constant.AddMmbIdsUrl).params("param",
-                            "{\"sys_func\":\"" + SYS_FUNC10110028 + "\"," +
+                            "{\"sys_func\":\"" + SYS_FUNC + "\"," +
                                     "\"sys_member\":\"" + publicArg.getSys_member() + "\"," +
                                     "\"sys_name\":\"" + publicArg.getSys_name() + "\"," +
                                     "\"sys_token\":\"" + publicArg.getSys_token() + "\"," +
                                     "\"sys_user\":\"" + publicArg.getSys_user() + "\"," +
-                                    "\"sys_uuid\":\" " + Constant.SYS_FUNC101100310002 + " \"," +
+                                    "\"sys_uuid\":\" " + Constant.SYS_FUNC + " \"," +
                                     "\"mmbIds\":\"" + ids + "\"," +
                                     "\"quoteId\":\"" + quoteId + "\"," +
                                     "\"rangType\":\"1\"}")
@@ -305,7 +305,7 @@ public class ShowMmbActivity extends ActivityBaseHeader2 implements View.OnClick
                     }
 
                     OkGo.post(Constant.AddGroupIdsUrl).params("param",
-                            "{\"sys_func\":\"" + SYS_FUNC10110028 + "\"," +
+                            "{\"sys_func\":\"" + SYS_FUNC + "\"," +
                                     "\"sys_member\":\"" + publicArg.getSys_member() + "\"," +
                                     "\"sys_name\":\"" + publicArg.getSys_name() + "\"," +
                                     "\"sys_token\":\"" + publicArg.getSys_token() + "\"," +

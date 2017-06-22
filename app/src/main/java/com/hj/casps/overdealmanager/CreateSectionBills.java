@@ -179,7 +179,7 @@ public class CreateSectionBills extends ActivityBaseHeader implements View.OnCli
         QueryMyPendingSttleLoading qEntity = new QueryMyPendingSttleLoading(
                 Constant.publicArg.getSys_token(),
                 Constant.getUUID(),
-                Constant.SYS_FUNC10110081,
+                Constant.SYS_FUNC,
                 Constant.publicArg.getSys_user(),
                 Constant.publicArg.getSys_member(),
                 Constant.SEARCH_sendgoods_OrdertitleCode,

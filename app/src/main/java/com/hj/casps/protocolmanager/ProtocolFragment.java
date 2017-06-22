@@ -263,7 +263,7 @@ public class ProtocolFragment extends ViewPagerFragment1 implements View.OnClick
                     case 0:
                         post = new ProtocolModelForPost(publicArg.getSys_token(),
                                 getUUID(),
-                                Constant.SYS_FUNC101100350005,
+                                Constant.SYS_FUNC,
                                 publicArg.getSys_user(),
                                 publicArg.getSys_member(),
                                 String.valueOf(page + 1),
@@ -276,7 +276,7 @@ public class ProtocolFragment extends ViewPagerFragment1 implements View.OnClick
                         post = new ProtocolModelForPost(
                                 publicArg.getSys_token(),
                                 getUUID(),
-                                Constant.SYS_FUNC101100350004,
+                                Constant.SYS_FUNC,
                                 publicArg.getSys_user(),
                                 publicArg.getSys_member(),
                                 String.valueOf(page + 1), "10", "pending",
@@ -287,7 +287,7 @@ public class ProtocolFragment extends ViewPagerFragment1 implements View.OnClick
                         post = new ProtocolModelForPost(
                                 publicArg.getSys_token(),
                                 getUUID(),
-                                Constant.SYS_FUNC101100350003,
+                                Constant.SYS_FUNC,
                                 publicArg.getSys_user(),
                                 publicArg.getSys_member(),
                                 String.valueOf(page + 1),
@@ -351,7 +351,7 @@ public class ProtocolFragment extends ViewPagerFragment1 implements View.OnClick
                         post1 = new ProtocolModelForPost(
                                 publicArg.getSys_token(),
                                 getUUID(),
-                                Constant.SYS_FUNC101100410004,
+                                Constant.SYS_FUNC,
                                 publicArg.getSys_user(),
                                 publicArg.getSys_name(),
                                 publicArg.getSys_member(),
@@ -367,7 +367,7 @@ public class ProtocolFragment extends ViewPagerFragment1 implements View.OnClick
                         post1 = new ProtocolModelForPost(
                                 publicArg.getSys_token(),
                                 getUUID(),
-                                Constant.SYS_FUNC101100410005,
+                                Constant.SYS_FUNC,
                                 publicArg.getSys_user(),
                                 publicArg.getSys_name(),
                                 publicArg.getSys_member(),
@@ -382,7 +382,7 @@ public class ProtocolFragment extends ViewPagerFragment1 implements View.OnClick
                         post1 = new ProtocolModelForPost(
                                 publicArg.getSys_token(),
                                 getUUID(),
-                                Constant.SYS_FUNC101100410006,
+                                Constant.SYS_FUNC,
                                 publicArg.getSys_user(),
                                 publicArg.getSys_name(),
                                 publicArg.getSys_member(),
@@ -528,7 +528,7 @@ public class ProtocolFragment extends ViewPagerFragment1 implements View.OnClick
         ProtocolModelForPost post = new ProtocolModelForPost(
                 publicArg.getSys_token(),
                 getUUID(),
-                Constant.SYS_FUNC101100410004,
+                Constant.SYS_FUNC,
                 publicArg.getSys_user(),
                 publicArg.getSys_name(),
                 publicArg.getSys_member(),
@@ -815,7 +815,7 @@ public class ProtocolFragment extends ViewPagerFragment1 implements View.OnClick
             ProtocolModelForPost post = new ProtocolModelForPost(
                     publicArg.getSys_token(),
                     getUUID(),
-                    Constant.SYS_FUNC101100350005,
+                    Constant.SYS_FUNC,
                     publicArg.getSys_user(),
                     publicArg.getSys_member(),
                     id, refuse, String.valueOf(i),
@@ -857,7 +857,7 @@ public class ProtocolFragment extends ViewPagerFragment1 implements View.OnClick
             ProtocolModelForPost post = new ProtocolModelForPost(
                     publicArg.getSys_token(),
                     getUUID(),
-                    Constant.SYS_FUNC101100350005,
+                    Constant.SYS_FUNC,
                     publicArg.getSys_user(),
                     publicArg.getSys_member(),
                     id,

@@ -358,7 +358,7 @@ public class Constant {
 
     public static PublicArg publicArg = null;
 
-
+    public static  String  SYS_FUNC="";
     //                      funcCode	菜单项	           说明
     public static String SYS_FUNC1011 = "1011";//	业务平台	各类业务活动的工作平台
     public static String SYS_FUNC10110021 = "10110021";//基础配置	商品目录的管理、会员主页的配置
@@ -1077,7 +1077,7 @@ public class Constant {
             return;
         }
     }
-
+    //根据时间限时uuid
     public static String getTimeUUID() {
         if (currentTime != -1) {
             if (System.currentTimeMillis() <= currentTime + 2000) {

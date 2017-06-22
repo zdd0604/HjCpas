@@ -27,7 +27,7 @@ import mehdi.sakout.fancybuttons.FancyButton;
 import okhttp3.Call;
 import okhttp3.Response;
 
-import static com.hj.casps.common.Constant.SYS_FUNC101100410003;
+import static com.hj.casps.common.Constant.SYS_FUNC;
 import static com.hj.casps.common.Constant.publicArg;
 
 /**
@@ -147,7 +147,7 @@ public class OrderShellAdapter extends WZYBaseAdapter<OrderShellModel> {
 
         BuyCart.BuyCartPost post = new BuyCart.BuyCartPost(publicArg.getSys_token(),
                 Constant.getUUID(),
-                SYS_FUNC101100410003,
+                SYS_FUNC,
                 publicArg.getSys_user(),
                 publicArg.getSys_name(),
                 publicArg.getSys_member(),

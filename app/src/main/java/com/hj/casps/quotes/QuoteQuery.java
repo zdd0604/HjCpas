@@ -75,7 +75,7 @@ public class QuoteQuery extends ActivityBaseHeader implements View.OnClickListen
             modeltoJson.createTime1 = "";
             modeltoJson.sys_token = publicArg.getSys_token();
             modeltoJson.sys_user = publicArg.getSys_user();
-            modeltoJson.sys_func = Constant.SYS_FUNC10110028;
+            modeltoJson.sys_func = Constant.SYS_FUNC;
             modeltoJson.startTime = "";
             modeltoJson.sys_uuid = Constant.getUUID();
             modeltoJson.sys_member = publicArg.getSys_member();

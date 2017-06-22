@@ -25,8 +25,8 @@ import java.util.List;
 import okhttp3.Call;
 import okhttp3.Response;
 
-import static com.hj.casps.common.Constant.SYS_FUNC101100410002;
-import static com.hj.casps.common.Constant.SYS_FUNC101100410003;
+import static com.hj.casps.common.Constant.SYS_FUNC;
+import static com.hj.casps.common.Constant.SYS_FUNC;
 import static com.hj.casps.common.Constant.getUUID;
 
 //采购拣单车 销售拣单车
@@ -57,7 +57,7 @@ public class BuyCart extends ActivityBaseHeader implements View.OnClickListener 
                 type_name = getString(R.string.cooperate_buy_part);
                 post = new BuyCartPost(publicArg.getSys_token(),
                         getUUID(),
-                        SYS_FUNC101100410002,
+                        SYS_FUNC,
                         publicArg.getSys_user(),
                         publicArg.getSys_name(),
                         publicArg.getSys_member(),
@@ -69,7 +69,7 @@ public class BuyCart extends ActivityBaseHeader implements View.OnClickListener 
                 type_name = getString(R.string.cooperate_buy_role);
                 post = new BuyCartPost(publicArg.getSys_token(),
                         getUUID(),
-                        SYS_FUNC101100410003,
+                        SYS_FUNC,
                         publicArg.getSys_user(),
                         publicArg.getSys_name(),
                         publicArg.getSys_member(),

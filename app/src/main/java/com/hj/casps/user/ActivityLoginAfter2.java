@@ -205,7 +205,7 @@ public class ActivityLoginAfter2 extends ActivityBaseHeader2 {
     private void queryMmbForNet() {
         waitDialogRectangle.show();
         PublicArg p = Constant.publicArg;
-        ReqMmb r = new ReqMmb(p.getSys_token(), Constant.getUUID(), Constant.SYS_FUNC101100310002, p.getSys_user(), p.getSys_member(), mUrl);
+        ReqMmb r = new ReqMmb(p.getSys_token(), Constant.getUUID(), Constant.SYS_FUNC, p.getSys_user(), p.getSys_member(), mUrl);
         String param = mGson.toJson(r);
 
         OkGo.post(Constant.GetMmbByUrl).params("param", param).execute(new StringCallback() {
@@ -242,7 +242,7 @@ public class ActivityLoginAfter2 extends ActivityBaseHeader2 {
     private void markMemberForNet(String mmbId) {
         waitDialogRectangle.show();
         PublicArg p = Constant.publicArg;
-        ReqMark r = new ReqMark(p.getSys_token(), Constant.getUUID(), Constant.SYS_FUNC10110031, p.getSys_user(), p.getSys_member(), mmbId);
+        ReqMark r = new ReqMark(p.getSys_token(), Constant.getUUID(), Constant.SYS_FUNC, p.getSys_user(), p.getSys_member(), mmbId);
         String param = mGson.toJson(r);
         OkGo.post(Constant.MarkMemberUrl).params("param", param).execute(new StringCallback() {
             @Override

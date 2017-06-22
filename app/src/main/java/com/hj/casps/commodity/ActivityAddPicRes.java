@@ -116,7 +116,7 @@ public class ActivityAddPicRes extends ActivityBaseHeader2 {
             toastSHORT(getString(R.string.time_out));
             return;
         }
-        ResUpdateDiv r = new ResUpdateDiv(p.getSys_token(), timeUUID, Constant.SYS_FUNC101100210001, p.getSys_user(), p.getSys_member(), divName, divId);
+        ResUpdateDiv r = new ResUpdateDiv(p.getSys_token(), timeUUID, Constant.SYS_FUNC, p.getSys_user(), p.getSys_member(), divName, divId);
         String param = mGson.toJson(r);
         waitDialogRectangle.show();
         OkGo.post(Constant.UpdateDivUrl).params("param", param).execute(new StringCallback() {
@@ -164,7 +164,7 @@ public class ActivityAddPicRes extends ActivityBaseHeader2 {
             toastSHORT(getString(R.string.time_out));
             return;
         }
-        ResAddDiv r = new ResAddDiv(p.getSys_token(), timeUUID,Constant.SYS_FUNC101100210001, p.getSys_user(), p.getSys_member(), divName, parentId, baseId);
+        ResAddDiv r = new ResAddDiv(p.getSys_token(), timeUUID,Constant.SYS_FUNC, p.getSys_user(), p.getSys_member(), divName, parentId, baseId);
         String param = mGson.toJson(r);
         waitDialogRectangle.show();
         OkGo.post(Constant.AddDivUrl).params("param", param).execute(new StringCallback() {

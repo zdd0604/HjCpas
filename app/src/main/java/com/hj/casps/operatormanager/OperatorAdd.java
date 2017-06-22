@@ -225,7 +225,7 @@ public class OperatorAdd extends ActivityBaseHeader2 implements View.OnClickList
         final ToEditUserPageLoading tEdit = new ToEditUserPageLoading(
                 Constant.publicArg.getSys_token(),
                 Constant.getUUID(),
-                Constant.SYS_FUNC1021,
+                Constant.SYS_FUNC,
                 Constant.publicArg.getSys_user(),
                 Constant.publicArg.getSys_member(),
                 userId
@@ -296,7 +296,7 @@ public class OperatorAdd extends ActivityBaseHeader2 implements View.OnClickList
         EditUserLoading edLoading = new EditUserLoading(
                 Constant.publicArg.getSys_token(),
                 Constant.getUUID(),
-                Constant.SYS_FUNC1021,
+                Constant.SYS_FUNC,
                 Constant.publicArg.getSys_user(),
                 Constant.publicArg.getSys_member(),
                 toEditUserPageEntity.getUserId(),
@@ -346,7 +346,7 @@ public class OperatorAdd extends ActivityBaseHeader2 implements View.OnClickList
         ToAddUserPageLoading taddLoading = new ToAddUserPageLoading(
                 Constant.publicArg.getSys_token(),
                 Constant.getUUID(),
-                Constant.SYS_FUNC1021,
+                Constant.SYS_FUNC,
                 Constant.publicArg.getSys_user(),
                 Constant.publicArg.getSys_member()
         );
@@ -431,7 +431,7 @@ public class OperatorAdd extends ActivityBaseHeader2 implements View.OnClickList
         EditUserLoading edLoading = new EditUserLoading(
                 Constant.publicArg.getSys_token(),
                 Constant.getUUID(),
-                Constant.SYS_FUNC1021,
+                Constant.SYS_FUNC,
                 Constant.publicArg.getSys_user(),
                 Constant.publicArg.getSys_member(),
                 getEdVaule(operator_ed_account),
@@ -473,7 +473,7 @@ public class OperatorAdd extends ActivityBaseHeader2 implements View.OnClickList
         EditStateOfUserLoading edLoading = new EditStateOfUserLoading(
                 Constant.publicArg.getSys_token(),
                 Constant.getUUID(),
-                Constant.SYS_FUNC1021,
+                Constant.SYS_FUNC,
                 Constant.publicArg.getSys_user(),
                 Constant.publicArg.getSys_member(),
                 userId,
@@ -509,7 +509,7 @@ public class OperatorAdd extends ActivityBaseHeader2 implements View.OnClickList
         CheckUserLoading ckLoading = new CheckUserLoading(
                 Constant.publicArg.getSys_token(),
                 Constant.getUUID(),
-                Constant.SYS_FUNC1021,
+                Constant.SYS_FUNC,
                 Constant.publicArg.getSys_user(),
                 Constant.publicArg.getSys_member(),
                 getEdVaule(operator_ed_account));

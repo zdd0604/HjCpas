@@ -346,7 +346,7 @@ public class EditCardActivity extends ActivityBaseHeader2 implements View.OnClic
         }
         RequestMmbBackAccout r = new RequestMmbBackAccout(p.getSys_token(),
                 timeUUID,
-                Constant.SYS_FUNC101100610001,
+                Constant.SYS_FUNC,
                 p.getSys_user(),
                 p.getSys_member(),
                 cardInfo.getId(),
@@ -402,7 +402,7 @@ public class EditCardActivity extends ActivityBaseHeader2 implements View.OnClic
         }
         RequestMmbBackAccout r = new RequestMmbBackAccout(p.getSys_token(),
                 timeUUID,
-                Constant.SYS_FUNC101100610001,
+                Constant.SYS_FUNC,
                 p.getSys_user(),
                 p.getSys_member(),
                 getEdVaule(account_number),
@@ -506,7 +506,7 @@ public class EditCardActivity extends ActivityBaseHeader2 implements View.OnClic
         String account_number = getEdVaule(this.account_number);
         RequestCheckAccountNo r = new RequestCheckAccountNo(p.getSys_token(),
                 Constant.getUUID(),
-                Constant.SYS_FUNC101100610001,
+                Constant.SYS_FUNC,
                 p.getSys_user(),
                 p.getSys_member(),
                 account_number,
@@ -591,7 +591,7 @@ public class EditCardActivity extends ActivityBaseHeader2 implements View.OnClic
         final ToEditMmbWarehouseLoading tEdit = new ToEditMmbWarehouseLoading(
                 Constant.publicArg.getSys_token(),
                 "",
-                Constant.SYS_FUNC101100510004,
+                Constant.SYS_FUNC,
                 Constant.publicArg.getSys_user(),
                 Constant.publicArg.getSys_name(),
                 Constant.publicArg.getSys_member(),
@@ -661,7 +661,7 @@ public class EditCardActivity extends ActivityBaseHeader2 implements View.OnClic
         GetTreeModalEntity getTreeModalEntity = new GetTreeModalEntity(
                 publicArg.getSys_token(),
                 Constant.getUUID(),
-                Constant.SYS_FUNC101100510001,
+                Constant.SYS_FUNC,
                 publicArg.getSys_user(),
                 publicArg.getSys_member()
         );
@@ -699,7 +699,7 @@ public class EditCardActivity extends ActivityBaseHeader2 implements View.OnClic
         upDate = new CreateMmbWarehouseLoading(
                 publicArg.getSys_token(),
                 Constant.getUUID(),
-                Constant.SYS_FUNC101100610001,
+                Constant.SYS_FUNC,
                 publicArg.getSys_user(),
                 publicArg.getSys_name(),
                 publicArg.getSys_member(),
@@ -723,7 +723,7 @@ public class EditCardActivity extends ActivityBaseHeader2 implements View.OnClic
         upDate = new CreateMmbWarehouseLoading(
                 publicArg.getSys_token(),
                 Constant.getUUID(),
-                Constant.SYS_FUNC101100610001,
+                Constant.SYS_FUNC,
                 publicArg.getSys_user(),
                 publicArg.getSys_name(),
                 publicArg.getSys_member(),

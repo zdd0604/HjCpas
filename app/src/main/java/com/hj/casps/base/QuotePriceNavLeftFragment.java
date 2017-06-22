@@ -92,7 +92,7 @@ public class QuotePriceNavLeftFragment extends FragmentBase {
     //初始化数据
     private void initData() {
         PublicArg p = Constant.publicArg;
-        RequestPub r = new RequestPub(p.getSys_token(), Constant.getUUID(), Constant.SYS_FUNC101100210001, p.getSys_user(), p.getSys_member());
+        RequestPub r = new RequestPub(p.getSys_token(), Constant.getUUID(), Constant.SYS_FUNC, p.getSys_user(), p.getSys_member());
         String param = GsonTools.createGsonString(r);
         OkGo.post(Constant.GetAllCategoryUrl)
                 .params("param", param)

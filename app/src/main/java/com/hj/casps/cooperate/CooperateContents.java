@@ -27,7 +27,7 @@ import mehdi.sakout.fancybuttons.FancyButton;
 import okhttp3.Call;
 import okhttp3.Response;
 
-import static com.hj.casps.common.Constant.SYS_FUNC101100310002;
+import static com.hj.casps.common.Constant.SYS_FUNC;
 import static com.hj.casps.common.Constant.getUUID;
 //合作会员列表
 public class CooperateContents extends ActivityBaseHeader implements View.OnClickListener {
@@ -104,7 +104,7 @@ public class CooperateContents extends ActivityBaseHeader implements View.OnClic
     private void initData(int grage) {
         cooperateModels = new ArrayList<>();
         QueryMMBConcerns concerns = new QueryMMBConcerns(publicArg.getSys_token(),
-                getUUID(), SYS_FUNC101100310002,
+                getUUID(), SYS_FUNC,
                 publicArg.getSys_user(),
                 publicArg.getSys_member(),
                 grade == 0 ? "" : String.valueOf(grage),
@@ -424,7 +424,7 @@ public class CooperateContents extends ActivityBaseHeader implements View.OnClic
         }
 
         private void postGrade(String relationship_id) {
-            CooperateContents.QueryMMBConcerns concerns = new CooperateContents.QueryMMBConcerns(Constant.publicArg.getSys_token(), getUUID(), Constant.SYS_FUNC101100310002, Constant.publicArg.getSys_user(), Constant.publicArg.getSys_member(), relationship_id);
+            CooperateContents.QueryMMBConcerns concerns = new CooperateContents.QueryMMBConcerns(Constant.publicArg.getSys_token(), getUUID(), Constant.SYS_FUNC, Constant.publicArg.getSys_user(), Constant.publicArg.getSys_member(), relationship_id);
             OkGo.post(Constant.CancelConcernUrl).params("param", mGson.toJson(concerns)).execute(new StringCallback() {
                 @Override
                 public void onSuccess(String s, Call call, Response response) {
@@ -451,7 +451,7 @@ public class CooperateContents extends ActivityBaseHeader implements View.OnClic
         }
 
         private void postGrade(int i, String relationship_id) {
-            CooperateContents.QueryMMBConcerns concerns = new CooperateContents.QueryMMBConcerns(Constant.publicArg.getSys_token(), getUUID(), Constant.SYS_FUNC101100310002, Constant.publicArg.getSys_user(), Constant.publicArg.getSys_member(), String.valueOf(i), relationship_id);
+            CooperateContents.QueryMMBConcerns concerns = new CooperateContents.QueryMMBConcerns(Constant.publicArg.getSys_token(), getUUID(), Constant.SYS_FUNC, Constant.publicArg.getSys_user(), Constant.publicArg.getSys_member(), String.valueOf(i), relationship_id);
             OkGo.post(Constant.ChangeConcernGradeUrl).params("param", mGson.toJson(concerns)).execute(new StringCallback() {
                 @Override
                 public void onSuccess(String s, Call call, Response response) {

@@ -29,7 +29,7 @@ import okhttp3.Call;
 import okhttp3.Response;
 
 import static com.hj.casps.common.Constant.DIALOG_CONTENT_13;
-import static com.hj.casps.common.Constant.SYS_FUNC10110028;
+import static com.hj.casps.common.Constant.SYS_FUNC;
 
 /**
  * 选择发布范围
@@ -95,7 +95,7 @@ public class MmbActivity extends ActivityBaseHeader2 implements View.OnClickList
     //数据更新
     private void refreshData() {
         url_mmb = Constant.GetMmbUrl +
-                "?param={\"sys_func\":\"" + SYS_FUNC10110028 + "\"," +
+                "?param={\"sys_func\":\"" + SYS_FUNC + "\"," +
                 "\"sys_member\":\"" + publicArg.getSys_member() + "\"," +
                 "\"sys_name\":\"" + publicArg.getSys_name() + "\"," +
                 "\"sys_token\":\"" + publicArg.getSys_token() + "\"," +
@@ -128,7 +128,7 @@ public class MmbActivity extends ActivityBaseHeader2 implements View.OnClickList
 
     //合作范围的群加载
     private void groupOkGo() {
-        url_group = Constant.GetGroupUrl + "?param={\"sys_func\":\"" + SYS_FUNC10110028 + "\"," +
+        url_group = Constant.GetGroupUrl + "?param={\"sys_func\":\"" + SYS_FUNC + "\"," +
                 "\"sys_member\":\"" + publicArg.getSys_member() + "\"," +
                 "\"sys_name\":\"" + publicArg.getSys_name() + "\"," +
                 "\"sys_token\":\"" + publicArg.getSys_token() + "\"," +
@@ -301,7 +301,7 @@ public class MmbActivity extends ActivityBaseHeader2 implements View.OnClickList
 
     //确定发布范围的类型添加
     private void subg(int i) {
-        OkGo.get(Constant.SubgUrl + "?param={\"sys_func\":\"" + SYS_FUNC10110028 + "\"," +
+        OkGo.get(Constant.SubgUrl + "?param={\"sys_func\":\"" + SYS_FUNC + "\"," +
                 "\"sys_member\":\"" + publicArg.getSys_member() + "\"," +
                 "\"sys_name\":\"" + publicArg.getSys_name() + "\"," +
                 "\"sys_token\":\"" + publicArg.getSys_token() + "\"," +
@@ -410,7 +410,7 @@ public class MmbActivity extends ActivityBaseHeader2 implements View.OnClickList
                 public void onClick(View view) {
                     // param={\"scopeId\":\"testschool001\",\"quoteId\":\"30038601\",\"rangType\":\"1\"}
                     OkGo.post(Constant.DeleteScopeIdUrl)
-                            .params("param", "{\"sys_func\":\"" + SYS_FUNC10110028 + "\"," +
+                            .params("param", "{\"sys_func\":\"" + SYS_FUNC + "\"," +
                                     "\"sys_member\":\"" + publicArg.getSys_member() + "\"," +
                                     "\"sys_name\":\"" + publicArg.getSys_name() + "\"," +
                                     "\"sys_token\":\"" + publicArg.getSys_token() + "\"," +

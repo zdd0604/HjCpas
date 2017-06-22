@@ -94,10 +94,8 @@ public class ActivityGoodsClass extends ActivityBaseHeader2 implements View.OnCl
     };
     private GoodClassAdapter adapter;
     private int totalCount;
-
+//刷新UI
     private void refreshUi() {
-
-
         if (pageno == 0) {
             if (adapter == null) {
                 adapter = new GoodClassAdapter(context, null);
@@ -135,7 +133,7 @@ public class ActivityGoodsClass extends ActivityBaseHeader2 implements View.OnCl
             }
         }
     }
-    //
+    //从本地数据库加载数据
     private void getLocalData() {
         List<DataListBean> listBeen = WytUtils.getInstance(this).QuerytDataListBeanInfo(categoryId);
         if (listBeen != null && listBeen.size() > 0) {
@@ -153,21 +151,23 @@ public class ActivityGoodsClass extends ActivityBaseHeader2 implements View.OnCl
         ButterKnife.bind(this);
         setTitle(getString(R.string.goods_class));
         initView();
+        //判断是否有网络
         if (hasInternetConnected()) {
             initData(pageno);
         } else {
+            //从本地数据库加载数据
             getLocalData();
         }
         setTitleRight(null, null);
     }
 
 
-
+        //请求数据接口
     private void initData(final int pageno) {
         PublicArg p = Constant.publicArg;
         RequestSearchGood r = new RequestSearchGood(p.getSys_token(),
                 Constant.getUUID(),
-                Constant.SYS_FUNC101100210001,
+                Constant.SYS_FUNC,
                 p.getSys_user(),
                 p.getSys_member(),
                 categoryId,
@@ -190,8 +190,6 @@ public class ActivityGoodsClass extends ActivityBaseHeader2 implements View.OnCl
                       LogoutUtils.exitUser(ActivityGoodsClass.this);
                   }
                      }
-
-
               @Override
               public void onError(Call call, Response response, Exception e) {
                   super.onError(call, response, e);
@@ -204,8 +202,10 @@ public class ActivityGoodsClass extends ActivityBaseHeader2 implements View.OnCl
 
 
     private void initView() {
+
         fra_type = getIntent().getIntExtra("fra", 0);
         if (fra_type == 1) {
+            //是否显示上部的   添加头
             Goodsclass_top_Re.setVisibility(View.GONE);
         }
         showSharePopupWindow();
@@ -221,6 +221,7 @@ public class ActivityGoodsClass extends ActivityBaseHeader2 implements View.OnCl
 
         GridLayoutManager gl = new GridLayoutManager(this, 3, GridLayoutManager.VERTICAL, false);
         rv.setLayoutManager(gl);
+        //添加分割线
         rv.addItemDecoration(new SelectPicture02.SelectPicture02ItemDecoration(this));
         log("heigth=" + height);
 
@@ -372,7 +373,7 @@ public class ActivityGoodsClass extends ActivityBaseHeader2 implements View.OnCl
         //状态是可用，就停用      停用就启用
         String status = statusInt == 0 ? "disabled" : "enabled";
         PublicArg publicArg = Constant.publicArg;
-        RequestUpdateStatus requestToUpdateGood = new RequestUpdateStatus(publicArg.getSys_token(), timeUUID, Constant.SYS_FUNC101100210001, publicArg.getSys_user(), publicArg.getSys_member(), goodsId, status);
+        RequestUpdateStatus requestToUpdateGood = new RequestUpdateStatus(publicArg.getSys_token(), timeUUID, Constant.SYS_FUNC, publicArg.getSys_user(), publicArg.getSys_member(), goodsId, status);
         String param = mGson.toJson(requestToUpdateGood);
         OkGo.post(Constant.UpdateStatusUrl).params("param", param).execute(new GoodToUpdateCallBack<GoodtoUpdateGain<GoodInfoEntity>>() {
             @Override

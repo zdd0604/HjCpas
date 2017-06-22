@@ -40,7 +40,7 @@ import cn.appsdream.nestrefresh.normalstyle.NestRefreshLayout;
 import okhttp3.Call;
 import okhttp3.Response;
 
-import static com.hj.casps.common.Constant.SYS_FUNC101100410002;
+import static com.hj.casps.common.Constant.SYS_FUNC;
 
 
 /**
@@ -92,7 +92,7 @@ public class ActivityPriceSearch extends ActivityBaseHeader3 implements View.OnC
 
     //初始化购物车数据
     private void initShopCarData() {
-        BuyCart.BuyCartPost post = new BuyCart.BuyCartPost(publicArg.getSys_token(), Constant.getUUID(), SYS_FUNC101100410002, publicArg.getSys_user(), publicArg.getSys_name(), publicArg.getSys_member(), String.valueOf(type));
+        BuyCart.BuyCartPost post = new BuyCart.BuyCartPost(publicArg.getSys_token(), Constant.getUUID(), SYS_FUNC, publicArg.getSys_user(), publicArg.getSys_name(), publicArg.getSys_member(), String.valueOf(type));
         OkGo.post(Constant.SearchSHPCUrl)
                 .params("param", mGson.toJson(post))
                 .execute(new StringCallback() {
@@ -214,7 +214,7 @@ public class ActivityPriceSearch extends ActivityBaseHeader3 implements View.OnC
 
         RequestSearchQuote r = new RequestSearchQuote(publicArg.getSys_token(),
                 Constant.getUUID(),
-                Constant.SYS_FUNC10110028,
+                Constant.SYS_FUNC,
                 publicArg.getSys_user(),
                 publicArg.getSys_name(),
                 publicArg.getSys_member(),
@@ -279,7 +279,7 @@ public class ActivityPriceSearch extends ActivityBaseHeader3 implements View.OnC
             toastSHORT(getString(R.string.time_out));
             return;
         }
-        ReqQuoteDetail r = new ReqQuoteDetail(publicArg.getSys_token(), timeUUID, Constant.SYS_FUNC10110028, publicArg.getSys_user(), publicArg.getSys_name(), publicArg.getSys_member(), id);
+        ReqQuoteDetail r = new ReqQuoteDetail(publicArg.getSys_token(), timeUUID, Constant.SYS_FUNC, publicArg.getSys_user(), publicArg.getSys_name(), publicArg.getSys_member(), id);
         final String param = mGson.toJson(r);
         System.out.println("r=AddShopCarUrl" + r.toString());
         OkGo.post(Constant.AddShopCarUrl).params("param", param).execute(new StringCallback() {

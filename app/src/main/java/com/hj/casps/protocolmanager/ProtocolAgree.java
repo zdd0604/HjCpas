@@ -18,7 +18,7 @@ import mehdi.sakout.fancybuttons.FancyButton;
 import okhttp3.Call;
 import okhttp3.Response;
 
-import static com.hj.casps.common.Constant.SYS_FUNC101100310004;
+import static com.hj.casps.common.Constant.SYS_FUNC;
 import static com.hj.casps.common.Constant.getUUID;
 //协议管理的同意合作协议
 public class ProtocolAgree extends ActivityBaseHeader2 implements View.OnClickListener {
@@ -48,7 +48,7 @@ public class ProtocolAgree extends ActivityBaseHeader2 implements View.OnClickLi
         contract_id = getIntent().getStringExtra("contract_id");
         contract_status = getIntent().getStringExtra("contract_status");
         contract_type = getIntent().getStringExtra("contract_type");
-        ShowAgreePost post = new ShowAgreePost(publicArg.getSys_token(), getUUID(), SYS_FUNC101100310004, publicArg.getSys_user(), publicArg.getSys_member(), contract_id, contract_status, contract_type);
+        ShowAgreePost post = new ShowAgreePost(publicArg.getSys_token(), getUUID(), SYS_FUNC, publicArg.getSys_user(), publicArg.getSys_member(), contract_id, contract_status, contract_type);
         OkGo.post(Constant.ShowAgreeModalUrl)
                 .tag(this)
                 .params("param", mGson.toJson(post))
@@ -112,7 +112,7 @@ public class ProtocolAgree extends ActivityBaseHeader2 implements View.OnClickLi
     }
 //提交
     private void submit() {
-        ShowAgreePost post = new ShowAgreePost(publicArg.getSys_token(), getUUID(), SYS_FUNC101100310004, publicArg.getSys_user(), publicArg.getSys_member(), contract_id, contract_type, addressLists[protocol_delivery_address.getSelectedItemPosition()], banklistBeen.get(protocol_receipt_account.getSelectedItemPosition()).getAccountno(), banklistBeen.get(protocol_receipt_account.getSelectedItemPosition()).getBankname());
+        ShowAgreePost post = new ShowAgreePost(publicArg.getSys_token(), getUUID(), SYS_FUNC, publicArg.getSys_user(), publicArg.getSys_member(), contract_id, contract_type, addressLists[protocol_delivery_address.getSelectedItemPosition()], banklistBeen.get(protocol_receipt_account.getSelectedItemPosition()).getAccountno(), banklistBeen.get(protocol_receipt_account.getSelectedItemPosition()).getBankname());
         OkGo.post(Constant.AgreeContractUrl)
                 .tag(this)
                 .params("param", mGson.toJson(post))

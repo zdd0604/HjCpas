@@ -230,7 +230,7 @@ public class CooperateDetail extends ActivityBaseHeader2 implements View.OnClick
         CDLoading cdLoading = new CDLoading(
                 publicArg.getSys_token(),
                 getUUID(),
-                Constant.SYS_FUNC101100310001,
+                Constant.SYS_FUNC,
                 publicArg.getSys_user(),
                 publicArg.getSys_name(),
                 publicArg.getSys_member(),
@@ -255,7 +255,7 @@ public class CooperateDetail extends ActivityBaseHeader2 implements View.OnClick
                 CDLoading cdLoading = new CDLoading(
                         Constant.publicArg.getSys_token(),
                         Constant.getUUID(),
-                        Constant.SYS_FUNC101100310001,
+                        Constant.SYS_FUNC,
                         Constant.publicArg.getSys_user(),
                         Constant.publicArg.getSys_name(),
                         Constant.publicArg.getSys_member(), relation_member);
@@ -342,7 +342,7 @@ public class CooperateDetail extends ActivityBaseHeader2 implements View.OnClick
         buztype = getIntent().getStringExtra("buztype");
         CDLoading cdLoading = new CDLoading(Constant.publicArg.getSys_token(),
                 Constant.getUUID(),
-                Constant.SYS_FUNC101100310001,
+                Constant.SYS_FUNC,
                 Constant.publicArg.getSys_user(),
                 Constant.publicArg.getSys_name(),
                 Constant.publicArg.getSys_member(),
@@ -388,7 +388,7 @@ public class CooperateDetail extends ActivityBaseHeader2 implements View.OnClick
         CDLoading cdLoading1 = new CDLoading(
                 Constant.publicArg.getSys_token(),
                 Constant.getUUID(),
-                Constant.SYS_FUNC101100310001,
+                Constant.SYS_FUNC,
                 Constant.publicArg.getSys_user(),
                 Constant.publicArg.getSys_name(),
                 Constant.publicArg.getSys_member(),
