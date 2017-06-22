@@ -310,6 +310,7 @@ public class ActivityLogin extends ActivityBase {
         String et_verfy = verfyEt.getText().toString().trim();
         if(et_verfy.length()!=6){
             ToastUtils.showToast(ActivityLogin.this,"验证码长度不正确");
+            waitDialogRectangle.dismiss();
             return;
         }
         OkGo.post(url).params("param", "{\"sys_user\":\"" + userId + "\"," +
