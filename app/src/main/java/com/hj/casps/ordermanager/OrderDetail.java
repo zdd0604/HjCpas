@@ -307,27 +307,45 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
 
     //已经订单
     private void submit() {
-        order_detail_product_pay.requestFocusFromTouch();
+//        order_detail_product_pay.requestFocusFromTouch();
+
         refreshAllPrice();
-        if (allPrice <= 0) {
-            Toast.makeText(this, "总价为零，不能下单", Toast.LENGTH_SHORT).show();
-            return;
-        }
+
         // validate
         String pay = order_detail_time_pay.getText().toString().trim();
         if (TextUtils.isEmpty(pay)) {
-            Toast.makeText(this, "付款时间不能为空", Toast.LENGTH_SHORT).show();
+            toastSHORT("付款时间不能为空");
             return;
         }
         String start = order_detail_time_start.getText().toString().trim();
         if (TextUtils.isEmpty(start)) {
-            Toast.makeText(this, "开始时间不能为空", Toast.LENGTH_SHORT).show();
+            toastSHORT("开始时间不能为空");
             return;
         }
 
         String end = order_detail_time_end.getText().toString().trim();
         if (TextUtils.isEmpty(end)) {
-            Toast.makeText(this, "结束时间不能为空", Toast.LENGTH_SHORT).show();
+            toastSHORT("结束时间不能为空");
+            return;
+        }
+
+        if (orders!=null&&orders.size()>0){
+            for (int i = 0; i < orders.size(); i++) {
+                if (!StringUtils.isStrTrue(orders.get(i).getFinalprice())
+                        || Double.parseDouble(orders.get(i).getFinalprice())<=0){
+                    toastSHORT("请填写单价");
+                    return;
+                }
+                if (!StringUtils.isStrTrue(String.valueOf(orders.get(i).getNum()))
+                        || orders.get(i).getNum()<=0){
+                    toastSHORT("请填写数量");
+                    return;
+                }
+            }
+        }
+
+        if (allPrice <= 0) {
+            toastSHORT("总价为零，不能下单");
             return;
         }
 

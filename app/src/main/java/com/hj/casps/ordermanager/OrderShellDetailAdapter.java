@@ -85,16 +85,20 @@ public class OrderShellDetailAdapter extends WZYBaseAdapter<OrderShellModel> {
             public void afterTextChanged(Editable s) {
                 //文本变化后
                 if (minPrice != 0.0 && maxPrice != 0.0) {
-                    if (StringUtils.isStrTrue(ActivityBase.getTvVaule(order_detail_item_price)))
+                    if (StringUtils.isStrTrue(ActivityBase.getTvVaule(order_detail_item_price))) {
                         if (Double.parseDouble(ActivityBase.getTvVaule(order_detail_item_price)) < minPrice) {
                             ToastUtils.showToast(context, "单价不能小于" + minPrice);
                         } else if (Double.parseDouble(ActivityBase.getTvVaule(order_detail_item_price)) > maxPrice) {
                             ToastUtils.showToast(context, "单价不能大于" + maxPrice);
                         } else {
                             orderShellModel.setFinalprice(ActivityBase.getTvVaule(order_detail_item_price));
-                            item_detail_order_price.setText(String.valueOf(Double.parseDouble(orderShellModel.getFinalprice()) * orderShellModel.getNum()));
-                            upDataPrice.onRefresh();
+                            item_detail_order_price.setText(String.valueOf(Double.parseDouble(orderShellModel.getFinalprice())
+                                    * orderShellModel.getNum()));
                         }
+                    } else {
+                        orderShellModel.setFinalprice("");
+                    }
+                    upDataPrice.onRefresh();
                 }
             }
         });
@@ -113,8 +117,11 @@ public class OrderShellDetailAdapter extends WZYBaseAdapter<OrderShellModel> {
                 if (StringUtils.isStrTrue(ActivityBase.getTvVaule(order_detail_item_number))) {
                     orderShellModel.setNum(Integer.parseInt(ActivityBase.getTvVaule(order_detail_item_number)));
                     item_detail_order_price.setText(String.valueOf(Double.parseDouble(orderShellModel.getFinalprice()) * orderShellModel.getNum()));
-                    upDataPrice.onRefresh();
+                } else {
+                    //默认设置为0
+                    orderShellModel.setNum(0);
                 }
+                upDataPrice.onRefresh();
             }
         });
 
