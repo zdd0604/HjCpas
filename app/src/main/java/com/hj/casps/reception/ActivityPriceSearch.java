@@ -41,8 +41,6 @@ import okhttp3.Call;
 import okhttp3.Response;
 
 import static com.hj.casps.common.Constant.SYS_FUNC;
-
-
 /**
  * Created by YaoChen on 2017/4/14.
  */

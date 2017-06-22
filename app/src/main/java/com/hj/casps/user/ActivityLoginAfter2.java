@@ -173,6 +173,7 @@ public class ActivityLoginAfter2 extends ActivityBaseHeader2 {
                 break;
             //去销售
             case R.id.goBuy:
+                 /*报价检索的sysfunc是随便传的获取菜单的任意一个 不做验证的sysfunc*/
                 Constant.SYS_FUNC=Constant.MenuList.get(0).getEntity().getDircode();
                 Intent buy = new Intent(this, ActivityPriceSearch.class);
                 buy.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -181,6 +182,7 @@ public class ActivityLoginAfter2 extends ActivityBaseHeader2 {
                 break;
             //去采购
             case R.id.goSell:
+                 /*报价检索的sysfunc是随便传的获取菜单的任意一个 不做验证的sysfunc*/
                 Constant.SYS_FUNC=Constant.MenuList.get(0).getEntity().getDircode();
                 Intent sale = new Intent(this, ActivityPriceSearch.class);
                 sale.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

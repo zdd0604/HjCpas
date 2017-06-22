@@ -185,15 +185,7 @@ public class ActivityLogin extends ActivityBase {
     @Override
     protected void onStop() {
         super.onStop();
-        verfyBv.setText("获取验证码");
-        if (timer != null) {
-            timer.cancel();
-        }
-        if (timerTask != null) {
-            timerTask.cancel();
-        }
-        verfyBv.setClickable(true);
-        dismissPop();
+
     }
 
     /**
@@ -294,6 +286,10 @@ public class ActivityLogin extends ActivityBase {
         final String password = password_Et.getText().toString().trim();
         final String userId = loginBean.getUserId();
         String et_verfy = verfyEt.getText().toString().trim();
+        if(et_verfy.length()!=6){
+            ToastUtils.showToast(ActivityLogin.this,"验证码长度不正确");
+            return;
+        }
         OkGo.post(url).params("param", "{\"sys_user\":\"" + userId + "\"," +
                 "\"sys_account\":\"" + username + "\"," +
                 "\"sys_pwd\":\"" + password + "\"," +
@@ -632,6 +628,17 @@ public class ActivityLogin extends ActivityBase {
         super.onPause();
         loginBean = null;
         isCheck = true;
+
+        verfyBv.setText("获取验证码");
+        if (timer != null) {
+            timer.cancel();
+        }
+        if (timerTask != null) {
+            timerTask.cancel();
+        }
+        verfyBv.setClickable(true);
+        dismissPop();
+
     }
 
     /**
