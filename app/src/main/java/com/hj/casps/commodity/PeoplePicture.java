@@ -21,7 +21,6 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.chad.library.adapter.base.listener.SimpleClickListener;
 import com.hj.casps.R;
 import com.hj.casps.base.ActivityBaseHeader2;
-import com.hj.casps.base.QuotePriceNavLeftFragment;
 import com.hj.casps.common.Constant;
 import com.hj.casps.entity.PublicArg;
 import com.hj.casps.entity.goodsmanager.Pub;
@@ -75,15 +74,13 @@ public class PeoplePicture extends ActivityBaseHeader2 implements OnPullListener
     private TextView barLayoutSubmit;
     private final int RequestCodeForEditImageRes = 1028;
     private String divId;
-    private int pageno = 0;
-    private int pagesize = 9;
     private List<File> imagePathList = new ArrayList<>();
 
     private SelectPicture02Adapter adapter;
     private final int QUERY_PICTRUE_NAME = 111;
     //删除图片
     private FancyButton del;
-    private List<ShowPicEntity.DataListBean> mList=new ArrayList<>();
+    private List<ShowPicEntity.DataListBean> mList = new ArrayList<>();
     private ArrayList<SelectPicture02ListEntity> checkListEntity;
     public ProgressDialog prdialog;
 
@@ -93,12 +90,10 @@ public class PeoplePicture extends ActivityBaseHeader2 implements OnPullListener
             super.handleMessage(msg);
             switch (msg.what) {
                 case Constant.HANDLERTYPE_0:
-                 /*   System.out.println("pageno=" + pageno);
-                    System.out.println("mlist="+mList.size());
-                    System.out.println("mlist="+mList.toString());*/
-                    setAdapter();
+                    initData(pageNo);
                     break;
                 case Constant.HANDLERTYPE_1:
+                    setAdapter();
                     break;
                 case Constant.HANDLERTYPE_2:
                     break;
@@ -118,7 +113,7 @@ public class PeoplePicture extends ActivityBaseHeader2 implements OnPullListener
         divId = (String) getIntent().getExtras().get(Constant.INTENT_DIV_ID);
         initView();
         viewShow();
-        initData(pageno);
+
     }
 
     private void setData() {
@@ -174,24 +169,22 @@ public class PeoplePicture extends ActivityBaseHeader2 implements OnPullListener
                 divId, "",
                 Constant.MaterialName,
                 String.valueOf(pageno + 1),
-                String.valueOf(pagesize));
-        System.out.println("r PeoplePicture="+r);
+                String.valueOf(pageSize + 2));
+        LogShow("r PeoplePicture=" + mGson.toJson(r));
         OkGo.post(Constant.ShowPicUrl)
                 .params("param", mGson.toJson(r))
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(String s, Call call, Response response) {
-                        System.out.println("s=initData"+s);
                         showPicEntity = GsonTools.changeGsonToBean(s, ShowPicEntity.class);
-                        if (showPicEntity.getReturn_code() == 0&&showPicEntity != null ) {
-                        mList = showPicEntity.getDataList();
-                        mHadler.sendEmptyMessage(Constant.HANDLERTYPE_0);
-                        }else if(showPicEntity.getReturn_code()==1101||showPicEntity.getReturn_code()==1102){
+                        mList.clear();
+                        if (showPicEntity.getReturn_code() == 0 && showPicEntity != null) {
+                            total = showPicEntity.getTotalCount();
+                            mList = showPicEntity.getDataList();
+                            mHadler.sendEmptyMessage(Constant.HANDLERTYPE_1);
+                        } else if (showPicEntity.getReturn_code() == 1101 || showPicEntity.getReturn_code() == 1102) {
                             LogoutUtils.exitUser(PeoplePicture.this);
-                        }
-
-
-                        else{
+                        } else {
                             toastSHORT(showPicEntity.getReturn_message());
                             return;
                         }
@@ -206,8 +199,8 @@ public class PeoplePicture extends ActivityBaseHeader2 implements OnPullListener
      * 并刷新数据
      */
     private void setAdapter() {
-        if (pageno != 0) {
-            if (pageno <= ((showPicEntity.getTotalCount() - 1) / pagesize)) {
+        if (pageNo != 0) {
+            if (pageNo <= ((total - 1) / (pageSize + 2))) {
                 setLoadData();
             } else {
                 mLoader.onLoadAll();
@@ -217,26 +210,19 @@ public class PeoplePicture extends ActivityBaseHeader2 implements OnPullListener
         }
     }
 
-
     private void viewShow() {
         PageFlag = getIntent().getIntExtra("PicStyle", 0);
         if (PageFlag == 1) {
             barLayout.setVisibility(View.VISIBLE);
             setTitle(getString(R.string.select_title_pic));
-            getData();
         } else if (PageFlag == 2) {
             setTitle(getString(R.string.select_banner_pic));
             barLayout.setVisibility(View.VISIBLE);
-            getData();
         } else {
             setTitle("分类");
             topRelayout.setVisibility(View.VISIBLE);
             barLayout.setVisibility(View.VISIBLE);
         }
-
-    }
-
-    private void getData() {
 
     }
 
@@ -256,7 +242,6 @@ public class PeoplePicture extends ActivityBaseHeader2 implements OnPullListener
         mLoader.setPullLoadEnable(true);
         mLoader.setPullRefreshEnable(true);
 
-
         recycleView.addItemDecoration(new SelectPicture02.SelectPicture02ItemDecoration(this));
         recycleView.addOnItemTouchListener(new SelectPicture02ItemClick());
         addPic = (FancyButton) findViewById(R.id.add);
@@ -266,25 +251,28 @@ public class PeoplePicture extends ActivityBaseHeader2 implements OnPullListener
         del.setOnClickListener(l);
         barLayoutCancel.setOnClickListener(l);
         barLayoutSubmit.setOnClickListener(l);
+
+        if (hasInternetConnected())
+            mHadler.sendEmptyMessage(Constant.HANDLERTYPE_0);
+
     }
 
     @Override
     protected void onRightClick() {
         intentActivity(ActivityPictureSearch.class, QUERY_PICTRUE_NAME);
-
     }
 
     @Override
     public void onRefresh(AbsRefreshLayout listLoader) {
-        pageno = 0;
-        initData(pageno);
+        pageNo = 0;
+        mHadler.sendEmptyMessage(Constant.HANDLERTYPE_0);
         mLoader.onLoadFinished();
     }
 
     @Override
     public void onLoading(AbsRefreshLayout listLoader) {
-        pageno++;
-        initData(pageno);
+        pageNo++;
+        mHadler.sendEmptyMessage(Constant.HANDLERTYPE_0);
         mLoader.onLoadFinished();
     }
 
@@ -329,7 +317,7 @@ public class PeoplePicture extends ActivityBaseHeader2 implements OnPullListener
                                 String imagePath = imageMultipleResultEvent.getResult().get(i).getOriginalPath();
                                 LogShow(imagePath);
                                 File e = new File(BitmapUtils2.getCompressFile(imagePath));
-                                System.out.println("e="+ DataCleanManager.getFormatSize(e.length()));
+                                System.out.println("e=" + DataCleanManager.getFormatSize(e.length()));
                                 imagePathList.add(e);
                             }
                             onSelectImage();
@@ -382,7 +370,8 @@ public class PeoplePicture extends ActivityBaseHeader2 implements OnPullListener
             return;
         }
         ReqDelMal r = new ReqDelMal(p.getSys_token(),
-                timeUUID, Constant.SYS_FUNC,
+                timeUUID,
+                Constant.SYS_FUNC,
                 p.getSys_user(),
                 p.getSys_member(),
                 imgId);
@@ -399,13 +388,9 @@ public class PeoplePicture extends ActivityBaseHeader2 implements OnPullListener
                         new MyToast(PeoplePicture.this, "删除图片成功");
                         map.clear();
                         adapter.remove(index);
-                    }else if(pub.getReturn_code()==1101||pub.getReturn_code()==1102){
+                    } else if (pub.getReturn_code() == 1101 || pub.getReturn_code() == 1102) {
                         LogoutUtils.exitUser(PeoplePicture.this);
-                    }
-
-
-
-                    else {
+                    } else {
                         toast(pub.getReturn_message());
                     }
                 }
@@ -456,7 +441,7 @@ public class PeoplePicture extends ActivityBaseHeader2 implements OnPullListener
             EventBus.getDefault().post(imageData);
         }
         PeoplePicture.this.finish();
-        Constant.isAddPic=true;
+        Constant.isAddPic = true;
         PeoplePicture.this.setResult(SelectPicture02.RESULT_CODE);
 
     }
@@ -570,8 +555,8 @@ public class PeoplePicture extends ActivityBaseHeader2 implements OnPullListener
             }
             //点击查询图片名字
             if (requestCode == QUERY_PICTRUE_NAME) {
-                pageno = 0;
-                initData(pageno);
+                pageNo = 0;
+                mHadler.sendEmptyMessage(Constant.HANDLERTYPE_0);
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
@@ -595,14 +580,17 @@ public class PeoplePicture extends ActivityBaseHeader2 implements OnPullListener
         prdialog.setMax(100);
         prdialog.show();
 
-        final String paramStr = "?sys_token=" + publicArg.getSys_token()
+        final String paramStr = "?" +
+                "sys_token=" + publicArg.getSys_token()
                 + "&sys_uuid=" + publicArg.getSys_uuid()
                 + "&sys_func=" + Constant.SYS_FUNC
                 + "&sys_user=" + publicArg.getSys_user()
                 + "&sys_member=" + publicArg.getSys_member()
                 + "&divId=" + divId
                 + "&imgName=" + imageName;
-        System.out.println("imagePathList ="+imagePathList.size());
+
+        LogShow(imagePathList.size() + "------" + paramStr);
+
         OkGo.post(Constant.ImageUploadUrl + paramStr)//
                 .tag(this)//
                 .isMultipart(true)
@@ -610,19 +598,18 @@ public class PeoplePicture extends ActivityBaseHeader2 implements OnPullListener
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(String s, Call call, Response response) {
-                        System.out.println("s=uploadImage"+ s );
                         Pub pub = GsonTools.changeGsonToBean(s, Pub.class);
-                        if (pub.getReturn_code() == 0) {
+                        if (pub != null && pub.getReturn_code() == 0) {
                             new MyToast(PeoplePicture.this, "上传图片成功");
                             //刷新图片列表
-                        }else if(pub.getReturn_code()==1101||pub.getReturn_code()==1102){
+                            pageNo = 0;
+                            mHadler.sendEmptyMessage(Constant.HANDLERTYPE_0);
+                        } else if (pub.getReturn_code() == 1101 || pub.getReturn_code() == 1102) {
                             LogoutUtils.exitUser(PeoplePicture.this);
-                        }
-                        else {
+                        } else {
                             toast(pub.getReturn_message());
                         }
-                        prdialog.dismiss();
-                        imagePathList.clear();
+                        deleteDatas();
                     }
 
                     /**
@@ -635,12 +622,15 @@ public class PeoplePicture extends ActivityBaseHeader2 implements OnPullListener
                     @Override
                     public void upProgress(long currentSize, long totalSize, float progress, long networkSpeed) {
                         super.upProgress(currentSize, totalSize, progress, networkSpeed);
-                        System.out.println("currentSize = [" + currentSize + "], totalSize = [" + totalSize + "], progress = [" + progress + "], networkSpeed = [" + networkSpeed + "]");
-                        System.out.println("总大小:"+ DataCleanManager.getFormatSize(currentSize));
+                        LogShow("currentSize = [" + currentSize + "], totalSize = [" + totalSize + "], " +
+                                "progress = [" + progress + "], networkSpeed = [" + networkSpeed + "]");
+                        LogShow("总大小:" + DataCleanManager.getFormatSize(totalSize));
+                        LogShow("当前大小:" + DataCleanManager.getFormatSize(currentSize));
                         prdialog.setProgress((int) (progress * 100));
                         if (((int) (progress * 100)) == 100) {
-                            prdialog.dismiss();
-                            imagePathList.clear();
+                            pageNo = 0;
+                            mHadler.sendEmptyMessage(Constant.HANDLERTYPE_0);
+                            deleteDatas();
                         }
                     }
 
@@ -648,12 +638,16 @@ public class PeoplePicture extends ActivityBaseHeader2 implements OnPullListener
                     public void onError(Call call, Response response, Exception e) {
                         super.onError(call, response, e);
                         toastSHORT("上传失败");
-                        prdialog.dismiss();
-                        imagePathList.clear();
+                        deleteDatas();
                     }
                 });      // 这种方式为同一个key，上传多个文件
     }
 
-
-
+    /**
+     * 清空缓存
+     */
+    private void deleteDatas() {
+        prdialog.dismiss();
+        imagePathList.clear();
+    }
 }

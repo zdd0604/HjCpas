@@ -228,7 +228,9 @@ public class ActivityPriceSearch extends ActivityBaseHeader3 implements View.OnC
         waitDialogRectangle.show();
         Constant.JSONFATHERRESPON = "SearchQuoteGain";
         System.out.println("r=SearchQuoteUrl" + r.toString());
-        OkGo.post(Constant.SearchQuoteUrl).params("param", param).execute(new JsonCallBack<SearchQuoteGain<List<QtListEntity>>>() {
+        OkGo.post(Constant.SearchQuoteUrl)
+                .params("param", param)
+                .execute(new JsonCallBack<SearchQuoteGain<List<QtListEntity>>>() {
             @Override
             public void onSuccess(SearchQuoteGain<List<QtListEntity>> data, Call call, Response response) {
                 waitDialogRectangle.dismiss();

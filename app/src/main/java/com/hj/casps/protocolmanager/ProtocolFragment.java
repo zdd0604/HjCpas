@@ -101,7 +101,6 @@ public class ProtocolFragment extends ViewPagerFragment1 implements View.OnClick
         START_TIME = "";
         END_TIME = "";
         PROTOCOL_STATUS = "3";
-
     }
 
     /**
@@ -111,19 +110,18 @@ public class ProtocolFragment extends ViewPagerFragment1 implements View.OnClick
         CooperateDirUtils.getInstance(getActivity()).deleteAll();
         switch (type_k) {
             case 1:
+                //代表协议管理
                 for (int i = 0; i < protocolModels.size(); i++) {
                     CooperateDirUtils.getInstance(getActivity()).insertInfo(protocolModels.get(i));
                 }
                 break;
             case 2:
+                //代表订单管理
                 for (int i = 0; i < orderDoingModels.size(); i++) {
                     CooperateDirUtils.getInstance(getActivity()).insertInfo(orderDoingModels.get(i));
                 }
                 break;
-
         }
-
-
     }
 
 
@@ -133,17 +131,14 @@ public class ProtocolFragment extends ViewPagerFragment1 implements View.OnClick
     private void addLocality() {
         switch (type_k) {
             case 1:
-
                 List<ProtocolListBean> usrList = CooperateDirUtils.getInstance(getActivity()).queryProtocolListBeanInfo();
-
                 if (usrList.size() > 0) {
                     protocolModels = usrList;
                 }
                 adapter.updateRes(protocolModels);
                 break;
-            case 2:
+            case 2://代表订单管理
                 List<OrderRowBean> usrList1 = CooperateDirUtils.getInstance(getActivity()).queryOrderRowBeanDaoInfo();
-
                 if (usrList1.size() > 0) {
                     orderDoingModels = usrList1;
                 }
@@ -309,13 +304,9 @@ public class ProtocolFragment extends ViewPagerFragment1 implements View.OnClick
                                 }
                                 if (backDetail.getReturn_code() != 0) {
                                     Toast.makeText(context, backDetail.getReturn_message(), Toast.LENGTH_SHORT).show();
-                                }
-                                else if(backDetail.getReturn_code()==1101||backDetail.getReturn_code()==1102){
+                                } else if (backDetail.getReturn_code() == 1101 || backDetail.getReturn_code() == 1102) {
                                     LogoutUtils.exitUser(ProtocolFragment.this);
-                                }
-
-
-                                else {
+                                } else {
                                     protocolModels = backDetail.getList();
                                     if (protocolModels.isEmpty()) {
 //                                        Toast.makeText(context, "无协议", Toast.LENGTH_SHORT).show();
@@ -408,12 +399,9 @@ public class ProtocolFragment extends ViewPagerFragment1 implements View.OnClick
                                     }
                                     if (backDetail.getReturn_code() != 0) {
 //                                        Toast.makeText(context, backDetail.getReturn_message(), Toast.LENGTH_SHORT).show();
-                                    }else if(backDetail.getReturn_code()==1101||backDetail.getReturn_code()==1102){
+                                    } else if (backDetail.getReturn_code() == 1101 || backDetail.getReturn_code() == 1102) {
                                         LogoutUtils.exitUser(ProtocolFragment.this);
-                                    }
-
-
-                                    else {
+                                    } else {
                                         orderDoingModels = backDetail.getRows();
                                         if (orderDoingModels.isEmpty()) {
 //                                            Toast.makeText(context, "无订单", Toast.LENGTH_SHORT).show();
@@ -545,12 +533,9 @@ public class ProtocolFragment extends ViewPagerFragment1 implements View.OnClick
                         }
                         if (backDetail.getReturn_code() != 0) {
                             Toast.makeText(context, backDetail.getReturn_message(), Toast.LENGTH_SHORT).show();
-                        }else if(backDetail.getReturn_code() ==1101||backDetail.getReturn_code() ==1102){
+                        } else if (backDetail.getReturn_code() == 1101 || backDetail.getReturn_code() == 1102) {
                             LogoutUtils.exitUser(ProtocolFragment.this);
-                        }
-
-
-                        else {
+                        } else {
                             Toast.makeText(context, backDetail.getReturn_message(), Toast.LENGTH_SHORT).show();
                             initData();
                         }
@@ -829,12 +814,9 @@ public class ProtocolFragment extends ViewPagerFragment1 implements View.OnClick
                             BackBean backDetail = mGson.fromJson(s, BackBean.class);
                             if (backDetail.getReturn_code() != 0) {
                                 Toast.makeText(context, backDetail.getReturn_message(), Toast.LENGTH_SHORT).show();
-                            }else if(backDetail.getReturn_code()==1101||backDetail.getReturn_code()==1102){
+                            } else if (backDetail.getReturn_code() == 1101 || backDetail.getReturn_code() == 1102) {
                                 LogoutUtils.exitUser(ProtocolFragment.this);
-                            }
-
-
-                            else {
+                            } else {
                                 new MyToast(context, string);
                                 initData();
                             }
@@ -872,15 +854,14 @@ public class ProtocolFragment extends ViewPagerFragment1 implements View.OnClick
                             if (backDetail == null) {
                                 return;
                             }
-                            if (backDetail.getReturn_code() != 0) {
-                                Toast.makeText(context, backDetail.getReturn_message(), Toast.LENGTH_SHORT).show();
-                            }else if(backDetail.getReturn_code()==1101||backDetail.getReturn_code()==1102){
-                                LogoutUtils.exitUser(ProtocolFragment.this);
-                            }
-
-                            else {
+                            if (backDetail.getReturn_code() == 0) {
                                 new MyToast(context, string);
+                                page = 0;
                                 initData();
+                            } else if (backDetail.getReturn_code() == 1101 || backDetail.getReturn_code() == 1102) {
+                                LogoutUtils.exitUser(ProtocolFragment.this);
+                            } else {
+                                Toast.makeText(context, backDetail.getReturn_message(), Toast.LENGTH_SHORT).show();
                             }
                         }
 
@@ -963,7 +944,6 @@ public class ProtocolFragment extends ViewPagerFragment1 implements View.OnClick
                 case 2://执行中订单
                     create_time.setText(context.getString(R.string.tv_bills_contract_time_title));
                     time.setText(Constant.stmpToDate(orderDoingModel.getLockTime()));
-
                     if (orderDoingModel.getExecuteStatus() == 1) {
                         switch (orderDoingModel.getStopStatus()) {
                             case 1://请求终止
