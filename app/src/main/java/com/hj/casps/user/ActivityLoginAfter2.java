@@ -174,7 +174,9 @@ public class ActivityLoginAfter2 extends ActivityBaseHeader2 {
             //去销售
             case R.id.goBuy:
                  /*报价检索的sysfunc是随便传的获取菜单的任意一个 不做验证的sysfunc*/
+                 if(Constant.MenuList!=null&&Constant.MenuList.size()>0){
                 Constant.SYS_FUNC=Constant.MenuList.get(0).getEntity().getDircode();
+                 }
                 Intent buy = new Intent(this, ActivityPriceSearch.class);
                 buy.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 buy.putExtra("Style", 0);
@@ -183,7 +185,9 @@ public class ActivityLoginAfter2 extends ActivityBaseHeader2 {
             //去采购
             case R.id.goSell:
                  /*报价检索的sysfunc是随便传的获取菜单的任意一个 不做验证的sysfunc*/
-                Constant.SYS_FUNC=Constant.MenuList.get(0).getEntity().getDircode();
+                if(Constant.MenuList!=null&&Constant.MenuList.size()>0){
+                    Constant.SYS_FUNC=Constant.MenuList.get(0).getEntity().getDircode();
+                }
                 Intent sale = new Intent(this, ActivityPriceSearch.class);
                 sale.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 sale.putExtra("Style", 1);
@@ -202,11 +206,13 @@ public class ActivityLoginAfter2 extends ActivityBaseHeader2 {
 
     //根据会员主页url查询有没有会员信息，如果有就可以收藏店铺
     private void queryMmbForNet() {
+        if(Constant.MenuList!=null&&Constant.MenuList.size()>0){
+            Constant.SYS_FUNC=Constant.MenuList.get(0).getEntity().getDircode();
+        }
         waitDialogRectangle.show();
         PublicArg p = Constant.publicArg;
         ReqMmb r = new ReqMmb(p.getSys_token(), Constant.getUUID(), Constant.SYS_FUNC, p.getSys_user(), p.getSys_member(), mUrl);
         String param = mGson.toJson(r);
-
         OkGo.post(Constant.GetMmbByUrl).params("param", param).execute(new StringCallback() {
             @Override
             public void onSuccess(String data, Call call, Response response) {
@@ -221,8 +227,6 @@ public class ActivityLoginAfter2 extends ActivityBaseHeader2 {
                 }else if(resMmb.getReturn_code()==1101||resMmb.getReturn_code()==1102){
                     LogoutUtils.exitUser(ActivityLoginAfter2.this);
                 }
-
-
                 else {
                     toast("收藏失败");
                 }
@@ -234,12 +238,14 @@ public class ActivityLoginAfter2 extends ActivityBaseHeader2 {
                 waitDialogRectangle.dismiss();
             }
         });
-
     }
 
     //收藏会员的请求
     private void markMemberForNet(String mmbId) {
         waitDialogRectangle.show();
+        if(Constant.MenuList!=null&&Constant.MenuList.size()>0){
+            Constant.SYS_FUNC=Constant.MenuList.get(0).getEntity().getDircode();
+        }
         PublicArg p = Constant.publicArg;
         ReqMark r = new ReqMark(p.getSys_token(), Constant.getUUID(), Constant.SYS_FUNC, p.getSys_user(), p.getSys_member(), mmbId);
         String param = mGson.toJson(r);

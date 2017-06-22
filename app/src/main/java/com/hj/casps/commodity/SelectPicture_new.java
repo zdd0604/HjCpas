@@ -236,9 +236,9 @@ public class SelectPicture_new extends ActivityBaseHeader2 {
 
         }else{
             SelectPicture_new.this.baseId=baseId;
-            titleRight.setVisibility(View.VISIBLE);
-            titleRight.setText("添加");
-            titleRight.setBackgroundColor(Color.TRANSPARENT);
+//            titleRight.setVisibility(View.VISIBLE);
+//            titleRight.setText("添加");
+//            titleRight.setBackgroundColor(Color.TRANSPARENT);
 //            titleRight.setTextSize(R.dimen.font_size_16);
         }
 

@@ -270,7 +270,9 @@ public class ActivityBaseHeader extends ActivityBase {
         switch (index) {
             case 0:
                 /*报价检索的sysfunc是随便传的获取菜单的任意一个 不做验证的sysfunc*/
-                Constant.SYS_FUNC=Constant.MenuList.get(0).getEntity().getDircode();
+                if(Constant.MenuList!=null&&Constant.MenuList.size()>0){
+                    Constant.SYS_FUNC=Constant.MenuList.get(0).getEntity().getDircode();
+                }
                 Intent intent0 = new Intent(this, ActivityPriceSearch.class);
                 intent0.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 intent0.putExtra("Style", 0);
@@ -278,7 +280,9 @@ public class ActivityBaseHeader extends ActivityBase {
                 break;
             case 1:
                  /*报价检索的sysfunc是随便传的获取菜单的任意一个 不做验证的sysfunc*/
-                Constant.SYS_FUNC=Constant.MenuList.get(0).getEntity().getDircode();
+                if(Constant.MenuList!=null&&Constant.MenuList.size()>0){
+                    Constant.SYS_FUNC=Constant.MenuList.get(0).getEntity().getDircode();
+                }
                 Intent intent1 = new Intent(this, ActivityPriceSearch.class);
                 intent1.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 intent1.putExtra("Style", 1);

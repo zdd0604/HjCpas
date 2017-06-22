@@ -6,8 +6,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
+import android.text.Editable;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
+import android.text.TextWatcher;
 import android.text.style.ForegroundColorSpan;
 import android.view.Gravity;
 import android.view.View;
@@ -90,9 +92,29 @@ public class ActivityLogin extends ActivityBase {
         }*/
         initView();
     }
-
     private void initView() {
         SubmitClickUtils.addView(submit, verfyBv, showNameSelectBt);
+        /*verfyEt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                System.out.println("beforeTextChanged = [" + s + "], start = [" + start + "], count = [" + count + "], after = [" + after + "]");
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                System.out.println("onTextChanged = [" + s + "], start = [" + start + "], before = [" + before + "], count = [" + count + "]");
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                System.out.println("s = [" + s + "]");
+                EditText et= (EditText) s;
+               if(et.getText().length()>6){
+                   ToastUtils.showToast(ActivityLogin.this,"验证码是6位的");
+               }
+            }
+        });*/
         user_name_Et.setOnFocusChangeListener(new NameEtFocusChangeListener());
     }
 

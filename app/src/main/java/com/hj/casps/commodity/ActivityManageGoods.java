@@ -103,7 +103,6 @@ public class ActivityManageGoods extends ActivityBaseHeader implements View.OnCl
         /*Drawable drawable = getResources().getDrawable(R.mipmap.nav_menu);
         drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight()); //设置边界
         titleLeft.setCompoundDrawables(null, null, drawable, null);//画在右边*/
-
         setTitleRight(null, null);
         ButterKnife.bind(this);
         layout_head_right_tv.setOnClickListener(this);
