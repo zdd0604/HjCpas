@@ -57,7 +57,7 @@ import java.util.List;
 import okhttp3.Call;
 import okhttp3.Response;
 
-/**
+/** 选择轮播目录
  * Created by YaoChen on 2017/4/13.
  */
 

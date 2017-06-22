@@ -205,7 +205,7 @@ public class ActivityGoodsClass extends ActivityBaseHeader2 implements View.OnCl
 
         fra_type = getIntent().getIntExtra("fra", 0);
         if (fra_type == 1) {
-            //是否显示上部的   添加头
+            //是否显示上部的   添加头部布局
             Goodsclass_top_Re.setVisibility(View.GONE);
         }
         showSharePopupWindow();
@@ -226,7 +226,7 @@ public class ActivityGoodsClass extends ActivityBaseHeader2 implements View.OnCl
         log("heigth=" + height);
 
     }
-
+          /*选择图片编辑*/
     private void choosePictureEdit(int position) {
         if (fra_type == 1) {
             DataListBean d = adapter.getDatas().get(position);
@@ -244,12 +244,10 @@ public class ActivityGoodsClass extends ActivityBaseHeader2 implements View.OnCl
                 tv_goodname.setText(d.getName());
                 TextView tv = (TextView) contentView.findViewById(R.id.gooddeclass_do_do);
                 tv.setText(d.getStatus() == 0 ? "禁用" : "启用");
-//                        tv.setCompoundDrawables(null,ActivityGoodsClass.this.getResources().getDrawable(R.mipmap.cz_edit),null,null);
                 Drawable drawable = getResources().getDrawable(R.mipmap.cz_enable);
                 /// 这一步必须要做,否则不会显示.
                 drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
                 tv.setCompoundDrawables(null, drawable, null, null);
-
 
                 Glide.with(ActivityGoodsClass.this).load(Constant.SHORTHTTPURL + d.getImgPath()).into(addIv);
                 sharepopupWindow.showAtLocation(contentView, Gravity.BOTTOM, 0, 0);
@@ -281,7 +279,7 @@ public class ActivityGoodsClass extends ActivityBaseHeader2 implements View.OnCl
         super.onPause();
         Constant.isFreshGood=false;
     }
-
+//        显示底部的编辑 详情  启用的PopupWindow
     private void showSharePopupWindow() {
         contentView = LayoutInflater.from(this).inflate(
                 R.layout.pop_goodsclass, null);
@@ -334,6 +332,7 @@ public class ActivityGoodsClass extends ActivityBaseHeader2 implements View.OnCl
                 }
 
                 break;
+            //商品详情
             case R.id.gooddeclass_do_detail:
                 sharepopupWindow.dismiss();
                 List<DataListBean> datas2 = adapter.getDatas();
@@ -344,6 +343,7 @@ public class ActivityGoodsClass extends ActivityBaseHeader2 implements View.OnCl
                     startActivity(intentDetail);
                 }
                 break;
+            //商品添加
             case R.id.Goodsclass_add_Btn:
                 Intent i = new Intent(ActivityGoodsClass.this, ActivityEditGoods.class);
                 i.putExtra(Constant.INTENTISADDGOODS, true);
@@ -404,6 +404,7 @@ public class ActivityGoodsClass extends ActivityBaseHeader2 implements View.OnCl
 
     }
 
+    //选择图片
     @Override
     public void onClickPicture(int pos) {
         choosePictureEdit(pos);

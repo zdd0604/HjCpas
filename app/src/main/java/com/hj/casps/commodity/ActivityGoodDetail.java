@@ -145,9 +145,8 @@ public class ActivityGoodDetail extends ActivityBaseHeader2 implements View.OnCl
         setTitleRight(null, null);
         ButterKnife.bind(this);
         goodsId = getIntent().getStringExtra(Constant.INTENT_GOODSID);
-
-
         initView();
+        //有网络
         if (hasInternetConnected()) {
             initData();
         } else {
@@ -187,7 +186,7 @@ public class ActivityGoodDetail extends ActivityBaseHeader2 implements View.OnCl
 
     }
 
-
+    //初始化轮播图数据
     private void initBar(final List<String> datas) {
 
         final List<String> list = new ArrayList<String>();
@@ -217,7 +216,7 @@ public class ActivityGoodDetail extends ActivityBaseHeader2 implements View.OnCl
 //        banner.setOnBannerClickListener(new HomeOnBannerClickListener(data));
         banner.start();
     }
-
+    //设置商品信息
     private void setGoodInfo(GoodInfoEntity g) {
         Glide.with(this).load(Constant.SHORTHTTPURL + g.getImgPath()).into(ivTitle);
         detail_name.setText(g.getName());

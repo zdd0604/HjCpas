@@ -87,12 +87,11 @@ public class ActivityPriceSearch extends ActivityBaseHeader3 implements View.OnC
         } else {
             getDataForLocal();
         }
-
     }
 
     //初始化购物车数据
     private void initShopCarData() {
-        BuyCart.BuyCartPost post = new BuyCart.BuyCartPost(publicArg.getSys_token(), Constant.getUUID(), SYS_FUNC, publicArg.getSys_user(), publicArg.getSys_name(), publicArg.getSys_member(), String.valueOf(type));
+        BuyCart.BuyCartPost post = new BuyCart.BuyCartPost(publicArg.getSys_token(), Constant.getUUID(), Constant.SYS_FUNC, publicArg.getSys_user(), publicArg.getSys_name(), publicArg.getSys_member(), String.valueOf(type));
         OkGo.post(Constant.SearchSHPCUrl)
                 .params("param", mGson.toJson(post))
                 .execute(new StringCallback() {

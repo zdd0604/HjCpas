@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.hj.casps.R;
 import com.hj.casps.backstage.ActivityBackStage;
+import com.hj.casps.common.Constant;
 import com.hj.casps.reception.ActivityPriceSearch;
 import com.hj.casps.ui.MyDialog;
 import com.hj.casps.user.ActivityLoginAfter;
@@ -268,12 +269,14 @@ public class ActivityBaseHeader extends ActivityBase {
     private void BtClick(int index) {
         switch (index) {
             case 0:
+                Constant.SYS_FUNC=Constant.MenuList.get(0).getEntity().getDircode();
                 Intent intent0 = new Intent(this, ActivityPriceSearch.class);
                 intent0.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 intent0.putExtra("Style", 0);
                 startActivity(intent0);
                 break;
             case 1:
+                Constant.SYS_FUNC=Constant.MenuList.get(0).getEntity().getDircode();
                 Intent intent1 = new Intent(this, ActivityPriceSearch.class);
                 intent1.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 intent1.putExtra("Style", 1);

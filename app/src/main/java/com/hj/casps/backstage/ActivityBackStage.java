@@ -88,7 +88,9 @@ public class ActivityBackStage extends ActivityBaseHeader2 {
 
         //网络请求用户所对应的菜单数据
         if (hasInternetConnected()) {
-            onStartInitData();
+            if (initMenuData()) return;
+            initView();
+
         } else {
             if (initMenuData()) return;
             initView();
@@ -127,18 +129,7 @@ public class ActivityBackStage extends ActivityBaseHeader2 {
         }
     }
 
-    private void handData(MenuUtils.Bean.MenusEntity menus) {
-        ArrayList<MenuUtils.MenusEntityExtra> extras = new ArrayList<>();
-        if (menus.getMenus() == null) {
-            toastSHORT("获取菜单失败");
-            return;
-        }
-        MenuUtils.doBuildData(menus.getMenus(), extras);
-        Constant.MenuList = extras;
-        System.out.println("e=" + extras);
-        if (initMenuData()) return;
-        initView();
-    }
+
 
     private void initView() {
         bundle = new Bundle();
@@ -147,36 +138,7 @@ public class ActivityBackStage extends ActivityBaseHeader2 {
         ArrayList<LevelEntity> data = generateData();
         recyclerView.setAdapter(new BaseListNavAdapter(data));
     }
-    //初始化菜单数据
-    private void onStartInitData() {
-        PublicArg p = Constant.publicArg;
-        String param = "{\"sys_token\":\"" + p.getSys_token() + "\",\"sys_user\":\"" + p.getSys_user() + "\"}";
-        OkGo.post(Constant.GetMenuListUrl).params("param", param).execute(new StringCallback() {
-            @Override
-            public void onSuccess(String data, Call call, Response response) {
-                MenuUtils.Bean entity = GsonTools.changeGsonToBean(data, MenuUtils.Bean.class);
-                if (entity != null && entity.getReturn_code() == 0 && entity.getMenus() != null) {
-                    MenuUtils.Bean.MenusEntity menus = entity.getMenus();
-                    ActivityBackStage.this.menus = menus;
-                    handData(menus);
-                }else if(entity.getReturn_code()==1101||entity.getReturn_code()==1102){
-                    LogoutUtils.exitUser(ActivityBackStage.this);
-                }
-                else {
-                    toastSHORT("获取用户菜单失败");
-                    return;
-                }
 
-            }
-
-            @Override
-            public void onError(Call call, Response response, Exception e) {
-                super.onError(call, response, e);
-                toastSHORT(e.getMessage());
-
-            }
-        });
-    }
 
     private ArrayList<LevelEntity> generateData() {
         ArrayList<LevelEntity> res = new ArrayList<>();

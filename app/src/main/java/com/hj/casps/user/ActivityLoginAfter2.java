@@ -76,17 +76,10 @@ public class ActivityLoginAfter2 extends ActivityBaseHeader2 {
 
         ButterKnife.bind(this);
         //TODO test
-
-        UserBeanUtils instance = UserBeanUtils.getInstance(ActivityLoginAfter2.this);
-        List<UserBean> userBeanList = instance.getList();
-        for (UserBean u : userBeanList) {
-            System.out.println("a="+u);
-        }
-
+        //初始化菜单数据
+        onStartInitData();
         //初始化菜单的基础数据
         initMenuData();
-
-
         initView();
     }
 
@@ -178,13 +171,17 @@ public class ActivityLoginAfter2 extends ActivityBaseHeader2 {
                 managerBack.setVisibility(View.VISIBLE);
 
                 break;
+            //去销售
             case R.id.goBuy:
+                Constant.SYS_FUNC=Constant.MenuList.get(0).getEntity().getDircode();
                 Intent buy = new Intent(this, ActivityPriceSearch.class);
                 buy.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 buy.putExtra("Style", 0);
                 startActivity(buy);
                 break;
+            //去采购
             case R.id.goSell:
+                Constant.SYS_FUNC=Constant.MenuList.get(0).getEntity().getDircode();
                 Intent sale = new Intent(this, ActivityPriceSearch.class);
                 sale.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 sale.putExtra("Style", 1);
@@ -279,5 +276,47 @@ public class ActivityLoginAfter2 extends ActivityBaseHeader2 {
             showExitDialog();
         }
         return true;
+    }
+
+
+    //初始化菜单数据
+    private void onStartInitData() {
+        PublicArg p = Constant.publicArg;
+        String param = "{\"sys_token\":\"" + p.getSys_token() + "\",\"sys_user\":\"" + p.getSys_user() + "\"}";
+        OkGo.post(Constant.GetMenuListUrl).params("param", param).execute(new StringCallback() {
+            @Override
+            public void onSuccess(String data, Call call, Response response) {
+                MenuUtils.Bean entity = GsonTools.changeGsonToBean(data, MenuUtils.Bean.class);
+                if (entity != null && entity.getReturn_code() == 0 && entity.getMenus() != null) {
+                    MenuUtils.Bean.MenusEntity menus = entity.getMenus();
+                    handData(menus);
+                }else if(entity.getReturn_code()==1101||entity.getReturn_code()==1102){
+                    LogoutUtils.exitUser(ActivityLoginAfter2.this);
+                }
+                else {
+                    toastSHORT("获取用户菜单失败");
+                    return;
+                }
+
+            }
+
+            @Override
+            public void onError(Call call, Response response, Exception e) {
+                super.onError(call, response, e);
+                toastSHORT(e.getMessage());
+
+            }
+        });
+    }
+    private void handData(MenuUtils.Bean.MenusEntity menus) {
+        ArrayList<MenuUtils.MenusEntityExtra> extras = new ArrayList<>();
+        if (menus.getMenus() == null) {
+            toastSHORT("获取菜单失败");
+            return;
+        }
+        MenuUtils.doBuildData(menus.getMenus(), extras);
+        Constant.MenuList = extras;
+        System.out.println("e=" + extras);
+
     }
 }

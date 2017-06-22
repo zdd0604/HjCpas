@@ -157,7 +157,6 @@ public class ActivityEditGoods extends ActivityBaseHeader2 implements View.OnCli
                     break;
                 case 3:
                     toast("商品添加提交成功");
-                    int i = 0;
                     Constant.isFreshGood=true;
                     ActivityEditGoods.this.finish();
                     break;
@@ -170,7 +169,7 @@ public class ActivityEditGoods extends ActivityBaseHeader2 implements View.OnCli
             }
         }
     };
-
+    //判断添加还是编辑页面   true  添加     false  编辑
     private Boolean flag = false;
     private String categoryName;
     private String categoryId;
@@ -224,7 +223,9 @@ public class ActivityEditGoods extends ActivityBaseHeader2 implements View.OnCli
     //设置商品信息
     private void setGoodInfo() {
         ResToUpdateEntity.GoodsInfoBean g = updateEntity.getGoodsInfo();
+        //分类id
         categoryId = g.getCategoryId();
+        //分类名字
         categoryName = g.getCategoryName();
         imagePath = g.getImgPath();
         Glide.with(this).load(Constant.SHORTHTTPURL + g.getImgPath()).into(selectPic);
@@ -263,6 +264,7 @@ public class ActivityEditGoods extends ActivityBaseHeader2 implements View.OnCli
     ArrayList<SelectPicture02ListEntity> multCheckDatas = new ArrayList<>();
     private String goodsId;
 
+    //编辑时候请求的接口
     private void initData2() {
         PublicArg publicArg = Constant.publicArg;
 
@@ -426,7 +428,6 @@ public class ActivityEditGoods extends ActivityBaseHeader2 implements View.OnCli
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-
             case R.id.editGoods_do_desc_tv:
                 //操作说明
                 CreateDialog(Constant.DIALOG_CONTENT_30);
@@ -465,6 +466,7 @@ public class ActivityEditGoods extends ActivityBaseHeader2 implements View.OnCli
                 break;
             //保存按钮
             case R.id.editGoods_true_Btn:
+                //如果是添加 需要验证  商品名称是否唯一
                 if(flag){
                         checkNameGoNet();
                 }else{
@@ -474,7 +476,7 @@ public class ActivityEditGoods extends ActivityBaseHeader2 implements View.OnCli
                 break;
         }
     }
-
+//添加商品提交接口
     private void submitAddData() {
         String timeUUID = Constant.getTimeUUID();
         if(timeUUID.equals("")){
@@ -549,7 +551,7 @@ public class ActivityEditGoods extends ActivityBaseHeader2 implements View.OnCli
             }
         });
     }
-
+        //提交详情
     private void submitDetailData() {
         PublicArg p = Constant.publicArg;
         String timeUUID = Constant.getTimeUUID();
@@ -570,6 +572,7 @@ public class ActivityEditGoods extends ActivityBaseHeader2 implements View.OnCli
         String specification = getEdVaule(Specification_Et);
 
         String createTime = productDate.getText().toString().trim();
+        //截取字符串数据
         String subImagePath = imagePath.substring(17);
         //轮播图ids
         StringBuilder sb = new StringBuilder();
@@ -609,9 +612,6 @@ public class ActivityEditGoods extends ActivityBaseHeader2 implements View.OnCli
                 }else if(return_code==1101||return_code==1102){
                     LogoutUtils.exitUser(ActivityEditGoods.this);
                 }
-
-
-
                 else {
                     toast(return_message);
                 }
@@ -816,6 +816,9 @@ public class ActivityEditGoods extends ActivityBaseHeader2 implements View.OnCli
         }
     }
 
+
+
+    //接收图片库传过来的图片数据    单选或者多选的时候
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(ImageData imageData) {
         if (imageData.getList() != null && imageData.getList().size() > 0) {
@@ -849,11 +852,8 @@ public class ActivityEditGoods extends ActivityBaseHeader2 implements View.OnCli
             imageId = imageData.getEntity().getImgId();
             imagePath = imageData.getEntity().getImagePath();
             Glide.with(this).load(Constant.SHORTHTTPURL + imageData.getEntity().getImagePath()).into(selectPic);
-
         }
-
     }
-
 
     @Override
     protected void onDestroy() {

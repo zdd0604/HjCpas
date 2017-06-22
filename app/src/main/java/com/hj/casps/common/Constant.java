@@ -358,7 +358,10 @@ public class Constant {
 
     public static PublicArg publicArg = null;
 
+    /*公共的功能编码*/
     public static  String  SYS_FUNC="";
+
+
     //                      funcCode	菜单项	           说明
     public static String SYS_FUNC1011 = "1011";//	业务平台	各类业务活动的工作平台
     public static String SYS_FUNC10110021 = "10110021";//基础配置	商品目录的管理、会员主页的配置
