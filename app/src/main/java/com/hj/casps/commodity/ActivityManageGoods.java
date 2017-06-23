@@ -57,6 +57,7 @@ public class ActivityManageGoods extends ActivityBaseHeader implements View.OnCl
     private int fra_type;
     //多选添加按钮
     private ImageView et_add;
+    private List<NoteEntity> categoryList = new ArrayList<>();
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -84,8 +85,6 @@ public class ActivityManageGoods extends ActivityBaseHeader implements View.OnCl
         recyclerView.addItemDecoration(new GoodDividerItemDecoration(ActivityManageGoods.this));
         recyclerView.addOnItemTouchListener(new GoodSimpleItemClick());
     }
-
-    private List<NoteEntity> categoryList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -145,10 +144,11 @@ public class ActivityManageGoods extends ActivityBaseHeader implements View.OnCl
                             mHandler.sendEmptyMessage(Constant.HANDLERTYPE_0);
                         }
                     }
+
                     @Override
                     public void onError(Call call, Response response, Exception e) {
                         super.onError(call, response, e);
-                       if(Constant.public_code){
+                        if (Constant.public_code) {
                             LogoutUtils.exitUser(ActivityManageGoods.this);
                         }
                     }
@@ -183,7 +183,7 @@ public class ActivityManageGoods extends ActivityBaseHeader implements View.OnCl
         return res;
     }
 
-//初始化菜单数据
+    //初始化菜单数据
     private ArrayList<GoodLevelEntity> generateData1() {
         ArrayList<ActivityManageGoods.GoodLevelEntity> res = new ArrayList<>();
 //        if(entityList!=null&&entityList.size()>0)
@@ -200,6 +200,38 @@ public class ActivityManageGoods extends ActivityBaseHeader implements View.OnCl
             res.add(lv0);
         }
         return res;
+    }
+
+    //初始化菜单数据
+    private ArrayList<GoodLevelEntity> generateData2() {
+        ArrayList<ActivityManageGoods.GoodLevelEntity> res = new ArrayList<>();
+        for (int i = 0; i < categoryList.size(); i++) {
+            NoteEntity noteEntity = categoryList.get(i);
+            ActivityManageGoods.GoodLevelEntity lv0 = new ActivityManageGoods.GoodLevelEntity(
+                    noteEntity.getCategoryName(), noteEntity.getCategoryId());
+            res.add(lv0);
+            generateData2(lv0, noteEntity);
+        }
+        return res;
+    }
+
+    /**
+     * noteEntity的子类添加到lv0的结构中
+     *
+     * @param lv0
+     * @param noteEntity
+     * @return
+     */
+    private void generateData2(ActivityManageGoods.GoodLevelEntity lv0, NoteEntity noteEntity) {
+        if (noteEntity.getNodes() != null && noteEntity.getNodes().size() > 0) {
+            for (int i = 0; i < noteEntity.getNodes().size(); i++) {
+                NoteEntity itemNoteEntity=noteEntity.getNodes().get(i);
+                ActivityManageGoods.GoodLevelEntity goodEntity = new ActivityManageGoods.GoodLevelEntity(
+                        itemNoteEntity.getCategoryName(), itemNoteEntity.getCategoryId());
+                lv0.addSubItem(goodEntity);
+                generateData2(goodEntity,itemNoteEntity);
+            }
+        }
     }
 
     private void onItemClick1(GoodLevelEntity lv1) {
@@ -285,14 +317,6 @@ public class ActivityManageGoods extends ActivityBaseHeader implements View.OnCl
             this.i = Math.random();
         }
 
-        public String getCategoryId() {
-            return categoryId;
-        }
-
-        public void setCategoryId(String categoryId) {
-            this.categoryId = categoryId;
-        }
-
         /**
          * @param string
          */
@@ -300,6 +324,13 @@ public class ActivityManageGoods extends ActivityBaseHeader implements View.OnCl
             this.name = string;
         }
 
+        public String getCategoryId() {
+            return categoryId;
+        }
+
+        public void setCategoryId(String categoryId) {
+            this.categoryId = categoryId;
+        }
 
         public GoodLevelEntity getParent() {
             return parent;
