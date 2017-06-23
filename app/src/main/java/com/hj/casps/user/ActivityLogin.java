@@ -94,27 +94,7 @@ public class ActivityLogin extends ActivityBase {
     }
     private void initView() {
         SubmitClickUtils.addView(submit, verfyBv, showNameSelectBt);
-        /*verfyEt.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                System.out.println("beforeTextChanged = [" + s + "], start = [" + start + "], count = [" + count + "], after = [" + after + "]");
-            }
 
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                System.out.println("onTextChanged = [" + s + "], start = [" + start + "], before = [" + before + "], count = [" + count + "]");
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                System.out.println("s = [" + s + "]");
-                EditText et= (EditText) s;
-               if(et.getText().length()>6){
-                   ToastUtils.showToast(ActivityLogin.this,"验证码是6位的");
-               }
-            }
-        });*/
         user_name_Et.setOnFocusChangeListener(new NameEtFocusChangeListener());
     }
 

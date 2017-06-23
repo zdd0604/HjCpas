@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.hj.casps.R;
+import com.hj.casps.base.ActivityBase;
 import com.hj.casps.common.Constant;
 import com.hj.casps.entity.paymentmanager.response.ResRefundMoneyOfflineEntity;
 import com.hj.casps.util.StringUtils;
@@ -51,13 +52,8 @@ public class RefundAdapter extends CommonAdapter<ResRefundMoneyOfflineEntity> {
 
         hooder.getView(R.id.layout_already_money_title).setVisibility(View.GONE);
         hooder.getView(R.id.layout_await_money_title).setVisibility(View.GONE);
-
-
-       /* hooder.setTextInt(R.id.tv_already_money_title,R.string.head_payment_time_title);
-        //待付金额
-        //本次付款金额
-      hooder.setTextInt(R.id.tv_await_money_title,R.string.pay_await_money);
-        hooder.setTextInt(R.id.ed_now_money_title,R.string.pay_now_money);*/
+        //金额保留两位小数
+        ActivityBase.setPricePoint(et_now_money);
 
 
         if (et_payment_remark.getTag() instanceof TextWatcher) {

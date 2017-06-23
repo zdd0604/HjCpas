@@ -78,7 +78,7 @@ public class ActivityManageGoods extends ActivityBaseHeader implements View.OnCl
             toastSHORT("商品分类初始化失败，可能网络或用户没有该分类");
             return;
         }
-        ArrayList<GoodLevelEntity> dataList = generateData1();
+        ArrayList<GoodLevelEntity> dataList = generateData2();
         //如果数据为空，就跳到添加数据页面
         recyclerView.setAdapter(new GoodListAdapter(dataList));
         //添加分割线
@@ -210,7 +210,7 @@ public class ActivityManageGoods extends ActivityBaseHeader implements View.OnCl
             ActivityManageGoods.GoodLevelEntity lv0 = new ActivityManageGoods.GoodLevelEntity(
                     noteEntity.getCategoryName(), noteEntity.getCategoryId());
             res.add(lv0);
-            generateData2(lv0, noteEntity);
+            resolveData(lv0, noteEntity);
         }
         return res;
     }
@@ -222,14 +222,14 @@ public class ActivityManageGoods extends ActivityBaseHeader implements View.OnCl
      * @param noteEntity
      * @return
      */
-    private void generateData2(ActivityManageGoods.GoodLevelEntity lv0, NoteEntity noteEntity) {
+    private void resolveData(ActivityManageGoods.GoodLevelEntity lv0, NoteEntity noteEntity) {
         if (noteEntity.getNodes() != null && noteEntity.getNodes().size() > 0) {
             for (int i = 0; i < noteEntity.getNodes().size(); i++) {
                 NoteEntity itemNoteEntity=noteEntity.getNodes().get(i);
                 ActivityManageGoods.GoodLevelEntity goodEntity = new ActivityManageGoods.GoodLevelEntity(
                         itemNoteEntity.getCategoryName(), itemNoteEntity.getCategoryId());
                 lv0.addSubItem(goodEntity);
-                generateData2(goodEntity,itemNoteEntity);
+                resolveData(goodEntity,itemNoteEntity);
             }
         }
     }

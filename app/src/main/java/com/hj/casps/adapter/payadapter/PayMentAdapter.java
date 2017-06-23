@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.hj.casps.R;
+import com.hj.casps.base.ActivityBase;
 import com.hj.casps.common.Constant;
 import com.hj.casps.entity.paymentmanager.response.ResponseQueryPayEntity;
 import com.hj.casps.util.StringUtils;
@@ -55,6 +56,8 @@ public class PayMentAdapter extends CommonAdapter<ResponseQueryPayEntity> {
         //本次付款账号
         hooder.setTextInt(R.id.tv_payment_id_title,R.string.pay_ment_id);
 
+       //设置金额为保留两位小数
+        ActivityBase.setPricePoint(et_now_money);
 
         if (et_payment_remark.getTag() instanceof TextWatcher) {
             et_payment_remark.removeTextChangedListener((TextWatcher) et_payment_remark.getTag());

@@ -135,10 +135,9 @@ public class FragementTemporaryPic extends FragmentBase implements View.OnClickL
             }
             res.add(lv0);
         }
-
-
         return res;
     }
+
 
     @Override
     public void onClick(View v) {
