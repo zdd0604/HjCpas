@@ -4,6 +4,7 @@ import android.content.Context;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -26,18 +27,15 @@ public class OrderShellDetailAdapter extends WZYBaseAdapter<OrderShellModel> {
     double maxPrice = 0.0;//最大单价
     public static upDataPrice upDataPrice;
 
-    public static OrderShellDetailAdapter.upDataPrice getUpDataPrice() {
-        return upDataPrice;
-    }
-
     public static void setUpDataPrice(OrderShellDetailAdapter.upDataPrice upDataPrice) {
         OrderShellDetailAdapter.upDataPrice = upDataPrice;
     }
 
     public OrderShellDetailAdapter(List<OrderShellModel> data, Context context, int layoutRes) {
         super(data, context, layoutRes);
-
         this.context = context;
+        Log.e("show", "数组的长度：" + data.toString());
+
     }
 
     @Override
@@ -46,29 +44,44 @@ public class OrderShellDetailAdapter extends WZYBaseAdapter<OrderShellModel> {
         final TextView order_item_detail_name = (TextView) holder.getView(R.id.order_item_detail_name);
         order_item_detail_name.setText(orderShellModel.getName());
 
-        try {
-            String[] prices = orderShellModel.getPrice().split("-");
-            if (prices.length > 0) {
-                minPrice = Double.parseDouble(prices[0]);
-                maxPrice = Double.parseDouble(prices[1]);
-            }
-        } catch (Exception e) {
-            Log.e("show", "文字截取异常");
-        }
+
         //单价
         final EditText order_detail_item_price = (EditText) holder.getView(R.id.order_detail_item_price);
-        order_detail_item_price.setText(orderShellModel.getFinalprice());
-        orderShellModel.setFinalprice(order_detail_item_price.getText().toString().isEmpty() ? "0.0" : order_detail_item_price.getText().toString());
+//        order_detail_item_price.setText(StringUtils.isStrTrue(orderShellModel.getFinalprice()) ? orderShellModel.getFinalprice() : "0.0");
+
         //数量
         final EditText order_detail_item_number = (EditText) holder.getView(R.id.order_detail_item_number);
-        order_detail_item_number.setText(String.valueOf(orderShellModel.getNum()));
+        if (orderShellModel.getNum() > 0)
+            order_detail_item_number.setText(String.valueOf(orderShellModel.getNum()));
         //总价
         final TextView item_detail_order_price = (TextView) holder.getView(R.id.item_detail_order_price);
-        item_detail_order_price.setText(String.valueOf(Double.parseDouble(orderShellModel.getFinalprice()) * orderShellModel.getNum()));
+        if (StringUtils.isStrTrue(orderShellModel.getFinalprice()) && orderShellModel.getNum() > 0) {
+            item_detail_order_price.setText(String.valueOf(Double.parseDouble(orderShellModel.getFinalprice()) * orderShellModel.getNum()));
+            orderShellModel.setAllprice(String.valueOf(Double.parseDouble(orderShellModel.getFinalprice()) * orderShellModel.getNum()));
+        } else {
+            item_detail_order_price.setText("0.0");
+        }
 
-        orderShellModel.setAllprice(String.valueOf(Double.parseDouble(orderShellModel.getFinalprice()) * orderShellModel.getNum()));
         //控制小数点后两位
         ActivityBase.setPricePoint(order_detail_item_price);
+
+        order_detail_item_price.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus)
+                    try {
+                        String[] prices = orderShellModel.getPrice().split("-");
+                        if (prices.length > 0) {
+                            minPrice = Double.parseDouble(prices[0]);
+                            maxPrice = Double.parseDouble(prices[1]);
+                            orderShellModel.setMinPrice(minPrice);
+                            orderShellModel.setMaxPrice(maxPrice);
+                        }
+                    } catch (Exception e) {
+                        Log.e("show", "文字截取异常");
+                    }
+            }
+        });
 
         order_detail_item_price.addTextChangedListener(new TextWatcher() {
             @Override
@@ -92,8 +105,8 @@ public class OrderShellDetailAdapter extends WZYBaseAdapter<OrderShellModel> {
                             ToastUtils.showToast(context, "单价不能大于" + maxPrice);
                         } else {
                             orderShellModel.setFinalprice(ActivityBase.getTvVaule(order_detail_item_price));
-                            item_detail_order_price.setText(String.valueOf(Double.parseDouble(orderShellModel.getFinalprice())
-                                    * orderShellModel.getNum()));
+                            if (orderShellModel.getNum() > 0)
+                                item_detail_order_price.setText(String.valueOf(Double.parseDouble(orderShellModel.getFinalprice()) * orderShellModel.getNum()));
                         }
                     } else {
                         orderShellModel.setFinalprice("");
@@ -116,7 +129,8 @@ public class OrderShellDetailAdapter extends WZYBaseAdapter<OrderShellModel> {
             public void afterTextChanged(Editable s) {
                 if (StringUtils.isStrTrue(ActivityBase.getTvVaule(order_detail_item_number))) {
                     orderShellModel.setNum(Integer.parseInt(ActivityBase.getTvVaule(order_detail_item_number)));
-                    item_detail_order_price.setText(String.valueOf(Double.parseDouble(orderShellModel.getFinalprice()) * orderShellModel.getNum()));
+                    if (StringUtils.isStrTrue(orderShellModel.getFinalprice()))
+                        item_detail_order_price.setText(String.valueOf(Double.parseDouble(orderShellModel.getFinalprice()) * orderShellModel.getNum()));
                 } else {
                     //默认设置为0
                     orderShellModel.setNum(0);

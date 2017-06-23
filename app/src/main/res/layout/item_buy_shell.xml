@@ -116,7 +116,7 @@
     <RelativeLayout
         android:id="@+id/buy_shell_item_relative1"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/size_70"
+        android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/size_1"
         android:background="@color/white">
 
@@ -125,9 +125,7 @@
             android:layout_width="@dimen/size_100"
             android:layout_height="@dimen/size_40"
             android:layout_alignParentRight="true"
-            android:layout_marginLeft="@dimen/main_margin"
-            android:layout_marginRight="@dimen/size_10"
-            android:layout_marginTop="@dimen/size_15"
+            android:layout_margin="@dimen/size_10"
             android:gravity="center"
             app:fb_borderColor="@color/title_bg"
             app:fb_borderWidth="1dp"
@@ -142,8 +140,7 @@
             android:id="@+id/status_buy_shell_product"
             android:layout_width="@dimen/size_100"
             android:layout_height="@dimen/size_40"
-            android:layout_marginLeft="@dimen/main_margin"
-            android:layout_marginTop="@dimen/size_15"
+            android:layout_margin="@dimen/size_10"
             android:layout_toLeftOf="@id/buy_shell_delete"
             android:gravity="center"
             app:fb_borderColor="@color/title_bg"

@@ -19,6 +19,8 @@ public class OrderShellModel implements Parcelable {
     private String categoryId;
     private int num;
     private int no;
+    private double minPrice = 0.0;//最小单价
+    private double maxPrice = 0.0;//最大单价
     private boolean checked;
     private boolean status;
     private boolean delete;
@@ -45,6 +47,22 @@ public class OrderShellModel implements Parcelable {
 
     public void setFinalprice(String finalprice) {
         this.finalprice = finalprice;
+    }
+
+    public double getMinPrice() {
+        return minPrice;
+    }
+
+    public void setMinPrice(double minPrice) {
+        this.minPrice = minPrice;
+    }
+
+    public double getMaxPrice() {
+        return maxPrice;
+    }
+
+    public void setMaxPrice(double maxPrice) {
+        this.maxPrice = maxPrice;
     }
 
     public OrderShellModel() {
@@ -174,5 +192,34 @@ public class OrderShellModel implements Parcelable {
         parcel.writeByte((byte) (checked ? 1 : 0));
         parcel.writeByte((byte) (status ? 1 : 0));
         parcel.writeByte((byte) (delete ? 1 : 0));
+    }
+
+    @Override
+    public String toString() {
+        return "OrderShellModel{" +
+                "name='" + name + '\'' +
+                ", goodsId='" + goodsId + '\'' +
+                ", quoteId='" + quoteId + '\'' +
+                ", price='" + price + '\'' +
+                ", finalprice='" + finalprice + '\'' +
+                ", allprice='" + allprice + '\'' +
+                ", size='" + size + '\'' +
+                ", categoryId='" + categoryId + '\'' +
+                ", num=" + num +
+                ", no=" + no +
+                ", minPrice=" + minPrice +
+                ", maxPrice=" + maxPrice +
+                ", checked=" + checked +
+                ", status=" + status +
+                ", delete=" + delete +
+                '}';
+    }
+
+    public  void clearDatas(){
+        finalprice = "";
+        allprice = "";
+        minPrice = 0.0;
+        maxPrice = 0.0;
+        num = 0;
     }
 }

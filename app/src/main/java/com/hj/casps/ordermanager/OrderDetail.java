@@ -1,6 +1,8 @@
 package com.hj.casps.ordermanager;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -70,7 +72,6 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
     private double allPrice;
     public static OrderDetail orderDetail = null;
     private Button order_detail_submit;
-    //    private String url = HTTPURL + "appOrder/createOrder.app";
     private List<MmbBankAccountEntity> mList;//银行账户
     private List<WarehouseEntity> mAddressList;//地址
     private String[] addressLists;
@@ -87,6 +88,21 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
     private String sell_id;
     private String id;
     private boolean orderList;
+
+    Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case Constant.HANDLERTYPE_0:
+                    getQueryMmbBankAccountGainDatas();
+                    break;
+                case Constant.HANDLERTYPE_1:
+                    getQueryMmbWareHouseGainDatas();
+                    break;
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,16 +121,13 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
         if (type == 1) {
             id = getIntent().getStringExtra("id");
             state = getIntent().getIntExtra("state", 0);
-
             getData();
-
         } else {
             orders = getIntent().getParcelableArrayListExtra("orders");
             orderList = getIntent().getBooleanExtra("OrderList", false);
             buy_id = getIntent().getStringExtra("buy_id");
             buy_name = getIntent().getStringExtra("buy_name");
             state = getIntent().getIntExtra("state", 0);
-
             if (orderList) {
                 for (int i = 0; i < orders.size(); i++) {
                     searchPrice(orders.get(i));
@@ -122,11 +135,11 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
             }
         }
 
-
-        getQueryMmbBankAccountGainDatas();
-        getQueryMmbWareHouseGainDatas();
         statusItems = new String[]{"货款两清", "先货后款", "先货后款已交货", "先款后货", "先款后货已收款"};
         stringArrayAdapter3 = new TestArrayAdapter(getApplicationContext(), statusItems);
+
+        if (hasInternetConnected())
+            mHandler.sendEmptyMessage(Constant.HANDLERTYPE_0);
     }
 
     //根据id和类型进行订单加载操作
@@ -285,6 +298,7 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
             order_detail_num.setText(String.valueOf(orders.size()));
         }
         order_detail_product_pay = (TextView) findViewById(R.id.order_detail_product_pay);
+
         adapter = new OrderShellDetailAdapter(orders, this, R.layout.item_order_detail);
         order_detail_add_layout.setAdapter(adapter);
         order_detail_submit = (Button) findViewById(R.id.order_detail_submit);
@@ -293,18 +307,20 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
         OrderShellDetailAdapter.setUpDataPrice(this);
     }
 
-    //刷新报价结果
-    public void refreshAllPrice() {
-        allPrice = 0.0;
-        for (OrderShellModel order : orders) {
-            allPrice += Double.parseDouble(order.getAllprice());
-        }
-        order_detail_product_pay.setText(allPrice + "");
-    }
 
     @Override
     public void onRefresh() {
         refreshAllPrice();
+    }
+
+    //刷新报价结果
+    public void refreshAllPrice() {
+        allPrice = 0.0;
+        for (OrderShellModel order : orders) {
+            if (StringUtils.isStrTrue(order.getAllprice()))
+                allPrice += Double.parseDouble(order.getAllprice());
+        }
+        order_detail_product_pay.setText(allPrice + "");
     }
 
     //已经订单
@@ -331,16 +347,28 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
             return;
         }
 
-        if (orders!=null&&orders.size()>0){
+        if (orders != null && orders.size() > 0) {
             for (int i = 0; i < orders.size(); i++) {
+                LogShow(orders.toString());
                 if (!StringUtils.isStrTrue(orders.get(i).getFinalprice())
-                        || Double.parseDouble(orders.get(i).getFinalprice())<=0){
+                        || Double.parseDouble(orders.get(i).getFinalprice()) <= 0) {
                     toastSHORT("请填写单价");
                     return;
                 }
+
                 if (!StringUtils.isStrTrue(String.valueOf(orders.get(i).getNum()))
-                        || orders.get(i).getNum()<=0){
+                        || orders.get(i).getNum() <= 0) {
                     toastSHORT("请填写数量");
+                    return;
+                }
+
+                if (Double.parseDouble(orders.get(i).getFinalprice()) < orders.get(i).getMinPrice()) {
+                    toastSHORT("单价不能小于" + orders.get(i).getMinPrice());
+                    return;
+                }
+
+                if (Double.parseDouble(orders.get(i).getFinalprice()) > orders.get(i).getMaxPrice()) {
+                    toastSHORT("单价不能大于" + orders.get(i).getMaxPrice());
                     return;
                 }
             }
@@ -498,6 +526,8 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
                             toast("订单提交成功");
                             finish();
                         }
+
+                        deleteDatas();
                     }
 
                     @Override
@@ -506,9 +536,15 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
                         Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
-
-
     }
+
+    private void deleteDatas() {
+        if (orders.size() > 0)
+            for (int i = 0; i < orders.size(); i++) {
+                orders.get(i).clearDatas();
+            }
+    }
+
 
     @Override
     public void onClick(View view) {
@@ -532,8 +568,15 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
      * 获取银行账户列表
      */
     private void getQueryMmbBankAccountGainDatas() {
-        PublicArg p = Constant.publicArg;
-        RequestBackAccount r = new RequestBackAccount(p.getSys_token(), Constant.getUUID(), Constant.SYS_FUNC, p.getSys_user(), p.getSys_member(), "1", "30");
+        waitDialogRectangle.show();
+        RequestBackAccount r = new RequestBackAccount(
+                publicArg.getSys_token(),
+                Constant.getUUID(),
+                Constant.SYS_FUNC,
+                publicArg.getSys_user(),
+                publicArg.getSys_member(),
+                "1",
+                "30");
         String param = mGson.toJson(r);
         Constant.JSONFATHERRESPON = "QueryMmbBankAccountRespon";
         OkGo.post(Constant.QueryMmbBankAccountUrl)
@@ -542,7 +585,7 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
                 .execute(new JsonCallBack<QueryMmbBankAccountRespon<List<MmbBankAccountEntity>>>() {
                     @Override
                     public void onSuccess(QueryMmbBankAccountRespon<List<MmbBankAccountEntity>> listQueryMmbBankAccountGain, Call call, Response response) {
-                        if (listQueryMmbBankAccountGain.list.size() > 0) {
+                        if (listQueryMmbBankAccountGain != null) {
                             mList = listQueryMmbBankAccountGain.list;
                             bankLists = new String[mList.size()];
                             for (int i = 0; i < mList.size(); i++) {
@@ -557,7 +600,13 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
                                     order_detail_pay_account.setAdapter(stringArrayAdapter2);
                                     break;
                             }
+
+                            if (hasInternetConnected())
+                                mHandler.sendEmptyMessage(Constant.HANDLERTYPE_1);
+                        } else {
+                            toastSHORT(listQueryMmbBankAccountGain.return_message);
                         }
+                        waitDialogRectangle.dismiss();
                     }
 
                     @Override
@@ -567,7 +616,7 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
                         if (Constant.public_code) {
                             LogoutUtils.exitUser(OrderDetail.this);
                         }
-
+                        waitDialogRectangle.dismiss();
                     }
                 });
     }
@@ -576,9 +625,10 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
      * 获取收发货地址
      */
     private void getQueryMmbWareHouseGainDatas() {
+        waitDialogRectangle.show();
         QueryMmbWareHouseLoading queryMmbWareHouseLoading = new QueryMmbWareHouseLoading(
                 publicArg.getSys_token(),
-                "00520",
+                Constant.getUUID(),
                 Constant.SYS_FUNC,
                 publicArg.getSys_user(),
                 publicArg.getSys_name(),
@@ -608,14 +658,18 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
                                     order_detail_pay_address.setAdapter(stringArrayAdapter1);
                                     break;
                             }
-
                         }
+                        waitDialogRectangle.dismiss();
                     }
 
                     @Override
                     public void onError(Call call, Response response, Exception e) {
                         super.onError(call, response, e);
                         toastSHORT(e.getMessage());
+                        if (Constant.public_code) {
+                            LogoutUtils.exitUser(OrderDetail.this);
+                        }
+                        waitDialogRectangle.dismiss();
                     }
                 });
     }
