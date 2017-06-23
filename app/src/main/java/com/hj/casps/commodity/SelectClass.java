@@ -66,7 +66,7 @@ public class SelectClass extends ActivityBaseHeader2 implements View.OnClickList
     //更新UI
     private void refrushUi() {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        ArrayList<SelectClass.GoodLevelEntity> dataList = generateData1();
+        ArrayList<SelectClass.GoodLevelEntity> dataList = generateData2();
         //如果数据为空，就跳到添加数据页面
         recyclerView.setAdapter(new SelectClass.GoodListAdapter(dataList));
         recyclerView.addItemDecoration(new SelectClass.GoodDividerItemDecoration(SelectClass.this));
@@ -141,6 +141,39 @@ public class SelectClass extends ActivityBaseHeader2 implements View.OnClickList
             res.add(lv0);
         }
         return res;
+    }
+
+
+    //初始化菜单数据
+    private ArrayList<SelectClass.GoodLevelEntity> generateData2() {
+        ArrayList<SelectClass.GoodLevelEntity> res = new ArrayList<>();
+        for (int i = 0; i < categoryList.size(); i++) {
+            NoteEntity noteEntity = categoryList.get(i);
+            SelectClass.GoodLevelEntity lv0 = new SelectClass.GoodLevelEntity(
+                    noteEntity.getCategoryName(), noteEntity.getCategoryId());
+            res.add(lv0);
+            resolveData(lv0, noteEntity);
+        }
+        return res;
+    }
+
+    /**
+     * noteEntity的子类添加到lv0的结构中
+     *
+     * @param lv0
+     * @param noteEntity
+     * @return
+     */
+    private void resolveData(SelectClass.GoodLevelEntity lv0, NoteEntity noteEntity) {
+        if (noteEntity.getNodes() != null && noteEntity.getNodes().size() > 0) {
+            for (int i = 0; i < noteEntity.getNodes().size(); i++) {
+                NoteEntity itemNoteEntity=noteEntity.getNodes().get(i);
+                SelectClass.GoodLevelEntity goodEntity = new SelectClass.GoodLevelEntity(
+                        itemNoteEntity.getCategoryName(), itemNoteEntity.getCategoryId());
+                lv0.addSubItem(goodEntity);
+                resolveData(goodEntity,itemNoteEntity);
+            }
+        }
     }
 
     private void onItemClick1(SelectClass.GoodLevelEntity lv1) {

@@ -109,7 +109,7 @@ public class ProtocalProductItem extends ActivityBaseHeader2 implements View.OnC
                             if (categoryList == null || categoryList.size() == 0) {
                                 return;
                             }
-                            ArrayList<ProtocalProductItem.GoodLevelEntity> dataList = generateData1();
+                            ArrayList<ProtocalProductItem.GoodLevelEntity> dataList = generateData2();
                             //如果数据为空，就跳到添加数据页面
                             cooperate_protocol_recycle.setAdapter(new GoodListAdapter(dataList));
                             cooperate_protocol_recycle.addItemDecoration(
@@ -122,7 +122,7 @@ public class ProtocalProductItem extends ActivityBaseHeader2 implements View.OnC
                     public void onError(Call call, Response response, Exception e) {
                         super.onError(call, response, e);
                         toastSHORT(e.getMessage());
-                        if (Constant.public_code) {
+                        if (Constant.public_code){
                             LogoutUtils.exitUser(ProtocalProductItem.this);
                         }
                     }
@@ -260,24 +260,21 @@ public class ProtocalProductItem extends ActivityBaseHeader2 implements View.OnC
         setResult(22);
         finish();
     }
-
     //三级菜单加载
     private ArrayList<ProtocalProductItem.GoodLevelEntity> generateData1() {
         ArrayList<ProtocalProductItem.GoodLevelEntity> res = new ArrayList<>();
-        if (categoryList!=null)
         for (int i = 0; i < categoryList.size(); i++) {
             ProtocalProductItem.GoodLevelEntity lv0 = new ProtocalProductItem.GoodLevelEntity(categoryList.get(i).getCategoryName(), categoryList.get(i).getCategoryId());
             if (categoryList.get(i).getNodes() != null && categoryList.get(i).getNodes().size() > 0)
                 for (int j = 0; j < categoryList.get(i).getNodes().size(); j++) {
-                    if (categoryList.get(i).getNodes().get(j) != null) {
+                    if (categoryList.get(i).getNodes().get(j)!= null&&categoryList.get(i).getNodes().get(j).getNodes().size()>0) {
                         ProtocalProductItem.GoodLevelEntity lv1 = new ProtocalProductItem.GoodLevelEntity(categoryList.get(i).getNodes().get(j).getCategoryName(), categoryList.get(i).getNodes().get(j).getCategoryId());
-                        if (categoryList.get(i).getNodes().get(j).getNodes() != null)
-                            for (int x = 0; x < categoryList.get(i).getNodes().get(j).getNodes().size(); x++) {
-                                if (categoryList.get(i).getNodes().get(j).getNodes().get(x).getNodes() != null && categoryList.get(i).getNodes().get(j).getNodes().get(x).getNodes().size() > 0) {
-                                    ProtocalProductItem.GoodLevelEntity lv2 = new ProtocalProductItem.GoodLevelEntity(categoryList.get(i).getNodes().get(j).getNodes().get(x).getCategoryName(), categoryList.get(i).getNodes().get(j).getNodes().get(x).getCategoryId());
-                                    lv1.addSubItem(lv2);
-                                }
+                        for (int x = 0; x < categoryList.get(i).getNodes().get(j).getNodes().size(); x++) {
+                            if (categoryList.get(i).getNodes().get(j).getNodes().get(x).getNodes() != null && categoryList.get(i).getNodes().get(j).getNodes().get(x).getNodes().size() > 0) {
+                                ProtocalProductItem.GoodLevelEntity lv2 = new ProtocalProductItem.GoodLevelEntity(categoryList.get(i).getNodes().get(j).getNodes().get(x).getCategoryName(), categoryList.get(i).getNodes().get(j).getNodes().get(x).getCategoryId());
+                                lv1.addSubItem(lv2);
                             }
+                        }
                         lv0.addSubItem(lv1);
                     }
                 }
@@ -285,26 +282,40 @@ public class ProtocalProductItem extends ActivityBaseHeader2 implements View.OnC
         }
         return res;
     }
+    //初始化菜单数据
+    private ArrayList<ProtocalProductItem.GoodLevelEntity> generateData2() {
+        ArrayList<ProtocalProductItem.GoodLevelEntity> res = new ArrayList<>();
+        for (int i = 0; i < categoryList.size(); i++) {
+            NoteEntity noteEntity = categoryList.get(i);
+            ProtocalProductItem.GoodLevelEntity lv0 = new ProtocalProductItem.GoodLevelEntity(
+                    noteEntity.getCategoryName(), noteEntity.getCategoryId());
+            res.add(lv0);
+            resolveData(lv0, noteEntity);
+        }
+        return res;
+    }
+
+    /**
+     * noteEntity的子类添加到lv0的结构中
+     *
+     * @param lv0
+     * @param noteEntity
+     * @return
+     */
+    private void resolveData(ProtocalProductItem.GoodLevelEntity lv0, NoteEntity noteEntity) {
+        if (noteEntity.getNodes() != null && noteEntity.getNodes().size() > 0) {
+            for (int i = 0; i < noteEntity.getNodes().size(); i++) {
+                NoteEntity itemNoteEntity=noteEntity.getNodes().get(i);
+                ProtocalProductItem.GoodLevelEntity goodEntity = new ProtocalProductItem.GoodLevelEntity(
+                        itemNoteEntity.getCategoryName(), itemNoteEntity.getCategoryId());
+                lv0.addSubItem(goodEntity);
+                resolveData(goodEntity,itemNoteEntity);
+            }
+        }
+    }
 
 
-//    //三级菜单加载
-//    private ArrayList<ProtocalProductItem.GoodLevelEntity> generateData1() {
-//        ArrayList<ProtocalProductItem.GoodLevelEntity> res = new ArrayList<>();
-//        if (categoryList != null && categoryList.size() > 0)
-//            for (int i = 0; i < categoryList.size(); i++) {
-//                ProtocalProductItem.GoodLevelEntity lv0 = new ProtocalProductItem.GoodLevelEntity(categoryList.get(i).getCategoryName(), categoryList.get(i).getCategoryId());
-//                for (int j = 0; j < categoryList.get(i).getNodes().size(); j++) {
-//                    ProtocalProductItem.GoodLevelEntity lv1 = new ProtocalProductItem.GoodLevelEntity(categoryList.get(i).getNodes().get(j).getCategoryName(), categoryList.get(i).getNodes().get(j).getCategoryId());
-//                    for (int x = 0; x < categoryList.get(i).getNodes().get(j).getNodes().size(); x++) {
-//                        ProtocalProductItem.GoodLevelEntity lv2 = new ProtocalProductItem.GoodLevelEntity(categoryList.get(i).getNodes().get(j).getNodes().get(x).getCategoryName(), categoryList.get(i).getNodes().get(j).getNodes().get(x).getCategoryId());
-//                        lv1.addSubItem(lv2);
-//                    }
-//                    lv0.addSubItem(lv1);
-//                }
-//                res.add(lv0);
-//            }
-//        return res;
-//    }
+
 
     //三级菜单的适配器
     private class GoodListAdapter extends BaseMultiItemQuickAdapter<GoodLevelEntity, BaseViewHolder> {
