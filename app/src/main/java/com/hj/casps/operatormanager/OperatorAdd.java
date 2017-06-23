@@ -110,12 +110,12 @@ public class OperatorAdd extends ActivityBaseHeader2 implements View.OnClickList
                     public void onFocusChange(View v, boolean hasFocus) {
                         if (!hasFocus) {
                             if (StringUtils.isStrTrue(getEdVaule(operator_ed_account))) {
-                                if (!isString(getEdVaule(operator_ed_account).substring(0, 1))){
+                                if (!isString(getEdVaule(operator_ed_account).substring(0, 1))) {
                                     toastSHORT("账户必须以字母开头");
                                     return;
                                 }
 
-                                if (getTvVaule(operator_ed_account).length() < 3){
+                                if (getTvVaule(operator_ed_account).length() < 3) {
                                     toastSHORT("账户最少三位");
                                     return;
                                 }
@@ -250,7 +250,7 @@ public class OperatorAdd extends ActivityBaseHeader2 implements View.OnClickList
                         super.onError(call, response, e);
                         toastSHORT(e.getMessage());
                         waitDialogRectangle.dismiss();
-                        if (Constant.public_code){
+                        if (Constant.public_code) {
                             //退出操作
                             LogoutUtils.exitUser(OperatorAdd.this);
                         }
@@ -268,11 +268,15 @@ public class OperatorAdd extends ActivityBaseHeader2 implements View.OnClickList
             return;
         }
 
-        if (StringUtils.isStrTrue(getEdVaule(operator_ed_account_mobile)))
-            if (!isMobileNO(getEdVaule(operator_ed_account_mobile))) {
-                toastSHORT("请填写正确的电话号码");
-                return;
-            }
+        if (!StringUtils.isStrTrue(getEdVaule(operator_ed_account_mobile))) {
+            toastSHORT("请填写电话号码");
+            return;
+        }
+
+        if (!isMobileNO(getEdVaule(operator_ed_account_mobile))) {
+            toastSHORT("请填写正确的电话号码");
+            return;
+        }
         if (StringUtils.isStrTrue(getEdVaule(operator_ed_account_emial)))
             if (!isEmail(getEdVaule(operator_ed_account_emial))) {
                 toastSHORT("请填写正确的邮箱");
@@ -328,7 +332,7 @@ public class OperatorAdd extends ActivityBaseHeader2 implements View.OnClickList
                         super.onError(call, response, e);
                         toastSHORT(e.getMessage());
                         waitDialogRectangle.dismiss();
-                        if (Constant.public_code){
+                        if (Constant.public_code) {
                             //退出操作
                             LogoutUtils.exitUser(OperatorAdd.this);
                         }
@@ -381,15 +385,14 @@ public class OperatorAdd extends ActivityBaseHeader2 implements View.OnClickList
             return;
         }
 
+        if (!isString(getEdVaule(operator_ed_account))) {
+            toastSHORT("账户必须以字母开头");
+        }
+
         if (isExist) {
             toastSHORT("账户名称已存在");
             return;
         }
-
-        if (StringUtils.isStrTrue(getEdVaule(operator_ed_account)))
-            if (!isString(getEdVaule(operator_ed_account))) {
-                toastSHORT("账户必须以字母开头");
-            }
 
         if (StringUtils.isStrTrue(getEdVaule(operator_ed_account_name)))
             if (!StringUtils.isStrTrue(getEdVaule(operator_ed_account_name))) {
@@ -397,11 +400,14 @@ public class OperatorAdd extends ActivityBaseHeader2 implements View.OnClickList
                 return;
             }
 
-        if (StringUtils.isStrTrue(getEdVaule(operator_ed_account_mobile)))
-            if (isMobileNO(getEdVaule(operator_ed_account_mobile))) {
-                toastSHORT("请填写正确的电话号码");
-                return;
-            }
+        if (!StringUtils.isStrTrue(getEdVaule(operator_ed_account_mobile))) {
+            toastSHORT("请填写电话号码");
+            return;
+        }
+        if (isMobileNO(getEdVaule(operator_ed_account_mobile))) {
+            toastSHORT("请填写正确的电话号码");
+            return;
+        }
         if (StringUtils.isStrTrue(getEdVaule(operator_ed_account_emial)))
             if (!isEmail(getEdVaule(operator_ed_account_emial))) {
                 toastSHORT("请填写正确的邮箱");
