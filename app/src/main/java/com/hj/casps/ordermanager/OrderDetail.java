@@ -131,6 +131,11 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
             if (orderList) {
                 for (int i = 0; i < orders.size(); i++) {
                     searchPrice(orders.get(i));
+                    try {
+                        Thread.currentThread().sleep(3000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         }
