@@ -117,7 +117,11 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
     //加载下订单的参数
     private void initData() {
         type = getIntent().getIntExtra("type", 0);
+        statusItems = new String[]{"货款两清", "先货后款", "先货后款已交货", "先款后货", "先款后货已收款"};
+        stringArrayAdapter3 = new TestArrayAdapter(getApplicationContext(), statusItems);
 
+        if (hasInternetConnected())
+            mHandler.sendEmptyMessage(Constant.HANDLERTYPE_0);
         if (type == 1) {
             id = getIntent().getStringExtra("id");
             state = getIntent().getIntExtra("state", 0);
@@ -140,11 +144,7 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
             }
         }
 
-        statusItems = new String[]{"货款两清", "先货后款", "先货后款已交货", "先款后货", "先款后货已收款"};
-        stringArrayAdapter3 = new TestArrayAdapter(getApplicationContext(), statusItems);
 
-        if (hasInternetConnected())
-            mHandler.sendEmptyMessage(Constant.HANDLERTYPE_0);
     }
 
     //根据id和类型进行订单加载操作
