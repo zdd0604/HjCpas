@@ -82,8 +82,9 @@ public class ActivityLoginAfter2 extends ActivityBaseHeader2 {
         initMenuData();
         initView();
     }
-
+    //初始化菜单的基础数据
     private void initMenuData() {
+        /*从assert资源的menu.xml获取基础数据*/
         List<XmlUtils.MenuBean> menuBeen = XmlUtils.dom4jXMLResolve(ActivityLoginAfter2.this);
         Constant.MenuBean = menuBeen;
     }
@@ -316,6 +317,7 @@ public class ActivityLoginAfter2 extends ActivityBaseHeader2 {
             }
         });
     }
+    //处理菜单数据
     private void handData(MenuUtils.Bean.MenusEntity menus) {
         ArrayList<MenuUtils.MenusEntityExtra> extras = new ArrayList<>();
         if (menus.getMenus() == null) {

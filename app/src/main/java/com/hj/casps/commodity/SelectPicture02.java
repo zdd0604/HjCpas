@@ -54,7 +54,7 @@ import mehdi.sakout.fancybuttons.FancyButton;
 import okhttp3.Call;
 import okhttp3.Response;
 
-/**
+/**平台和临时素材库的图片列表
  * Created by YaoChen on 2017/4/13.
  */
 public class SelectPicture02 extends ActivityBaseHeader2 implements OnPullListener {
@@ -259,7 +259,6 @@ public class SelectPicture02 extends ActivityBaseHeader2 implements OnPullListen
     @Override
     protected void onRightClick() {
         intentActivity(ActivityPictureSearch.class, QUERY_PICTRUE_NAME);
-
     }
 
     @Override
@@ -276,7 +275,7 @@ public class SelectPicture02 extends ActivityBaseHeader2 implements OnPullListen
         mLoader.onLoadFinished();
     }
 
-
+    //上传图片的点击事件
     private class SelectPicture02Click implements View.OnClickListener {
         @Override
         public void onClick(View v) {
@@ -294,7 +293,6 @@ public class SelectPicture02 extends ActivityBaseHeader2 implements OnPullListen
                                 String imagePath = imageMultipleResultEvent.getResult().getOriginalPath();
                                 onSelectImage(imagePath);
                             }
-
                             @Override
                             public void onCompleted() {
                                 super.onCompleted();
@@ -310,7 +308,7 @@ public class SelectPicture02 extends ActivityBaseHeader2 implements OnPullListen
             }
         }
     }
-
+    //收集传递图片内容到其他页面
     private void onSubmit() {
         ArrayList<SelectPicture02ListEntity> checkListEntity = new ArrayList<>();
         SelectPicture02Adapter adapter = (SelectPicture02Adapter) recycleView.getAdapter();
@@ -337,7 +335,7 @@ public class SelectPicture02 extends ActivityBaseHeader2 implements OnPullListen
         SelectPicture02.this.setResult(RESULT_CODE);
 
     }
-
+    //跳转到其他页面来输入上传图片的名称
     private void onSelectImage(String imagePath) {
         Intent intent = new Intent(this, SelectPicture03.class);
         intent.putExtra(SelectPicture03.ExtraImagePath, imagePath);
@@ -561,6 +559,7 @@ public class SelectPicture02 extends ActivityBaseHeader2 implements OnPullListen
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        //清空查询条件
         Constant.MaterialName = "";
     }
 

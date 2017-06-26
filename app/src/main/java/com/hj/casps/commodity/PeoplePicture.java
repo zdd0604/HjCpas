@@ -116,6 +116,7 @@ public class PeoplePicture extends ActivityBaseHeader2 implements OnPullListener
 
     }
 
+    //当pageno=0的时候的设置数据
     private void setData() {
         if (adapter == null) {
             adapter = new SelectPicture02Adapter();
@@ -134,7 +135,7 @@ public class PeoplePicture extends ActivityBaseHeader2 implements OnPullListener
 //        adapter.notifyDataSetChanged();
     }
 
-
+    //设置加载更多的数据
     private void setLoadData() {
         if (adapter == null) {
             adapter = new SelectPicture02Adapter();
@@ -150,6 +151,7 @@ public class PeoplePicture extends ActivityBaseHeader2 implements OnPullListener
                 adapter.addData(data1);
             }
         int itemCount = recycleView.getAdapter().getItemCount();
+        /*跳转到加载所在位置*/
         recycleView.smoothScrollToPosition(itemCount);
     }
 
@@ -293,6 +295,7 @@ public class PeoplePicture extends ActivityBaseHeader2 implements OnPullListener
                     onSubmit();
                     break;
                 case R.id.del:
+                    /*删除图片*/
                     delPic();
                     break;
             }
@@ -406,6 +409,7 @@ public class PeoplePicture extends ActivityBaseHeader2 implements OnPullListener
 
     }
 
+    //收集选中图片传到所用界面
     private void onSubmit() {
         checkListEntity = new ArrayList<>();
         SelectPicture02Adapter adapter = (SelectPicture02Adapter) recycleView.getAdapter();
@@ -541,12 +545,14 @@ public class PeoplePicture extends ActivityBaseHeader2 implements OnPullListener
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        //清空查询条件
         Constant.MaterialName = "";
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
+            //上传图片的处理
             if (requestCode == RequestCodeForEditImageRes) {
                 //图片路径
 //                String image = data.getStringExtra(SelectPicture03.ExtraImagePath);

@@ -139,7 +139,7 @@ public class ActivityBackStage extends ActivityBaseHeader2 {
         recyclerView.setAdapter(new BaseListNavAdapter(data));
     }
 
-
+        //加载目录数据
     private ArrayList<LevelEntity> generateData() {
         ArrayList<LevelEntity> res = new ArrayList<>();
 
@@ -200,7 +200,6 @@ public class ActivityBackStage extends ActivityBaseHeader2 {
 //                    mContext.getResources().getColor(R.color.blue) :
 //                    mContext.getResources().getColor(R.color.black));
             holder.setImageResource(R.id.item_iv, lv0.isExpanded() ? R.mipmap.jt3 : R.mipmap.jt1);
-
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

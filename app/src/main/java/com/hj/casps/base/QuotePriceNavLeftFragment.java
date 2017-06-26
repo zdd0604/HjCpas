@@ -27,6 +27,7 @@ import com.chad.library.adapter.base.entity.MultiItemEntity;
 import com.chad.library.adapter.base.listener.SimpleClickListener;
 import com.hj.casps.R;
 import com.hj.casps.commodity.ActivityEditGoods;
+import com.hj.casps.commodity.ActivityManageGoods;
 import com.hj.casps.commodity.ActivityPictureSearch;
 import com.hj.casps.commodity.SelectClass;
 import com.hj.casps.common.Constant;
@@ -185,13 +186,46 @@ public class QuotePriceNavLeftFragment extends FragmentBase {
         return res;
     }
 
+
+
+    //初始化菜单数据
+    private ArrayList<GoodLevelEntity> generateData2() {
+        ArrayList<GoodLevelEntity> res = new ArrayList<>();
+        for (int i = 0; i < categoryList.size(); i++) {
+            NoteEntity noteEntity = categoryList.get(i);
+            GoodLevelEntity lv0 = new GoodLevelEntity(
+                    noteEntity.getCategoryName(), noteEntity.getCategoryId());
+            res.add(lv0);
+            resolveData(lv0, noteEntity);
+        }
+        return res;
+    }
+
+    /**
+     * noteEntity的子类添加到lv0的结构中
+     *
+     * @param lv0
+     * @param noteEntity
+     * @return
+     */
+    private void resolveData(GoodLevelEntity lv0, NoteEntity noteEntity) {
+        if (noteEntity.getNodes() != null && noteEntity.getNodes().size() > 0) {
+            for (int i = 0; i < noteEntity.getNodes().size(); i++) {
+                NoteEntity itemNoteEntity=noteEntity.getNodes().get(i);
+                GoodLevelEntity goodEntity = new GoodLevelEntity(
+                        itemNoteEntity.getCategoryName(), itemNoteEntity.getCategoryId());
+                lv0.addSubItem(goodEntity);
+                resolveData(goodEntity,itemNoteEntity);
+            }
+        }
+    }
  void setData(BaseLeftViewData data, List<GoodLevelEntity> listEntity) {
 
     }
 
    void setData(){
        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-       recyclerView.setAdapter(new GoodListAdapter(generateData()));
+       recyclerView.setAdapter(new GoodListAdapter(generateData2()));
        //如果数据为空，就跳到添加数据页面
        recyclerView.addItemDecoration(new GoodDividerItemDecoration((ActivityBaseHeader3)(getActivity())));
        recyclerView.addOnItemTouchListener(new GoodSimpleItemClick());

@@ -86,6 +86,7 @@ public class FragementTemporaryPic extends FragmentBase implements View.OnClickL
 
 
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
