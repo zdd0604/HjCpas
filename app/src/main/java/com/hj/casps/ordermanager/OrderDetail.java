@@ -268,6 +268,7 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
                         } else {
                             result[0] = databack.getGoodsInfo().getMinPrice() + "-" + databack.getGoodsInfo().getMaxPrice();
                             orderShellModel.setPrice(result[0]);
+                            LogShow("orderShellModel:" + orderShellModel.toString());
                             adapter.notifyDataSetChanged();
                         }
                     }
