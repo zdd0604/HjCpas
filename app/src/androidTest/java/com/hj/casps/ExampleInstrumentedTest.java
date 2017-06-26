@@ -28,10 +28,10 @@ public class ExampleInstrumentedTest {
      /*   Context appContext = InstrumentationRegistry.getTargetContext();
         assertEquals("com.hj.casps", appContext.getPackageName());*/
 
-/*
-    String s= "/v2content/upload/img/newImg/FD/min/383d7955cca54763bd19c7b2f226c306.jpg";
-        String substring = s.substring(17);
-        System.out.println("su"+substring);*/
+
+    String s= "http://192.168.0.120:8081";
+        String str=s.substring(s.indexOf("//")+2,s.lastIndexOf(":"));
+        System.out.println("su"+str);
 
 
     }

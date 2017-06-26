@@ -27,6 +27,7 @@ import com.hj.casps.common.Constant;
 import com.hj.casps.entity.PublicArg;
 import com.hj.casps.http.LoginBean;
 import com.hj.casps.util.LogoutUtils;
+import com.hj.casps.util.NetUtil;
 import com.hj.casps.util.SubmitClickUtils;
 import com.hj.casps.util.ToastUtils;
 import com.hj.casps.widget.ListPopupWindow;
@@ -196,6 +197,10 @@ public class ActivityLogin extends ActivityBase {
     private void httpInit() {
         if (!hasInternetConnected()) {
             ToastUtils.showToast(this, "网络连接失败");
+            return;
+        }
+        if(!NetUtil.ping()){
+            ToastUtils.showToast(this, "访问服务器失败");
             return;
         }
 
@@ -573,7 +578,7 @@ public class ActivityLogin extends ActivityBase {
 
                 if (isCheck) {
                     if (loginBean == null) {
-                        ToastUtils.showToast(ActivityLogin.this, "请获取验证码");
+                        ToastUtils.showToast(ActivityLogin.this, "首次登陆请获取验证码");
                         return;
                     }
                 }
