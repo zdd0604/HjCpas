@@ -30,6 +30,7 @@ import com.hj.casps.ordermanager.OrderDetail;
 import com.hj.casps.ui.MyDialog;
 import com.hj.casps.ui.MyToast;
 import com.hj.casps.util.LogoutUtils;
+import com.hj.casps.util.ToastUtils;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 
@@ -459,16 +460,41 @@ public class ProtocolFragment extends ViewPagerFragment1 implements View.OnClick
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.order_lock:
-                showDialog(0);
+                lockOrder(0);
                 break;
             case R.id.order_abandon:
-                showDialog(1);
+                lockOrder(1);
                 break;
         }
     }
 
+    /**
+     * 订单判断
+     * @param type
+     */
+    private void lockOrder(int type) {
+        List<ProtocolModelForPost.ID> ids = new ArrayList<>();
+        for (int i = 0; i < orderDoingModels.size(); i++) {
+            if (orderDoingModels.get(i).isChoice()) {
+                ids.add(new ProtocolModelForPost.ID(orderDoingModels.get(i).getId()));
+            }
+        }
+
+        if (ids.size() == 0) {
+            ToastUtils.showToast(getActivity(), "请选择订单");
+            return;
+        }
+        showDialog(type,ids);
+    }
+
+
+
     //弹框
-    private void showDialog(final int type) {
+    private void showDialog(final int type,final List<ProtocolModelForPost.ID> ids) {
+        if (orderDoingModels.size() == 0) {
+            ToastUtils.showToast(getActivity(), "请选择订单");
+            return;
+        }
         myDialog = new MyDialog(getContext());
         switch (type) {
             case 0:
@@ -481,8 +507,8 @@ public class ProtocolFragment extends ViewPagerFragment1 implements View.OnClick
         myDialog.setYesOnclickListener(getString(R.string.True), new MyDialog.onYesOnclickListener() {
             @Override
             public void onYesClick() {
+                lockorab(type, ids);
                 myDialog.dismiss();
-                lockorab(type);
             }
         });
         myDialog.setNoOnclickListener(getString(R.string.cancel), new MyDialog.onNoOnclickListener() {
@@ -494,8 +520,10 @@ public class ProtocolFragment extends ViewPagerFragment1 implements View.OnClick
         myDialog.show();
     }
 
+
+
     //锁定，作废订单操作
-    private void lockorab(int type) {
+    private void lockorab(int type, List<ProtocolModelForPost.ID> ids) {
         String url = "";
         switch (type) {
             case 0:
@@ -507,12 +535,7 @@ public class ProtocolFragment extends ViewPagerFragment1 implements View.OnClick
                 url = Constant.AppOrderAbolishOrderUrl;
                 break;
         }
-        List<ProtocolModelForPost.ID> ids = new ArrayList<>();
-        for (int i = 0; i < orderDoingModels.size(); i++) {
-            if (orderDoingModels.get(i).isChoice()) {
-                ids.add(new ProtocolModelForPost.ID(orderDoingModels.get(i).getId()));
-            }
-        }
+
         ProtocolModelForPost post = new ProtocolModelForPost(
                 publicArg.getSys_token(),
                 getUUID(),

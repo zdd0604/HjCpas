@@ -467,6 +467,7 @@
     <!--合作会员目录-->
     <string name="cooperate_direct">合作会员目录</string>
     <string name="cooperate_contents">关注会员目录</string>
+    <string name="cooperate_contents2">会员等级查询</string>
     <string name="cooperate_buy">买（采购）</string>
     <string name="cooperate_sell">卖（销售）</string>
     <string name="cooperate_person">合作会员：</string>
@@ -539,6 +540,7 @@
     <string name="cooperate_dialog_gone_ok">操作成功</string>
     <string name="cooperate_request">待审批申请</string>
     <string name="cooperate_group">群组管理</string>
+    <string name="cooperate_group2">群组查询</string>
     <string name="cooperate_mmb_care">谁在关注我</string>
     <string name="cooperate_mmb_buy">建立采购关系</string>
     <string name="cooperate_mmb_sell">建立销售关系</string>

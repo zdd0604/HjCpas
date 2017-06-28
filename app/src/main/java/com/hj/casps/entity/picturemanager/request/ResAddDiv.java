@@ -26,4 +26,6 @@ public class ResAddDiv {
         this.parentId = parentId;
         this.baseId = baseId;
     }
+
+
 }

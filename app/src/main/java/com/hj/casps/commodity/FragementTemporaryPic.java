@@ -1,7 +1,6 @@
 package com.hj.casps.commodity;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
@@ -26,6 +25,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.chad.library.adapter.base.entity.AbstractExpandableItem;
 import com.chad.library.adapter.base.entity.MultiItemEntity;
 import com.chad.library.adapter.base.listener.SimpleClickListener;
+import com.google.gson.Gson;
 import com.hj.casps.R;
 import com.hj.casps.base.FragmentBase;
 import com.hj.casps.common.Constant;
@@ -38,6 +38,7 @@ import com.hj.casps.ui.MyToast;
 import com.hj.casps.util.GsonTools;
 import com.hj.casps.util.LogoutUtils;
 import com.hj.casps.util.ToastUtils;
+import com.hj.casps.widget.WaitDialogRectangle;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 
@@ -57,7 +58,6 @@ public class FragementTemporaryPic extends FragmentBase implements View.OnClickL
 
     private PopupWindow sharepopupWindow;
     private View contentView;
-
     private RecyclerView recyclerView;
     private int pageFlag;
     private List<SelectPicture_new.DataTreeListEntity> divList;
@@ -72,7 +72,9 @@ public class FragementTemporaryPic extends FragmentBase implements View.OnClickL
 // 图片封装为一个数组
 
 
-    public FragementTemporaryPic(int pageFlag, List<SelectPicture_new.DataTreeListEntity> divList, String baseId) {
+    public FragementTemporaryPic(int pageFlag,
+                                 List<SelectPicture_new.DataTreeListEntity> divList,
+                                 String baseId) {
         this.pageFlag = pageFlag;
         this.divList = divList;
         this.baseId = baseId;
@@ -84,13 +86,13 @@ public class FragementTemporaryPic extends FragmentBase implements View.OnClickL
     }
 
 
-
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         View view = inflater.inflate(R.layout.activity_selectclass, container, false);
+        if (waitDialogRectangle == null)
+            waitDialogRectangle = new WaitDialogRectangle(getActivity());
+        mGson = new Gson();
         ll_content = (LinearLayout) view.findViewById(R.id.ll_content);
         FancyButton add = (FancyButton) view.findViewById(R.id.submit);
         et_name = (EditText) view.findViewById(R.id.fragment_mypic_empty_class_Et);
@@ -103,10 +105,10 @@ public class FragementTemporaryPic extends FragmentBase implements View.OnClickL
 
     private void setData() {
         //如果个人素材库没有数据，就显示一个可以添加一级目录的界面
-       if(divList!=null&&divList.size()<=0&&isMyMaterial){
-           ll_content.setVisibility(View.VISIBLE);
-           return;
-       }
+        if (divList != null && divList.size() <= 0 && isMyMaterial) {
+            ll_content.setVisibility(View.VISIBLE);
+            return;
+        }
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
         ArrayList<GoodLevelEntity> arrayList = generateData();
         recyclerView.setAdapter(new GoodListAdapter(arrayList));
@@ -142,14 +144,14 @@ public class FragementTemporaryPic extends FragmentBase implements View.OnClickL
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.submit:
                 String name = et_name.getText().toString().trim();
-                if(name.equals("")){
-                    ToastUtils.showToast(FragementTemporaryPic.this.getActivity(),"目录不能为空");
+                if (name.equals("")) {
+                    ToastUtils.showToast(FragementTemporaryPic.this.getActivity(), "目录不能为空");
                     return;
                 }
-                addDivForNet(name,"0",baseId);
+                addDivForNet(name, "0", baseId);
                 break;
         }
     }
@@ -434,7 +436,7 @@ public class FragementTemporaryPic extends FragmentBase implements View.OnClickL
                 String divId = entity.getDivId();
                 intent.putExtra("PicStyle", pageFlag);
                 intent.putExtra(Constant.INTENT_DIV_ID, divId);
-                FragementTemporaryPic.this.startActivityForResult(intent,REQUES_CODE);
+                FragementTemporaryPic.this.startActivityForResult(intent, REQUES_CODE);
                 return;
             }
             if (entity.isExpanded()) {
@@ -530,18 +532,21 @@ public class FragementTemporaryPic extends FragmentBase implements View.OnClickL
 
         @Override
         public void onItemLongClick(BaseQuickAdapter adapter, View view, int position) {
-            log("onItemLongClick() called with: " + "adapter = [" + adapter + "], view = [" + view + "], position = [" + position + "]");
+            log("onItemLongClick() called with: " + "adapter = [" + adapter + "]," +
+                    " view = [" + view + "], position = [" + position + "]");
             showSharePopupWindow(adapter, position);
         }
 
         @Override
         public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-            log("onItemChildClick() called with: " + "adapter = [" + adapter + "], view = [" + view + "], position = [" + position + "]");
+            log("onItemChildClick() called with: " + "adapter = [" + adapter + "]," +
+                    " view = [" + view + "], position = [" + position + "]");
         }
 
         @Override
         public void onItemChildLongClick(BaseQuickAdapter adapter, View view, int position) {
-            log("onItemChildLongClick() called with: " + "adapter = [" + adapter + "], view = [" + view + "], position = [" + position + "]");
+            log("onItemChildLongClick() called with: " + "adapter = [" + adapter + "], " +
+                    "view = [" + view + "], position = [" + position + "]");
         }
     }
 
@@ -558,7 +563,8 @@ public class FragementTemporaryPic extends FragmentBase implements View.OnClickL
 
         if (!entity.hasSubItem() && !entity.parentId.equals("0")) {
             contentView.findViewById(R.id.ll_add).setVisibility(View.GONE);
-        }if(entity.parentId.equals("0")){
+        }
+        if (entity.parentId.equals("0")) {
             contentView.findViewById(R.id.ll_add_same).setVisibility(View.VISIBLE);
         }
         ShowPopupClick click = new ShowPopupClick(entity);
@@ -567,7 +573,9 @@ public class FragementTemporaryPic extends FragmentBase implements View.OnClickL
         contentView.findViewById(R.id.edit).setOnClickListener(click);
         contentView.findViewById(R.id.del).setOnClickListener(click);
         contentView.findViewById(R.id.cancel).setOnClickListener(click);
-        sharepopupWindow = new PopupWindow(contentView, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, true);
+        sharepopupWindow = new PopupWindow(contentView,
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT, true);
         sharepopupWindow.setAnimationStyle(R.style.take_photo_anim);
         sharepopupWindow.setTouchable(true);
         sharepopupWindow.setOutsideTouchable(true);
@@ -589,7 +597,7 @@ public class FragementTemporaryPic extends FragmentBase implements View.OnClickL
             Intent intent = new Intent(context, ActivityAddPicRes.class);
             intent.putExtra(Constant.INTENT_BASEID, entity.getBaseId());
             switch (v.getId()) {
-              case R.id.add_same:
+                case R.id.add_same:
                     intent.putExtra(Constant.INTENT_TYPE, Constant.PIC_ADD);
                     intent.putExtra(Constant.INTENT_PARENTID, entity.getParentId());
                     context.startActivityForResult(intent, ADD_PIC_RES_REQUES_CODE);
@@ -618,7 +626,7 @@ public class FragementTemporaryPic extends FragmentBase implements View.OnClickL
                       /*  intent.putExtra(Constant.INTENT_TYPE, Constant.PIC_DEL);
                         intent.putExtra(Constant.INTENT_DIV_ID, entity.getDivId());
                         context.startActivityForResult(intent, ADD_PIC_RES_REQUES_CODE);*/
-                        handleDel(entity.getDivId(),entity.getBaseId());
+                        handleDel(entity.getDivId(), entity.getBaseId());
                     }
                     sharepopupWindow.dismiss();
                     break;
@@ -639,21 +647,23 @@ public class FragementTemporaryPic extends FragmentBase implements View.OnClickL
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        System.out.println("requestCode FragementTemporaryPic= [" + requestCode + "], resultCode = [" + resultCode + "], data = [" + data + "]");
-        if(requestCode==REQUES_CODE&&Constant.isAddPic){
+        System.out.println("requestCode FragementTemporaryPic= [" + requestCode + "]," +
+                " resultCode = [" + resultCode + "], data = [" + data + "]");
+        if (requestCode == REQUES_CODE && Constant.isAddPic) {
             FragementTemporaryPic.this.getActivity().finish();
         }
 
     }
+
     /*删除个人素材库分类(只能删除没有资源，没有子节点的目录)。*/
     private void delDiv(String divId, final String baseId) {
         PublicArg p = Constant.publicArg;
         String timeUUID = Constant.getTimeUUID();
-        if(timeUUID.equals("")){
+        if (timeUUID.equals("")) {
             toastSHORT(getString(R.string.time_out));
             return;
         }
-        ResUpdateDiv r = new ResUpdateDiv(p.getSys_token(), timeUUID,Constant.SYS_FUNC, p.getSys_user(), p.getSys_member(), divId);
+        ResUpdateDiv r = new ResUpdateDiv(p.getSys_token(), timeUUID, Constant.SYS_FUNC, p.getSys_user(), p.getSys_member(), divId);
         String param = GsonTools.createGsonString(r);
         OkGo.post(Constant.DelDivUrl).params("param", param).execute(new StringCallback() {
             @Override
@@ -663,12 +673,9 @@ public class FragementTemporaryPic extends FragmentBase implements View.OnClickL
                     new MyToast(getActivity(), "删除成功");
                     SelectPicture_new context = (SelectPicture_new) FragementTemporaryPic.this.getContext();
                     context.setDelCallBack(baseId);
-                }else if(pub.getReturn_code()==1101||pub.getReturn_code()==1102){
+                } else if (pub.getReturn_code() == 1101 || pub.getReturn_code() == 1102) {
                     LogoutUtils.exitUser(FragementTemporaryPic.this);
-                }
-
-
-                else {
+                } else {
                     toastSHORT(pub.getReturn_message());
                     return;
                 }
@@ -683,14 +690,14 @@ public class FragementTemporaryPic extends FragmentBase implements View.OnClickL
 
     }
 
-    private void handleDel(final String divId,final  String baseId) {
+    private void handleDel(final String divId, final String baseId) {
 
         final MyDialog dialog = new MyDialog(getActivity());
         dialog.setMessage("确定删除分类吗？").setYesOnclickListener("确定", new MyDialog.onYesOnclickListener() {
             @Override
             public void onYesClick() {
                 dialog.dismiss();
-                delDiv(divId,baseId);
+                delDiv(divId, baseId);
             }
         }).setNoOnclickListener("取消", new MyDialog.onNoOnclickListener() {
             @Override
@@ -705,48 +712,59 @@ public class FragementTemporaryPic extends FragmentBase implements View.OnClickL
     //添加个人素材库分类
     private void addDivForNet(String divName, String parentId, final String baseId) {
         //如果增加顶级目录，parentId传空
-        if (parentId.equals("0")) parentId = "";
+        if (parentId.equals("0"))
+            parentId = "";
 
-        PublicArg p = Constant.publicArg;
         String timeUUID = Constant.getTimeUUID();
-        if(timeUUID.equals("")){
+        if (timeUUID.equals("")) {
             toastSHORT(getString(R.string.time_out));
             return;
         }
-        ResAddDiv r = new ResAddDiv(p.getSys_token(), timeUUID,Constant.SYS_FUNC, p.getSys_user(), p.getSys_member(), divName, parentId, baseId);
-        String param = mGson.toJson(r);
+
         waitDialogRectangle.show();
-        OkGo.post(Constant.AddDivUrl).params("param", param).execute(new StringCallback() {
-            @Override
-            public void onSuccess(String data, Call call, Response response) {
-                waitDialogRectangle.dismiss();
-                Pub pub = GsonTools.changeGsonToBean(data, Pub.class);
-                if (pub.getReturn_code() == 0) {
-                    SelectPicture_new context = (SelectPicture_new) FragementTemporaryPic.this.getContext();
-                    new MyToast(getActivity(), "添加图片目录成功");
-                    context.setDelCallBack(baseId);
+
+        ResAddDiv resAddDiv = new ResAddDiv(
+                Constant.publicArg.getSys_token(),
+                timeUUID,
+                Constant.SYS_FUNC,
+                Constant.publicArg.getSys_user(),
+                Constant.publicArg.getSys_member(),
+                divName,
+                parentId,
+                baseId);
+
+        OkGo.post(Constant.AddDivUrl)
+                .params("param", mGson.toJson(resAddDiv))
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(String data, Call call, Response response) {
+                        waitDialogRectangle.dismiss();
+                        Pub pub = GsonTools.changeGsonToBean(data, Pub.class);
+                        if (pub.getReturn_code() == 0) {
+                            SelectPicture_new context = (SelectPicture_new) FragementTemporaryPic.this.getContext();
+                            new MyToast(getActivity(), "添加图片目录成功");
+                            context.setDelCallBack(baseId);
                    /* Intent intent = new Intent();
                     intent.putExtra(IS_ADD, true);
                     intent.putExtra(BASE_ID, baseId);
                     setResult(RESULT_OK, intent);
                     ActivityAddPicRes.this.finish();*/
-                } else if(pub.getReturn_code()==1101||pub.getReturn_code()==1102){
-                    LogoutUtils.exitUser(FragementTemporaryPic.this);
-                }
-                else {
-                    toastSHORT(pub.getReturn_message());
-                    return;
-                }
-            }
-            @Override
-            public void onError(Call call, Response response, Exception e) {
-                super.onError(call, response, e);
-                waitDialogRectangle.dismiss();
-            }
-        });
+                        } else if (pub.getReturn_code() == 1101 || pub.getReturn_code() == 1102) {
+                            LogoutUtils.exitUser(FragementTemporaryPic.this);
+                        } else {
+                            toastSHORT(pub.getReturn_message());
+                            return;
+                        }
+                    }
+
+                    @Override
+                    public void onError(Call call, Response response, Exception e) {
+                        super.onError(call, response, e);
+                        waitDialogRectangle.dismiss();
+                    }
+                });
         //添加个人素材库分类
     }
-
 
 
 }

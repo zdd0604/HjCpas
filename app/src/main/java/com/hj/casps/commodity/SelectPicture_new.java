@@ -11,14 +11,12 @@ import android.os.Parcelable;
 import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
-import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
 import com.hj.casps.R;
@@ -26,17 +24,12 @@ import com.hj.casps.base.ActivityBaseHeader2;
 import com.hj.casps.base.FragmentBase;
 import com.hj.casps.common.Constant;
 import com.hj.casps.entity.PublicArg;
-import com.hj.casps.entity.goodsmanager.Pub;
 import com.hj.casps.entity.picturemanager.ShowBaseEntity;
-import com.hj.casps.entity.picturemanager.ShowDivEntity;
 import com.hj.casps.entity.picturemanager.request.RequestShowBase;
-import com.hj.casps.entity.picturemanager.request.ResAddDiv;
-import com.hj.casps.ui.MyToast;
 import com.hj.casps.util.DensityUtil;
 import com.hj.casps.util.GsonTools;
 import com.hj.casps.util.LogoutUtils;
 import com.lzy.okgo.OkGo;
-import com.lzy.okgo.callback.AbsCallback;
 import com.lzy.okgo.callback.StringCallback;
 
 import net.lucode.hackware.magicindicator.MagicIndicator;
@@ -49,15 +42,14 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.Li
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.ColorTransitionPagerTitleView;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.SimplePagerTitleView;
 
-import org.greenrobot.eventbus.EventBus;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.Response;
 
-/** 选择轮播目录
+/**
+ * 选择轮播目录
  * Created by YaoChen on 2017/4/13.
  */
 
@@ -166,10 +158,9 @@ public class SelectPicture_new extends ActivityBaseHeader2 {
                     if (showBaseEntity.getReturn_code() == 0) {
                         showBaseList = showBaseEntity.getDataList();
                         initShowDivData(showBaseList.get(mIndex).getBaseId());
-                    }
-                    else if(showBaseEntity.getReturn_code()==1101||showBaseEntity.getReturn_code()==1102){
+                    } else if (showBaseEntity.getReturn_code() == 1101 || showBaseEntity.getReturn_code() == 1102) {
                         LogoutUtils.exitUser(SelectPicture_new.this);
-                    }else {
+                    } else {
                         toastSHORT(showBaseEntity.getReturn_message());
                     }
                 }
@@ -184,7 +175,7 @@ public class SelectPicture_new extends ActivityBaseHeader2 {
     private void handleJson(String data) {
 
         Entity entity = JSONObject.parseObject(data, Entity.class);
-        if(entity.getReturn_code()==1101||entity.getReturn_code()==1102){
+        if (entity.getReturn_code() == 1101 || entity.getReturn_code() == 1102) {
             LogoutUtils.exitUser(SelectPicture_new.this);
         }
         List<DataListEntity> sourceList = entity.getDataList();
@@ -210,7 +201,9 @@ public class SelectPicture_new extends ActivityBaseHeader2 {
     private void setFragmentData() {
         ArrayList<FragmentBase> fragList = new ArrayList<>();
         for (int i = 0; i < showBaseList.size(); i++) {
-            FragementTemporaryPic e = new FragementTemporaryPic(PageFlag, showDivList,
+            FragementTemporaryPic e = new FragementTemporaryPic(
+                    PageFlag,
+                    showDivList,
                     showBaseList.get(mIndex).getBaseId());
             fragList.add(e);
         }
@@ -231,11 +224,11 @@ public class SelectPicture_new extends ActivityBaseHeader2 {
     }
 
     private void initShowDivData(String baseId) {
-        if(baseId.equals("4")||baseId.equals("19")){
+        if (baseId.equals("4") || baseId.equals("19")) {
             titleRight.setVisibility(View.GONE);
 
-        }else{
-            SelectPicture_new.this.baseId=baseId;
+        } else {
+            SelectPicture_new.this.baseId = baseId;
 //            titleRight.setVisibility(View.VISIBLE);
 //            titleRight.setText("添加");
 //            titleRight.setBackgroundColor(Color.TRANSPARENT);
@@ -329,11 +322,11 @@ public class SelectPicture_new extends ActivityBaseHeader2 {
         super.onActivityResult(requestCode, resultCode, data);
         System.out.println("requestCode SelectPicture_new = [" + requestCode + "], resultCode = [" + resultCode + "], data = [" + data + "]");
         //这里是ActivityAddPicRes所传过来的值  判断是否添加目录分类成功的  ActivityAddPicRes是FragementTemporaryPic打开的
-        if(resultCode==RESULT_OK&&requestCode==FragementTemporaryPic.ADD_PIC_RES_REQUES_CODE){
-            boolean is_add =data.getBooleanExtra(ActivityAddPicRes.IS_ADD, false);
+        if (resultCode == RESULT_OK && requestCode == FragementTemporaryPic.ADD_PIC_RES_REQUES_CODE) {
+            boolean is_add = data.getBooleanExtra(ActivityAddPicRes.IS_ADD, false);
             String baseid = data.getStringExtra(ActivityAddPicRes.BASE_ID);
             System.out.println("requestCode = [" + requestCode + "], resultCode = [" + resultCode + "], data = [" + data + "]");
-            if(is_add){
+            if (is_add) {
                 initShowDivData(baseid);
             }
         }
@@ -496,21 +489,22 @@ public class SelectPicture_new extends ActivityBaseHeader2 {
 
     @Override
     protected void onRightClick() {
-        Intent intent = new Intent(this,ActivityAddPicRes.class);
+        Intent intent = new Intent(this, ActivityAddPicRes.class);
         intent.putExtra(Constant.INTENT_TYPE, Constant.PIC_ADD);
         intent.putExtra(Constant.INTENT_BASEID, baseId);
         //添加一级目录的  parentId  传 0    到  ActivityAddPicRes判断的传0  就传空  传空就说明是一级目录了
         intent.putExtra(Constant.INTENT_PARENTID, "0");
         startActivityForResult(intent, FragementTemporaryPic.ADD_PIC_RES_REQUES_CODE);
     }
-    protected  void setDelCallBack(String baseId){
+
+    protected void setDelCallBack(String baseId) {
         initShowDivData(baseId);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Constant.isAddPic=false;
+        Constant.isAddPic = false;
         System.out.println("SelectPicture_new onDestroy ");
     }
 }

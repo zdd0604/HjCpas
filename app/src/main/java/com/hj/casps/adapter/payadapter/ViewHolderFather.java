@@ -48,7 +48,8 @@ public class ViewHolderFather extends TypeAbstractViewHolder<AppOrderCheckOrderO
     public void bindViewHolder(AppOrderCheckOrderOrdertitle cargoMessage, int postion) {
         DecimalFormat df = new DecimalFormat("#0.00");
         rl_one_tv_bills_id.setText(cargoMessage.ordertitleCode);
-        rl_ft_tv_bills_type.setText(cargoMessage.buyersId.equalsIgnoreCase(Constant.publicArg.getSys_member()) ? "采购" : "销售");
+        if (StringUtils.isStrTrue(cargoMessage.buyersId))
+            rl_ft_tv_bills_type.setText(cargoMessage.buyersId.equalsIgnoreCase(Constant.publicArg.getSys_member()) ? "采购" : "销售");
         rl_ft_tv_flow_id.setText(GetWorkFlowType(cargoMessage.workflowTypeId));
         rl_ft_tv_buy_name.setText(cargoMessage.buyersName);
         rl_ft_tv_contract_time.setText(Constant.stmpToDate(cargoMessage.lockTime));

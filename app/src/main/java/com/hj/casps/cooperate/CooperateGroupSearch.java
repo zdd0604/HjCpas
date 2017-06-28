@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.hj.casps.R;
 import com.hj.casps.base.ActivityBaseHeader2;
 import com.hj.casps.commodity.SelectClass;
+import com.hj.casps.common.Constant;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +21,7 @@ import mehdi.sakout.fancybuttons.FancyButton;
 
 import static com.hj.casps.common.Constant.GOODS_NAME;
 import static com.hj.casps.common.Constant.SYS_FUNC;
+
 //群组管理的搜索页面
 public class CooperateGroupSearch extends ActivityBaseHeader2 implements View.OnClickListener {
 
@@ -32,15 +34,10 @@ public class CooperateGroupSearch extends ActivityBaseHeader2 implements View.On
     private LinearLayout care_name_layout;
     private LinearLayout province_layout;
     private Spinner cooperate_province_names;
-    List<Dict> dicts = new ArrayList<Dict>();
+    List<Dict> dicts = new ArrayList<>();
     private LinearLayout names_layout;
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == 11 && resultCode == 22) {
-            cooperate_group_names.setText(GOODS_NAME);
-        }
-    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,7 +111,7 @@ public class CooperateGroupSearch extends ActivityBaseHeader2 implements View.On
                 name.setText(getString(R.string.cooperate_group_name_text));
                 break;
             case 3://关系管理群组管理的搜索
-                setTitle(getString(R.string.cooperate_group));
+                setTitle(getString(R.string.cooperate_group2));
                 name.setText(getString(R.string.cooperate_group_names));
                 break;
             case 5://订单管理商品分类选择的搜索
@@ -169,13 +166,28 @@ public class CooperateGroupSearch extends ActivityBaseHeader2 implements View.On
         switch (type) {
             case 0:
 
-                bundle.putString("searchjson", "{\"sys_func\":\"" + SYS_FUNC + "\",\"sys_member\":\"" + publicArg.getSys_member() + "\",\"mmbId\":\"" + publicArg.getSys_member() + "\",\"sys_name\":\"" + publicArg.getSys_name() + "\",\"sys_token\":\"" + publicArg.getSys_token() + "\",\"sys_user\":\"" + publicArg.getSys_user() + "\",\"sys_uuid\":\"\",\"mmbSname\":\"" + names + "\"," +
+                bundle.putString("searchjson", "" +
+                        "{\"sys_func\":\"" + SYS_FUNC + "\"," +
+                        "\"sys_member\":\"" + publicArg.getSys_member() + "\"," +
+                        "\"mmbId\":\"" + publicArg.getSys_member() + "\"," +
+                        "\"sys_name\":\"" + publicArg.getSys_name() + "\"," +
+                        "\"sys_token\":\"" + publicArg.getSys_token() + "\"," +
+                        "\"sys_user\":\"" + publicArg.getSys_user() + "\"," +
+                        "\"sys_uuid\":\"" + Constant.getUUID() + "\"," +
+                        "\"mmbSname\":\"" + names + "\"," +
                         "\"pageno\":\"1\"," + "\"pagesize\":\"20\"," +
                         "\"type\":\"" + String.valueOf(typeQ) + "\"}");
 
                 break;
             case 1:
-                bundle.putString("searchjson", "{\"sys_func\":\"" + SYS_FUNC + "\",\"sys_member\":\"" + publicArg.getSys_member() + "\",\"mmbId\":\"" + publicArg.getSys_member() + "\",\"sys_name\":\"" + publicArg.getSys_name() + "\",\"sys_token\":\"" + publicArg.getSys_token() + "\",\"sys_user\":\"" + publicArg.getSys_user() + "\",\"sys_uuid\":\"\",\"groupName\":\"" + names + "\"," +
+                bundle.putString("searchjson", "{\"sys_func\":\"" + SYS_FUNC + "\"," +
+                        "\"sys_member\":\"" + publicArg.getSys_member() + "\"," +
+                        "\"mmbId\":\"" + publicArg.getSys_member() + "\"," +
+                        "\"sys_name\":\"" + publicArg.getSys_name() + "\"," +
+                        "\"sys_token\":\"" + publicArg.getSys_token() + "\"," +
+                        "\"sys_user\":\"" + publicArg.getSys_user() + "\"," +
+                        "\"sys_uuid\":\"" + Constant.getUUID() + "\"," +
+                        "\"groupName\":\"" + names + "\"," +
                         "\"pageno\":\"1\"," + "\"pagesize\":\"20\"," +
                         "\"type\":\"" + String.valueOf(typeQ) + "\"}");
                 break;
@@ -191,8 +203,12 @@ public class CooperateGroupSearch extends ActivityBaseHeader2 implements View.On
         }
         setResult(22, getIntent().putExtras(bundle));
         finish();
-
     }
 
-
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 11 && resultCode == 22) {
+            cooperate_group_names.setText(GOODS_NAME);
+        }
+    }
 }
