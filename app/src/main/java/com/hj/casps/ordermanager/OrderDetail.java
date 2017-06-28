@@ -40,6 +40,7 @@ import com.hj.casps.entity.protocalproductentity.OrderBack;
 import com.hj.casps.ui.MyListView;
 import com.hj.casps.util.LogoutUtils;
 import com.hj.casps.util.StringUtils;
+import com.hj.casps.widget.MyWListView;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 
@@ -57,39 +58,40 @@ import static com.hj.casps.common.Constant.getUUID;
 public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickListener,
         OrderShellDetailAdapter.upDataPrice {
 
-    private EditText order_detail_time_pay;//订单时间
-    private Spinner order_detail_process;//订单流程
-    private EditText order_detail_time_start;//开始时间
-    private EditText order_detail_time_end;//结束时间
-    private Spinner order_detail_pay_account;//买的银行账户
-    private Spinner order_detail_pay_address;//买的地址
-    private Spinner order_detail_get_account;//卖的账号
-    private Spinner order_detail_get_address;//卖的地址
-    private MyListView order_detail_add_layout;//下边的ListView
-    private TextView order_detail_num;//选择了几件商品
-    private TextView order_detail_product_pay;//总金额
-    private List<OrderShellModel> orders;//商品的list
-    private OrderShellDetailAdapter adapter;//商品详情的adapter
-    private double allPrice;//总价
+    private EditText order_detail_time_pay;
+    private Spinner order_detail_process;
+    private EditText order_detail_time_start;
+    private EditText order_detail_time_end;
+    private Spinner order_detail_pay_account;
+    private Spinner order_detail_pay_address;
+    private Spinner order_detail_get_account;
+    private Spinner order_detail_get_address;
+    private MyWListView order_detail_add_layout;
+    private TextView order_detail_num;
+    private TextView order_detail_product_pay;
+    private List<OrderShellModel> orders;
+    private OrderShellDetailAdapter adapter;
+    private double allPrice;
     public static OrderDetail orderDetail = null;
-    private Button order_detail_submit;//确认
+    private Button order_detail_submit;
     private List<MmbBankAccountEntity> mList;//银行账户
     private List<WarehouseEntity> mAddressList;//地址
-    private String[] addressLists;//地址数组
-    private String[] bankLists;//银行数组
-    private String[] statusItems;//订单流程数组
-    private int state;//0销售拣单车，1采购拣单车
-    private int type;//0下单，1编辑
+    private String[] addressLists;
+    private String[] bankLists;
+    private String[] statusItems;
+    private int state;
+    private int type;
     private TestArrayAdapter stringArrayAdapter1;
     private TestArrayAdapter stringArrayAdapter2;
     private TestArrayAdapter stringArrayAdapter3;
-    private String buy_name;//买方名称
-    private String sell_name;//卖方名称
-    private String buy_id;//买方id
-    private String sell_id;//卖方id
-    private String id;//编辑订单时的订单id
-    private boolean orderList;//是否是从协议下订单过来的数据
+    private String buy_name;
+    private String sell_name;
+    private String buy_id;
+    private String sell_id;
+    private String id;
+    private boolean orderList;
     private int ordersSize = 0;//数组的长度
+
     Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -121,15 +123,15 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
 
     //加载下订单的参数
     private void initData() {
-        type = getIntent().getIntExtra("type", 0);//0正常下单，1编辑订单
-        statusItems = new String[]{"货款两清", "先货后款", "先货后款已交货", "先款后货", "先款后货已收款"};//流程数组
+        type = getIntent().getIntExtra("type", 0);
+        statusItems = new String[]{"货款两清", "先货后款", "先货后款已交货", "先款后货", "先款后货已收款"};
         stringArrayAdapter3 = new TestArrayAdapter(getApplicationContext(), statusItems);
 
         if (hasInternetConnected())
-            mHandler.sendEmptyMessage(Constant.HANDLERTYPE_0);//获取银行账户列表
+            mHandler.sendEmptyMessage(Constant.HANDLERTYPE_0);
         if (type == 1) {
-            id = getIntent().getStringExtra("id");//编辑订单的订单id
-            state = getIntent().getIntExtra("state", 0);//区分采购销售
+            id = getIntent().getStringExtra("id");
+            state = getIntent().getIntExtra("state", 0);
             getData();
         } else {
             orders = getIntent().getParcelableArrayListExtra("orders");
@@ -189,8 +191,8 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
                                 } else {
                                     state = 0;
                                 }
-                                getQueryMmbBankAccountGainDatas();
-                                getQueryMmbWareHouseGainDatas();
+//                                getQueryMmbBankAccountGainDatas();
+//                                getQueryMmbWareHouseGainDatas();
                             }
 
                             buy_name = appOrderCheckOrderOrdertitle.buyersName;
@@ -261,10 +263,11 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
                         if (databack == null) {
                             return;
                         }
-                        if (databack.getReturn_code() == 1101 || databack.getReturn_code() == 1102) {
-                            LogoutUtils.exitUser(OrderDetail.this);
-                        } else if (databack.getReturn_code() != 0) {
+
+                        if (databack.getReturn_code() != 0) {
                             Toast.makeText(context, databack.getReturn_message(), Toast.LENGTH_SHORT).show();
+                        } else if (databack.getReturn_code() == 1101 || databack.getReturn_code() == 1102) {
+                            LogoutUtils.exitUser(OrderDetail.this);
                         } else {
                             result[0] = databack.getGoodsInfo().getMinPrice() + "-" + databack.getGoodsInfo().getMaxPrice();
                             orderShellModel.setPrice(result[0]);
@@ -296,9 +299,9 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
         order_detail_pay_address = (Spinner) findViewById(R.id.order_detail_pay_address);
         order_detail_get_account = (Spinner) findViewById(R.id.order_detail_get_account);
         order_detail_get_address = (Spinner) findViewById(R.id.order_detail_get_address);
-        order_detail_add_layout = (MyListView) findViewById(R.id.order_detail_add_layout);
+        order_detail_add_layout = (MyWListView) findViewById(R.id.order_detail_add_layout);
         order_detail_num = (TextView) findViewById(R.id.order_detail_num);
-        if (type == 0) {//编辑订单的商品数量
+        if (type == 0) {
             order_detail_num.setText(String.valueOf(orders.size()));
         }
         order_detail_product_pay = (TextView) findViewById(R.id.order_detail_product_pay);
@@ -308,15 +311,14 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
         order_detail_submit = (Button) findViewById(R.id.order_detail_submit);
         order_detail_submit.setOnClickListener(this);
         order_detail_process.setAdapter(stringArrayAdapter3);
-        OrderShellDetailAdapter.setUpDataPrice(this);//更新价格
+        OrderShellDetailAdapter.setUpDataPrice(this);
     }
 
 
     @Override
     public void onDataPriceRefresh() {
         refreshAllPrice();
-    }//更新总价
-
+    }
 
     //刷新报价结果
     public void refreshAllPrice() {
@@ -403,7 +405,7 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
         CreateOrder post = null;
         List<CreateOrder.OrderListBean> listBeen = new ArrayList<>();
         String url_get = "";
-        if (type == 1) {//编辑订单提交
+        if (type == 1) {
             url_get = Constant.AppOrderEditOrderUrl;
             for (int i = 0; i < orders.size(); i++) {
                 CreateOrder.OrderListBean orderListBean = new CreateOrder.OrderListBean(
@@ -436,7 +438,7 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
                             ? "" : mAddressList.get(order_detail_get_address.getSelectedItemPosition()).getAddress(),
                     sell_id, sell_name, String.valueOf(allPrice),
                     String.valueOf(order_detail_process.getSelectedItemPosition() + 1), listBeen, id);
-        } else {//订单提交
+        } else {
             url_get = Constant.CreateOrderUrl;
             switch (state) {
                 case 0://销售拣单车
@@ -513,7 +515,6 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
 //                            mList.get(order_detail_pay_account.getSelectedItemPosition()).getBankname(),
                             mList.get(order_detail_pay_account.getSelectedItemPosition()).getAccountno() == null
                                     ? "" : mList.get(order_detail_pay_account.getSelectedItemPosition()).getAccountno(),
-
                             mList.get(order_detail_pay_account.getSelectedItemPosition()).getBankname() == null
                                     ? "" : mList.get(order_detail_pay_account.getSelectedItemPosition()).getBankname(),
                             pay, "", "",
@@ -536,17 +537,17 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
                         if (orderBack == null) {
                             return;
                         }
-                        if (orderBack.getReturn_code() == 1101 || orderBack.getReturn_code() == 1102) {
+                        if (orderBack.getReturn_code() != 0) {
+                            toast(orderBack.getReturn_message());
+                        } else if (orderBack.getReturn_code() == 1101 || orderBack.getReturn_code() == 1102) {
                             toastSHORT("重复登录或令牌超时");
                             LogoutUtils.exitUser(OrderDetail.this);
-                        } else if (orderBack.getReturn_code() != 0) {
-                            toast(orderBack.getReturn_message());
                         } else {
                             toast("订单提交成功");
                             finish();
                         }
 
-                        deleteDatas();//订单完成后删除list
+                        deleteDatas();
                     }
 
                     @Override
