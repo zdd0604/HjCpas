@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 import com.hj.casps.R;
 import com.hj.casps.adapter.TestArrayAdapter;
 import com.hj.casps.base.ActivityBaseHeader2;
@@ -40,7 +41,6 @@ import okhttp3.Response;
 import static com.hj.casps.common.Constant.HTTPURLIMAGE;
 import static com.hj.casps.common.Constant.SHORTHTTPURL;
 import static com.hj.casps.common.Constant.getUUID;
-import static com.hj.casps.common.Constant.publicArg;
 import static com.hj.casps.common.Constant.stmpToDate;
 
 //新建或者编辑报价管理
@@ -123,7 +123,7 @@ public class CreateQuotes extends ActivityBaseHeader2 implements View.OnClickLis
                     id
             );
             OkGo.post(Constant.EditQuoteUrl)
-                    .params("param",mGson.toJson(editQuoteEntity)).
+                    .params("param", mGson.toJson(editQuoteEntity)).
                     execute(new StringCallback() {
                         @Override
                         public void onSuccess(String s, Call call, Response response) {
@@ -139,42 +139,42 @@ public class CreateQuotes extends ActivityBaseHeader2 implements View.OnClickLis
         Log.d("response", response);
 //        CreateModel.MapBean quoteModels = new CreateModel.MapBean();
         Gson gson = new Gson();
-        CreateModel.MapBean quotesBack = gson.fromJson(response, CreateModel.MapBean.class);
-        newOne = false;
+        try {
+            CreateModel.MapBean quotesBack = gson.fromJson(response, CreateModel.MapBean.class);
+            newOne = false;
 
-        if (quotesBack != null) {
-            product_name.setText(quotesBack.getGoodsName());
-            product_number.setText(String.valueOf(quotesBack.getNum()));
-            product_price_from.setText(String.valueOf(quotesBack.getMinPrice()));
-            product_price_to.setText(String.valueOf(quotesBack.getMaxPrice()));
-            product_time_from.setText(stmpToDate(quotesBack.getStartTime()));
-            if (quotesBack.getImgPath() != null) {
-                Glide.with(this).load(quotesBack.getImgPath().startsWith("/v2content") ? SHORTHTTPURL + quotesBack.getImgPath() : HTTPURLIMAGE + quotesBack.getImgPath()).into(chooose_product_pic);
+            if (quotesBack != null) {
+                product_name.setText(quotesBack.getGoodsName());
+                product_number.setText(String.valueOf(quotesBack.getNum()));
+                product_price_from.setText(String.valueOf(quotesBack.getMinPrice()));
+                product_price_to.setText(String.valueOf(quotesBack.getMaxPrice()));
+                product_time_from.setText(stmpToDate(quotesBack.getStartTime()));
+                if (quotesBack.getImgPath() != null) {
+                    Glide.with(this).load(quotesBack.getImgPath().startsWith("/v2content") ? SHORTHTTPURL + quotesBack.getImgPath() : HTTPURLIMAGE + quotesBack.getImgPath()).into(chooose_product_pic);
+                }
+                goodsId = quotesBack.getGoodsId();
+                if (!product_time_from.getText().toString().isEmpty()) {
+                    product_time_from.setCompoundDrawables(null, null, null, null);
+                }
+                product_time_to.setText(stmpToDate(quotesBack.getStartEnd()));
+                if (!product_time_to.getText().toString().isEmpty()) {
+                    product_time_to.setCompoundDrawables(null, null, null, null);
+                }
+                product_more.setText(quotesBack.getExplan());
+
+                switch (quotesBack.getType()) {
+                    default:
+                    case 0:
+                        product_type.setSelection(0, true);
+                        break;
+                    case 1:
+                        product_type.setSelection(1, true);
+                        break;
+
+                }
             }
-            goodsId = quotesBack.getGoodsId();
-            if (!product_time_from.getText().toString().isEmpty()) {
-                product_time_from.setCompoundDrawables(null, null, null, null);
-            }
-            product_time_to.setText(stmpToDate(quotesBack.getStartEnd()));
-            if (!product_time_to.getText().toString().isEmpty()) {
-                product_time_to.setCompoundDrawables(null, null, null, null);
-            }
-            product_more.setText(quotesBack.getExplan());
-
-            switch (quotesBack.getType()) {
-                default:
-                case 0:
-                    product_type.setSelection(0, true);
-                    break;
-                case 1:
-                    product_type.setSelection(1, true);
-
-                    break;
-
-            }
-
-        } else {
-
+        } catch (JsonSyntaxException j) {
+            LogShow("类型转换异常");
         }
     }
 
@@ -366,13 +366,10 @@ public class CreateQuotes extends ActivityBaseHeader2 implements View.OnClickLis
             toast(returnBean.getReturn_message());
             setResult(33);
             finish();
-        }else if(returnBean.getReturn_code() ==1101||returnBean.getReturn_code() ==1102){
+        } else if (returnBean.getReturn_code() == 1101 || returnBean.getReturn_code() == 1102) {
             toastSHORT("重复登录或令牌超时");
             LogoutUtils.exitUser(CreateQuotes.this);
-        }
-
-
-        else {
+        } else {
             toast(returnBean.getReturn_message());
         }
     }

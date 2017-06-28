@@ -2,7 +2,6 @@ package com.hj.casps.base;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -41,6 +40,7 @@ import com.hj.casps.util.NetUtil;
 import com.hj.casps.widget.WaitDialogRectangle;
 import com.lzy.okgo.OkGo;
 
+import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -477,7 +477,7 @@ public class ActivityBase extends ActivityCommBase implements
                                 toastSHORT(loginBean.getReturn_message());
                             } else if (loginBean.getReturn_code() == 999) {
                                 toastSHORT(loginBean.getReturn_message());
-                            }else{
+                            } else {
                                 toastSHORT("其他异常");
                             }
                         }
@@ -529,6 +529,7 @@ public class ActivityBase extends ActivityCommBase implements
         Matcher m = p.matcher(email);
         return m.matches();
     }
+
     //判断email格式是否正确
     public boolean isString(String content) {
         String str = "[a-zA-Z]";
@@ -539,6 +540,7 @@ public class ActivityBase extends ActivityCommBase implements
 
     /**
      * 小数点后两位
+     *
      * @param editText
      */
     public static void setPricePoint(final EditText editText) {
@@ -583,6 +585,15 @@ public class ActivityBase extends ActivityCommBase implements
             }
 
         });
+    }
 
+    /**
+     * 提供精确乘法运算的mul方法
+     * @return 两个参数的积
+     */
+    public static double doubleValue(double d1, double d2) {
+        BigDecimal b1 = new BigDecimal(Double.toString(d1));
+        BigDecimal b2 = new BigDecimal(Double.toString(d2));
+        return b1.multiply(b2).doubleValue();
     }
 }

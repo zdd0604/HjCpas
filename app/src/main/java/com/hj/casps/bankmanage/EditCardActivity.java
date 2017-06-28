@@ -285,7 +285,7 @@ public class EditCardActivity extends ActivityBaseHeader2 implements View.OnClic
             case R.id.ed_account_number:
                 if (addressList != null && addressList.size() >= 0) {
                     showCityPopupWindow();
-                }else {
+                } else {
                     toastSHORT("地狱树获取失败");
                 }
                 break;
@@ -371,13 +371,10 @@ public class EditCardActivity extends ActivityBaseHeader2 implements View.OnClic
                     setResult(Constant.CARD_EDIT);
                     mHandler.sendEmptyMessage(Constant.HANDLERTYPE_5);
                     EditCardActivity.this.finish();
-                }else if(return_code==1101||return_code==1102){
+                } else if (return_code == 1101 || return_code == 1102) {
                     toastSHORT("重复登录或令牌超时");
                     LogoutUtils.exitUser(EditCardActivity.this);
-                }
-
-
-                else {
+                } else {
                     toast(return_message);
                 }
                 return null;
@@ -427,11 +424,9 @@ public class EditCardActivity extends ActivityBaseHeader2 implements View.OnClic
                     setResult(Constant.CARD_ADD);
                     mHandler.sendEmptyMessage(Constant.HANDLERTYPE_4);
                     EditCardActivity.this.finish();
-                }else if(return_code==1101||return_code==1102){
+                } else if (return_code == 1101 || return_code == 1102) {
                     LogoutUtils.exitUser(EditCardActivity.this);
-                }
-
-                else {
+                } else {
                     toast(return_message);
                 }
                 return null;
@@ -526,12 +521,9 @@ public class EditCardActivity extends ActivityBaseHeader2 implements View.OnClic
                         EditCardActivity.this.isOne = num == 0 ? true : false;
                         mHandler.sendEmptyMessage(Constant.HANDLERTYPE_1);
                         waitDialogRectangle.dismiss();
-                    }else if(return_code==1101||return_code==1102){
+                    } else if (return_code == 1101 || return_code == 1102) {
                         LogoutUtils.exitUser(EditCardActivity.this);
-                    }
-
-
-                    else {
+                    } else {
                         toast(return_message);
                     }
                 }
@@ -553,6 +545,12 @@ public class EditCardActivity extends ActivityBaseHeader2 implements View.OnClic
         Constant.JSONFATHERRESPON = "AddressEditRespon";
         if (!StringUtils.isStrTrue(getEdVaule(account_name))) {
             toastSHORT("收货地址不能为空");
+            waitDialogRectangle.dismiss();
+            return;
+        }
+
+        if (!isMobileNO(getEdVaule(mobile_number))) {
+            toastSHORT("请输入正确的手机号");
             waitDialogRectangle.dismiss();
             return;
         }
@@ -687,7 +685,6 @@ public class EditCardActivity extends ActivityBaseHeader2 implements View.OnClic
                     }
                 });
     }
-
 
 
     /**

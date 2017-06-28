@@ -32,9 +32,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:maxLines="1"
             android:background="@null"
             android:hint="@string/hint_ed_caoun_title"
+            android:maxLength="30"
+            android:maxLines="1"
             android:textSize="@dimen/font_size_16" />
     </LinearLayout>
 
@@ -61,8 +62,8 @@
             android:layout_weight="1"
             android:background="@null"
             android:hint="@string/hint_ed_opr_name_title"
-            android:maxLines="1"
             android:maxLength="6"
+            android:maxLines="1"
             android:textSize="@dimen/font_size_16" />
     </LinearLayout>
 
@@ -88,10 +89,10 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@null"
-            android:inputType="number"
-            android:maxLines="1"
-            android:maxLength="11"
             android:hint="@string/hint_ed_amobile_title"
+            android:inputType="number"
+            android:maxLength="11"
+            android:maxLines="1"
             android:textSize="@dimen/font_size_16" />
     </LinearLayout>
 

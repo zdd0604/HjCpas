@@ -58,8 +58,8 @@ public abstract class WZYBaseAdapter<T> extends BaseAdapter {
     public void addRes(List<T> data) {
         if (data != null && data.size() > 0) {
             this.data.addAll(data);
-            notifyDataSetChanged();
         }
+        notifyDataSetChanged();
     }
 
     @Override
@@ -88,12 +88,12 @@ public abstract class WZYBaseAdapter<T> extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
         //数据加载
-        bindData(holder, getItem(position),position);
+        bindData(holder, getItem(position), position);
         return convertView;
 
     }
 
-    public abstract void bindData(ViewHolder holder, T t,int indexPostion);
+    public abstract void bindData(ViewHolder holder, T t, int indexPostion);
 
     protected static class ViewHolder {
         //convertView的引用

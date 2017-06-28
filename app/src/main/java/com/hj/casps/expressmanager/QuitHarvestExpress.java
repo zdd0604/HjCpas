@@ -401,7 +401,7 @@ public class QuitHarvestExpress extends ActivityBaseHeader implements OnPullList
                         super.onError(call, response, e);
                         toastSHORT(e.getMessage());
                         waitDialogRectangle.dismiss();
-                        if (Constant.public_code){
+                        if (Constant.public_code) {
                             //退出操作
                             LogoutUtils.exitUser(QuitHarvestExpress.this);
                         }
@@ -446,7 +446,7 @@ public class QuitHarvestExpress extends ActivityBaseHeader implements OnPullList
                         super.onError(call, response, e);
                         toastSHORT(e.getMessage());
                         waitDialogRectangle.dismiss();
-                        if (Constant.public_code){
+                        if (Constant.public_code) {
                             //退出操作
                             LogoutUtils.exitUser(QuitHarvestExpress.this);
                         }
@@ -555,10 +555,17 @@ public class QuitHarvestExpress extends ActivityBaseHeader implements OnPullList
                         toastSHORT("请填写数量");
                         return;
                     }
+
                     if (dbList.get(i).getExeGetreturngoodsNum() < Integer.valueOf(dbList.get(i).getNum())) {
                         toastSHORT("超出待收数量");
                         return;
                     }
+
+                    if (!StringUtils.isStrTrue(dbList.get(i).getAddressName())) {
+                        toastSHORT("尚未创建地址，收退货失败");
+                        return;
+                    }
+
                     orderList.add(new GetReturnGoodsOperation.GetReturnGoodsList(
                             dbList.get(i).getOrderId(),
                             String.valueOf(dbList.get(i).getNum()),

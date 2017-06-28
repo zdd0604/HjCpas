@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.hj.casps.R;
 import com.hj.casps.adapter.payadapter.CommonAdapter;
 import com.hj.casps.adapter.payadapter.ViewHolder;
+import com.hj.casps.base.ActivityBase;
 import com.hj.casps.common.Constant;
 import com.hj.casps.entity.appsettle.QueryPendingSttleGain;
 import com.hj.casps.util.StringUtils;
@@ -99,6 +100,8 @@ public class CheckWaitAdapter extends CommonAdapter<QueryPendingSttleGain> {
 
 
         final EditText layout_check_ed_content_6 = hooder.getView(R.id.layout_check_ed_content_6);
+        //控制小数点后两位
+        ActivityBase.setPricePoint(layout_check_ed_content_6);
         if (layout_check_ed_content_6.getTag() instanceof TextWatcher) {
             layout_check_ed_content_6.removeTextChangedListener((TextWatcher) layout_check_ed_content_6.getTag());
             layout_check_ed_content_6.clearFocus();

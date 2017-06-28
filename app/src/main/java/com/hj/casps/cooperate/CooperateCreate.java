@@ -191,11 +191,10 @@ public class CooperateCreate extends ActivityBaseHeader2 implements View.OnClick
                         EditBack databack = mGson.fromJson(s, EditBack.class);
                         if (databack.getReturn_code() != 0) {
                             Toast.makeText(context, databack.getReturn_message(), Toast.LENGTH_SHORT).show();
-                        }else if(databack.getReturn_code()==1101||databack.getReturn_code()==1102){
+                        } else if (databack.getReturn_code() == 1101 || databack.getReturn_code() == 1102) {
                             toastSHORT("重复登录或令牌超时");
                             LogoutUtils.exitUser(CooperateCreate.this);
-                        }
-                        else {
+                        } else {
                             buy_mmb_id = databack.getData().getBuy_mmb_id();
                             sell_mmb_id = databack.getData().getSell_mmb_id();
                             cooperate_buy_role.setText(databack.getData().getBuy_membername());
@@ -335,13 +334,10 @@ public class CooperateCreate extends ActivityBaseHeader2 implements View.OnClick
                         DataBack databack = mGson.fromJson(s, DataBack.class);
                         if (databack.getReturn_code() != 0) {
                             Toast.makeText(context, databack.getReturn_message(), Toast.LENGTH_SHORT).show();
-                        }else if(databack.getReturn_code()==1101||databack.getReturn_code()==1102){
+                        } else if (databack.getReturn_code() == 1101 || databack.getReturn_code() == 1102) {
                             toastSHORT("重复登录或令牌超时");
                             LogoutUtils.exitUser(CooperateCreate.this);
-                        }
-
-
-                        else {
+                        } else {
                             buy_mmb_id = databack.getBuy_mmb_id();
                             sell_mmb_id = databack.getSell_mmb_id();
                             setView(databack);
@@ -550,16 +546,17 @@ public class CooperateCreate extends ActivityBaseHeader2 implements View.OnClick
     //新建协议的提交
     private void submit() {
         // validate
-        String title = cooperate_protocol_title.getText().toString().trim();
-        String note = cooperate_products_remarks.getText().toString().trim();
-
-        String user_time = cooperate_protocol_valid_time.getText().toString().trim() + " - " + cooperate_protocol_valid_time_to.getText().toString().trim();
+        String title = getEdVaule(cooperate_protocol_title);
+        String note = getEdVaule(cooperate_products_remarks);
+        String user_time = getTvVaule(cooperate_protocol_valid_time) + " - " +
+                getTvVaule(cooperate_protocol_valid_time_to);
         if (TextUtils.isEmpty(title)) {
-            Toast.makeText(this, "标题不能为空", Toast.LENGTH_SHORT).show();
+            toastSHORT("标题不能为空");
             return;
         }
-        if (TextUtils.isEmpty(cooperate_protocol_valid_time.getText().toString().trim()) || TextUtils.isEmpty(cooperate_protocol_valid_time_to.getText().toString().trim())) {
-            Toast.makeText(this, "有效时间不能为空", Toast.LENGTH_SHORT).show();
+        if (TextUtils.isEmpty(getTvVaule(cooperate_protocol_valid_time))
+                || TextUtils.isEmpty(getTvVaule(cooperate_protocol_valid_time_to))) {
+            toastSHORT("有效时间不能为空");
             return;
         }
         String goods = "";
@@ -571,13 +568,10 @@ public class CooperateCreate extends ActivityBaseHeader2 implements View.OnClick
             }
         }
         if (TextUtils.isEmpty(goods)) {
-            Toast.makeText(this, "商品品类不能为空", Toast.LENGTH_SHORT).show();
+            toastSHORT("商品品类不能为空");
             return;
         }
 
-        // TODO validate success, do something
-        waitDialogRectangle.show();
-        waitDialogRectangle.setText("正在提交");
         CreateData data = null;
         switch (type) {
             //创建合作协议
@@ -716,34 +710,34 @@ public class CooperateCreate extends ActivityBaseHeader2 implements View.OnClick
 
     //提交后的交互
     private void gotoNet(String url, CreateData data) {
-        OkGo.post(url).params("param", mGson.toJson(data)).execute(new StringCallback() {
-            @Override
-            public void onSuccess(String s, Call call, Response response) {
-                if (waitDialogRectangle != null && waitDialogRectangle.isShowing()) {
-                    waitDialogRectangle.dismiss();
-                }
-                DataBack databack = mGson.fromJson(s, DataBack.class);
-                if (databack.getReturn_code() != 0) {
-                    Toast.makeText(context, databack.getReturn_message(), Toast.LENGTH_SHORT).show();
-                }else if(databack.getReturn_code()==1101||databack.getReturn_code()==1102){
-                    toastSHORT("重复登录或令牌超时");
-                    LogoutUtils.exitUser(CooperateCreate.this);
-                }
+        waitDialogRectangle.show();
+        waitDialogRectangle.setText("正在提交");
+        OkGo.post(url)
+                .params("param", mGson.toJson(data))
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(String s, Call call, Response response) {
+                        waitDialogRectangle.dismiss();
+                        DataBack databack = mGson.fromJson(s, DataBack.class);
+                        if (databack.getReturn_code() != 0) {
+                            Toast.makeText(context, databack.getReturn_message(), Toast.LENGTH_SHORT).show();
+                        } else if (databack.getReturn_code() == 1101 || databack.getReturn_code() == 1102) {
+                            toastSHORT("重复登录或令牌超时");
+                            LogoutUtils.exitUser(CooperateCreate.this);
+                        } else {
+                            toast("提交完成");
+                            finalGoodLevelEntities.clear();
+                            oldGoodLevelEntities.clear();
+                            finish();
+                        }
+                    }
 
-
-                else {
-                    toast("提交完成");
-                    finalGoodLevelEntities.clear();
-                    oldGoodLevelEntities.clear();
-                    finish();
-                }
-            }
-
-            @Override
-            public void onError(Call call, Response response, Exception e) {
-                super.onError(call, response, e);
-            }
-        });
+                    @Override
+                    public void onError(Call call, Response response, Exception e) {
+                        super.onError(call, response, e);
+                        waitDialogRectangle.dismiss();
+                    }
+                });
     }
 
 

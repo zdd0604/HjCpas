@@ -115,8 +115,8 @@ public class OperatorAdd extends ActivityBaseHeader2 implements View.OnClickList
                                     return;
                                 }
 
-                                if (getTvVaule(operator_ed_account).length() < 3) {
-                                    toastSHORT("账户最少三位");
+                                if (getTvVaule(operator_ed_account).length() < 2) {
+                                    toastSHORT("账户最少两位");
                                     return;
                                 }
                                 checkUser();
@@ -385,8 +385,9 @@ public class OperatorAdd extends ActivityBaseHeader2 implements View.OnClickList
             return;
         }
 
-        if (!isString(getEdVaule(operator_ed_account))) {
+        if (!isString(getEdVaule(operator_ed_account).substring(0, 1))) {
             toastSHORT("账户必须以字母开头");
+            return;
         }
 
         if (isExist) {

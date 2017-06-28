@@ -29,7 +29,6 @@ import com.hj.casps.entity.appordergoods.QueryGoodsListLoading;
 import com.hj.casps.entity.appordergoodsCallBack.AppOrderGoodsUtils;
 import com.hj.casps.entity.appordergoodsCallBack.HarvestExpressRespon;
 import com.hj.casps.entity.appordergoodsCallBack.JsonCallBack;
-import com.hj.casps.operatormanager.OperatorAdd;
 import com.hj.casps.ui.MyDialog;
 import com.hj.casps.ui.MyToast;
 import com.hj.casps.util.GsonTools;
@@ -214,6 +213,7 @@ public class HarvestExpress extends ActivityBaseHeader implements OnPullListener
             }
         }
     }
+
     /**
      * 加载本地数据
      */
@@ -297,6 +297,11 @@ public class HarvestExpress extends ActivityBaseHeader implements OnPullListener
                 }
                 if (queryGetGoodsEntity.getExe_getgoods_num() < Integer.valueOf(queryGetGoodsEntity.getNum())) {
                     toastSHORT("超出代收数量");
+                    return;
+                }
+
+                if (!StringUtils.isStrTrue(queryGetGoodsEntity.getAddressName())) {
+                    toastSHORT("尚未创建地址，收货失败");
                     return;
                 }
                 goodLsit.add(new GetGoodsLoading.NumListBean(
@@ -485,7 +490,7 @@ public class HarvestExpress extends ActivityBaseHeader implements OnPullListener
                         super.onError(call, response, e);
                         toastSHORT(e.getMessage());
                         waitDialogRectangle.dismiss();
-                        if (Constant.public_code){
+                        if (Constant.public_code) {
                             //退出操作
                             LogoutUtils.exitUser(HarvestExpress.this);
                         }
@@ -529,7 +534,7 @@ public class HarvestExpress extends ActivityBaseHeader implements OnPullListener
                         super.onError(call, response, e);
                         toastSHORT(e.getMessage());
                         waitDialogRectangle.dismiss();
-                        if (Constant.public_code){
+                        if (Constant.public_code) {
                             //退出操作
                             LogoutUtils.exitUser(HarvestExpress.this);
                         }

@@ -162,6 +162,7 @@
                 android:background="@null"
                 android:gravity="center_vertical"
                 android:hint="@string/edhint_mobile_number"
+                android:inputType="phone"
                 android:maxLength="11"
                 android:singleLine="true" />
         </LinearLayout>
@@ -195,7 +196,8 @@
                 android:background="@null"
                 android:gravity="center_vertical"
                 android:hint="@string/edhint_telephone_number"
-                android:inputType="number"
+                android:inputType="phone"
+                android:maxLength="11"
                 android:singleLine="true" />
         </LinearLayout>
 

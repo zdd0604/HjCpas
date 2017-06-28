@@ -37,12 +37,13 @@ import com.hj.casps.entity.appordermoney.QueryMmbBankAccountRespon;
 import com.hj.casps.entity.paymentmanager.RequestBackAccount;
 import com.hj.casps.entity.protocalproductentity.CreateOrder;
 import com.hj.casps.entity.protocalproductentity.OrderBack;
+import com.hj.casps.ui.MyListView;
 import com.hj.casps.util.LogoutUtils;
 import com.hj.casps.util.StringUtils;
-import com.hj.casps.widget.MyWListView;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,7 +65,7 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
     private Spinner order_detail_pay_address;//买的地址
     private Spinner order_detail_get_account;//卖的账号
     private Spinner order_detail_get_address;//卖的地址
-    private MyWListView order_detail_add_layout;//下边的ListView
+    private MyListView order_detail_add_layout;//下边的ListView
     private TextView order_detail_num;//选择了几件商品
     private TextView order_detail_product_pay;//总金额
     private List<OrderShellModel> orders;//商品的list
@@ -88,17 +89,21 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
     private String sell_id;//卖方id
     private String id;//编辑订单时的订单id
     private boolean orderList;//是否是从协议下订单过来的数据
-
+    private int ordersSize = 0;//数组的长度
     Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             switch (msg.what) {
                 case Constant.HANDLERTYPE_0:
-                    getQueryMmbBankAccountGainDatas();//获取银行账户
+                    getQueryMmbBankAccountGainDatas();
                     break;
                 case Constant.HANDLERTYPE_1:
-                    getQueryMmbWareHouseGainDatas();//获取地址列表
+                    getQueryMmbWareHouseGainDatas();
+                    break;
+                case Constant.HANDLERTYPE_2:
+                    if (ordersSize < orders.size())
+                        searchPrice(orders.get(ordersSize));
                     break;
             }
         }
@@ -127,21 +132,12 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
             state = getIntent().getIntExtra("state", 0);//区分采购销售
             getData();
         } else {
-            orders = getIntent().getParcelableArrayListExtra("orders");//获取下订单的商品列表
-            orderList = getIntent().getBooleanExtra("OrderList", false);//是否是从协议下订单来的
-            buy_id = getIntent().getStringExtra("buy_id");//供应商id
-            buy_name = getIntent().getStringExtra("buy_name");//供应商name
-            state = getIntent().getIntExtra("state", 0);//区分采购还是销售
-            if (orderList) {
-                for (int i = 0; i < orders.size(); i++) {
-                    searchPrice(orders.get(i));//搜索价格区间
-                    try {
-                        Thread.currentThread().sleep(3000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
+            orders = getIntent().getParcelableArrayListExtra("orders");
+            orderList = getIntent().getBooleanExtra("OrderList", false);
+            buy_name = getIntent().getStringExtra("buy_name");
+            state = getIntent().getIntExtra("state", 0);
+            if (orders.size() > 0)
+                mHandler.sendEmptyMessage(Constant.HANDLERTYPE_2);
         }
 
 
@@ -272,9 +268,12 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
                         } else {
                             result[0] = databack.getGoodsInfo().getMinPrice() + "-" + databack.getGoodsInfo().getMaxPrice();
                             orderShellModel.setPrice(result[0]);
-                            LogShow("orderShellModel:" + orderShellModel.toString());
+                            LogShow(orders.size() + ",,,," + ordersSize + "orderShellModel:" + orderShellModel.toString());
                             adapter.notifyDataSetChanged();
                         }
+
+                        ordersSize++;
+                        mHandler.sendEmptyMessage(Constant.HANDLERTYPE_2);
                     }
 
                     @Override
@@ -297,7 +296,7 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
         order_detail_pay_address = (Spinner) findViewById(R.id.order_detail_pay_address);
         order_detail_get_account = (Spinner) findViewById(R.id.order_detail_get_account);
         order_detail_get_address = (Spinner) findViewById(R.id.order_detail_get_address);
-        order_detail_add_layout = (MyWListView) findViewById(R.id.order_detail_add_layout);
+        order_detail_add_layout = (MyListView) findViewById(R.id.order_detail_add_layout);
         order_detail_num = (TextView) findViewById(R.id.order_detail_num);
         if (type == 0) {//编辑订单的商品数量
             order_detail_num.setText(String.valueOf(orders.size()));
@@ -314,32 +313,50 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
 
 
     @Override
-    public void onRefresh() {
+    public void onDataPriceRefresh() {
         refreshAllPrice();
     }//更新总价
+
 
     //刷新报价结果
     public void refreshAllPrice() {
         allPrice = 0.0;
-        for (OrderShellModel order : orders) {
-            if (StringUtils.isStrTrue(order.getAllprice()))
-                allPrice += Double.parseDouble(order.getAllprice());//计算总价
+        LogShow(orders.size() + "------------" + orders.toString());
+        for (int i = 0; i < orders.size(); i++) {
+            if (!StringUtils.isStrTrue(orders.get(i).getFinalprice())
+                    || Double.parseDouble(orders.get(i).getFinalprice()) <= 0) {
+                return;
+            }
+
+            if (!StringUtils.isStrTrue(String.valueOf(orders.get(i).getNum()))
+                    || orders.get(i).getNum() <= 0) {
+                return;
+            }
+
+            if (Double.parseDouble(orders.get(i).getFinalprice()) < orders.get(i).getMinPrice()) {
+                return;
+            }
+
+            if (Double.parseDouble(orders.get(i).getFinalprice()) > orders.get(i).getMaxPrice()) {
+                return;
+            }
+            allPrice += Double.valueOf(orders.get(i).getAllprice());
+
         }
-        order_detail_product_pay.setText(allPrice + "");
+        DecimalFormat df = new DecimalFormat(".##");
+        order_detail_product_pay.setText(df.format(allPrice) + "");
     }
 
     //已经订单
     private void submit() {
-//        order_detail_product_pay.requestFocusFromTouch();
-
-        refreshAllPrice();//提交前先刷新总价
-
+//        refreshAllPrice();
         // validate
         String pay = order_detail_time_pay.getText().toString().trim();
         if (TextUtils.isEmpty(pay)) {
             toastSHORT("付款时间不能为空");
             return;
         }
+
         String start = order_detail_time_start.getText().toString().trim();
         if (TextUtils.isEmpty(start)) {
             toastSHORT("开始时间不能为空");
@@ -357,23 +374,22 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
                 LogShow(orders.toString());
                 if (!StringUtils.isStrTrue(orders.get(i).getFinalprice())
                         || Double.parseDouble(orders.get(i).getFinalprice()) <= 0) {
-                    toastSHORT("请填写单价");
+                    toastSHORT("请填写商品单价");
                     return;
                 }
 
-                if (!StringUtils.isStrTrue(String.valueOf(orders.get(i).getNum()))
-                        || orders.get(i).getNum() <= 0) {
-                    toastSHORT("请填写数量");
+                if (orders.get(i).getNum() == 0) {
+                    toastSHORT("请填写商品数量");
                     return;
                 }
 
                 if (Double.parseDouble(orders.get(i).getFinalprice()) < orders.get(i).getMinPrice()) {
-                    toastSHORT("单价不能小于" + orders.get(i).getMinPrice());
+                    toastSHORT("商品单价不能小于" + orders.get(i).getMinPrice());
                     return;
                 }
 
                 if (Double.parseDouble(orders.get(i).getFinalprice()) > orders.get(i).getMaxPrice()) {
-                    toastSHORT("单价不能大于" + orders.get(i).getMaxPrice());
+                    toastSHORT("商品单价不能大于" + orders.get(i).getMaxPrice());
                     return;
                 }
             }
@@ -383,8 +399,6 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
             toastSHORT("总价为零，不能下单");
             return;
         }
-
-        // TODO validate success, do something
 
         CreateOrder post = null;
         List<CreateOrder.OrderListBean> listBeen = new ArrayList<>();

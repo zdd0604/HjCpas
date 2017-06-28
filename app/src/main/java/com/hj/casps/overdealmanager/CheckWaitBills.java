@@ -64,7 +64,7 @@ public class CheckWaitBills extends ActivityBaseHeader implements View.OnClickLi
     TextView layout_bottom_tv_4;
     @BindView(R.id.layout_bottom_check_layout1)
     LinearLayout layout_bottom_check_layout1;
-
+//40002137
     private CheckWaitAdapter cAdapter;
     private List<QueryPendingSttleGain> mList;
     private List<QueryPendingSttleGain> dbList;
