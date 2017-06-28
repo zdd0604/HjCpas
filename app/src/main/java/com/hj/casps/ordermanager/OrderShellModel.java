@@ -5,25 +5,25 @@ import android.os.Parcelable;
 
 /**
  * Created by zy on 2017/4/27.
- * 订单的返回类
+ * 订单的返回类，继承了Parcelable，便于传递
  */
 
 public class OrderShellModel implements Parcelable {
-    private String name;
-    private String goodsId;
-    private String quoteId;
-    private String price;
-    private String finalprice;
-    private String allprice;
-    private String size;
-    private String categoryId;
-    private int num;
-    private int no;
+    private String name;//商品名
+    private String goodsId;//商品ID
+    private String quoteId;//报价ID
+    private String price;//商品价格
+    private String finalprice;//该商品的合计价格
+    private String allprice;//最后的总价
+    private String size;//商品型号，后来取消了这个参数
+    private String categoryId;//商品品类ID
+    private int num;//商品数量
+    private int no;//商品的no，为了删除商品使用
     private double minPrice = 0.0;//最小单价
     private double maxPrice = 0.0;//最大单价
-    private boolean checked;
-    private boolean status;
-    private boolean delete;
+    private boolean checked;//是否选中该商品
+    private boolean status;//是否是指定商品
+    private boolean delete;//是否删除该商品
 
     public String getQuoteId() {
         return quoteId;

@@ -44,18 +44,18 @@ import static com.hj.casps.common.Constant.getUUID;
 //采购销售拣单车点击进入下单界面
 public class BuyShell extends ActivityBaseHeader2 implements View.OnClickListener {
 
-    private TextView buy_shell_info;
-    private TextView text_name_buy_shell;
-    private TextView order_buy_name_shell;
-    private TextView order_buy_num_shell;
-    private ListView buy_cart_list_shell;
-    private CheckBox select_all_shell;
-    private TextView offline_shell_reset;
-    private TextView order_buy_btn;
-    private String buy_type;
-    private String buy_name;
-    private String categoryId;
-    private int buy_num;
+    private TextView buy_shell_info;//操作说明
+    private TextView text_name_buy_shell;//采购方还是销售方
+    private TextView order_buy_name_shell;//供应商名称
+    private TextView order_buy_num_shell;//有多少种商品
+    private ListView buy_cart_list_shell;//购物车选择后的list
+    private CheckBox select_all_shell;//全选商品按钮
+    private TextView offline_shell_reset;//重置按钮
+    private TextView order_buy_btn;//下单按钮
+    private String buy_type;//传递过来是采购还是销售
+    private String buy_name;//供应商名称
+    private String categoryId;//商品品类id
+    private int buy_num;//商品品类包含的商品数量
     private List<OrderShellModel> orderShellModels;
     private List<ChooseGoodsBack.MtListBean> mtlistbeans;
     private OrderShellAdapter adapter;
@@ -149,8 +149,8 @@ public class BuyShell extends ActivityBaseHeader2 implements View.OnClickListene
 
     //加载拣单车数据，或者指定商品数据
     private void initData() {
-        choose = getIntent().getBooleanExtra("choose", false);
-        if (choose) {
+        choose = getIntent().getBooleanExtra("choose", false);//是选择指定商品还是拣单车
+        if (choose) {//如果是选择指定商品，就从网络加载数据
             no = getIntent().getIntExtra("no", -1);
             categoryId = getIntent().getStringExtra("categoryId");
 //            toast(no + "," + categoryId);
@@ -176,11 +176,12 @@ public class BuyShell extends ActivityBaseHeader2 implements View.OnClickListene
                             if (backDetail == null) {
                                 return;
                             }
-                            if (backDetail.getReturn_code() != 0) {
-                                Toast.makeText(getApplicationContext(), backDetail.getReturn_message(), Toast.LENGTH_SHORT).show();
-                            }else if(backDetail.getReturn_code()==1101||backDetail.getReturn_code()==1102){
+                            if(backDetail.getReturn_code()==1101||backDetail.getReturn_code()==1102){
                                 toastSHORT(backDetail.getReturn_message());
                                 LogoutUtils.exitUser(BuyShell.this);
+                            }
+                            else if (backDetail.getReturn_code() != 0) {
+                                Toast.makeText(getApplicationContext(), backDetail.getReturn_message(), Toast.LENGTH_SHORT).show();
                             }
                             else {
                                 mtlistbeans = backDetail.getMtList();
@@ -410,14 +411,13 @@ public class BuyShell extends ActivityBaseHeader2 implements View.OnClickListene
                             ChooseGoodsBack backDetail = mGson.fromJson(s, ChooseGoodsBack.class);
                             if (backDetail == null) {
                                 return;
-                            }
-                            if (backDetail.getReturn_code() != 0) {
-                                Toast.makeText(getApplicationContext(), backDetail.getReturn_message(), Toast.LENGTH_SHORT).show();
-                            }else if(backDetail.getReturn_code()==1101||backDetail.getReturn_code()==1102){
+                            }if(backDetail.getReturn_code()==1101||backDetail.getReturn_code()==1102){
                                 toastSHORT("重复登录或令牌超时");
                                 LogoutUtils.exitUser(BuyShell.this);
                             }
-
+                            else if (backDetail.getReturn_code() != 0) {
+                                Toast.makeText(getApplicationContext(), backDetail.getReturn_message(), Toast.LENGTH_SHORT).show();
+                            }
                             else {
 //                                Toast.makeText(getApplicationContext(), backDetail.getReturn_message(), Toast.LENGTH_SHORT).show();
                                 bundle.putInt("no", no);

@@ -26,18 +26,17 @@ import okhttp3.Call;
 import okhttp3.Response;
 
 import static com.hj.casps.common.Constant.SYS_FUNC;
-import static com.hj.casps.common.Constant.SYS_FUNC;
 import static com.hj.casps.common.Constant.getUUID;
 
 //采购拣单车 销售拣单车
 public class BuyCart extends ActivityBaseHeader implements View.OnClickListener {
 
-    private TextView buy_cart_info;
-    private ListView buy_cart_list;
-    private int type;
-    private String type_name;
-    private List<BuyCartBack.ListBean> orderBuyModels;
-    private OrderAdapter adapter;
+    private TextView buy_cart_info;//操作说明
+    private ListView buy_cart_list;//购物车list
+    private int type;//采购是0，销售是1
+    private String type_name;//设置文字，采购方，销售方
+    private List<BuyCartBack.ListBean> orderBuyModels;//从网络上获取购物车后的返回list
+    private OrderAdapter adapter;//购物车adapter
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,12 +49,12 @@ public class BuyCart extends ActivityBaseHeader implements View.OnClickListener 
     //加载拣单车的数据
     private void initData() {
         BuyCartPost post = null;
-        type = getIntent().getIntExtra(Constant.ORDER_TYPE, Constant.order_type_buy);
+        type = getIntent().getIntExtra(Constant.ORDER_TYPE, Constant.order_type_buy);//从外面传递过来是采购还是销售
         switch (type) {
-            case Constant.order_type_buy:
-                setTitle(getString(R.string.order_buy_cart));
-                type_name = getString(R.string.cooperate_buy_part);
-                post = new BuyCartPost(publicArg.getSys_token(),
+            case Constant.order_type_buy://如果是采购
+                setTitle(getString(R.string.order_buy_cart));//设置标题
+                type_name = getString(R.string.cooperate_buy_part);//设置采购方还是销售方文字
+                post = new BuyCartPost(publicArg.getSys_token(),//请求，注意这里采购提交1，销售提交0
                         getUUID(),
                         SYS_FUNC,
                         publicArg.getSys_user(),
@@ -64,7 +63,7 @@ public class BuyCart extends ActivityBaseHeader implements View.OnClickListener 
                         "1");
 
                 break;
-            case Constant.order_type_sell:
+            case Constant.order_type_sell://销售拣单车请求，同采购
                 setTitle(getString(R.string.order_sell_cart));
                 type_name = getString(R.string.cooperate_buy_role);
                 post = new BuyCartPost(publicArg.getSys_token(),
@@ -88,28 +87,27 @@ public class BuyCart extends ActivityBaseHeader implements View.OnClickListener 
                         if (backDetail == null) {
                             return;
                         }
-                        if (backDetail.getReturn_code() != 0) {
-                            Toast.makeText(context, backDetail.getReturn_message(), Toast.LENGTH_SHORT).show();
-                        }
-                        else if(backDetail.getReturn_code()==1101||backDetail.getReturn_code()==1102){
+                        if(backDetail.getReturn_code()==1101||backDetail.getReturn_code()==1102){
                             toastSHORT("重复登录或令牌超时");
                             LogoutUtils.exitUser(BuyCart.this);
                         }
-
+                        else if (backDetail.getReturn_code() != 0) {
+                            Toast.makeText(context, backDetail.getReturn_message(), Toast.LENGTH_SHORT).show();
+                        }
                         else {
                             orderBuyModels = backDetail.getList();
                             if (orderBuyModels.isEmpty()) {
 //                                Toast.makeText(context, "没有订单", Toast.LENGTH_SHORT).show();
-                                adapter.removeAll();
+                                adapter.removeAll();//订单为空的时候把adapter的数据清空
                             }
-                            int no = 0;
+                            int no = 0;//指定一个no，为所有商品排个序
                             for (int i = 0; i < orderBuyModels.size(); i++) {
                                 for (int i1 = 0; i1 < orderBuyModels.get(i).getListGoods().size(); i1++) {
                                     orderBuyModels.get(i).getListGoods().get(i1).setNo(no);
                                     no++;
                                 }
                             }
-                            adapter.updateRes(orderBuyModels);
+                            adapter.updateRes(orderBuyModels);//刷新adapter
                         }
                     }
 
@@ -119,16 +117,6 @@ public class BuyCart extends ActivityBaseHeader implements View.OnClickListener 
                         Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
-//        orderBuyModels = new ArrayList<>();
-//        for (int i = 0; i < 30; i++) {
-//            OrderBuyModel orderBuyModel = new OrderBuyModel();
-//            orderBuyModel.setName("长城商行" + String.valueOf(i + 1));
-//            orderBuyModel.setType(type_name);
-//            orderBuyModel.setContents("散装农场青菜        冷冻大肉        葵花油       五常大米       中国");
-//            orderBuyModel.setNum(i + 20);
-//            orderBuyModels.add(orderBuyModel);
-//
-//        }
 
     }
 
@@ -146,7 +134,7 @@ public class BuyCart extends ActivityBaseHeader implements View.OnClickListener 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.buy_cart_info:
+            case R.id.buy_cart_info://操作说明
                 if (type == 0) {
                     CreateDialog(Constant.DIALOG_CONTENT_23);
 
@@ -168,7 +156,7 @@ public class BuyCart extends ActivityBaseHeader implements View.OnClickListener 
         private String sys_member;
         private String type;
         private String index;
-
+        //请求获取列表使用的参数
         public BuyCartPost(String sys_token, String sys_uuid, String sys_func, String sys_user, String sys_name, String sys_member, String type) {
             this.sys_token = sys_token;
             this.sys_uuid = sys_uuid;
@@ -178,7 +166,7 @@ public class BuyCart extends ActivityBaseHeader implements View.OnClickListener 
             this.sys_member = sys_member;
             this.type = type;
         }
-
+        //请求删除时使用的参数
         public BuyCartPost(String sys_token, String sys_uuid, String sys_func, String sys_user, String sys_name, String sys_member, String type, String index) {
             this.sys_token = sys_token;
             this.sys_uuid = sys_uuid;
@@ -291,7 +279,7 @@ public class BuyCart extends ActivityBaseHeader implements View.OnClickListener 
                 parcel.writeString(mmbName);
             }
 
-            public static class ListGoodsBean implements Parcelable {
+            public static class ListGoodsBean implements Parcelable {//返回网络请求后的购物车商品
                 /**
                  * categoryId : 1002002001
                  * goodsId : ae378bc20f3b4f679096a21c1302584e
@@ -302,14 +290,14 @@ public class BuyCart extends ActivityBaseHeader implements View.OnClickListener 
                  * mmbName : cyh
                  */
 
-                private String categoryId;
-                private String goodsId;
-                private String goodsName;
-                private String id;
-                private int no;
-                private double maxPrice;
-                private double minPrice;
-                private String mmbName;
+                private String categoryId;//品类id
+                private String goodsId;//商品id
+                private String goodsName;//商品名
+                private String id;//报价id
+                private int no;//设置编号
+                private double maxPrice;//最高价格
+                private double minPrice;//最低价格
+                private String mmbName;//供应商名称
 
                 protected ListGoodsBean(Parcel in) {
                     categoryId = in.readString();
@@ -429,29 +417,29 @@ public class BuyCart extends ActivityBaseHeader implements View.OnClickListener 
 
         @Override
         public void bindData(WZYBaseAdapter.ViewHolder holder, final BuyCartBack.ListBean orderBuyModel, final int indexPos) {
-            TextView type = (TextView) holder.getView(R.id.text_name_buy_cart);
+            TextView type = (TextView) holder.getView(R.id.text_name_buy_cart);//采购方还是销售方
             type.setText(type_name);
-            TextView name = (TextView) holder.getView(R.id.order_buy_name);
+            TextView name = (TextView) holder.getView(R.id.order_buy_name);//供应商名称
             name.setText(orderBuyModel.getMmbName());
-            final TextView contents = (TextView) holder.getView(R.id.buy_cart_info_contents);
+            final TextView contents = (TextView) holder.getView(R.id.buy_cart_info_contents);//商品列表，空格隔开
             String contents_cart = "";
             for (int i = 0; i < orderBuyModel.getListGoods().size(); i++) {
-                contents_cart = contents_cart + orderBuyModel.getListGoods().get(i).getGoodsName() + "        ";
+                contents_cart = contents_cart + orderBuyModel.getListGoods().get(i).getGoodsName() + "        ";//遍历该供应商下的商品列表
             }
             contents.setText(contents_cart);
-            TextView num = (TextView) holder.getView(R.id.order_buy_num);
+            TextView num = (TextView) holder.getView(R.id.order_buy_num);//商品数量（共有多少类商品）
             num.setText(String.valueOf(orderBuyModel.getListGoods().size()));
-            RelativeLayout buy_cart_contents_rl = (RelativeLayout) holder.getView(R.id.buy_cart_contents_rl);
+            RelativeLayout buy_cart_contents_rl = (RelativeLayout) holder.getView(R.id.buy_cart_contents_rl);//加载商品列表的layout
             buy_cart_contents_rl.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View view) {
+                public void onClick(View view) {//点击layout的事件，传递采购销售类型，供应商id，名称，商品种类数量，商品列表
                     Intent intent = new Intent(context, BuyShell.class);
                     intent.putExtra("buy_type", type_name);
                     intent.putExtra("buy_name", orderBuyModel.getMmbName());
                     intent.putExtra("buy_id", orderBuyModel.getMmbId());
                     intent.putParcelableArrayListExtra("buy_list", (ArrayList<? extends Parcelable>) orderBuyModel.getListGoods());
                     intent.putExtra("buy_num", orderBuyModel.getListGoods().size());
-                    startActivityForResult(intent, Constant.START_ACTIVITY_TYPE);
+                    startActivityForResult(intent, Constant.START_ACTIVITY_TYPE);//10
                 }
             });
         }

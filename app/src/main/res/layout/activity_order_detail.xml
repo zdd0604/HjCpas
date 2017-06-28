@@ -233,7 +233,7 @@
                 android:textColor="@color/black"
                 android:textSize="@dimen/font_size_16" />
 
-            <com.hj.casps.ui.MyListView
+            <com.hj.casps..MyWListView
                 android:id="@+id/order_detail_add_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -243,7 +243,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/size_45" />
         </LinearLayout>
-
+widget
     </ScrollView>
 
     <LinearLayout
