@@ -24,6 +24,7 @@ import com.hj.casps.adapter.WZYBaseAdapter;
 import com.hj.casps.base.ActivityBaseHeader2;
 import com.hj.casps.common.Constant;
 import com.hj.casps.cooperate.CooperateGroupSearch;
+import com.hj.casps.entity.appOrder.BuyCartBack;
 import com.hj.casps.entity.appQuote.ChooseGoodsBack;
 import com.hj.casps.entity.appQuote.ChooseGoodsPost;
 import com.hj.casps.util.LogoutUtils;
@@ -64,7 +65,7 @@ public class BuyShell extends ActivityBaseHeader2 implements View.OnClickListene
     private String buy_id;
     private int no;
     public static BuyShell buyShell = null;
-    private ArrayList<BuyCart.BuyCartBack.ListBean.ListGoodsBean> buy_list;
+    private ArrayList<BuyCartBack.ListBean.ListGoodsBean> buy_list;
     private boolean choose;
     private RelativeLayout info_relative;
     private RelativeLayout relation_all;

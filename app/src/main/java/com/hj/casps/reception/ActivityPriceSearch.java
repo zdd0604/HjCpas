@@ -14,6 +14,8 @@ import com.hj.casps.R;
 import com.hj.casps.base.ActivityBaseHeader3;
 import com.hj.casps.commodity.SelectPicture02;
 import com.hj.casps.common.Constant;
+import com.hj.casps.entity.appOrder.BuyCartBack;
+import com.hj.casps.entity.appOrder.BuyCartPost;
 import com.hj.casps.entity.appordergoodsCallBack.JsonCallBack;
 import com.hj.casps.entity.paymentmanager.response.WytUtils;
 import com.hj.casps.ordermanager.BuyCart;
@@ -303,7 +305,7 @@ public class ActivityPriceSearch extends ActivityBaseHeader3 implements View.OnC
      */
     private void initShopCarData() {
         waitDialogRectangle.show();
-        BuyCart.BuyCartPost post = new BuyCart.BuyCartPost(
+        BuyCartPost post = new BuyCartPost(
                 publicArg.getSys_token(),
                 Constant.getUUID(),
                 Constant.SYS_FUNC,
@@ -318,14 +320,14 @@ public class ActivityPriceSearch extends ActivityBaseHeader3 implements View.OnC
                     @Override
                     public void onSuccess(String s, Call call, Response response) {
                         waitDialogRectangle.dismiss();
-                        BuyCart.BuyCartBack backDetail = mGson.fromJson(s, BuyCart.BuyCartBack.class);
+                        BuyCartBack backDetail = mGson.fromJson(s, BuyCartBack.class);
                         if (backDetail == null) {
                             return;
                         }
 
                         if (backDetail.getReturn_code() == 0) {
                             count = 0;
-                            List<BuyCart.BuyCartBack.ListBean> list = backDetail.getList();
+                            List<BuyCartBack.ListBean> list = backDetail.getList();
                             for (int i = 0; i < list.size(); i++) {
                                 count += list.get(i).getListGoods().size();
                             }

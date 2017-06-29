@@ -54,7 +54,7 @@ import static com.hj.casps.common.Constant.SYS_FUNC;
 import static com.hj.casps.common.Constant.getUUID;
 
 //下定单的页面
-public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickListener{
+public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickListener {
 
     private EditText order_detail_time_pay;
     private Spinner order_detail_process;
@@ -132,9 +132,11 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
             state = getIntent().getIntExtra("state", 0);
             getData();
         } else {
+            id="";
             orders = getIntent().getParcelableArrayListExtra("orders");
             orderList = getIntent().getBooleanExtra("OrderList", false);
             buy_name = getIntent().getStringExtra("buy_name");
+            buy_id = getIntent().getStringExtra("buy_id");
             state = getIntent().getIntExtra("state", 0);
             if (orders.size() > 0)
                 mHandler.sendEmptyMessage(Constant.HANDLERTYPE_2);
@@ -450,7 +452,7 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
                                 String.valueOf(orders.get(i).getNum()),
                                 orders.get(i).getAllprice(),
                                 orders.get(i).getFinalprice(),
-                                orders.get(i).getQuoteId());
+                                orders.get(i).getQuoteId(),id);
                         listBeen.add(orderListBean);
                     }
                     post = new CreateOrder(publicArg.getSys_token(),
@@ -491,7 +493,7 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
                                 String.valueOf(orders.get(i).getNum()),
                                 orders.get(i).getAllprice(),
                                 orders.get(i).getFinalprice(),
-                                orders.get(i).getQuoteId());
+                                orders.get(i).getQuoteId(),id);
                         listBeen.add(orderListBean);
                     }
                     post = new CreateOrder(publicArg.getSys_token(),

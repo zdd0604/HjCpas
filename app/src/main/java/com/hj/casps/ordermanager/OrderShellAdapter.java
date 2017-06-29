@@ -17,6 +17,8 @@ import com.google.gson.Gson;
 import com.hj.casps.R;
 import com.hj.casps.adapter.WZYBaseAdapter;
 import com.hj.casps.common.Constant;
+import com.hj.casps.entity.appOrder.BuyCartBack;
+import com.hj.casps.entity.appOrder.BuyCartPost;
 import com.hj.casps.util.LogoutUtils;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
@@ -145,7 +147,7 @@ public class OrderShellAdapter extends WZYBaseAdapter<OrderShellModel> {
     //删除购物车数据
     private void delete(int type, int no, final OrderShellModel orderShellModel) {
 
-        BuyCart.BuyCartPost post = new BuyCart.BuyCartPost(publicArg.getSys_token(),
+        BuyCartPost post = new BuyCartPost(publicArg.getSys_token(),
                 Constant.getUUID(),
                 SYS_FUNC,
                 publicArg.getSys_user(),
@@ -160,7 +162,7 @@ public class OrderShellAdapter extends WZYBaseAdapter<OrderShellModel> {
                     @Override
                     public void onSuccess(String s, Call call, Response response) {
 
-                        BuyCart.BuyCartBack backDetail = mGson.fromJson(s, BuyCart.BuyCartBack.class);
+                        BuyCartBack backDetail = mGson.fromJson(s, BuyCartBack.class);
                         if (backDetail == null) {
                             return;
                         }

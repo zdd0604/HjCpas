@@ -2,8 +2,6 @@ package com.hj.casps.reception;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -15,6 +13,8 @@ import com.hj.casps.base.ActivityBaseHeader2;
 import com.hj.casps.commodity.ActivityGoodDetail;
 import com.hj.casps.commodity.BannerImageLoader;
 import com.hj.casps.common.Constant;
+import com.hj.casps.entity.appOrder.BuyCartBack;
+import com.hj.casps.entity.appOrder.BuyCartPost;
 import com.hj.casps.entity.paymentmanager.response.WytUtils;
 import com.hj.casps.ordermanager.BuyCart;
 import com.hj.casps.quotes.wyt.PubMap;
@@ -22,11 +22,9 @@ import com.hj.casps.quotes.wyt.ReqQuoteDetail;
 import com.hj.casps.quotes.wyt.ResQuoteDetailBean;
 import com.hj.casps.quotes.wyt.ResQuoteDetailEntity;
 import com.hj.casps.ui.MyToast;
-import com.hj.casps.util.BitmapUtils;
 import com.hj.casps.util.GsonTools;
 import com.hj.casps.util.LogoutUtils;
 import com.lzy.okgo.OkGo;
-import com.lzy.okgo.callback.AbsCallback;
 import com.lzy.okgo.callback.StringCallback;
 import com.youth.banner.Banner;
 import com.youth.banner.listener.OnBannerClickListener;
@@ -334,14 +332,14 @@ public class ActivityGoodsDetailed extends ActivityBaseHeader2 implements View.O
 
     //初始化购物车数据
     private void initShopCarData() {
-        BuyCart.BuyCartPost post = new BuyCart.BuyCartPost(publicArg.getSys_token(), Constant.getUUID(), SYS_FUNC, publicArg.getSys_user(), publicArg.getSys_name(), publicArg.getSys_member(), String.valueOf(type));
+        BuyCartPost post = new BuyCartPost(publicArg.getSys_token(), Constant.getUUID(), SYS_FUNC, publicArg.getSys_user(), publicArg.getSys_name(), publicArg.getSys_member(), String.valueOf(type));
 
         OkGo.post(Constant.SearchSHPCUrl)
                 .params("param", mGson.toJson(post))
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(String s, Call call, Response response) {
-                        BuyCart.BuyCartBack backDetail = mGson.fromJson(s, BuyCart.BuyCartBack.class);
+                       BuyCartBack backDetail = mGson.fromJson(s, BuyCartBack.class);
                         if (backDetail == null) {
                             return;
                         }
@@ -355,7 +353,7 @@ public class ActivityGoodsDetailed extends ActivityBaseHeader2 implements View.O
 
                         else {
 
-                            List<BuyCart.BuyCartBack.ListBean> list = backDetail.getList();
+                            List<BuyCartBack.ListBean> list = backDetail.getList();
                             for (int i = 0; i < list.size(); i++) {
                                 count += list.get(i).getListGoods().size();
                             }
