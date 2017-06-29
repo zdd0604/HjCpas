@@ -6,7 +6,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
 import com.hj.casps.R;
 import com.hj.casps.base.ActivityBaseHeader2;
 
@@ -29,7 +28,7 @@ public class SelectPicture03 extends ActivityBaseHeader2 {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_picture03);
-        setTitle(R.string.Classs);
+        setTitle("资源名称");
         ButterKnife.bind(this);
         initView();
     }
@@ -42,7 +41,7 @@ public class SelectPicture03 extends ActivityBaseHeader2 {
     @OnClick(R.id.submit)
     void onSubmit(FancyButton v) {
         String resNameStr = editText.getText().toString().trim();
-        if (resNameStr.length()!=0){
+        if (resNameStr.length() != 0) {
             // TODO: 2017/4/21   /*文件上传*/
 
             Intent data = new Intent();
@@ -50,8 +49,8 @@ public class SelectPicture03 extends ActivityBaseHeader2 {
 //            data.putExtra(ExtraImagePath, getIntent().getStringExtra(ExtraImagePath));
             setResult(RESULT_OK, data);
             finish();
-        }else {
-            toast("文件名称不能为空");
+        } else {
+            toastSHORT("文件名称不能为空");
         }
 
     }

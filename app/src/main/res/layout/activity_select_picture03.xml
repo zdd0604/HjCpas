@@ -52,6 +52,6 @@
         app:fb_radius="@dimen/size_5"
         app:fb_text="@string/add"
         app:fb_textColor="@color/white"
-        app:fb_textSize="@dimen/btn_size"/>
+        app:fb_textSize="@dimen/btn_size" />
 
 </LinearLayout>

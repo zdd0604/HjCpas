@@ -380,31 +380,33 @@ public class PeoplePicture extends ActivityBaseHeader2 implements OnPullListener
                 imgId);
         String param = mGson.toJson(r);
         waitDialogRectangle.show();
-        OkGo.post(Constant.DelMalUrl).params("param", param).execute(new StringCallback() {
-            @Override
-            public void onSuccess(String s, Call call, Response response) {
-                waitDialogRectangle.dismiss();
-                Pub pub = GsonTools.changeGsonToBean(s, Pub.class);
-                if (pub != null) {
-                    if (pub.getReturn_code() == 0) {
-                        //删除列表对应角标的数据
-                        new MyToast(PeoplePicture.this, "删除图片成功");
-                        map.clear();
-                        adapter.remove(index);
-                    } else if (pub.getReturn_code() == 1101 || pub.getReturn_code() == 1102) {
-                        LogoutUtils.exitUser(PeoplePicture.this);
-                    } else {
-                        toast(pub.getReturn_message());
+        OkGo.post(Constant.DelMalUrl)
+                .params("param", param)
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(String s, Call call, Response response) {
+                        waitDialogRectangle.dismiss();
+                        Pub pub = GsonTools.changeGsonToBean(s, Pub.class);
+                        if (pub != null) {
+                            if (pub.getReturn_code() == 0) {
+                                //删除列表对应角标的数据
+                                new MyToast(PeoplePicture.this, "删除图片成功");
+                                map.clear();
+                                adapter.remove(index);
+                            } else if (pub.getReturn_code() == 1101 || pub.getReturn_code() == 1102) {
+                                LogoutUtils.exitUser(PeoplePicture.this);
+                            } else {
+                                toast(pub.getReturn_message());
+                            }
+                        }
                     }
-                }
-            }
 
-            @Override
-            public void onError(Call call, Response response, Exception e) {
-                super.onError(call, response, e);
-                waitDialogRectangle.dismiss();
-            }
-        });
+                    @Override
+                    public void onError(Call call, Response response, Exception e) {
+                        super.onError(call, response, e);
+                        waitDialogRectangle.dismiss();
+                    }
+                });
 
 
     }

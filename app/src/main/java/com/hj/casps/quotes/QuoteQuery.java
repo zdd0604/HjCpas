@@ -95,16 +95,13 @@ public class QuoteQuery extends ActivityBaseHeader implements View.OnClickListen
 //            url = Constant.ShowQuoteListUrl + "?param=" + s;
             getDatas(Constant.ShowQuoteListUrl, s);
         }
-
-
     }
 
     /**
      * 加载报价管理列表数据
-     * @param url
-     *          网址
-     * @param param
-     *          请求参数
+     *
+     * @param url   网址
+     * @param param 请求参数
      */
     private void getDatas(String url, String param) {
         OkGo.get(url)
@@ -127,7 +124,6 @@ public class QuoteQuery extends ActivityBaseHeader implements View.OnClickListen
         }
     }
 
-
     /**
      * 加载本地数据
      */
@@ -149,16 +145,14 @@ public class QuoteQuery extends ActivityBaseHeader implements View.OnClickListen
         QuotesBack quotesBack = gson.fromJson(response, QuotesBack.class);
         if (quotesBack.getReturn_code() != 0) {
             toast(quotesBack.getReturn_message());
-        }else if(quotesBack.getReturn_code()==1101||quotesBack.getReturn_code()==1102){
+        } else if (quotesBack.getReturn_code() == 1101 || quotesBack.getReturn_code() == 1102) {
             toastSHORT("重复登录或令牌超时");
             LogoutUtils.exitUser(QuoteQuery.this);
-        }
-
-        else {
+        } else {
             quoteModels = quotesBack.getQtList();
         }
         if (quoteModels == null || quoteModels.isEmpty()) {
-            toast("没有搜到商品");
+            toastSHORT("尚未创建报价");
             adapter.removeAll();
             return;
         }
@@ -177,8 +171,6 @@ public class QuoteQuery extends ActivityBaseHeader implements View.OnClickListen
 
         }
         saveDaoData();
-
-
     }
 
     //加载布局

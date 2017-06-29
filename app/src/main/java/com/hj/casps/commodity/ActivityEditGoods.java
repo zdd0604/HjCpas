@@ -30,7 +30,6 @@ import com.hj.casps.R;
 import com.hj.casps.adapter.TestArrayAdapter;
 import com.hj.casps.base.ActivityBaseHeader2;
 import com.hj.casps.common.Constant;
-import com.hj.casps.entity.PublicArg;
 import com.hj.casps.entity.goodsmanager.Pub;
 import com.hj.casps.entity.goodsmanager.SelectPicture02ListEntity;
 import com.hj.casps.entity.goodsmanager.request.RequestCheckName;
@@ -42,6 +41,7 @@ import com.hj.casps.entity.goodsmanager.response.ResToUpdateEntity;
 import com.hj.casps.ui.MyGridView;
 import com.hj.casps.util.GsonTools;
 import com.hj.casps.util.LogoutUtils;
+import com.hj.casps.util.StringUtils;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.AbsCallback;
 import com.lzy.okgo.callback.StringCallback;
@@ -138,37 +138,6 @@ public class ActivityEditGoods extends ActivityBaseHeader2 implements View.OnCli
     @BindView(R.id.editGoods_true_Btn)
     FancyButton submit_Fcybtn;
     public static Bitmap bimap;
-    private Handler mHandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            switch (msg.what) {
-                //数据请求成功
-                case 0:
-
-                    break;
-                case 1:
-                    if (isRepeat) {
-                        toastSHORT("商品名重复");
-                        return;
-                    } else{
-                        submitAddData();
-                    }
-                    break;
-                case 3:
-                    toast("商品添加提交成功");
-                    Constant.isFreshGood=true;
-                    ActivityEditGoods.this.finish();
-                    break;
-                case 4:
-
-                    toast("商品编辑提交成功");
-                    Constant.isFreshGood=true;
-                    ActivityEditGoods.this.finish();
-                    break;
-            }
-        }
-    };
     //判断添加还是编辑页面   true  添加     false  编辑
     private Boolean flag = false;
     private String categoryName;
@@ -176,6 +145,39 @@ public class ActivityEditGoods extends ActivityBaseHeader2 implements View.OnCli
     private Boolean isRepeat;
     private String imagePath;
     private String imageId;
+
+    private Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                //数据请求成功
+                case Constant.HANDLERTYPE_0:
+
+                    break;
+                case Constant.HANDLERTYPE_1:
+                    if (isRepeat) {
+                        toastSHORT("商品名重复");
+                        return;
+                    } else {
+                        submitAddData();
+                    }
+                    break;
+                case Constant.HANDLERTYPE_3:
+                    toast("商品添加提交成功");
+                    Constant.isFreshGood = true;
+                    setResult(RESULT_OK);
+                    ActivityEditGoods.this.finish();
+                    break;
+                case Constant.HANDLERTYPE_4:
+                    toast("商品编辑提交成功");
+                    Constant.isFreshGood = true;
+                    setResult(RESULT_OK);
+                    ActivityEditGoods.this.finish();
+                    break;
+            }
+        }
+    };
 
 
     @Override
@@ -189,7 +191,6 @@ public class ActivityEditGoods extends ActivityBaseHeader2 implements View.OnCli
             setTitle("商品添加");
         } else {
             setTitle(getString(R.string.editgood));
-
         }
         setTitleRight(null, null);
         ButterKnife.bind(this);
@@ -197,7 +198,6 @@ public class ActivityEditGoods extends ActivityBaseHeader2 implements View.OnCli
         if (!flag) {
             initData2();
         }
-
     }
 
 
@@ -266,40 +266,43 @@ public class ActivityEditGoods extends ActivityBaseHeader2 implements View.OnCli
 
     //编辑时候请求的接口
     private void initData2() {
-        PublicArg publicArg = Constant.publicArg;
-
         String timeUUID = Constant.getTimeUUID();
-        if(timeUUID.equals("")){
+        if (timeUUID.equals("")) {
             toastSHORT(getString(R.string.time_out));
             return;
         }
-        RequestToUpdateGood requestToUpdateGood = new RequestToUpdateGood(publicArg.getSys_token(), timeUUID, Constant.SYS_FUNC, publicArg.getSys_user(), publicArg.getSys_member(), goodsId);
-        String param = mGson.toJson(requestToUpdateGood);
+        RequestToUpdateGood requestToUpdateGood = new RequestToUpdateGood(
+                publicArg.getSys_token(),
+                timeUUID,
+                Constant.SYS_FUNC,
+                publicArg.getSys_user(),
+                publicArg.getSys_member(),
+                goodsId);
         waitDialogRectangle.show();
-        OkGo.post(Constant.ToUpdateGoodUrl).params("param", param).execute(new StringCallback() {
-            @Override
-            public void onSuccess(String data, Call call, Response response) {
-                waitDialogRectangle.dismiss();
-                ResToUpdateEntity entity = GsonTools.changeGsonToBean(data, ResToUpdateEntity.class);
-                log("size:" + entity.getGoodsImages().size());
-                if (entity != null && entity.getReturn_code() == 0) {
-                    ActivityEditGoods.this.updateEntity = entity;
-                    setDataAndRefrush();
-                }else if(entity.getReturn_code()==1101||entity.getReturn_code()==1102){
-                    LogoutUtils.exitUser(ActivityEditGoods.this);
-                }
-                else {
-                    toastSHORT(entity.getReturn_message());
-                }
-            }
+        OkGo.post(Constant.ToUpdateGoodUrl)
+                .params("param", mGson.toJson(requestToUpdateGood))
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(String data, Call call, Response response) {
+                        waitDialogRectangle.dismiss();
+                        ResToUpdateEntity entity = GsonTools.changeGsonToBean(data, ResToUpdateEntity.class);
+                        if (entity != null && entity.getReturn_code() == 0) {
+                            ActivityEditGoods.this.updateEntity = entity;
+                            setDataAndRefrush();
+                        } else if (entity.getReturn_code() == 1101 || entity.getReturn_code() == 1102) {
+                            LogoutUtils.exitUser(ActivityEditGoods.this);
+                        } else {
+                            toastSHORT(entity.getReturn_message());
+                        }
+                    }
 
-            @Override
-            public void onError(Call call, Response response, Exception e) {
-                super.onError(call, response, e);
-                toastSHORT(e.getMessage());
-                waitDialogRectangle.dismiss();
-            }
-        });
+                    @Override
+                    public void onError(Call call, Response response, Exception e) {
+                        super.onError(call, response, e);
+                        toastSHORT(e.getMessage());
+                        waitDialogRectangle.dismiss();
+                    }
+                });
     }
 
     private void initData(ArrayList<SelectPicture02ListEntity> multCheckDatas) {
@@ -466,24 +469,64 @@ public class ActivityEditGoods extends ActivityBaseHeader2 implements View.OnCli
                 break;
             //保存按钮
             case R.id.editGoods_true_Btn:
-                //如果是添加 需要验证  商品名称是否唯一
-                if(flag){
-                        checkNameGoNet();
-                }else{
-                    submitDetailData();
-                }
-
+                //编辑或者新增的判断
+                submitCommodity();
                 break;
         }
     }
-//添加商品提交接口
+
+    /**
+     * 判断条件是否满足提交
+     */
+    private void submitCommodity() {
+        if (categoryId == null || categoryId.equals("")) {
+            toastSHORT("必须选择分类");
+            return;
+        }
+        if (this.et_goodname.getText().toString().trim().equals("")) {
+            toastSHORT("商品名不能为空");
+            return;
+        }
+        if (!StringUtils.isStrTrue(getTvVaule(productDate))) {
+            toastSHORT("生产日期不能为空");
+            return;
+        }
+        if (!StringUtils.isStrTrue(getEdVaule(stock_Et))) {
+            toastSHORT("库存不能为空");
+            return;
+        }
+        if (!StringUtils.isStrTrue(getTvVaule(productTime_et))) {
+            toastSHORT("保质期不能为空");
+            return;
+        }
+        if (!StringUtils.isStrTrue(getEdVaule(price_from_Et))) {
+            toastSHORT("最低单价不能为空");
+            return;
+        }
+        if (!StringUtils.isStrTrue(getEdVaule(price_to_Et))) {
+            toastSHORT("最高单价不能为空");
+            return;
+        }
+        if (imagePath == null || imagePath.equals("")) {
+            toastSHORT("请选择标题");
+            return;
+        }
+        //如果是添加 需要验证  商品名称是否唯一
+        if (flag) {
+            checkNameGoNet();
+        } else {
+            submitDetailData();
+        }
+    }
+
+    //添加商品提交接口
     private void submitAddData() {
         String timeUUID = Constant.getTimeUUID();
-        if(timeUUID.equals("")){
+        if (timeUUID.equals("")) {
             toastSHORT(getString(R.string.time_out));
             return;
         }
-        PublicArg p = Constant.publicArg;
+
         String createAddress = getEdVaule(goodaddress);
         String factory = getEdVaule(product_Et);
         String product_num = getEdVaule(this.product_num);
@@ -513,49 +556,88 @@ public class ActivityEditGoods extends ActivityBaseHeader2 implements View.OnCli
         String imageIds = sb.toString();
 
         //TODO imageIds暂时没有传递值
-        RequestCreateGood r = new RequestCreateGood(p.getSys_token(),timeUUID, Constant.SYS_FUNC,
-                p.getSys_user(), p.getSys_member(), categoryId, createTime, createAddress, factory, product_num,
-                brand, stockNum, productTime, specification, unitSpecification, minPrice, maxPrice, unitPrice, described, imageId, subImagePath, imageIds, name);
+        RequestCreateGood r = new RequestCreateGood(
+                publicArg.getSys_token(),
+                timeUUID, Constant.SYS_FUNC,
+                publicArg.getSys_user(),
+                publicArg.getSys_member(),
+                categoryId,
+                createTime,
+                createAddress,
+                factory,
+                product_num,
+                brand,
+                stockNum,
+                productTime,
+                specification,
+                unitSpecification,
+                minPrice,
+                maxPrice,
+                unitPrice,
+                described,
+                imageId,
+                subImagePath,
+                imageIds, name);
 
-        String param = mGson.toJson(r);
-        log("r=" + r.toString());
         waitDialogRectangle.show();
-        OkGo.post(Constant. CreateGoodUrl).params("param", param).execute(new AbsCallback<Pub>() {
+        OkGo.post(Constant.CreateGoodUrl)
+                .params("param", mGson.toJson(r))
+                .execute(new AbsCallback<Pub>() {
 
-            @Override
-            public Pub convertSuccess(Response response) throws Exception {
-                String data = response.body().string();
-                Pub pub = GsonTools.changeGsonToBean(data, Pub.class);
-                int return_code = pub.getReturn_code();
-                String return_message = pub.getReturn_message();
-                waitDialogRectangle.dismiss();
-                if (return_code == 0) {
-                    mHandler.sendEmptyMessage(3);
-                }else if(return_code==1101||return_code==1102){
-                    LogoutUtils.exitUser(ActivityEditGoods.this);
-                }
-                else {
-                    waitDialogRectangle.dismiss();
-                    toast(return_message);
-                }
-                return null;
-            }
+                    @Override
+                    public Pub convertSuccess(Response response) throws Exception {
+                        String data = response.body().string();
+                        Pub pub = GsonTools.changeGsonToBean(data, Pub.class);
+                        int return_code = pub.getReturn_code();
+                        String return_message = pub.getReturn_message();
+                        waitDialogRectangle.dismiss();
+                        if (return_code == 0) {
+                            mHandler.sendEmptyMessage(3);
+                        } else if (return_code == 1101 || return_code == 1102) {
+                            LogoutUtils.exitUser(ActivityEditGoods.this);
+                        } else {
+                            waitDialogRectangle.dismiss();
+                            toast(return_message);
+                        }
+                        return null;
+                    }
 
-            @Override
-            public void onSuccess(Pub pub, Call call, Response response) {
-            }
-            @Override
-            public void onError(Call call, Response response, Exception e) {
-                super.onError(call, response, e);
-                waitDialogRectangle.dismiss();
-            }
-        });
+                    @Override
+                    public void onSuccess(Pub pub, Call call, Response response) {
+                    }
+
+                    @Override
+                    public void onError(Call call, Response response, Exception e) {
+                        super.onError(call, response, e);
+                        waitDialogRectangle.dismiss();
+                    }
+                });
     }
-        //提交详情
+
+    //提交详情
     private void submitDetailData() {
-        PublicArg p = Constant.publicArg;
+        if (!StringUtils.isStrTrue(getTvVaule(productDate))) {
+            toastSHORT("生产日期不能为空");
+            return;
+        }
+        if (categoryId == null || categoryId.equals("")) {
+            toastSHORT("必须选择分类");
+            return;
+        } else if (this.et_goodname.getText().toString().trim().equals("")) {
+            toastSHORT("商品名不能为空");
+            return;
+        } else if (getEdVaule(price_from_Et).equals("")) {
+            toastSHORT("最低单价不能为空");
+            return;
+        } else if (getEdVaule(price_to_Et).equals("")) {
+            toastSHORT("最高单价不能为空");
+            return;
+        } else if (imagePath == null || imagePath.equals("")) {
+            toastSHORT("请选择标题");
+            return;
+        }
         String timeUUID = Constant.getTimeUUID();
-        if(timeUUID.equals("")){
+        if (timeUUID.equals("")) {
             toastSHORT(getString(R.string.time_out));
             return;
         }
@@ -592,43 +674,63 @@ public class ActivityEditGoods extends ActivityBaseHeader2 implements View.OnCli
         //价格单位
         String unitPrice = sp_unitPrice.getText().toString().trim();
         String unitSpecification = sp_specification.getSelectedItem().toString();
-        RequestDetailGood r = new RequestDetailGood(p.getSys_token(),
+        RequestDetailGood r = new RequestDetailGood(
+                publicArg.getSys_token(),
                 timeUUID,
                 Constant.SYS_FUNC,
-                p.getSys_user(), p.getSys_member(), goodsId, categoryId, createAddress, factory, product_num, brand, stockNum, productTime, specification, unitSpecification, minPrice, maxPrice, unitPrice, described, imageId, subImagePath, imageIds, name, createTime);
-        String param = mGson.toJson(r);
+                publicArg.getSys_user(),
+                publicArg.getSys_member(),
+                goodsId, categoryId,
+                createAddress,
+                factory,
+                product_num,
+                brand,
+                stockNum,
+                productTime,
+                specification,
+                unitSpecification,
+                minPrice,
+                maxPrice,
+                unitPrice,
+                described,
+                imageId,
+                subImagePath,
+                imageIds,
+                name,
+                createTime);
         waitDialogRectangle.show();
-        OkGo.post(Constant.UpdateGoodDetailUrl).params("param", param).execute(new AbsCallback<Pub>() {
-            @Override
-            public Pub convertSuccess(Response response) throws Exception {
-                String data = response.body().string();
-                Pub pub = GsonTools.changeGsonToBean(data, Pub.class);
-                int return_code = pub.getReturn_code();
-                String return_message = pub.getReturn_message();
-                waitDialogRectangle.dismiss();
-                if (return_code == 0) {
+        OkGo.post(Constant.UpdateGoodDetailUrl)
+                .params("param", mGson.toJson(r))
+                .execute(new AbsCallback<Pub>() {
+                    @Override
+                    public Pub convertSuccess(Response response) throws Exception {
+                        String data = response.body().string();
+                        Pub pub = GsonTools.changeGsonToBean(data, Pub.class);
+                        int return_code = pub.getReturn_code();
+                        String return_message = pub.getReturn_message();
+                        waitDialogRectangle.dismiss();
+                        if (return_code == 0) {
 //                    toast("添加详情商品成功");
-                    mHandler.sendEmptyMessage(4);
-                }else if(return_code==1101||return_code==1102){
-                    LogoutUtils.exitUser(ActivityEditGoods.this);
-                }
-                else {
-                    toast(return_message);
-                }
-                return null;
-            }
+                            mHandler.sendEmptyMessage(4);
+                        } else if (return_code == 1101 || return_code == 1102) {
+                            LogoutUtils.exitUser(ActivityEditGoods.this);
+                        } else {
+                            toast(return_message);
+                        }
+                        return null;
+                    }
 
-            @Override
-            public void onSuccess(Pub pub, Call call, Response response) {
+                    @Override
+                    public void onSuccess(Pub pub, Call call, Response response) {
 
-            }
+                    }
 
-            @Override
-            public void onError(Call call, Response response, Exception e) {
-                super.onError(call, response, e);
-                waitDialogRectangle.dismiss();
-            }
-        });
+                    @Override
+                    public void onError(Call call, Response response, Exception e) {
+                        super.onError(call, response, e);
+                        waitDialogRectangle.dismiss();
+                    }
+                });
 
     }
 
@@ -639,22 +741,6 @@ public class ActivityEditGoods extends ActivityBaseHeader2 implements View.OnCli
           PublicDatas02.getInstance().setMultCheckList(null);
       }*/
     private void checkNameGoNet() {
-        if (categoryId == null || categoryId.equals("")) {
-            toast("必须选择分类");
-            return;
-        } else if (this.et_goodname.getText().toString().trim().equals("")) {
-            toast("商品名不能为空");
-            return;
-        } else if (getEdVaule(price_from_Et).equals("")) {
-            toast("开始价格不能为空");
-            return;
-        } else if (getEdVaule(price_to_Et).equals("")) {
-            toast("结束价格不能为空");
-            return;
-        } else if (imagePath == null || imagePath.equals("")) {
-            toast("请选择标题");
-            return;
-        }
         //如果是详情的话，验证是不是原有的商品名称，如果一样就直接可以上传
         /*if (!flag) {
             String editGoodName = updateEntity.getGoodsInfo().getName();
@@ -667,12 +753,16 @@ public class ActivityEditGoods extends ActivityBaseHeader2 implements View.OnCli
         }*/
         String goodname = et_goodname.getText().toString().trim();
 
-        PublicArg publicArg = Constant.publicArg;
-        RequestCheckName requestCheckName = new RequestCheckName(publicArg.getSys_token(), Constant.getUUID(), Constant.SYS_FUNC, publicArg.getSys_user(), publicArg.getSys_member(), categoryId + "", goodname);
-        String param = mGson.toJson(requestCheckName);
-//        String url="http://192.168.1.120:8081/v2/appGoods/checkName.app?param={\"sys_member\":\"testshop001\",\"sys_user\":\"e6ae4ad55d5b44769d2a54a0fedbfff7\",\"sys_token\":\"x4jiwtk2eyq8bsg9\",\"sys_func\":\"121212\",\"sys_uuid\":\"13123\",\"categoryId\":\"12123\",\"goodsName\":\"dfs\"}";
+        RequestCheckName requestCheckName = new RequestCheckName(
+                publicArg.getSys_token(),
+                Constant.getUUID(),
+                Constant.SYS_FUNC,
+                publicArg.getSys_user(),
+                publicArg.getSys_member(),
+                categoryId + "",
+                goodname);
         OkGo.post(Constant.CheckGoodName).
-                params("param", param).
+                params("param", mGson.toJson(requestCheckName)).
                 execute(new StringCallback() {
                     @Override
                     public void onSuccess(String data, Call call, Response response) {
@@ -680,10 +770,9 @@ public class ActivityEditGoods extends ActivityBaseHeader2 implements View.OnCli
                         if (checkName != null && checkName.getReturn_code() == 0) {
                             ActivityEditGoods.this.isRepeat = checkName.isRepeat();
                             mHandler.sendEmptyMessage(1);
-                        }
-                        else if(checkName.getReturn_code()==1101||checkName.getReturn_code()==1102){
+                        } else if (checkName.getReturn_code() == 1101 || checkName.getReturn_code() == 1102) {
                             LogoutUtils.exitUser(ActivityEditGoods.this);
-                        }else{
+                        } else {
                             toastSHORT(checkName.getReturn_message());
                         }
                     }
@@ -815,7 +904,6 @@ public class ActivityEditGoods extends ActivityBaseHeader2 implements View.OnCli
             }
         }
     }
-
 
 
     //接收图片库传过来的图片数据    单选或者多选的时候

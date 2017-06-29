@@ -25,7 +25,6 @@ import com.chad.library.adapter.base.listener.SimpleClickListener;
 import com.hj.casps.R;
 import com.hj.casps.base.ActivityBaseHeader;
 import com.hj.casps.common.Constant;
-import com.hj.casps.entity.PublicArg;
 import com.hj.casps.entity.goodsmanager.goodsmanagerCallBack.GoodsCategoryCallBack;
 import com.hj.casps.entity.goodsmanager.request.RequestPub;
 import com.hj.casps.entity.goodsmanager.response.GoodsCategoryEntity;
@@ -57,6 +56,7 @@ public class ActivityManageGoods extends ActivityBaseHeader implements View.OnCl
     private int fra_type;
     //多选添加按钮
     private ImageView et_add;
+    private int ac_type = 10;
     private List<NoteEntity> categoryList = new ArrayList<>();
     private Handler mHandler = new Handler() {
         @Override
@@ -123,23 +123,32 @@ public class ActivityManageGoods extends ActivityBaseHeader implements View.OnCl
         if (requestCode == 11 && resultCode == RESULT_OK) {
             setResult(RESULT_OK);
             finish();
+        } else if (requestCode == 10 && resultCode == RESULT_OK) {
+            //新增商品
+            if (hasInternetConnected())
+                initData();
         }
     }
 
     //初始化数据
     private void initData() {
-        PublicArg p = Constant.publicArg;
-        RequestPub r = new RequestPub(p.getSys_token(), Constant.getUUID(), Constant.SYS_FUNC, p.getSys_user(), p.getSys_member());
-        String param = mGson.toJson(r);
+        RequestPub r = new RequestPub(
+                publicArg.getSys_token(),
+                Constant.getUUID(),
+                Constant.SYS_FUNC,
+                publicArg.getSys_user(),
+                publicArg.getSys_member());
+        LogShow(mGson.toJson(r));
         OkGo.post(Constant.GetUserCategoryUrl)
-                .params("param", param)
+                .params("param", mGson.toJson(r))
                 .execute(new GoodsCategoryCallBack<GoodsCategoryEntity<List<NoteEntity>>>() {
                     @Override
-                    public void onSuccess(GoodsCategoryEntity<List<NoteEntity>> listGoodsCategoryEntity, Call call, Response response) {
+                    public void onSuccess(GoodsCategoryEntity<List<NoteEntity>> listGoodsCategoryEntity,
+                                          Call call, Response response) {
                         super.onSuccess(listGoodsCategoryEntity, call, response);
                         if (listGoodsCategoryEntity != null) {
-                            List<NoteEntity> categoryList = listGoodsCategoryEntity.categoryList;
-                            ActivityManageGoods.this.categoryList.addAll(categoryList);
+                            categoryList.clear();
+                            categoryList.addAll(listGoodsCategoryEntity.categoryList);
                             Constant.goodCategoryList = categoryList;
                             mHandler.sendEmptyMessage(Constant.HANDLERTYPE_0);
                         }
@@ -153,8 +162,6 @@ public class ActivityManageGoods extends ActivityBaseHeader implements View.OnCl
                         }
                     }
                 });
-
-
     }
 
     private void initView() {
@@ -225,11 +232,11 @@ public class ActivityManageGoods extends ActivityBaseHeader implements View.OnCl
     private void resolveData(ActivityManageGoods.GoodLevelEntity lv0, NoteEntity noteEntity) {
         if (noteEntity.getNodes() != null && noteEntity.getNodes().size() > 0) {
             for (int i = 0; i < noteEntity.getNodes().size(); i++) {
-                NoteEntity itemNoteEntity=noteEntity.getNodes().get(i);
+                NoteEntity itemNoteEntity = noteEntity.getNodes().get(i);
                 ActivityManageGoods.GoodLevelEntity goodEntity = new ActivityManageGoods.GoodLevelEntity(
                         itemNoteEntity.getCategoryName(), itemNoteEntity.getCategoryId());
                 lv0.addSubItem(goodEntity);
-                resolveData(goodEntity,itemNoteEntity);
+                resolveData(goodEntity, itemNoteEntity);
             }
         }
     }
@@ -245,7 +252,7 @@ public class ActivityManageGoods extends ActivityBaseHeader implements View.OnCl
             case R.id.layout_head_left_btn:
                 Intent intent = new Intent(ActivityManageGoods.this, ActivityEditGoods.class);
                 intent.putExtra(Constant.INTENTISADDGOODS, true);
-                startActivity(intent);
+                startActivityForResult(intent, ac_type);
                 break;
             case R.id.layout_head_right_tv:
                 //    操作说明
