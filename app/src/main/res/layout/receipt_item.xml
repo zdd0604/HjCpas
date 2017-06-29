@@ -5,10 +5,6 @@
     android:background="@color/white"
     android:orientation="vertical">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/size_5"
-        android:background="@color/view_bg" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -133,7 +129,7 @@
         android:background="@color/view_bg" />
 
     <LinearLayout
-       android:id="@+id/ll_remark"
+        android:id="@+id/ll_remark"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/size_10"
@@ -144,7 +140,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="@string/head_remark_hint_title"
-            android:textColor="@color/tv_hint_color"
+            android:textColor="@color/bills_tv_color"
             android:textSize="@dimen/font_size_16" />
 
         <EditText
@@ -158,4 +154,9 @@
             android:textColor="@color/bills_tv_color"
             android:textSize="@dimen/font_size_16" />
     </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_1"
+        android:background="@color/view_bg" />
 </LinearLayout>

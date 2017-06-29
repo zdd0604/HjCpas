@@ -84,6 +84,7 @@ public class ReceiptActivity extends ActivityBaseHeader implements OnPullListene
 //    private boolean isSave = true;//是否清除数据
     private boolean isSave = true;//是否保存数据
     private boolean isRSave = true;//重置时是否保存数据
+    private int pagecount;
 
     private Handler mHandler = new Handler() {
         @Override
@@ -96,7 +97,6 @@ public class ReceiptActivity extends ActivityBaseHeader implements OnPullListene
             }
         }
     };
-    private int pagecount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -179,7 +179,6 @@ public class ReceiptActivity extends ActivityBaseHeader implements OnPullListene
         }
 
         dbList.addAll(mList);
-        LogShow(dbList.size() + "---------集合长度");
 
         if (pageNo == 0) {
             receiptAdapter = new ReceiptAdapter(this, mList);
