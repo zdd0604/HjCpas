@@ -1,6 +1,7 @@
 package com.hj.casps.adapter.overdealadapter;
 
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.hj.casps.R;
@@ -14,10 +15,17 @@ import com.hj.casps.entity.appsettle.QuerysettleDetailOneGain;
  */
 
 public class ViewHolderTypeOne extends TypeAbstractViewHolder<QuerysettleDetailOneGain> {
-    private TextView layout_0_tv_content, layout_1_tv_content, layout_2_tv_content,
-            layout_3_tv_content, layout_4_tv_content,
-            layout_5_tv_content, layout_6_tv_content,
-            layout_7_tv_content, layout_8_tv_content;
+    private CheckBox layout_check_order_1;
+    private TextView layout_0_tv_content,
+            layout_1_tv_content,
+            layout_2_tv_content,
+            layout_3_tv_content,
+            layout_4_tv_content,
+            layout_5_tv_content,
+            layout_6_tv_content,
+            layout_7_tv_content,
+            layout_8_tv_content,
+            layout_tv_order_2;
 
 
     public ViewHolderTypeOne(View itemView) {
@@ -41,7 +49,10 @@ public class ViewHolderTypeOne extends TypeAbstractViewHolder<QuerysettleDetailO
         TextView layout_8_tv_tltle = (TextView) itemView.findViewById(R.id.layout_8_tv_tltle);
         layout_8_tv_tltle.setText(R.string.hint_tv_guarantee_register_type_title);
 
-        layout_0_tv_content = (TextView) itemView.findViewById(R.id.rl_one_tv_bills_id);
+        itemView.findViewById(R.id.layout_check_order_1).setVisibility(View.GONE);
+        layout_tv_order_2 = (TextView) itemView.findViewById(R.id.layout_tv_order_2);
+        layout_tv_order_2.setText("结款单号：");
+        layout_0_tv_content = (TextView) itemView.findViewById(R.id.layout_tv_order_3);
         layout_1_tv_content = (TextView) itemView.findViewById(R.id.rl_ft_tv_bills_type);
         layout_2_tv_content = (TextView) itemView.findViewById(R.id.rl_ft_tv_flow_id);
         layout_3_tv_content = (TextView) itemView.findViewById(R.id.rl_ft_tv_buy_name);
@@ -58,7 +69,7 @@ public class ViewHolderTypeOne extends TypeAbstractViewHolder<QuerysettleDetailO
 
     @Override
     public void bindViewHolder(QuerysettleDetailOneGain querysettleDetailOneGain, final int postion) {
-        layout_0_tv_content.setText(querysettleDetailOneGain.getSettleCode()+"");
+        layout_0_tv_content.setText(querysettleDetailOneGain.getSettleCode() + "");
         layout_1_tv_content.setText(querysettleDetailOneGain.getMmbpayName());
         layout_2_tv_content.setText(querysettleDetailOneGain.getMmbgetName());
         layout_3_tv_content.setText(querysettleDetailOneGain.getSettleMoney() + "");

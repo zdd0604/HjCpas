@@ -9,7 +9,6 @@ import android.view.View;
 
 import com.hj.casps.R;
 import com.hj.casps.adapter.overdealadapter.SectionDetailsAdapter;
-import com.hj.casps.adapter.wrapper.LoadMoreWrapper;
 import com.hj.casps.base.ActivityBaseHeader2;
 import com.hj.casps.common.Constant;
 import com.hj.casps.entity.appsettle.QuerysettleDetailLoading;
@@ -113,14 +112,14 @@ public class BillsSectionDetailsActivity extends ActivityBaseHeader2 {
     private void getNetWorkSendExpress() {
         waitDialogRectangle.show();
         QuerysettleDetailLoading qEntity = new QuerysettleDetailLoading(
-                Constant.publicArg.getSys_token(),
+                publicArg.getSys_token(),
                 Constant.getUUID(),
                 Constant.SYS_FUNC,
-                Constant.publicArg.getSys_user(),
-                Constant.publicArg.getSys_member(),
+                publicArg.getSys_user(),
+                publicArg.getSys_member(),
                 id);
-//        toastSHORT(mGson.toJson(qEntity));
         Constant.JSONFATHERRESPON = "ReturnMessageRespon";
+        LogShow(mGson.toJson(qEntity));
         OkGo.post(Constant.QuerysettleDetailUrl)
                 .tag(this)
                 .params("param", mGson.toJson(qEntity))

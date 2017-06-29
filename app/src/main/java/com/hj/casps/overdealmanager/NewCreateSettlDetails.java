@@ -24,9 +24,9 @@ import com.hj.casps.adapter.payadapter.CommonAdapter;
 import com.hj.casps.adapter.payadapter.ViewHolder;
 import com.hj.casps.base.ActivityBaseHeader2;
 import com.hj.casps.common.Constant;
-import com.hj.casps.entity.appordermoney.OverBillsDtailsEntity;
 import com.hj.casps.entity.appUser.ReturnMessageRespon;
 import com.hj.casps.entity.appordergoodsCallBack.JsonCallBack;
+import com.hj.casps.entity.appordermoney.OverBillsDtailsEntity;
 import com.hj.casps.entity.appordermoney.QueryAddressAccountEntity;
 import com.hj.casps.entity.appordermoney.QueryAddressAccountLoading;
 import com.hj.casps.entity.appordermoney.QueryPayMoneyOrderForSettleEntity;
@@ -140,6 +140,7 @@ public class NewCreateSettlDetails extends ActivityBaseHeader2 implements View.O
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.layout_bottom_check_1:
+                //全选按钮点击事件
                 selectCheck();
                 break;
             case R.id.layout_bottom_tv_2:
@@ -185,7 +186,8 @@ public class NewCreateSettlDetails extends ActivityBaseHeader2 implements View.O
             QueryPayMoneyOrderForSettleEntity entity = commList.get(i);
             if (entity.isCheck()) {
                 if (entity.getEndPaymoneyNum() == null ||
-                        !StringUtils.isStrTrue(entity.getEndPaymoneyNum())) {
+                        !StringUtils.isStrTrue(entity.getEndPaymoneyNum()) ||
+                        Integer.valueOf(entity.getEndPaymoneyNum()) == 0) {
                     toastSHORT("请填写实付金额");
                     return;
                 }

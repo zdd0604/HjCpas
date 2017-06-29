@@ -18,18 +18,28 @@ import static com.hj.casps.common.Constant.GetWorkFlowType;
  */
 
 public class ViewHolderFather extends TypeAbstractViewHolder<AppOrderCheckOrderOrdertitle> {
-    private TextView rl_one_tv_bills_id, rl_ft_tv_bills_type,
-            rl_ft_tv_flow_id, rl_ft_tv_buy_name,
-            rl_ft_tv_contract_time, rl_ft_tv_payment_time,
-            rl_ft_tv_start_delivery, rl_ft_tv_end_delivery,
-            rl_ft_tv_sum_money, rl_ft_tv_payment_card_id,
-            rl_ft_tv_gathering_card, rl_ft_tv_payment_address, rl_ft_tv_payment_address_f;
+    private TextView rl_one_tv_bills_id,
+            rl_ft_tv_bills_type,
+            rl_ft_tv_flow_id,
+            rl_ft_tv_buy_name,
+            rl_ft_tv_contract_time,
+            rl_ft_tv_payment_time,
+            rl_ft_tv_start_delivery,
+            rl_ft_tv_end_delivery,
+            rl_ft_tv_sum_money,
+            rl_ft_tv_payment_card_id,
+            rl_ft_tv_gathering_card,
+            rl_ft_tv_payment_address,
+            rl_ft_tv_payment_address_f,
+            layout_tv_order_2;
 
 
     public ViewHolderFather(View itemView) {
         super(itemView);
-
-        rl_one_tv_bills_id = (TextView) itemView.findViewById(R.id.rl_one_tv_bills_id);
+        itemView.findViewById(R.id.layout_check_order_1).setVisibility(View.GONE);
+        layout_tv_order_2 = (TextView) itemView.findViewById(R.id.layout_tv_order_2);
+        layout_tv_order_2.setText("订单号：");
+        rl_one_tv_bills_id = (TextView) itemView.findViewById(R.id.layout_tv_order_3);
         rl_ft_tv_bills_type = (TextView) itemView.findViewById(R.id.rl_ft_tv_bills_type);
         rl_ft_tv_flow_id = (TextView) itemView.findViewById(R.id.rl_ft_tv_flow_id);
         rl_ft_tv_buy_name = (TextView) itemView.findViewById(R.id.rl_ft_tv_buy_name);

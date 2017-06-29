@@ -116,6 +116,7 @@ public class CreateSectionBills extends ActivityBaseHeader implements View.OnCli
             }
         }
 
+        //结款单的单号点击回调事件
         CreateSectionAdapter.setOnClickSectionListener(this);
 
         if (isRSave)
@@ -170,6 +171,7 @@ public class CreateSectionBills extends ActivityBaseHeader implements View.OnCli
         bundle.putSerializable(Constant.BUNDLE_TYPE, mList.get(pos).getId());
         intentActivity(BillsSectionDetailsActivity.class, bundle);
     }
+
 
     /**
      * 网络请求获取发货列表
