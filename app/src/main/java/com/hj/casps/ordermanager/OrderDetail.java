@@ -37,7 +37,6 @@ import com.hj.casps.entity.appordermoney.QueryMmbBankAccountRespon;
 import com.hj.casps.entity.paymentmanager.RequestBackAccount;
 import com.hj.casps.entity.protocalproductentity.CreateOrder;
 import com.hj.casps.entity.protocalproductentity.OrderBack;
-import com.hj.casps.ui.MyListView;
 import com.hj.casps.util.LogoutUtils;
 import com.hj.casps.util.StringUtils;
 import com.hj.casps.widget.MyWListView;
@@ -55,8 +54,7 @@ import static com.hj.casps.common.Constant.SYS_FUNC;
 import static com.hj.casps.common.Constant.getUUID;
 
 //下定单的页面
-public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickListener,
-        OrderShellDetailAdapter.upDataPrice {
+public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickListener{
 
     private EditText order_detail_time_pay;
     private Spinner order_detail_process;
@@ -311,14 +309,14 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
         order_detail_submit = (Button) findViewById(R.id.order_detail_submit);
         order_detail_submit.setOnClickListener(this);
         order_detail_process.setAdapter(stringArrayAdapter3);
-        OrderShellDetailAdapter.setUpDataPrice(this);
+//        OrderShellDetailAdapter.setUpDataPrice(this);
     }
 
 
-    @Override
-    public void onDataPriceRefresh() {
-        refreshAllPrice();
-    }
+//    @Override
+//    public void onDataPriceRefresh() {
+//        refreshAllPrice();
+//    }
 
     //刷新报价结果
     public void refreshAllPrice() {
@@ -351,7 +349,7 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
 
     //已经订单
     private void submit() {
-//        refreshAllPrice();
+        refreshAllPrice();
         // validate
         String pay = order_detail_time_pay.getText().toString().trim();
         if (TextUtils.isEmpty(pay)) {

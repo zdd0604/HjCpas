@@ -25,6 +25,36 @@ public class OrderShellModel implements Parcelable {
     private boolean status;//是否是指定商品
     private boolean delete;//是否删除该商品
 
+    protected OrderShellModel(Parcel in) {
+        name = in.readString();
+        goodsId = in.readString();
+        quoteId = in.readString();
+        price = in.readString();
+        finalprice = in.readString();
+        allprice = in.readString();
+        size = in.readString();
+        categoryId = in.readString();
+        num = in.readInt();
+        no = in.readInt();
+        minPrice = in.readDouble();
+        maxPrice = in.readDouble();
+        checked = in.readByte() != 0;
+        status = in.readByte() != 0;
+        delete = in.readByte() != 0;
+    }
+
+    public static final Creator<OrderShellModel> CREATOR = new Creator<OrderShellModel>() {
+        @Override
+        public OrderShellModel createFromParcel(Parcel in) {
+            return new OrderShellModel(in);
+        }
+
+        @Override
+        public OrderShellModel[] newArray(int size) {
+            return new OrderShellModel[size];
+        }
+    };
+
     public String getQuoteId() {
         return quoteId;
     }
@@ -68,31 +98,8 @@ public class OrderShellModel implements Parcelable {
     public OrderShellModel() {
     }
 
-    protected OrderShellModel(Parcel in) {
-        name = in.readString();
-        goodsId = in.readString();
-        quoteId = in.readString();
-        price = in.readString();
-        size = in.readString();
-        categoryId = in.readString();
-        num = in.readInt();
-        no = in.readInt();
-        checked = in.readByte() != 0;
-        status = in.readByte() != 0;
-        delete = in.readByte() != 0;
-    }
 
-    public static final Creator<OrderShellModel> CREATOR = new Creator<OrderShellModel>() {
-        @Override
-        public OrderShellModel createFromParcel(Parcel in) {
-            return new OrderShellModel(in);
-        }
 
-        @Override
-        public OrderShellModel[] newArray(int size) {
-            return new OrderShellModel[size];
-        }
-    };
 
     public String getGoodsId() {
         return goodsId;
@@ -174,25 +181,7 @@ public class OrderShellModel implements Parcelable {
         this.num = num;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
 
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(name);
-        parcel.writeString(goodsId);
-        parcel.writeString(quoteId);
-        parcel.writeString(price);
-        parcel.writeString(size);
-        parcel.writeString(categoryId);
-        parcel.writeInt(num);
-        parcel.writeInt(no);
-        parcel.writeByte((byte) (checked ? 1 : 0));
-        parcel.writeByte((byte) (status ? 1 : 0));
-        parcel.writeByte((byte) (delete ? 1 : 0));
-    }
 
     @Override
     public String toString() {
@@ -221,5 +210,29 @@ public class OrderShellModel implements Parcelable {
         minPrice = 0.0;
         maxPrice = 0.0;
         num = 0;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(name);
+        parcel.writeString(goodsId);
+        parcel.writeString(quoteId);
+        parcel.writeString(price);
+        parcel.writeString(finalprice);
+        parcel.writeString(allprice);
+        parcel.writeString(size);
+        parcel.writeString(categoryId);
+        parcel.writeInt(num);
+        parcel.writeInt(no);
+        parcel.writeDouble(minPrice);
+        parcel.writeDouble(maxPrice);
+        parcel.writeByte((byte) (checked ? 1 : 0));
+        parcel.writeByte((byte) (status ? 1 : 0));
+        parcel.writeByte((byte) (delete ? 1 : 0));
     }
 }

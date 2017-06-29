@@ -27,7 +27,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:text="23300.00"
+            android:text="0.00"
             android:textSize="@dimen/font_size_14" />
 
         <TextView
@@ -87,30 +87,6 @@
             android:maxLength="9"
             android:gravity="center"
             android:inputType="number" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/size_45"
-        android:layout_marginBottom="@dimen/size_10"
-        android:background="@color/white"
-        android:paddingBottom="@dimen/size_10"
-        android:visibility="gone">
-
-        <TextView
-            android:layout_width="@dimen/size_80"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="@string/pro_Specifications"
-            android:textSize="@dimen/font_size_14" />
-
-        <TextView
-            android:id="@+id/order_detail_item_size"
-            android:layout_width="@dimen/size_200"
-            android:layout_height="match_parent"
-            android:layout_margin="@dimen/size_5"
-            android:gravity="center_vertical"
-            android:text="400千克" />
     </LinearLayout>
 
 </LinearLayout>

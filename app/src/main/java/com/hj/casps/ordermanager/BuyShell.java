@@ -176,14 +176,12 @@ public class BuyShell extends ActivityBaseHeader2 implements View.OnClickListene
                             if (backDetail == null) {
                                 return;
                             }
-                            if(backDetail.getReturn_code()==1101||backDetail.getReturn_code()==1102){
+                            if (backDetail.getReturn_code() == 1101 || backDetail.getReturn_code() == 1102) {
                                 toastSHORT(backDetail.getReturn_message());
                                 LogoutUtils.exitUser(BuyShell.this);
-                            }
-                            else if (backDetail.getReturn_code() != 0) {
+                            } else if (backDetail.getReturn_code() != 0) {
                                 Toast.makeText(getApplicationContext(), backDetail.getReturn_message(), Toast.LENGTH_SHORT).show();
-                            }
-                            else {
+                            } else {
                                 mtlistbeans = backDetail.getMtList();
                                 if (mtlistbeans == null || mtlistbeans.isEmpty()) {
 //                                Toast.makeText(context, "没有订单", Toast.LENGTH_SHORT).show();
@@ -371,6 +369,12 @@ public class BuyShell extends ActivityBaseHeader2 implements View.OnClickListene
                         toast("请先勾选报价");
                         return;
                     }
+                    for (int i = 0; i < orderShellModels2.size(); i++) {
+                        if (orderShellModels2.get(i).getNum() == 0) {
+                            toast("请填写数量");
+                            return;
+                        }
+                    }
                     bundle.putString("title", getString(R.string.order_detail_product_grid));
                     bundle.putInt("state", state);
                     bundle.putString("buy_name", buy_name);
@@ -411,14 +415,13 @@ public class BuyShell extends ActivityBaseHeader2 implements View.OnClickListene
                             ChooseGoodsBack backDetail = mGson.fromJson(s, ChooseGoodsBack.class);
                             if (backDetail == null) {
                                 return;
-                            }if(backDetail.getReturn_code()==1101||backDetail.getReturn_code()==1102){
+                            }
+                            if (backDetail.getReturn_code() == 1101 || backDetail.getReturn_code() == 1102) {
                                 toastSHORT("重复登录或令牌超时");
                                 LogoutUtils.exitUser(BuyShell.this);
-                            }
-                            else if (backDetail.getReturn_code() != 0) {
+                            } else if (backDetail.getReturn_code() != 0) {
                                 Toast.makeText(getApplicationContext(), backDetail.getReturn_message(), Toast.LENGTH_SHORT).show();
-                            }
-                            else {
+                            } else {
 //                                Toast.makeText(getApplicationContext(), backDetail.getReturn_message(), Toast.LENGTH_SHORT).show();
                                 bundle.putInt("no", no);
                                 bundle.putString("goodsId", finalChooseGood.getGoodsId());
