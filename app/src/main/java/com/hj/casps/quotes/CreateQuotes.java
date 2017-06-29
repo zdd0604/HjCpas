@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -12,7 +11,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
@@ -24,8 +22,12 @@ import com.hj.casps.commodity.ActivityManageGoods;
 import com.hj.casps.commodity.ImageData;
 import com.hj.casps.commodity.SelectPicture_new;
 import com.hj.casps.common.Constant;
+import com.hj.casps.entity.appQuote.CreateBean;
+import com.hj.casps.entity.appQuote.CreateModel;
 import com.hj.casps.entity.appQuote.EditQuoteEntity;
+import com.hj.casps.entity.appQuote.ReturnBean;
 import com.hj.casps.util.LogoutUtils;
+import com.hj.casps.util.StringUtils;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 
@@ -37,11 +39,6 @@ import java.util.Calendar;
 
 import okhttp3.Call;
 import okhttp3.Response;
-
-import static com.hj.casps.common.Constant.HTTPURLIMAGE;
-import static com.hj.casps.common.Constant.SHORTHTTPURL;
-import static com.hj.casps.common.Constant.getUUID;
-import static com.hj.casps.common.Constant.stmpToDate;
 
 //新建或者编辑报价管理
 public class CreateQuotes extends ActivityBaseHeader2 implements View.OnClickListener {
@@ -63,9 +60,6 @@ public class CreateQuotes extends ActivityBaseHeader2 implements View.OnClickLis
     private String id = "";//报价id
     private String imagePath;
     private String imageId;
-    //    private static final String QUOTE_URL = "appQuote/editQuote.app";
-//    private static final String QUOTE_URL_C = "appQuote/createQuote.app";
-//    private static final String QUOTE_URL_E = "appQuote/subEditQuote.app";
     private String url;
     private boolean newOne;
     private String goodsId;
@@ -77,7 +71,6 @@ public class CreateQuotes extends ActivityBaseHeader2 implements View.OnClickLis
             switch (msg.what) {
                 case 0:
                     product_name.setText(goodsName);
-
                     break;
 
             }
@@ -87,7 +80,7 @@ public class CreateQuotes extends ActivityBaseHeader2 implements View.OnClickLis
     //接收选择的产品名称和id
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 11 && resultCode == RESULT_OK) {
             goodsName = Constant.GOODS_NAME;
             goodsId = Constant.GOODS_ID;
@@ -142,21 +135,22 @@ public class CreateQuotes extends ActivityBaseHeader2 implements View.OnClickLis
         try {
             CreateModel.MapBean quotesBack = gson.fromJson(response, CreateModel.MapBean.class);
             newOne = false;
-
             if (quotesBack != null) {
                 product_name.setText(quotesBack.getGoodsName());
                 product_number.setText(String.valueOf(quotesBack.getNum()));
                 product_price_from.setText(String.valueOf(quotesBack.getMinPrice()));
                 product_price_to.setText(String.valueOf(quotesBack.getMaxPrice()));
-                product_time_from.setText(stmpToDate(quotesBack.getStartTime()));
+                product_time_from.setText(Constant.stmpToDate(quotesBack.getStartTime()));
                 if (quotesBack.getImgPath() != null) {
-                    Glide.with(this).load(quotesBack.getImgPath().startsWith("/v2content") ? SHORTHTTPURL + quotesBack.getImgPath() : HTTPURLIMAGE + quotesBack.getImgPath()).into(chooose_product_pic);
+                    Glide.with(this).load(quotesBack.getImgPath().startsWith("/v2content") ?
+                            Constant.SHORTHTTPURL + quotesBack.getImgPath() :
+                            Constant.HTTPURLIMAGE + quotesBack.getImgPath()).into(chooose_product_pic);
                 }
                 goodsId = quotesBack.getGoodsId();
                 if (!product_time_from.getText().toString().isEmpty()) {
                     product_time_from.setCompoundDrawables(null, null, null, null);
                 }
-                product_time_to.setText(stmpToDate(quotesBack.getStartEnd()));
+                product_time_to.setText(Constant.stmpToDate(quotesBack.getStartEnd()));
                 if (!product_time_to.getText().toString().isEmpty()) {
                     product_time_to.setCompoundDrawables(null, null, null, null);
                 }
@@ -244,39 +238,32 @@ public class CreateQuotes extends ActivityBaseHeader2 implements View.OnClickLis
     //编辑完毕，提交数据
     private void submit() {
         // validate
-        String name = product_name.getText().toString().trim();
-        if (TextUtils.isEmpty(name)) {
-            Toast.makeText(this, "请先选择商品类型", Toast.LENGTH_SHORT).show();
+        if (!StringUtils.isStrTrue(getEdVaule(product_name))) {
+            toastSHORT("请先选择商品类型");
             return;
         }
-
-        String number = product_number.getText().toString().trim();
-        if (TextUtils.isEmpty(number)) {
-            Toast.makeText(this, "数量不能为空", Toast.LENGTH_SHORT).show();
+        if (!StringUtils.isStrTrue(getEdVaule(product_number))) {
+            toastSHORT("数量不能为空");
             return;
         }
-
-        String from = product_price_from.getText().toString().trim();
-        if (TextUtils.isEmpty(from)) {
-            Toast.makeText(this, "单价最小值不能为空", Toast.LENGTH_SHORT).show();
+        if (!StringUtils.isStrTrue(getEdVaule(product_price_from))) {
+            toastSHORT("单价最小值不能为空");
             return;
         }
-
-        String to = product_price_to.getText().toString().trim();
-        if (TextUtils.isEmpty(to)) {
-            Toast.makeText(this, "单价最大值不能为空", Toast.LENGTH_SHORT).show();
+        if (!StringUtils.isStrTrue(getEdVaule(product_price_to))) {
+            toastSHORT("单价最大值不能为空");
             return;
         }
-
-        String product_from = product_time_from.getText().toString().trim();
-        if (TextUtils.isEmpty(product_from)) {
-            Toast.makeText(this, "有效时间最小值不能为空", Toast.LENGTH_SHORT).show();
+        if (Double.valueOf(getEdVaule(product_price_from)) > Double.valueOf(getEdVaule(product_price_to))) {
+            toastSHORT("请重新核对价格");
             return;
         }
-
-        String product_to = product_time_to.getText().toString().trim();
-        if (TextUtils.isEmpty(product_to)) {
-            Toast.makeText(this, "有效时间最大值不能为空", Toast.LENGTH_SHORT).show();
+        if (!StringUtils.isStrTrue(getEdVaule(product_time_from))) {
+            toastSHORT("有效开始时间不能为空");
+            return;
+        }
+        if (!StringUtils.isStrTrue(getEdVaule(product_time_to))) {
+            toastSHORT("有效结束时间不能为空");
             return;
         }
 
@@ -284,20 +271,18 @@ public class CreateQuotes extends ActivityBaseHeader2 implements View.OnClickLis
         waitDialogRectangle.show();
         waitDialogRectangle.setText("正在提交");
         if (newOne) {
-
-
             CreateBean createBean = new CreateBean();
-            createBean.goodsName = name;
-            createBean.num = number;
-            createBean.minPrice = from;
-            createBean.maxPrice = to;
-            createBean.startTime = product_from;
-            createBean.startEnd = product_to;
+            createBean.goodsName = getEdVaule(product_name);
+            createBean.num = getEdVaule(product_number);
+            createBean.minPrice = getEdVaule(product_price_from);
+            createBean.maxPrice = getEdVaule(product_price_to);
+            createBean.startTime = getEdVaule(product_time_from);
+            createBean.startEnd = getEdVaule(product_time_to);
             createBean.explan = more;
             createBean.type = String.valueOf(product_type.getSelectedItemPosition());
             createBean.sys_token = publicArg.getSys_token();
             createBean.sys_func = Constant.SYS_FUNC;
-            createBean.sys_uuid = getUUID();
+            createBean.sys_uuid = Constant.getUUID();
             createBean.sys_user = publicArg.getSys_user();
             createBean.sys_name = publicArg.getSys_username();
             createBean.sys_member = publicArg.getSys_member();
@@ -318,33 +303,30 @@ public class CreateQuotes extends ActivityBaseHeader2 implements View.OnClickLis
         } else {
             CreateBean createBean = new CreateBean();
 //            createBean.goodsName2 = name;
-            createBean.num = number;
-            createBean.minPrice = from;
-            createBean.maxPrice = to;
+            createBean.num = getEdVaule(product_number);
+            createBean.minPrice = getEdVaule(product_price_from);
+            createBean.maxPrice = getEdVaule(product_price_to);
             createBean.quoteId = id;
-            createBean.startTime = product_from;
-            createBean.startEnd = product_to;
+            createBean.startTime = getEdVaule(product_time_from);
+            createBean.startEnd = getEdVaule(product_time_to);
             createBean.explan = more;
             createBean.type = String.valueOf(product_type.getSelectedItemPosition());
             createBean.sys_token = publicArg.getSys_token();
             createBean.sys_func = Constant.SYS_FUNC;
-            createBean.sys_uuid = getUUID();
+            createBean.sys_uuid = Constant.getUUID();
             createBean.sys_user = publicArg.getSys_user();
             createBean.sys_name = publicArg.getSys_username();
             createBean.sys_member = publicArg.getSys_member();
             createBean.goodsId = goodsId;
             createBean.titlePic = imageId;
             createBean.imgPath = imagePath;
-//        createBean.goodsName1 = name;
-//        createBean.goodsName1 = name;
-//        createBean.goodsName1 = name;
-//        createBean.goodsName1 = name;
-//        createBean.goodsName1 = name;
             Gson gson = new Gson();
             String s1 = gson.toJson(createBean);
             Log.d("s1", s1);
 //            url = HTTPURL + QUOTE_URL_E;
-            OkGo.post(Constant.SubEditQuoteUrl).params("param", s1).execute(new StringCallback() {
+            OkGo.post(Constant.SubEditQuoteUrl)
+                    .params("param", s1)
+                    .execute(new StringCallback() {
                 @Override
                 public void onSuccess(String s, Call call, okhttp3.Response response) {
                     initGson2(s);
@@ -374,353 +356,13 @@ public class CreateQuotes extends ActivityBaseHeader2 implements View.OnClickLis
         }
     }
 
-    /**
-     * 提交的基类
-     */
-    private static class CreateBean {
-        private String sys_token;
-        private String sys_uuid;
-        private String sys_func;
-        private String sys_user;
-        private String sys_name;
-        private String sys_member;
-        private String startTime;
-        private String startEnd;
-        private String goodsId;
-        private String explan;
-        private String titlePic;
-        private String imgPath;
-        private String unitPrice;
-        private String minPrice;
-        private String maxPrice;
-        private String num;
-        private String type;
-        private String categoryId;
-        private String account;
-        private String address;
-        private String rangType;
-        private String goodsName;
-        private String quoteId;
-
-    }
-
-
-    /**
-     * 返回值的基类
-     */
-    private static class CreateModel {
-
-        /**
-         * map : {"areaId":"1","categoryId":"1002004001","createName":"刘长城","createTime":1488297600000,"explan":"优惠价","goodsId":"b6aa48901e134341a63c24c00c7264e1","goodsName":"土鸡","id":"30038403","imgPath":"","maxPrice":22,"minPrice":20,"mmbId":"testshop001","mmbName":"长城商行","num":1000,"publishId":"a29d2326763546a4b0063c202cff08ff","publishName":"刘长城","rangType":1,"startEnd":1493568000000,"startTime":1488297600000,"status":0,"titlePic":"76c179ef3f2a4130824798041e8e7345","type":1,"unitPrice":"￥","userId":"a29d2326763546a4b0063c202cff08ff"}
-         * return_code : 0
-         * return_message : success
-         */
-
-        private MapBean map;
-        private int return_code;
-        private String return_message;
-
-        public MapBean getMap() {
-            return map;
-        }
-
-        public void setMap(MapBean map) {
-            this.map = map;
-        }
-
-        public int getReturn_code() {
-            return return_code;
-        }
-
-        public void setReturn_code(int return_code) {
-            this.return_code = return_code;
-        }
-
-        public String getReturn_message() {
-            return return_message;
-        }
-
-        public void setReturn_message(String return_message) {
-            this.return_message = return_message;
-        }
-
-        public static class MapBean {
-            /**
-             * areaId : 1
-             * categoryId : 1002004001
-             * createName : 刘长城
-             * createTime : 1488297600000
-             * explan : 优惠价
-             * goodsId : b6aa48901e134341a63c24c00c7264e1
-             * goodsName : 土鸡
-             * id : 30038403
-             * imgPath :
-             * maxPrice : 22
-             * minPrice : 20
-             * mmbId : testshop001
-             * mmbName : 长城商行
-             * num : 1000
-             * publishId : a29d2326763546a4b0063c202cff08ff
-             * publishName : 刘长城
-             * rangType : 1
-             * startEnd : 1493568000000
-             * startTime : 1488297600000
-             * status : 0
-             * titlePic : 76c179ef3f2a4130824798041e8e7345
-             * type : 1
-             * unitPrice : ￥
-             * userId : a29d2326763546a4b0063c202cff08ff
-             */
-
-            private String areaId;
-            private String categoryId;
-            private String createName;
-            private long createTime;
-            private String explan;
-            private String goodsId;
-            private String goodsName;
-            private String id;
-            private String imgPath;
-            private double maxPrice;
-            private double minPrice;
-            private String mmbId;
-            private String mmbName;
-            private int num;
-            private String publishId;
-            private String publishName;
-            private int rangType;
-            private long startEnd;
-            private long startTime;
-            private int status;
-            private String titlePic;
-            private int type;
-            private String unitPrice;
-            private String userId;
-
-            public String getAreaId() {
-                return areaId;
-            }
-
-            public void setAreaId(String areaId) {
-                this.areaId = areaId;
-            }
-
-            public String getCategoryId() {
-                return categoryId;
-            }
-
-            public void setCategoryId(String categoryId) {
-                this.categoryId = categoryId;
-            }
-
-            public String getCreateName() {
-                return createName;
-            }
-
-            public void setCreateName(String createName) {
-                this.createName = createName;
-            }
-
-            public long getCreateTime() {
-                return createTime;
-            }
-
-            public void setCreateTime(long createTime) {
-                this.createTime = createTime;
-            }
-
-            public String getExplan() {
-                return explan;
-            }
-
-            public void setExplan(String explan) {
-                this.explan = explan;
-            }
-
-            public String getGoodsId() {
-                return goodsId;
-            }
-
-            public void setGoodsId(String goodsId) {
-                this.goodsId = goodsId;
-            }
-
-            public String getGoodsName() {
-                return goodsName;
-            }
-
-            public void setGoodsName(String goodsName) {
-                this.goodsName = goodsName;
-            }
-
-            public String getId() {
-                return id;
-            }
-
-            public void setId(String id) {
-                this.id = id;
-            }
-
-            public String getImgPath() {
-                return imgPath;
-            }
-
-            public void setImgPath(String imgPath) {
-                this.imgPath = imgPath;
-            }
-
-            public double getMaxPrice() {
-                return maxPrice;
-            }
-
-            public void setMaxPrice(double maxPrice) {
-                this.maxPrice = maxPrice;
-            }
-
-            public double getMinPrice() {
-                return minPrice;
-            }
-
-            public void setMinPrice(double minPrice) {
-                this.minPrice = minPrice;
-            }
-
-            public String getMmbId() {
-                return mmbId;
-            }
-
-            public void setMmbId(String mmbId) {
-                this.mmbId = mmbId;
-            }
-
-            public String getMmbName() {
-                return mmbName;
-            }
-
-            public void setMmbName(String mmbName) {
-                this.mmbName = mmbName;
-            }
-
-            public int getNum() {
-                return num;
-            }
-
-            public void setNum(int num) {
-                this.num = num;
-            }
-
-            public String getPublishId() {
-                return publishId;
-            }
-
-            public void setPublishId(String publishId) {
-                this.publishId = publishId;
-            }
-
-            public String getPublishName() {
-                return publishName;
-            }
-
-            public void setPublishName(String publishName) {
-                this.publishName = publishName;
-            }
-
-            public int getRangType() {
-                return rangType;
-            }
-
-            public void setRangType(int rangType) {
-                this.rangType = rangType;
-            }
-
-            public long getStartEnd() {
-                return startEnd;
-            }
-
-            public void setStartEnd(long startEnd) {
-                this.startEnd = startEnd;
-            }
-
-            public long getStartTime() {
-                return startTime;
-            }
-
-            public void setStartTime(long startTime) {
-                this.startTime = startTime;
-            }
-
-            public int getStatus() {
-                return status;
-            }
-
-            public void setStatus(int status) {
-                this.status = status;
-            }
-
-            public String getTitlePic() {
-                return titlePic;
-            }
-
-            public void setTitlePic(String titlePic) {
-                this.titlePic = titlePic;
-            }
-
-            public int getType() {
-                return type;
-            }
-
-            public void setType(int type) {
-                this.type = type;
-            }
-
-            public String getUnitPrice() {
-                return unitPrice;
-            }
-
-            public void setUnitPrice(String unitPrice) {
-                this.unitPrice = unitPrice;
-            }
-
-            public String getUserId() {
-                return userId;
-            }
-
-            public void setUserId(String userId) {
-                this.userId = userId;
-            }
-        }
-    }
-
-    /**
-     * 创建和编辑报价返回值
-     */
-    private static class ReturnBean {
-        private int return_code;
-        private String return_message;
-
-        public int getReturn_code() {
-            return return_code;
-        }
-
-        public void setReturn_code(int return_code) {
-            this.return_code = return_code;
-        }
-
-        public String getReturn_message() {
-            return return_message;
-        }
-
-        public void setReturn_message(String return_message) {
-            this.return_message = return_message;
-        }
-    }
 
     //选择图片后加载图片
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(ImageData imageData) {
         imageId = imageData.getEntity().getImgId();
         imagePath = imageData.getEntity().getImagePath();
-        Glide.with(this).load(SHORTHTTPURL + imageData.getEntity().getImagePath()).into(chooose_product_pic);
+        Glide.with(this).load(Constant.SHORTHTTPURL + imageData.getEntity().getImagePath()).into(chooose_product_pic);
     }
 
 
