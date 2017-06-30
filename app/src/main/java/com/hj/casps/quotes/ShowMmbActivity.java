@@ -12,16 +12,18 @@ import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
 import com.hj.casps.R;
 import com.hj.casps.adapter.WZYBaseAdapter;
 import com.hj.casps.base.ActivityBaseHeader2;
 import com.hj.casps.common.Constant;
 import com.hj.casps.cooperate.CooperateGroupSearch;
+import com.hj.casps.entity.appQuote.AddGroupIdsEntity;
+import com.hj.casps.entity.appQuote.AddMmbIdsEntity;
 import com.hj.casps.entity.appQuote.MmbBack;
 import com.hj.casps.entity.appQuote.ShowMmbModel;
 import com.hj.casps.ui.MyListView;
 import com.hj.casps.util.LogoutUtils;
+import com.hj.casps.util.StringUtils;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 
@@ -60,23 +62,19 @@ public class ShowMmbActivity extends ActivityBaseHeader2 implements View.OnClick
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             switch (msg.what) {
-                case 0:
+                case Constant.HANDLERTYPE_0:
                     initData(intentString);
                     break;
-
+                case Constant.HANDLERTYPE_1:
+                    break;
+                case Constant.HANDLERTYPE_2:
+                    break;
+                case Constant.HANDLERTYPE_3:
+                    break;
             }
         }
     };
 
-    //搜索报价会员后返回的结果显示
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 11 && resultCode == 22) {
-            intentString = data.getExtras().getString("searchjson");
-            handler.sendEmptyMessage(0);
-        }
-    }
 
     //安卓基本方法
     @Override
@@ -91,7 +89,6 @@ public class ShowMmbActivity extends ActivityBaseHeader2 implements View.OnClick
     //检索所有会员列表
     private void initData(String intentString) {
         type = getIntent().getIntExtra("type", 1);
-//        type = 1 - type1;
         group = getIntent().getIntExtra("group", 0);
         quoteId = getIntent().getStringExtra("quoteId");
         switch (group) {
@@ -106,7 +103,8 @@ public class ShowMmbActivity extends ActivityBaseHeader2 implements View.OnClick
                             "\"sys_user\":\"" + publicArg.getSys_user() + "\"," +
                             "\"sys_uuid\":\"" + Constant.getUUID() + "\"," +
                             "\"type\":\"" + String.valueOf(type) + "\"," +
-                            "\"pageno\":\"1\",\"pagesize\":\"5\"}";
+                            "\"pageno\":\"1\"," +
+                            "\"pagesize\":\"5\"}";
                 } else {
                     url_show = Constant.ShowMmbUrl + "?param=" + intentString;
                 }
@@ -130,35 +128,35 @@ public class ShowMmbActivity extends ActivityBaseHeader2 implements View.OnClick
                 }
                 break;
         }
-        OkGo.get(url_show).execute(new StringCallback() {
-            @Override
-            public void onSuccess(String s, Call call, Response response) {
-                Gson gson = new Gson();
-                MmbBack mmbBack = gson.fromJson(s, MmbBack.class);
-                if (mmbBack.getReturn_code() != 0) {
-                    toast(mmbBack.getReturn_message());
-                    return;
-                }else if(mmbBack.getReturn_code()==1101||mmbBack.getReturn_code()==1102){
-                    toastSHORT("重复登录或令牌超时");
-                    LogoutUtils.exitUser(ShowMmbActivity.this);
-                }
-//                showMmbModels = new ArrayList<>();
-                switch (group) {
-                    case 0:
-                        showMmbModels = mmbBack.getList();
-                        break;
-                    case 1:
-                        showMmbModels = mmbBack.getGroupList();
-                        break;
-                }
+        OkGo.get(url_show)
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(String s, Call call, Response response) {
+                        MmbBack mmbBack = mGson.fromJson(s, MmbBack.class);
+                        if (mmbBack.getReturn_code() != 0) {
+                            toast(mmbBack.getReturn_message());
+                            return;
+                        } else if (mmbBack.getReturn_code() == 1101
+                                || mmbBack.getReturn_code() == 1102) {
+                            toastSHORT("重复登录或令牌超时");
+                            LogoutUtils.exitUser(ShowMmbActivity.this);
+                        }
+                        switch (group) {
+                            case 0:
+                                showMmbModels = mmbBack.getList();
+                                break;
+                            case 1:
+                                showMmbModels = mmbBack.getGroupList();
+                                break;
+                        }
 
-                if (showMmbModels == null || showMmbModels.isEmpty()) {
-                    adapter.removeAll();
-                }
-                adapter.updateRes(showMmbModels);
-                show_mmb_check.setChecked(false);
-            }
-        });
+                        if (showMmbModels == null || showMmbModels.isEmpty()) {
+                            adapter.removeAll();
+                        }
+                        adapter.updateRes(showMmbModels);
+                        show_mmb_check.setChecked(false);
+                    }
+                });
 
     }
 
@@ -245,100 +243,94 @@ public class ShowMmbActivity extends ActivityBaseHeader2 implements View.OnClick
     //提交选择的合作会员已经群组
     private void submit() {
         String ids = "";
+        if (showMmbModels == null || showMmbModels.size() == 0) {
+            toastSHORT("数据为空不能提交");
+            return;
+        }
+
+
         switch (group) {
             case 0:
-                if (showMmbModels != null && showMmbModels.size() > 0) {
-                    for (int i = 0; i < showMmbModels.size(); i++) {
-                        if (showMmbModels.get(i).isChoose()) {
-                            if (ids == null || ids.isEmpty()) {
-                                ids = showMmbModels.get(i).getMmbId();
-                            } else {
-                                ids = ids + "," + showMmbModels.get(i).getMmbId();
-                            }
+                for (int i = 0; i < showMmbModels.size(); i++) {
+                    if (showMmbModels.get(i).isChoose()) {
+                        if (ids == null || ids.isEmpty()) {
+                            ids = showMmbModels.get(i).getMmbId();
+                        } else {
+                            ids = ids + "," + showMmbModels.get(i).getMmbId();
                         }
                     }
-
-                    OkGo.post(Constant.AddMmbIdsUrl).params("param",
-                            "{\"sys_func\":\"" + SYS_FUNC + "\"," +
-                                    "\"sys_member\":\"" + publicArg.getSys_member() + "\"," +
-                                    "\"sys_name\":\"" + publicArg.getSys_name() + "\"," +
-                                    "\"sys_token\":\"" + publicArg.getSys_token() + "\"," +
-                                    "\"sys_user\":\"" + publicArg.getSys_user() + "\"," +
-                                    "\"sys_uuid\":\" " + Constant.SYS_FUNC + " \"," +
-                                    "\"mmbIds\":\"" + ids + "\"," +
-                                    "\"quoteId\":\"" + quoteId + "\"," +
-                                    "\"rangType\":\"1\"}")
-                            .execute(new StringCallback() {
-                                @Override
-                                public void onSuccess(String s, Call call, Response response) {
-                                    Gson gson = new Gson();
-                                    MmbBack mmbBack = gson.fromJson(s, MmbBack.class);
-                                    if (mmbBack.getReturn_code() != 0) {
-                                        toast(mmbBack.getReturn_message());
-                                    }else if(mmbBack.getReturn_code()==1101||mmbBack.getReturn_code()==1102){
-                                        toastSHORT("重复登录或令牌超时");
-                                        LogoutUtils.exitUser(ShowMmbActivity.this);
-                                    }
-
-
-                                    else {
-                                        toast("添加成功");
-                                        setResult(22);
-                                        finish();
-                                    }
-                                }
-                            });
-                } else {
-                    finish();
                 }
+
+                if (!StringUtils.isStrTrue(ids)) {
+                    toastSHORT("至少选择一条数据");
+                    return;
+                }
+
+                AddMmbIdsEntity addMmbIdsEntity = new AddMmbIdsEntity(
+                        publicArg.getSys_token(),
+                        Constant.SYS_FUNC,
+                        Constant.getUUID(),
+                        publicArg.getSys_member(),
+                        publicArg.getSys_name(),
+                        publicArg.getSys_user(),
+                        ids, quoteId, "1"
+                );
+                subMmBDatas(Constant.AddMmbIdsUrl, mGson.toJson(addMmbIdsEntity));
                 break;
             case 1:
-                if (showMmbModels != null && showMmbModels.size() > 0) {
-                    for (int i = 0; i < showMmbModels.size(); i++) {
-                        if (showMmbModels.get(i).isChoose()) {
-                            if (ids == null || ids.isEmpty()) {
-                                ids = showMmbModels.get(i).getId();
-                            } else {
-                                ids = ids + "," + showMmbModels.get(i).getId();
-                            }
+                for (int i = 0; i < showMmbModels.size(); i++) {
+                    if (showMmbModels.get(i).isChoose()) {
+                        if (ids == null || ids.isEmpty()) {
+                            ids = showMmbModels.get(i).getId();
+                        } else {
+                            ids = ids + "," + showMmbModels.get(i).getId();
                         }
                     }
-
-                    OkGo.post(Constant.AddGroupIdsUrl).params("param",
-                            "{\"sys_func\":\"" + SYS_FUNC + "\"," +
-                                    "\"sys_member\":\"" + publicArg.getSys_member() + "\"," +
-                                    "\"sys_name\":\"" + publicArg.getSys_name() + "\"," +
-                                    "\"sys_token\":\"" + publicArg.getSys_token() + "\"," +
-                                    "\"sys_user\":\"" + publicArg.getSys_user() + "\"," +
-                                    "\"sys_uuid\":\"" + Constant.getUUID() + "\"," +
-                                    "\"groupIds\":\"" + ids + "\"," +
-                                    "\"quoteId\":\"" + quoteId + "\"," +
-                                    "\"rangType\":\"1\"}")
-                            .execute(new StringCallback() {
-                                @Override
-                                public void onSuccess(String s, Call call, Response response) {
-
-                                    Gson gson = new Gson();
-                                    MmbBack mmbBack = gson.fromJson(s, MmbBack.class);
-                                    if (mmbBack.getReturn_code() != 0) {
-                                        toast(mmbBack.getSuccessMsg());
-                                    }else if(mmbBack.getReturn_code()==1101||mmbBack.getReturn_code()==1102){
-                                        toastSHORT("重复登录或令牌超时");
-                                        LogoutUtils.exitUser(ShowMmbActivity.this);
-                                    }
-
-                                    else {
-                                        toast("添加成功");
-                                        setResult(22);
-                                        finish();
-                                    }
-                                }
-                            });
-                } else {
-                    finish();
                 }
+                if (!StringUtils.isStrTrue(ids)) {
+                    toastSHORT("至少选择一条数据");
+                    return;
+                }
+                AddGroupIdsEntity addGroupIdsEntity = new AddGroupIdsEntity(
+                        publicArg.getSys_token(),
+                        Constant.SYS_FUNC,
+                        Constant.getUUID(),
+                        publicArg.getSys_member(),
+                        publicArg.getSys_name(),
+                        publicArg.getSys_user(),
+                        ids, quoteId, "1"
+                );
+                subMmBDatas(Constant.AddGroupIdsUrl, mGson.toJson(addGroupIdsEntity));
                 break;
         }
+    }
+
+    /**
+     * 上传数据
+     *
+     * @param url
+     * @param jsonparm
+     */
+    private void subMmBDatas(String url, String jsonparm) {
+        OkGo.post(url)
+                .params("param", jsonparm)
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(String s, Call call, Response response) {
+                        MmbBack mmbBack = mGson.fromJson(s, MmbBack.class);
+                        if (mmbBack.getReturn_code() != 0) {
+                            toast(mmbBack.getSuccessMsg());
+                        } else if (mmbBack.getReturn_code() == 1101
+                                || mmbBack.getReturn_code() == 1102) {
+                            toastSHORT("重复登录或令牌超时");
+                            LogoutUtils.exitUser(ShowMmbActivity.this);
+                        } else {
+                            toastSHORT("添加会员成功！");
+                            setResult(22);
+                            finish();
+                        }
+                    }
+                });
     }
 
 
@@ -388,7 +380,17 @@ public class ShowMmbActivity extends ActivityBaseHeader2 implements View.OnClick
                     }
                     break;
             }
-
         }
     }
+
+    //搜索报价会员后返回的结果显示
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 11 && resultCode == 22) {
+            intentString = data.getExtras().getString("searchjson");
+            handler.sendEmptyMessage(0);
+        }
+    }
+
 }

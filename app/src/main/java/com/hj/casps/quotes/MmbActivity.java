@@ -13,11 +13,15 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
 import com.hj.casps.R;
 import com.hj.casps.adapter.WZYBaseAdapter;
 import com.hj.casps.base.ActivityBaseHeader2;
 import com.hj.casps.common.Constant;
+import com.hj.casps.entity.appQuote.DeleteScopeIdEntity;
+import com.hj.casps.entity.appQuote.GetMmbEntity;
+import com.hj.casps.entity.appQuote.MmbModelPerson;
+import com.hj.casps.entity.appQuote.MmbReturnBack;
+import com.hj.casps.entity.appQuote.SubgEntity;
 import com.hj.casps.util.LogoutUtils;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
@@ -29,7 +33,6 @@ import okhttp3.Call;
 import okhttp3.Response;
 
 import static com.hj.casps.common.Constant.DIALOG_CONTENT_13;
-import static com.hj.casps.common.Constant.SYS_FUNC;
 
 /**
  * 选择发布范围
@@ -46,35 +49,33 @@ public class MmbActivity extends ActivityBaseHeader2 implements View.OnClickList
     private String quoteId;
     private List<MmbModelPerson> mmbModelPersons;
     private List<MmbModelPerson> mmbModelGroup;
-    private String url_mmb;
-    private String url_group;
     private MmbAdapter adapter_person;
     private MmbAdapter adapter_group;
     private boolean pub = false;
     private boolean choose = false;
     private int type;
     private int rangType;
+
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             switch (msg.what) {
-                case 0:
+                case Constant.HANDLERTYPE_0:
                     initData();
                     break;
-
+                case Constant.HANDLERTYPE_1:
+                    refreshData();
+                    break;
+                case Constant.HANDLERTYPE_2:
+                    groupOkGo();
+                    break;
+                case Constant.HANDLERTYPE_3:
+                    break;
             }
         }
     };
 
-    //搜索发布范围后返回的结果
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 11 && resultCode == 22) {
-            handler.sendEmptyMessage(0);
-        }
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,117 +90,9 @@ public class MmbActivity extends ActivityBaseHeader2 implements View.OnClickList
         quoteId = getIntent().getStringExtra("quoteId");
         type = getIntent().getIntExtra("type", 1);
         rangType = getIntent().getIntExtra("RangType", 0);
-        refreshData();
+        if (hasInternetConnected())
+            handler.sendEmptyMessage(Constant.HANDLERTYPE_1);
     }
-
-    //数据更新
-    private void refreshData() {
-        url_mmb = Constant.GetMmbUrl +
-                "?param={\"sys_func\":\"" + SYS_FUNC + "\"," +
-                "\"sys_member\":\"" + publicArg.getSys_member() + "\"," +
-                "\"sys_name\":\"" + publicArg.getSys_name() + "\"," +
-                "\"sys_token\":\"" + publicArg.getSys_token() + "\"," +
-                "\"sys_user\":\"" + publicArg.getSys_user() + "\"," +
-                "\"sys_uuid\":\" " + Constant.getUUID() + "\"," +
-                "\"quoteId\":\"" + quoteId + "\"}";
-        OkGo.get(url_mmb).execute(new StringCallback() {
-            @Override
-            public void onSuccess(String s, Call call, okhttp3.Response response) {
-                groupOkGo();
-                Gson gson = new Gson();
-                MmbBack mmbBack = gson.fromJson(s, MmbBack.class);
-                if (mmbBack.getReturn_code() != 0) {
-                    toast(mmbBack.getReturn_message());
-                    return;
-                }else if(mmbBack.getReturn_code()==1101||mmbBack.getReturn_code()==1102){
-                    toastSHORT("重复登录或令牌超时");
-                    LogoutUtils.exitUser(MmbActivity.this);
-                }
-
-                mmbModelPersons = new ArrayList<>();
-                mmbModelPersons = mmbBack.getList();
-                if (mmbModelPersons.isEmpty()) {
-                    adapter_person.removeAll();
-                }
-                adapter_person.updateRes(mmbModelPersons);
-            }
-        });
-    }
-
-    //合作范围的群加载
-    private void groupOkGo() {
-        url_group = Constant.GetGroupUrl + "?param={\"sys_func\":\"" + SYS_FUNC + "\"," +
-                "\"sys_member\":\"" + publicArg.getSys_member() + "\"," +
-                "\"sys_name\":\"" + publicArg.getSys_name() + "\"," +
-                "\"sys_token\":\"" + publicArg.getSys_token() + "\"," +
-                "\"sys_user\":\"" + publicArg.getSys_user() + "\"," +
-                "\"sys_uuid\":\" " + Constant.getUUID() + " \"," +
-                "\"quoteId\":\"" + quoteId + "\"}";
-        OkGo.get(url_group).execute(new StringCallback() {
-            @Override
-            public void onSuccess(String s, Call call, okhttp3.Response response) {
-                Gson gson2 = new Gson();
-                MmbBack mmbBack2 = gson2.fromJson(s, MmbBack.class);
-                if (mmbBack2.getReturn_code() != 0) {
-                    toast(mmbBack2.getReturn_message());
-                    return;
-                }else if(mmbBack2.getReturn_code()==1101||mmbBack2.getReturn_code()==1102){
-                    toastSHORT("重复登录或令牌超时");
-                    LogoutUtils.exitUser(MmbActivity.this);
-                }
-
-                mmbModelGroup = new ArrayList<>();
-                mmbModelGroup = mmbBack2.getList();
-                if (mmbModelGroup.isEmpty()) {
-                    adapter_group.removeAll();
-
-                }
-                adapter_group.updateRes(mmbModelGroup);
-            }
-        });
-    }
-
-
-    //合作范围返回值，解析时使用
-    private static class MmbBack {
-        private int return_code;
-        private String return_message;
-        private int json;
-        private List<MmbModelPerson> list;
-
-        public int getJson() {
-            return json;
-        }
-
-        public void setJson(int json) {
-            this.json = json;
-        }
-
-        public int getReturn_code() {
-            return return_code;
-        }
-
-        public void setReturn_code(int return_code) {
-            this.return_code = return_code;
-        }
-
-        public String getReturn_message() {
-            return return_message;
-        }
-
-        public void setReturn_message(String return_message) {
-            this.return_message = return_message;
-        }
-
-        public List<MmbModelPerson> getList() {
-            return list;
-        }
-
-        public void setList(List<MmbModelPerson> list) {
-            this.list = list;
-        }
-    }
-
 
     //指定发布范围的页面初始化
     private void initView() {
@@ -282,9 +175,7 @@ public class MmbActivity extends ActivityBaseHeader2 implements View.OnClickList
                 }
             }
         });
-
     }
-
 
     //点击确定发布范围，选择后点击
     @Override
@@ -299,28 +190,104 @@ public class MmbActivity extends ActivityBaseHeader2 implements View.OnClickList
         }
     }
 
+    //数据更新
+    private void refreshData() {
+        GetMmbEntity getMmbEntity = new GetMmbEntity(
+                publicArg.getSys_token(),
+                Constant.getUUID(),
+                Constant.SYS_FUNC,
+                publicArg.getSys_user(),
+                publicArg.getSys_member(),
+                quoteId
+        );
+        OkGo.get(Constant.GetMmbUrl)
+                .params("param", mGson.toJson(getMmbEntity))
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(String s, Call call, okhttp3.Response response) {
+                        MmbReturnBack mmbBack = mGson.fromJson(s, MmbReturnBack.class);
+                        if (mmbBack.getReturn_code() != 0) {
+                            toast(mmbBack.getReturn_message());
+                            return;
+                        } else if (mmbBack.getReturn_code() == 1101 ||
+                                mmbBack.getReturn_code() == 1102) {
+                            toastSHORT("重复登录或令牌超时");
+                            LogoutUtils.exitUser(MmbActivity.this);
+                        }
+
+                        mmbModelPersons = new ArrayList<>();
+                        mmbModelPersons = mmbBack.getList();
+                        if (mmbModelPersons.isEmpty()) {
+                            adapter_person.removeAll();
+                        }
+                        adapter_person.updateRes(mmbModelPersons);
+
+                        if (hasInternetConnected())
+                            handler.sendEmptyMessage(Constant.HANDLERTYPE_2);
+                    }
+                });
+    }
+
+    //合作范围的群加载
+    private void groupOkGo() {
+        GetMmbEntity getMmbEntity = new GetMmbEntity(
+                publicArg.getSys_token(),
+                Constant.getUUID(),
+                Constant.SYS_FUNC,
+                publicArg.getSys_user(),
+                publicArg.getSys_member(),
+                quoteId
+        );
+        OkGo.get(Constant.GetGroupUrl)
+                .params("param", mGson.toJson(getMmbEntity))
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(String s, Call call, okhttp3.Response response) {
+                        MmbReturnBack mmbBack2 = mGson.fromJson(s, MmbReturnBack.class);
+                        if (mmbBack2.getReturn_code() != 0) {
+                            toast(mmbBack2.getReturn_message());
+                            return;
+                        } else if (mmbBack2.getReturn_code() == 1101
+                                || mmbBack2.getReturn_code() == 1102) {
+                            toastSHORT("重复登录或令牌超时");
+                            LogoutUtils.exitUser(MmbActivity.this);
+                        }
+
+                        mmbModelGroup = new ArrayList<>();
+                        mmbModelGroup = mmbBack2.getList();
+                        if (mmbModelGroup.isEmpty()) {
+                            adapter_group.removeAll();
+
+                        }
+                        adapter_group.updateRes(mmbModelGroup);
+                    }
+                });
+    }
+
     //确定发布范围的类型添加
     private void subg(int i) {
-        OkGo.get(Constant.SubgUrl + "?param={\"sys_func\":\"" + SYS_FUNC + "\"," +
-                "\"sys_member\":\"" + publicArg.getSys_member() + "\"," +
-                "\"sys_name\":\"" + publicArg.getSys_name() + "\"," +
-                "\"sys_token\":\"" + publicArg.getSys_token() + "\"," +
-                "\"sys_user\":\"" + publicArg.getSys_user() + "\"," +
-                "\"sys_uuid\":\" " + Constant.getUUID() + "\"," +
-                "\"rangType\":\"" + String.valueOf(i) + "\"," +
-                "\"quoteId\":\"" + quoteId + "\"}")
+        SubgEntity subgEntity = new SubgEntity(
+                publicArg.getSys_token(),
+                Constant.getUUID(),
+                Constant.SYS_FUNC,
+                publicArg.getSys_user(),
+                publicArg.getSys_member(),
+                String.valueOf(i),
+                quoteId
+        );
+        OkGo.get(Constant.SubgUrl)
+                .params("param", mGson.toJson(subgEntity))
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(String s, Call call, Response response) {
-                        Gson gson = new Gson();
-                        MmbBack mmbBack = gson.fromJson(s, MmbBack.class);
+                        MmbReturnBack mmbBack = mGson.fromJson(s, MmbReturnBack.class);
                         if (mmbBack.getReturn_code() == 0 && mmbBack.getJson() == 0) {
                             toast("发布报价成功");
                             Bundle bundle = new Bundle();
                             bundle.putString("searchjson", "");
                             setResult(22, getIntent().putExtras(bundle));
                             finish();
-                        }else if(mmbBack.getReturn_code()==1101||mmbBack.getReturn_code()==1102){
+                        } else if (mmbBack.getReturn_code() == 1101 || mmbBack.getReturn_code() == 1102) {
                             toastSHORT("重复登录或令牌超时");
                             LogoutUtils.exitUser(MmbActivity.this);
                         }
@@ -334,37 +301,6 @@ public class MmbActivity extends ActivityBaseHeader2 implements View.OnClickList
             case R.id.quote_mmb_desc_tv:
                 CreateDialog(Constant.DIALOG_CONTENT_12 + DIALOG_CONTENT_13);
                 break;
-        }
-    }
-
-    //会员群组提交类
-    private class MmbModelPerson {
-        private String id;
-        private String mmbSname;
-        private String groupName;
-
-        public String getGroupName() {
-            return groupName;
-        }
-
-        public void setGroupName(String groupName) {
-            this.groupName = groupName;
-        }
-
-        public String getMmbSname() {
-            return mmbSname;
-        }
-
-        public void setMmbSname(String mmbSname) {
-            this.mmbSname = mmbSname;
-        }
-
-        public String getId() {
-            return id;
-        }
-
-        public void setId(String id) {
-            this.id = id;
         }
     }
 
@@ -408,37 +344,43 @@ public class MmbActivity extends ActivityBaseHeader2 implements View.OnClickList
             delete_mmb_item.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    // param={\"scopeId\":\"testschool001\",\"quoteId\":\"30038601\",\"rangType\":\"1\"}
+                    DeleteScopeIdEntity idEntity = new DeleteScopeIdEntity(
+                            publicArg.getSys_token(),
+                            Constant.getUUID(),
+                            Constant.SYS_FUNC,
+                            publicArg.getSys_user(),
+                            publicArg.getSys_member(),
+                            quoteId, mmbModelPerson.getId()
+                    );
                     OkGo.post(Constant.DeleteScopeIdUrl)
-                            .params("param", "{\"sys_func\":\"" + SYS_FUNC + "\"," +
-                                    "\"sys_member\":\"" + publicArg.getSys_member() + "\"," +
-                                    "\"sys_name\":\"" + publicArg.getSys_name() + "\"," +
-                                    "\"sys_token\":\"" + publicArg.getSys_token() + "\"," +
-                                    "\"sys_user\":\"" + publicArg.getSys_user() + "\"," +
-                                    "\"sys_uuid\":\"" + Constant.getUUID() + "\"," +
-                                    "\"scopeId\":\"" + mmbModelPerson.getId() + "\"," +
-                                    "\"quoteId\":\"" + quoteId + "\"}")
+                            .params("param", mGson.toJson(idEntity))
                             .execute(new StringCallback() {
                                 @Override
                                 public void onSuccess(String s, Call call, Response response) {
-                                    Gson gson = new Gson();
-                                    MmbBack mmbBack = gson.fromJson(s, MmbBack.class);
+                                    MmbReturnBack mmbBack = mGson.fromJson(s, MmbReturnBack.class);
                                     if (mmbBack.getReturn_code() != 0) {
                                         toast(mmbBack.getReturn_message());
                                         return;
-                                    }else if(mmbBack.getReturn_code()==1101||mmbBack.getReturn_code()==1102){
+                                    } else if (mmbBack.getReturn_code() == 1101
+                                            || mmbBack.getReturn_code() == 1102) {
                                         toastSHORT("重复登录或令牌超时");
                                         LogoutUtils.exitUser(MmbActivity.this);
-                                    }
-
-
-                                    else {
+                                    } else {
                                         refreshData();
                                     }
                                 }
                             });
                 }
             });
+        }
+    }
+
+    //搜索发布范围后返回的结果
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 11 && resultCode == 22) {
+            handler.sendEmptyMessage(Constant.HANDLERTYPE_0);
         }
     }
 }

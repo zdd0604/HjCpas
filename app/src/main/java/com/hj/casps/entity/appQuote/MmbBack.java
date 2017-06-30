@@ -2,6 +2,9 @@ package com.hj.casps.entity.appQuote;
 
 import java.util.List;
 
+/**
+ * 报价检索
+ */
 public class MmbBack {
     private int return_code;
     private String return_message;
