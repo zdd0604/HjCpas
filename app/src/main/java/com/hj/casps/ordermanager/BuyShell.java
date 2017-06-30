@@ -239,6 +239,15 @@ public class BuyShell extends ActivityBaseHeader2 implements View.OnClickListene
 
     }
 
+    public void deleteFromOk(){
+        for (int i = 0; i < orderShellModels.size(); i++) {
+            if (Constant.numbers.contains(String.valueOf(orderShellModels.get(i).getNo()))){
+//                toast(String.valueOf(orderShellModels.get(i).getNo()));
+                orderShellModels.get(i).setDelete(true);
+            }
+        }
+        refresh();
+    }
     //刷新页面
     public void refresh() {
         List<OrderShellModel> orderShellModels1 = new ArrayList<>();
@@ -252,6 +261,8 @@ public class BuyShell extends ActivityBaseHeader2 implements View.OnClickListene
         } else {
             adapter.updateRes(orderShellModels1);
         }
+        buy_num = orderShellModels1.size();
+        order_buy_num_shell.setText(String.valueOf(buy_num));
         setResult(RESULT_OK);
     }
 

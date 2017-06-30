@@ -266,7 +266,10 @@ public class CreateQuotes extends ActivityBaseHeader2 implements View.OnClickLis
             toastSHORT("有效结束时间不能为空");
             return;
         }
-
+        if (!Constant.judgeDate(getEdVaule(product_time_from), getEdVaule(product_time_to))) {
+            toast("开始时间不能大于结束时间");
+            return;
+        }
         String more = product_more.getText().toString().trim();
         waitDialogRectangle.show();
         waitDialogRectangle.setText("正在提交");
@@ -327,11 +330,11 @@ public class CreateQuotes extends ActivityBaseHeader2 implements View.OnClickLis
             OkGo.post(Constant.SubEditQuoteUrl)
                     .params("param", s1)
                     .execute(new StringCallback() {
-                @Override
-                public void onSuccess(String s, Call call, okhttp3.Response response) {
-                    initGson2(s);
-                }
-            });
+                        @Override
+                        public void onSuccess(String s, Call call, okhttp3.Response response) {
+                            initGson2(s);
+                        }
+                    });
         }
 
     }

@@ -95,6 +95,11 @@ public class QuotesSearch extends ActivityBaseHeader2 implements View.OnClickLis
         String to = publish_time_to.getText().toString().trim();
         String period_from = period_time_from.getText().toString().trim();
         String period_to = period_time_to.getText().toString().trim();
+
+        if (!Constant.judgeDate(from, to) || !Constant.judgeDate(period_from, period_to)) {
+            toast("开始时间不能大于结束时间");
+            return;
+        }
         // TODO validate success, do something
         ModeltoJson modeltoJson = new ModeltoJson(
                 publicArg.getSys_token(),

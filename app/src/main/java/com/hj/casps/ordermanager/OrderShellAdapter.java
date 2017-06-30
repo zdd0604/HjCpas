@@ -96,8 +96,6 @@ public class OrderShellAdapter extends WZYBaseAdapter<OrderShellModel> {
         } else {
             delete_buy_shell.setVisibility(View.VISIBLE);
             buy_shell_item_relative1.setVisibility(View.GONE);
-
-
         }
         delete_buy_shell.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -189,6 +187,7 @@ public class OrderShellAdapter extends WZYBaseAdapter<OrderShellModel> {
                     }
                 });
     }
+
 
 
 }

@@ -12,11 +12,14 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.hj.casps.R;
 import com.hj.casps.adapter.TestArrayAdapter;
 import com.hj.casps.base.ActivityBaseHeader2;
 import com.hj.casps.common.Constant;
 import com.hj.casps.entity.PublicArg;
+import com.hj.casps.entity.appOrder.BuyCartBack;
+import com.hj.casps.entity.appOrder.BuyCartPost;
 import com.hj.casps.entity.appordercheckorder.BuyersAccountListBean;
 import com.hj.casps.entity.appordercheckorder.BuyersAddressListBean;
 import com.hj.casps.entity.appordercheckorder.DataBean;
@@ -52,6 +55,7 @@ import okhttp3.Response;
 
 import static com.hj.casps.common.Constant.SYS_FUNC;
 import static com.hj.casps.common.Constant.getUUID;
+import static com.hj.casps.common.Constant.publicArg;
 
 //下定单的页面
 public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickListener {
@@ -89,6 +93,7 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
     private String id;
     private boolean orderList;
     private int ordersSize = 0;//数组的长度
+
 
     Handler mHandler = new Handler() {
         @Override
@@ -132,7 +137,7 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
             state = getIntent().getIntExtra("state", 0);
             getData();
         } else {
-            id="";
+            id = "";
             orders = getIntent().getParcelableArrayListExtra("orders");
             orderList = getIntent().getBooleanExtra("OrderList", false);
             buy_name = getIntent().getStringExtra("buy_name");
@@ -370,7 +375,10 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
             toastSHORT("结束时间不能为空");
             return;
         }
-
+        if (!Constant.judgeDate(start, end)) {
+            toast("开始时间不能大于结束时间");
+            return;
+        }
         if (orders != null && orders.size() > 0) {
             for (int i = 0; i < orders.size(); i++) {
                 LogShow(orders.toString());
@@ -452,7 +460,7 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
                                 String.valueOf(orders.get(i).getNum()),
                                 orders.get(i).getAllprice(),
                                 orders.get(i).getFinalprice(),
-                                orders.get(i).getQuoteId(),id);
+                                orders.get(i).getQuoteId(), id);
                         listBeen.add(orderListBean);
                     }
                     post = new CreateOrder(publicArg.getSys_token(),
@@ -493,7 +501,7 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
                                 String.valueOf(orders.get(i).getNum()),
                                 orders.get(i).getAllprice(),
                                 orders.get(i).getFinalprice(),
-                                orders.get(i).getQuoteId(),id);
+                                orders.get(i).getQuoteId(), id);
                         listBeen.add(orderListBean);
                     }
                     post = new CreateOrder(publicArg.getSys_token(),
@@ -544,7 +552,20 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
                             LogoutUtils.exitUser(OrderDetail.this);
                         } else {
                             toast("订单提交成功");
-                            finish();
+                            String nos = "";
+                            Constant.numbers = new ArrayList<String>();
+                            for (int i = 0; i < orders.size(); i++) {
+                                Constant.numbers.add(String.valueOf(orders.get(i).getNo()));
+                                if (i == 0) {
+                                    nos = String.valueOf(orders.get(i).getNo());
+                                } else {
+                                    nos = nos + "," + String.valueOf(orders.get(i).getNo());
+                                }
+                            }
+                            if (!orderList) {
+                                delete(state, nos);
+                            }
+
                         }
 
                         deleteDatas();
@@ -563,6 +584,48 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
             for (int i = 0; i < orders.size(); i++) {
                 orders.get(i).clearDatas();
             }
+    }
+
+    //删除购物车数据
+    private void delete(int type, String no) {
+
+        BuyCartPost post = new BuyCartPost(publicArg.getSys_token(),
+                Constant.getUUID(),
+                SYS_FUNC,
+                publicArg.getSys_user(),
+                publicArg.getSys_name(),
+                publicArg.getSys_member(),
+                String.valueOf(type),
+                String.valueOf(no));
+        final Gson mGson = new Gson();
+        OkGo.post(Constant.DeleteMoreSHPCUrl)
+                .params("param", mGson.toJson(post))
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(String s, Call call, Response response) {
+
+                        BuyCartBack backDetail = mGson.fromJson(s, BuyCartBack.class);
+                        if (backDetail == null) {
+                            return;
+                        }
+                        if (backDetail.getReturn_code() == 1101 || backDetail.getReturn_code() == 1102) {
+                            LogoutUtils.exitUser(OrderDetail.this);
+                        } else if (backDetail.getReturn_code() != 0) {
+                            Toast.makeText(context, backDetail.getReturn_message(), Toast.LENGTH_SHORT).show();
+                        } else {
+
+                            BuyShell.buyShell.deleteFromOk();
+                            finish();
+
+                        }
+                    }
+
+                    @Override
+                    public void onError(Call call, Response response, Exception e) {
+                        super.onError(call, response, e);
+                        Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
 

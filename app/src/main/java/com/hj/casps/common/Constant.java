@@ -1,6 +1,8 @@
 package com.hj.casps.common;
 
 import android.content.Context;
+import android.text.TextUtils;
+import android.util.Log;
 
 import com.hj.casps.R;
 import com.hj.casps.cooperate.ProtocalProductItem;
@@ -14,6 +16,7 @@ import com.hj.casps.util.ToastUtils;
 import com.hj.casps.util.XmlUtils;
 
 import java.text.DecimalFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -34,7 +37,7 @@ public class Constant {
 //    public static final String HTTPURLALL = "http://192.168.0.120:8081";
     //    public static final String HTTPURLALL = "http://192.168.0.250:8080";
     public static final String HTTPURLALL = "http://192.168.1.120:8081";
-//    public static final String HTTPURLALL = "http://123.126.109.166:2000";
+    //    public static final String HTTPURLALL = "http://123.126.109.166:2000";
     //公共的请求头
     public static final String HTTPURL = HTTPURLALL + "/v2/";
     //短url
@@ -270,6 +273,8 @@ public class Constant {
     public static final String DeleteUserforGroupUrl = HTTPURL + "appMemberRelationship/deleteUserforGroup.app";
     //删除采购 (销售)拣单车中商品
     public static final String DeleteQuoteSHPCUrl = HTTPURL + "appOrder/deleteQuoteSHPC.app";
+    //批量删除采购 (销售)拣单车中商品
+    public static final String DeleteMoreSHPCUrl = HTTPURL + "appOrder/deleteMoreSHPC.app";
     //点击发布范围查询合作会员
     public static final String GetMmbUrl = HTTPURL + "appQuote/getMmb.app";
     //删除采购 (销售)拣单车中商品
@@ -311,7 +316,7 @@ public class Constant {
     //商品信息确定
     public static final String UpdateQuoteSHPCUrl = HTTPURL + "appOrder/updateQuoteSHPC.app";
 
-    public static  boolean isFreshGood=false;
+    public static boolean isFreshGood = false;
     //s商品管理的页面跳转到编辑页面的intent 值
     public static final String INTENTISADDGOODS = "INTENTISADDGOODS";
     public static final String INTENT_GOODCATEGORYID = "INTENT_GOODCATEGORYID";
@@ -356,9 +361,10 @@ public class Constant {
     public static List<XmlUtils.MenuBean> MenuBean;
 
     public static PublicArg publicArg = null;
+    public static List<String> numbers;
 
     /*公共的功能编码*/
-    public static  String  SYS_FUNC="";
+    public static String SYS_FUNC = "";
 
 
     //                      funcCode	菜单项	           说明
@@ -983,6 +989,25 @@ public class Constant {
         return time_st_string;
     }
 
+    //判断两个日期的大小，第一个日期小于第二个日期返回true，否则返回false，传入的格式必须是yyyy-MM-dd
+    public static boolean judgeDate(String date1, String date2) {
+        if (TextUtils.isEmpty(date1) || TextUtils.isEmpty(date2)) {
+            return true;
+        }
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            Date d1 = format.parse(date1);
+            Date d2 = format.parse(date2);
+            Long diff = d1.getTime() - d2.getTime();
+            return diff <= 0;
+        } catch (ParseException e) {
+            e.printStackTrace();
+            Log.d("TIME", "judgeDate: " + e.getMessage());
+            return false;
+        }
+
+    }
+
 
     /**
      * 协议管理规则字典
@@ -1079,6 +1104,7 @@ public class Constant {
             return;
         }
     }
+
     //根据时间限时uuid
     public static String getTimeUUID() {
         if (currentTime != -1) {
