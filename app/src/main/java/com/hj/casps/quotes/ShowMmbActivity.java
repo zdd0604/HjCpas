@@ -244,7 +244,7 @@ public class ShowMmbActivity extends ActivityBaseHeader2 implements View.OnClick
     private void submit() {
         String ids = "";
         if (showMmbModels == null || showMmbModels.size() == 0) {
-            toastSHORT("数据为空不能提交");
+            toastSHORT("至少选择一条数据");
             return;
         }
 
