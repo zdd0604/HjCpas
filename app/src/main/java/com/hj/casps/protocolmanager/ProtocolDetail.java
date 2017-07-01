@@ -66,13 +66,10 @@ public class ProtocolDetail extends ActivityBaseHeader2 {
                         DetailBack backDetail = mGson.fromJson(s, DetailBack.class);
                         if (backDetail.getReturn_code() != 0) {
                             toast(backDetail.getReturn_message());
-                        }
-                        else if(backDetail.getReturn_code()==1101||backDetail.getReturn_code()==1102){
+                        } else if (backDetail.getReturn_code() == 1101 || backDetail.getReturn_code() == 1102) {
                             toastSHORT("重复登录或令牌超时");
                             LogoutUtils.exitUser(ProtocolDetail.this);
-                        }
-
-                        else {
+                        } else {
                             protocol_contract_title.setText(backDetail.getData().getContract_title());
                             protocol_contract_type.setText(backDetail.getData().getContract_type().equalsIgnoreCase("1") ? "采购" : "销售");
                             protocol_buy_membername.setText(backDetail.getData().getBuy_membername());
@@ -84,14 +81,10 @@ public class ProtocolDetail extends ActivityBaseHeader2 {
                             protocol_pay_type.setText(GetPayType(backDetail.getData().getPay_type()));
                             protocol_flow_type.setText(GetSendsGoodsType(backDetail.getData().getFlow_type()));
                             protocol_sendgoods_type.setText(GetFlowType(backDetail.getData().getSendgoods_type()));
-                            if (contract_type.equalsIgnoreCase("1")) {
-                                protocol_payer_code.setText(backDetail.getData().getPayer_name() + "\n" + backDetail.getData().getPayer_code());
-                                protocol_getgoods_address.setText(backDetail.getData().getGetgoods_address());
-                            } else {
-                                protocol_payer_code.setText(backDetail.getData().getGetmoney_name() + "\n" + backDetail.getData().getGetmoney_code());
-                                protocol_getgoods_address.setText(backDetail.getData().getSendgoods_address());
-                            }
-
+                            protocol_payer_code.setText(backDetail.getData().getPayer_name() + "\n" + (backDetail.getData().getPayer_code().equalsIgnoreCase("undefined") ? "" : backDetail.getData().getPayer_code()));
+                            protocol_getgoods_address.setText(backDetail.getData().getGetgoods_address());
+//                                protocol_payer_code.setText(backDetail.getData().getGetmoney_name() + "\n" + backDetail.getData().getGetmoney_code());
+//                                protocol_getgoods_address.setText(backDetail.getData().getSendgoods_address());
                             String goodsName = null;
                             for (int i = 0; i < backDetail.getData().getGoods().size(); i++) {
                                 if (i == 0) {
@@ -134,13 +127,13 @@ public class ProtocolDetail extends ActivityBaseHeader2 {
         protocol_note = (TextView) findViewById(R.id.protocol_note);
         bank_account_name = (TextView) findViewById(R.id.bank_account_name);
         address_name = (TextView) findViewById(R.id.address_name);
-        if (contract_type.equalsIgnoreCase("2")) {
-            bank_account_name.setText("收款账号");
-            address_name.setText("发货地址");
-        } else {
-            bank_account_name.setText("付款账号");
-            address_name.setText("收货地址");
-        }
+//        if (contract_type.equalsIgnoreCase("2")) {
+//            bank_account_name.setText("收款账号");
+//            address_name.setText("发货地址");
+//        } else {
+//            bank_account_name.setText("付款账号");
+//            address_name.setText("收货地址");
+//        }
     }
 
     /**

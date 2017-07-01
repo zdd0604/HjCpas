@@ -66,36 +66,36 @@ public class CooperateGroupSearch extends ActivityBaseHeader2 implements View.On
         care_name_layout = (LinearLayout) findViewById(R.id.care_name_layout);
         province_layout = (LinearLayout) findViewById(R.id.province_layout);
         cooperate_province_names = (Spinner) findViewById(R.id.cooperate_province_names);
-        dicts.add(new Dict(110002, "北京市"));
-        dicts.add(new Dict(120000, "天津市"));
-        dicts.add(new Dict(130000, "河北省"));
-        dicts.add(new Dict(140000, "山西省"));
-        dicts.add(new Dict(150000, "内蒙古自治区"));
-        dicts.add(new Dict(210000, "辽宁省"));
-        dicts.add(new Dict(220000, "吉林省"));
-        dicts.add(new Dict(230000, "黑龙江省"));
-        dicts.add(new Dict(310000, "上海市"));
-        dicts.add(new Dict(320000, "江苏省"));
-        dicts.add(new Dict(330000, "浙江省"));
-        dicts.add(new Dict(340000, "安徽省"));
-        dicts.add(new Dict(350000, "福建省"));
-        dicts.add(new Dict(360000, "江西省"));
-        dicts.add(new Dict(410000, "河南省"));
-        dicts.add(new Dict(420000, "湖北省"));
-        dicts.add(new Dict(430000, "湖南省"));
-        dicts.add(new Dict(440000, "广东省"));
-        dicts.add(new Dict(450000, "广西壮族自治区"));
-        dicts.add(new Dict(460000, "海南省"));
-        dicts.add(new Dict(500000, "重庆市"));
-        dicts.add(new Dict(510000, "四川省"));
-        dicts.add(new Dict(520000, "贵州省"));
-        dicts.add(new Dict(530000, "云南省"));
-        dicts.add(new Dict(540000, "西藏自治区"));
-        dicts.add(new Dict(610000, "陕西省"));
-        dicts.add(new Dict(620000, "甘肃省"));
-        dicts.add(new Dict(630000, "宁夏回族自治区"));
-        dicts.add(new Dict(640000, "青海省"));
-        dicts.add(new Dict(650000, "新疆维吾尔自治区"));
+        dicts.add(new Dict(10001011, "北京市"));
+        dicts.add(new Dict(10001012, "天津市"));
+        dicts.add(new Dict(10001013, "河北省"));
+        dicts.add(new Dict(10001014, "山西省"));
+        dicts.add(new Dict(10001015, "内蒙古自治区"));
+        dicts.add(new Dict(10001021, "辽宁省"));
+        dicts.add(new Dict(10001022, "吉林省"));
+        dicts.add(new Dict(10001023, "黑龙江省"));
+        dicts.add(new Dict(10001031, "上海市"));
+        dicts.add(new Dict(10001032, "江苏省"));
+        dicts.add(new Dict(10001033, "浙江省"));
+        dicts.add(new Dict(10001034, "安徽省"));
+        dicts.add(new Dict(10001035, "福建省"));
+        dicts.add(new Dict(10001036, "江西省"));
+        dicts.add(new Dict(10001041, "河南省"));
+        dicts.add(new Dict(10001042, "湖北省"));
+        dicts.add(new Dict(10001043, "湖南省"));
+        dicts.add(new Dict(10001044, "广东省"));
+        dicts.add(new Dict(10001045, "广西壮族自治区"));
+        dicts.add(new Dict(10001046, "海南省"));
+        dicts.add(new Dict(10001050, "重庆市"));
+        dicts.add(new Dict(10001051, "四川省"));
+        dicts.add(new Dict(10001052, "贵州省"));
+        dicts.add(new Dict(10001053, "云南省"));
+        dicts.add(new Dict(10001054, "西藏自治区"));
+        dicts.add(new Dict(10001061, "陕西省"));
+        dicts.add(new Dict(10001062, "甘肃省"));
+        dicts.add(new Dict(10001063, "宁夏回族自治区"));
+        dicts.add(new Dict(10001064, "青海省"));
+        dicts.add(new Dict(10001065, "新疆维吾尔自治区"));
         ArrayAdapter<Dict> adapter = new ArrayAdapter<Dict>(this,
                 android.R.layout.simple_spinner_item, dicts);
         cooperate_province_names.setAdapter(adapter);
@@ -158,8 +158,8 @@ public class CooperateGroupSearch extends ActivityBaseHeader2 implements View.On
         // validate
         String names = cooperate_group_names.getText().toString().trim();
         String cares = cooperate_care_names.getText().toString().trim();
-        String province = String.valueOf(cooperate_province_names.getSelectedItemPosition() + 1);
-//        String province = String.valueOf(((Dict) cooperate_province_names.getSelectedItem()).getId());//因为这么传ID不行，所以去掉，等以后接口可以了再释放
+//        String province = String.valueOf(cooperate_province_names.getSelectedItemPosition() + 1);
+        String province = String.valueOf(((Dict) cooperate_province_names.getSelectedItem()).getId());//因为这么传ID不行，所以去掉，等以后接口可以了再释放
 
         // TODO validate success, do something
         Bundle bundle = new Bundle();

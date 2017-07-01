@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -49,6 +50,7 @@ public class GroupManager extends ActivityBaseHeader implements View.OnClickList
     private MyListView group_list;
     private List<GroupManagerListBean> cooperateGroupModels;
     private List<WhoCareListBean> whocaremes;
+    private List<WhoCareListBean> addwhocaremes;
     private ListView who_care_me;
     private CooperateGroupAdapter adapter;
     private WhoCareMeAdapter whoCareMeAdapter;
@@ -91,6 +93,7 @@ public class GroupManager extends ActivityBaseHeader implements View.OnClickList
         if (requestCode == 11 && resultCode == 22) {
             groupName = data.getExtras().getString("groupName");
             member_name = data.getExtras().getString("cares");
+            province = data.getExtras().getString("province");
             province = data.getExtras().getString("province");
             handler.sendEmptyMessage(0);
 
@@ -185,11 +188,10 @@ public class GroupManager extends ActivityBaseHeader implements View.OnClickList
                             GroupBack backDetail = mGson.fromJson(s, GroupBack.class);
                             if (backDetail.getReturn_code() != 0) {
                                 toast(backDetail.getReturn_message());
-                            }else if(backDetail.getReturn_code()==1101||backDetail.getReturn_code()==1102){
+                            } else if (backDetail.getReturn_code() == 1101 || backDetail.getReturn_code() == 1102) {
                                 toastSHORT("重复登录或令牌超时");
                                 LogoutUtils.exitUser(GroupManager.this);
-                            }
-                            else {
+                            } else {
                                 cooperateGroupModels = backDetail.getList();
                                 if (cooperateGroupModels.isEmpty()) {
                                     toast("没有群组");
@@ -207,17 +209,33 @@ public class GroupManager extends ActivityBaseHeader implements View.OnClickList
                         }
                     });
         } else {
-            whocaremes = new ArrayList<>();
-            QueryMMBConcerns concerns = new QueryMMBConcerns(
-                    publicArg.getSys_token(),
-                    Constant.getUUID(),
-                    Constant.SYS_FUNC,
-                    publicArg.getSys_user(),
-                    publicArg.getSys_member(),
-                    member_name,
-                    province,
-                    String.valueOf(pageno),
-                    String.valueOf(pagesize));
+            addwhocaremes = new ArrayList<>();
+            QueryMMBConcerns concerns = null;
+            if (TextUtils.isEmpty(Constant.GOODS_ID)) {
+                concerns = new QueryMMBConcerns(
+                        publicArg.getSys_token(),
+                        Constant.getUUID(),
+                        Constant.SYS_FUNC,
+                        publicArg.getSys_user(),
+                        publicArg.getSys_member(),
+                        member_name,
+                        province,
+                        String.valueOf(pageno),
+                        String.valueOf(pagesize));
+            } else {
+                concerns = new QueryMMBConcerns(
+                        publicArg.getSys_token(),
+                        Constant.getUUID(),
+                        Constant.SYS_FUNC,
+                        publicArg.getSys_user(),
+                        publicArg.getSys_member(),
+                        Constant.GOODS_ID,
+                        member_name,
+                        province,
+                        String.valueOf(pageno),
+                        String.valueOf(pagesize));
+            }
+
             OkGo.post(type == 1 ? Constant.GetAllMarkedMeMembersUrl : Constant.GetAllMemberUrl)
                     .tag(this)
                     .params("param", mGson.toJson(concerns))
@@ -225,30 +243,29 @@ public class GroupManager extends ActivityBaseHeader implements View.OnClickList
                         @Override
                         public void onSuccess(String s, Call call, Response response) {
                             WhoCareMe whoCareMe = mGson.fromJson(s, WhoCareMe.class);
-                            if (whoCareMe.getReturn_code() != 0) {
-                                toast(whoCareMe.getReturn_message());
-                            }
-
-                            else if(whoCareMe.getReturn_code()==1101||whoCareMe.getReturn_code()==1102){
+                            if (whoCareMe.getReturn_code() == 1101 || whoCareMe.getReturn_code() == 1102) {
                                 toastSHORT("重复登录或令牌超时");
                                 LogoutUtils.exitUser(GroupManager.this);
-                            }
-
-                            else {
-                                whocaremes = whoCareMe.getList();
-                                if (whocaremes.isEmpty()) {
+                            } else if (whoCareMe.getReturn_code() != 0) {
+                                toast(whoCareMe.getReturn_message());
+                            } else {
+                                addwhocaremes = whoCareMe.getList();
+                                if (addwhocaremes.isEmpty()) {
                                     toast("没有结果");
                                     whoCareMeAdapter.removeAll();
                                 }
                                 if (pageno != 1) {
                                     if (pageno - 1 <= (whoCareMe.getPagecount() - 1) / 20) {
-                                        whoCareMeAdapter.addRes(whocaremes);
+                                        whoCareMeAdapter.addRes(addwhocaremes);
+                                        whocaremes.addAll(addwhocaremes);
 
                                     } else {
                                         mLoader.onLoadAll();
                                     }
                                 } else {
-                                    whoCareMeAdapter.updateRes(whocaremes);
+                                    whoCareMeAdapter.updateRes(addwhocaremes);
+                                    whocaremes = new ArrayList<>();
+                                    whocaremes.addAll(addwhocaremes);
                                     saveDaoData();
                                 }
                             }
@@ -263,6 +280,13 @@ public class GroupManager extends ActivityBaseHeader implements View.OnClickList
 
         }
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Constant.GOODS_ID = "";
+        Constant.GOODS_NAME = "";
     }
 
     //加载布局
@@ -451,15 +475,11 @@ public class GroupManager extends ActivityBaseHeader implements View.OnClickList
                         if (backDetail == null) {
                             return;
                         }
-                        if (backDetail.getReturn_code() != 0) {
-                            toastSHORT(backDetail.getReturn_message());
-                        }
-                        else if(backDetail.getReturn_code()==1101||backDetail.getReturn_code()==1102){
+                        if (backDetail.getReturn_code() == 1101 || backDetail.getReturn_code() == 1102) {
                             LogoutUtils.exitUser(GroupManager.this);
-                        }
-
-
-                        else {
+                        } else if (backDetail.getReturn_code() != 0) {
+                            toastSHORT(backDetail.getReturn_message());
+                        } else {
                             if (type == 0) {
                                 new MyToast(context, "已关注");
                             } else {
@@ -586,15 +606,12 @@ public class GroupManager extends ActivityBaseHeader implements View.OnClickList
                         @Override
                         public void onSuccess(String s, Call call, Response response) {
                             GroupBack backDetail = mGson.fromJson(s, GroupBack.class);
-                            if (backDetail.getReturn_code() != 0) {
-                                toast(backDetail.getReturn_message());
-                            }else if(backDetail.getReturn_code()==1101||backDetail.getReturn_code()==1102){
+                            if (backDetail.getReturn_code() == 1101 || backDetail.getReturn_code() == 1102) {
                                 toastSHORT("重复登录或令牌超时");
                                 LogoutUtils.exitUser(GroupManager.this);
-                            }
-
-
-                            else {
+                            } else if (backDetail.getReturn_code() != 0) {
+                                toast(backDetail.getReturn_message());
+                            } else {
                                 if (b) {
                                     new MyToast(context, context.getString(R.string.cooperate_group_grant));
 

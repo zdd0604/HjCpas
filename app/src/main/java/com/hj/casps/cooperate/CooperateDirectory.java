@@ -138,7 +138,7 @@ public class CooperateDirectory extends ActivityBaseHeader implements RadioGroup
                         }
                         switch (cooperateBack.getList().size()) {
                             case 0:
-                                toast("没有数据");
+                                toast("尚未创建合作会员");
                                 break;
                             case 1:
                                 if (cooperateBack.getList().get(0).get买() == null) {
@@ -157,11 +157,15 @@ public class CooperateDirectory extends ActivityBaseHeader implements RadioGroup
                             adapter1.updateRes(cooperateModelsBuy);
                             saveDaoData(0);
 
+                        }else {
+                            adapter1.removeAll();
                         }
                         if (cooperateModelsSell != null && cooperateModelsSell.size() > 0) {
                             adapter2.updateRes(cooperateModelsSell);
                             saveDaoData(1);
 
+                        }else {
+                            adapter2.removeAll();
                         }
 
                     }

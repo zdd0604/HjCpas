@@ -868,6 +868,7 @@ public class Constant {
     public static String PROTOCOL_STATUS = "3";
     public static boolean PROTOCOL_SEARCH = false;
     public static int PROTOCOL_TYPE_NUM = 0;
+    public static int PROTOCOL_TYPE_BUY = 0;
     //订单管理参数
     public static String ORDER_STATUS = "0";//订单执行状态0:全部  1：执行中 2：已完成
     public static String ORDER_ORDER_ID = "";//订单头ID

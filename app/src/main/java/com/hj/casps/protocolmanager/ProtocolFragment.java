@@ -1,6 +1,7 @@
 package com.hj.casps.protocolmanager;
 
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -94,6 +95,7 @@ public class ProtocolFragment extends ViewPagerFragment1 implements View.OnClick
     public ProtocolFragment(int i, int j, int k) {
         protocol_type = i;
         protocol_type_j = j;
+//        Constant.PROTOCOL_TYPE_BUY = j;
         type_k = k;
         PROTOCOL_TITLE = "";
         ORDER_ORDER_ID = "";
@@ -198,7 +200,7 @@ public class ProtocolFragment extends ViewPagerFragment1 implements View.OnClick
     private void initAdapter() {
         switch (type_k) {
             case 1:
-                adapter = new ProtocolAdapter(protocolModels, getActivity(), R.layout.protocol_item);
+                adapter = new ProtocolAdapter(protocolModels, getActivity(), R.layout.protocol_item, getActivity());
                 protocol_list.setAdapter(adapter);
                 break;
             case 2:
@@ -240,10 +242,14 @@ public class ProtocolFragment extends ViewPagerFragment1 implements View.OnClick
     //用来接收查询后的页面
     @Override
     public void onResume() {
-//        Toast.makeText(getContext(), "res", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getContext(), "res"+PROTOCOL_SEARCH, Toast.LENGTH_SHORT).show();
         if (PROTOCOL_SEARCH) {
             page = 0;
+//            protocol_type_j = Constant.PROTOCOL_TYPE_NUM+1;
+//            onFragmentVisibleChange(false);
+
             initData();
+
         }
         super.onResume();
 
@@ -251,7 +257,10 @@ public class ProtocolFragment extends ViewPagerFragment1 implements View.OnClick
 
     //初始化数据，根据订单类型的不同和销售类型的不同来加载网络数据
     public void initData() {
+
         PROTOCOL_SEARCH = false;
+//        Toast.makeText(getContext(), type_k + "" + protocol_type + "" + protocol_type_j, Toast.LENGTH_SHORT).show();
+
         switch (type_k) {
             case 1:
                 ProtocolModelForPost post = null;
@@ -303,10 +312,10 @@ public class ProtocolFragment extends ViewPagerFragment1 implements View.OnClick
                                 if (backDetail == null) {
                                     return;
                                 }
-                                if (backDetail.getReturn_code() != 0) {
-                                    Toast.makeText(context, backDetail.getReturn_message(), Toast.LENGTH_SHORT).show();
-                                } else if (backDetail.getReturn_code() == 1101 || backDetail.getReturn_code() == 1102) {
+                                if (backDetail.getReturn_code() == 1101 || backDetail.getReturn_code() == 1102) {
                                     LogoutUtils.exitUser(ProtocolFragment.this);
+                                } else if (backDetail.getReturn_code() != 0) {
+                                    Toast.makeText(context, backDetail.getReturn_message(), Toast.LENGTH_SHORT).show();
                                 } else {
                                     protocolModels = backDetail.getList();
                                     if (protocolModels.isEmpty()) {
@@ -470,6 +479,7 @@ public class ProtocolFragment extends ViewPagerFragment1 implements View.OnClick
 
     /**
      * 订单判断
+     *
      * @param type
      */
     private void lockOrder(int type) {
@@ -484,13 +494,12 @@ public class ProtocolFragment extends ViewPagerFragment1 implements View.OnClick
             ToastUtils.showToast(getActivity(), "请选择订单");
             return;
         }
-        showDialog(type,ids);
+        showDialog(type, ids);
     }
 
 
-
     //弹框
-    private void showDialog(final int type,final List<ProtocolModelForPost.ID> ids) {
+    private void showDialog(final int type, final List<ProtocolModelForPost.ID> ids) {
         if (orderDoingModels.size() == 0) {
             ToastUtils.showToast(getActivity(), "请选择订单");
             return;
@@ -519,7 +528,6 @@ public class ProtocolFragment extends ViewPagerFragment1 implements View.OnClick
         });
         myDialog.show();
     }
-
 
 
     //锁定，作废订单操作
@@ -595,10 +603,12 @@ public class ProtocolFragment extends ViewPagerFragment1 implements View.OnClick
 
     public class ProtocolAdapter extends WZYBaseAdapter<ProtocolListBean> {
         private Context context;
+        private Activity activity;
 
-        public ProtocolAdapter(List<ProtocolListBean> data, Context context, int layoutRes) {
+        public ProtocolAdapter(List<ProtocolListBean> data, Context context, int layoutRes, Activity activity) {
             super(data, context, layoutRes);
             this.context = context;
+            this.activity = activity;
         }
 
         @Override
@@ -670,7 +680,7 @@ public class ProtocolFragment extends ViewPagerFragment1 implements View.OnClick
                             intent.putExtra("contract_id", protocolModel.getContract_id());
                             intent.putExtra("contract_status", String.valueOf(protocolModel.getContract_status()));
                             intent.putExtra("contract_type", String.valueOf(protocol_type_j));
-                            startActivity(intent);
+                            activity.startActivityForResult(intent, 11);
                         }
                     });
                     fancyButton_3.setBackgroundColor(context.getResources().getColor(R.color.white));
@@ -684,7 +694,8 @@ public class ProtocolFragment extends ViewPagerFragment1 implements View.OnClick
                             intent.putExtra("type", 1);
                             intent.putExtra("contract_id", protocolModel.getContract_id());
                             intent.putExtra("buy_type", protocol_type_j == 1);
-                            context.startActivity(intent);
+                            activity.startActivityForResult(intent, 11);
+//                            context.startActivity(intent);
                         }
                     });
                     break;

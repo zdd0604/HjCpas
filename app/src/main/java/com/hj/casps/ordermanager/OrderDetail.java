@@ -86,11 +86,16 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
     private TestArrayAdapter stringArrayAdapter1;
     private TestArrayAdapter stringArrayAdapter2;
     private TestArrayAdapter stringArrayAdapter3;
+    private TestArrayAdapter stringArrayAdapter4;
+    private TestArrayAdapter stringArrayAdapter5;
     private String buy_name;
     private String sell_name;
     private String buy_id;
     private String sell_id;
     private String id;
+    private String account2 = "";
+    private String bankname2 = "";
+    private String adress2 = "";
     private boolean orderList;
     private int ordersSize = 0;//数组的长度
 
@@ -130,6 +135,7 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
         statusItems = new String[]{"货款两清", "先货后款", "先货后款已交货", "先款后货", "先款后货已收款"};
         stringArrayAdapter3 = new TestArrayAdapter(getApplicationContext(), statusItems);
 
+
         if (hasInternetConnected())
             mHandler.sendEmptyMessage(Constant.HANDLERTYPE_0);
         if (type == 1) {
@@ -142,10 +148,15 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
             orderList = getIntent().getBooleanExtra("OrderList", false);
             buy_name = getIntent().getStringExtra("buy_name");
             buy_id = getIntent().getStringExtra("buy_id");
+            account2 = getIntent().getStringExtra("account") == null ? "" : getIntent().getStringExtra("account");
+            bankname2 = getIntent().getStringExtra("bankname") == null ? "" : getIntent().getStringExtra("bankname");
+            adress2 = getIntent().getStringExtra("adress") == null ? "" : getIntent().getStringExtra("adress");
             state = getIntent().getIntExtra("state", 0);
             if (orders.size() > 0)
                 mHandler.sendEmptyMessage(Constant.HANDLERTYPE_2);
         }
+        stringArrayAdapter4 = new TestArrayAdapter(getApplicationContext(), new String[]{adress2});
+        stringArrayAdapter5 = new TestArrayAdapter(getApplicationContext(), new String[]{bankname2 + "\n" + account2});
 
 
     }
@@ -330,15 +341,15 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
         allPrice = 0.0;
         LogShow(orders.size() + "------------" + orders.toString());
         for (int i = 0; i < orders.size(); i++) {
-            if (!StringUtils.isStrTrue(orders.get(i).getFinalprice())
-                    || Double.parseDouble(orders.get(i).getFinalprice()) <= 0) {
-                return;
-            }
+//            if (!StringUtils.isStrTrue(orders.get(i).getFinalprice())
+//                    || Double.parseDouble(orders.get(i).getFinalprice()) <= 0) {
+//                return;
+//            }
 
-            if (!StringUtils.isStrTrue(String.valueOf(orders.get(i).getNum()))
-                    || orders.get(i).getNum() <= 0) {
-                return;
-            }
+//            if (!StringUtils.isStrTrue(String.valueOf(orders.get(i).getNum()))
+//                    || orders.get(i).getNum() <= 0) {
+//                return;
+//            }
 
             if (Double.parseDouble(orders.get(i).getFinalprice()) < orders.get(i).getMinPrice()) {
                 return;
@@ -434,15 +445,15 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
                     buy_id, buy_name, end, start,
 //                    mList.get(order_detail_get_account.getSelectedItemPosition()).getAccountno(),
 //                    mList.get(order_detail_get_account.getSelectedItemPosition()).getBankname(),
-                    StringUtils.isStrTrue(mList.get(order_detail_get_account.getSelectedItemPosition()).getAccountno())
+                    order_detail_get_account.getSelectedItemPosition() == -1
                             ? "" : mList.get(order_detail_get_account.getSelectedItemPosition()).getAccountno(),
 
-                    StringUtils.isStrTrue(mList.get(order_detail_get_account.getSelectedItemPosition()).getBankname())
+                    order_detail_get_account.getSelectedItemPosition() == -1
                             ? "" : mList.get(order_detail_get_account.getSelectedItemPosition()).getBankname(),
                     "", "", pay,
-                    StringUtils.isStrTrue(mAddressList.get(order_detail_get_address.getSelectedItemPosition()).getId())
+                    order_detail_get_address.getSelectedItemPosition() == -1
                             ? "" : mAddressList.get(order_detail_get_address.getSelectedItemPosition()).getId(),
-                    StringUtils.isStrTrue(mAddressList.get(order_detail_get_address.getSelectedItemPosition()).getAddress())
+                    order_detail_get_address.getSelectedItemPosition() == -1
                             ? "" : mAddressList.get(order_detail_get_address.getSelectedItemPosition()).getAddress(),
                     sell_id, sell_name, String.valueOf(allPrice),
                     String.valueOf(order_detail_process.getSelectedItemPosition() + 1), listBeen, id);
@@ -471,17 +482,17 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
                             publicArg.getSys_member(),
                             "", "", buy_id, buy_name,
                             end, start,
-                            StringUtils.isStrTrue(mList.get(order_detail_get_account.getSelectedItemPosition()).getAccountno())
+                            order_detail_get_account.getSelectedItemPosition() == -1
                                     ? "" : mList.get(order_detail_get_account.getSelectedItemPosition()).getAccountno(),
 
-                            StringUtils.isStrTrue(mList.get(order_detail_get_account.getSelectedItemPosition()).getBankname())
+                            order_detail_get_account.getSelectedItemPosition() == -1
                                     ? "" : mList.get(order_detail_get_account.getSelectedItemPosition()).getBankname(),
                             "", "", pay,
 //                            mAddressList.get(order_detail_get_address.getSelectedItemPosition()).getId(),
 //                            mAddressList.get(order_detail_get_address.getSelectedItemPosition()).getAddress(),
-                            StringUtils.isStrTrue(mAddressList.get(order_detail_get_address.getSelectedItemPosition()).getId())
+                            order_detail_get_address.getSelectedItemPosition() == -1
                                     ? "" : mAddressList.get(order_detail_get_address.getSelectedItemPosition()).getId(),
-                            StringUtils.isStrTrue(mAddressList.get(order_detail_get_address.getSelectedItemPosition()).getAddress())
+                            order_detail_get_address.getSelectedItemPosition() == -1
                                     ? "" : mAddressList.get(order_detail_get_address.getSelectedItemPosition()).getAddress(),
                             publicArg.getSys_member(),
                             publicArg.getSys_mmbname(),
@@ -512,18 +523,18 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
                             publicArg.getSys_member(),
 //                            mAddressList.get(order_detail_pay_address.getSelectedItemPosition()).getId(),
 //                            mAddressList.get(order_detail_pay_address.getSelectedItemPosition()).getAddress(),
-                            StringUtils.isStrTrue(mAddressList.get(order_detail_pay_address.getSelectedItemPosition()).getId())
+                            order_detail_pay_address.getSelectedItemPosition() == -1
                                     ? "" : mAddressList.get(order_detail_pay_address.getSelectedItemPosition()).getId(),
-                            StringUtils.isStrTrue(mAddressList.get(order_detail_pay_address.getSelectedItemPosition()).getAddress())
+                            order_detail_pay_address.getSelectedItemPosition() == -1
                                     ? "" : mAddressList.get(order_detail_pay_address.getSelectedItemPosition()).getAddress(),
                             publicArg.getSys_member(),
                             publicArg.getSys_mmbname(),
                             end, start, "", "",
 //                            mList.get(order_detail_pay_account.getSelectedItemPosition()).getAccountno(),
 //                            mList.get(order_detail_pay_account.getSelectedItemPosition()).getBankname(),
-                            mList.get(order_detail_pay_account.getSelectedItemPosition()).getAccountno() == null
+                            order_detail_pay_account.getSelectedItemPosition() == -1
                                     ? "" : mList.get(order_detail_pay_account.getSelectedItemPosition()).getAccountno(),
-                            mList.get(order_detail_pay_account.getSelectedItemPosition()).getBankname() == null
+                            order_detail_pay_account.getSelectedItemPosition() == -1
                                     ? "" : mList.get(order_detail_pay_account.getSelectedItemPosition()).getBankname(),
                             pay, "", "",
                             buy_id, buy_name, String.valueOf(allPrice),
@@ -678,9 +689,14 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
                             switch (state) {
                                 case 0://销售拣单车
                                     order_detail_get_account.setAdapter(stringArrayAdapter2);
+                                    order_detail_pay_account.setAdapter(stringArrayAdapter5);
+                                    order_detail_pay_account.setEnabled(false);
                                     break;
                                 case 1://采购拣单车
                                     order_detail_pay_account.setAdapter(stringArrayAdapter2);
+                                    order_detail_get_account.setAdapter(stringArrayAdapter5);
+                                    order_detail_get_account.setEnabled(false);
+
                                     break;
                             }
 
@@ -736,9 +752,14 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
                             switch (state) {
                                 case 0://销售拣单车
                                     order_detail_get_address.setAdapter(stringArrayAdapter1);
+                                    order_detail_pay_address.setAdapter(stringArrayAdapter4);
+                                    order_detail_pay_address.setEnabled(false);
                                     break;
                                 case 1://采购拣单车
                                     order_detail_pay_address.setAdapter(stringArrayAdapter1);
+                                    order_detail_get_address.setAdapter(stringArrayAdapter4);
+                                    order_detail_get_address.setEnabled(false);
+
                                     break;
                             }
                         }

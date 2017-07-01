@@ -120,10 +120,15 @@ public class RequestProtocol extends ActivityBaseHeader {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+//        toast(PROTOCOL_TYPE_NUM+","+fragment_protocol_viewPager.getCurrentItem()+","+resultCode+","+requestCode);
         if (requestCode == 11 && resultCode == 22) {
             if (PROTOCOL_TYPE_NUM==fragment_protocol_viewPager.getCurrentItem()){
                 Constant.PROTOCOL_SEARCH = true;
             }
+            fragment_protocol_viewPager.setCurrentItem(PROTOCOL_TYPE_NUM);
+
+        }else if (requestCode == 11 && resultCode == 33){
+            Constant.PROTOCOL_SEARCH = true;
             fragment_protocol_viewPager.setCurrentItem(PROTOCOL_TYPE_NUM);
         }
     }

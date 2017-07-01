@@ -128,7 +128,7 @@ public class CooperateDetail extends ActivityBaseHeader2 implements View.OnClick
                 //我能采购
                 relation_change.setChecked(false);
                 if (toggle_coop_buy.isChecked()) {
-                    if (this.type == 0)
+                    if (this.type == 0 && buybiz.equalsIgnoreCase("0"))
                         cooperate_create_buy.setVisibility(View.VISIBLE);
                 } else {
                     if (this.type == 0)
@@ -140,7 +140,7 @@ public class CooperateDetail extends ActivityBaseHeader2 implements View.OnClick
                 //我能销售
                 relation_change.setChecked(false);
                 if (toggle_coop_sell.isChecked()) {
-                    if (this.type == 0)
+                    if (this.type == 0 && sellbiz.equalsIgnoreCase("0"))
                         cooperate_create_sell.setVisibility(View.VISIBLE);
                 } else {
                     if (this.type == 0)
@@ -325,8 +325,10 @@ public class CooperateDetail extends ActivityBaseHeader2 implements View.OnClick
                         if (isUpLoad) {
                             mHandler.sendEmptyMessage(Constant.HANDLERTYPE_1);
                             if (isFinish)
-                                finish();
+                                setResult(22);
+                            finish();
                         } else {
+                            setResult(22);
                             finish();
                         }
                     }

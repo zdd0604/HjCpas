@@ -96,8 +96,12 @@ public class QuotesSearch extends ActivityBaseHeader2 implements View.OnClickLis
         String period_from = period_time_from.getText().toString().trim();
         String period_to = period_time_to.getText().toString().trim();
 
-        if (!Constant.judgeDate(from, to) || !Constant.judgeDate(period_from, period_to)) {
-            toast("开始时间不能大于结束时间");
+        if (!Constant.judgeDate(from, to)) {
+            toast("发布开始时间不能大于结束时间");
+            return;
+        }
+        if (!Constant.judgeDate(period_from, period_to)) {
+            toast("有效期开始时间不能大于结束时间");
             return;
         }
         // TODO validate success, do something

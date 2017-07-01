@@ -48,10 +48,12 @@ public class OrderShellDetailAdapter extends WZYBaseAdapter<OrderShellModel> {
         TextView order_item_detail_name = (TextView) holder.getView(R.id.order_item_detail_name);
         order_item_detail_name.setText(orderShellModel.getName());
         final EditText order_detail_item_price = (EditText) holder.getView(R.id.order_detail_item_price);
+        order_detail_item_price.setText(orderShellModel.getFinalprice());
         final EditText order_detail_item_number = (EditText) holder.getView(R.id.order_detail_item_number);
         order_detail_item_number.setText(String.valueOf(orderShellModel.getNum()));
         final TextView item_detail_order_price = (TextView) holder.getView(R.id.item_detail_order_price);
-        final DecimalFormat df = new DecimalFormat(".##");
+        item_detail_order_price.setText(orderShellModel.getAllprice());
+        final DecimalFormat df = new DecimalFormat("#.##");
         //控制小数点后两位
         ActivityBase.setPricePoint(order_detail_item_price);
         order_detail_item_price.setOnFocusChangeListener(new View.OnFocusChangeListener() {

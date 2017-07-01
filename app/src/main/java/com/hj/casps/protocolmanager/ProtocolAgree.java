@@ -20,6 +20,8 @@ import mehdi.sakout.fancybuttons.FancyButton;
 import okhttp3.Call;
 import okhttp3.Response;
 
+import static com.hj.casps.common.Constant.PROTOCOL_TYPE_NUM;
+
 //协议管理的同意合作协议
 public class ProtocolAgree extends ActivityBaseHeader2 implements View.OnClickListener {
 
@@ -119,6 +121,16 @@ public class ProtocolAgree extends ActivityBaseHeader2 implements View.OnClickLi
 
     //提交
     private void submit() {
+        if (protocol_receipt_account.getSelectedItemPosition() == -1 & protocol_delivery_address.getSelectedItemPosition() == -1) {
+            toast("请您创建银行账号和地址");
+            return;
+        } else if (protocol_receipt_account.getSelectedItemPosition() == -1) {
+            toast("请您创建银行账号");
+            return;
+        } else if (protocol_delivery_address.getSelectedItemPosition() == -1) {
+            toast("请您创建地址");
+            return;
+        }
         ShowAgreePost post = new ShowAgreePost(publicArg.getSys_token(),
                 Constant.getUUID(),
                 Constant.SYS_FUNC101100350004,
@@ -127,8 +139,8 @@ public class ProtocolAgree extends ActivityBaseHeader2 implements View.OnClickLi
                 contract_id,
                 contract_type,
                 addressLists[protocol_delivery_address.getSelectedItemPosition()],
-                banklistBeen.get(protocol_receipt_account.getSelectedItemPosition()).getAccountno(),
-                banklistBeen.get(protocol_receipt_account.getSelectedItemPosition()).getBankname());
+                protocol_receipt_account.getSelectedItemPosition() == -1 ? "" : banklistBeen.get(protocol_receipt_account.getSelectedItemPosition()).getAccountno(),
+                protocol_receipt_account.getSelectedItemPosition() == -1 ? "" : banklistBeen.get(protocol_receipt_account.getSelectedItemPosition()).getBankname());
         OkGo.post(Constant.AgreeContractUrl)
                 .tag(this)
                 .params("param", mGson.toJson(post))
@@ -136,14 +148,16 @@ public class ProtocolAgree extends ActivityBaseHeader2 implements View.OnClickLi
                     @Override
                     public void onSuccess(String s, Call call, Response response) {
                         ShowAgreeBack backDetail = mGson.fromJson(s, ShowAgreeBack.class);
-                        if (backDetail.getReturn_code() != 0) {
-                            toast(backDetail.getReturn_message());
-                        } else if (backDetail.getReturn_code() == 1101 || backDetail.getReturn_code() == 1102) {
+                        if (backDetail.getReturn_code() == 1101 || backDetail.getReturn_code() == 1102) {
                             toastSHORT("重复登录或令牌超时");
                             LogoutUtils.exitUser(ProtocolAgree.this);
+                        } else if (backDetail.getReturn_code() != 0) {
+                            toast(backDetail.getReturn_message());
                         } else {
 //                            ProtocolFragment.protocolFragment.refresh();
                             Constant.PROTOCOL_SEARCH = true;
+//                            PROTOCOL_TYPE_NUM = Integer.valueOf(contract_type)-1;
+                            setResult(33);
                             finish();
                         }
                     }
@@ -156,7 +170,6 @@ public class ProtocolAgree extends ActivityBaseHeader2 implements View.OnClickLi
                 });
 
     }
-
 
 
 }

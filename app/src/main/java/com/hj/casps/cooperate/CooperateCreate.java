@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.hj.casps.R;
 import com.hj.casps.adapter.TestArrayAdapter;
 import com.hj.casps.adapter.WZYBaseAdapter;
+import com.hj.casps.base.ActivityBase;
 import com.hj.casps.base.ActivityBaseHeader2;
 import com.hj.casps.common.Constant;
 import com.hj.casps.ordermanager.OrderDetail;
@@ -37,6 +38,7 @@ import okhttp3.Response;
 import static com.hj.casps.common.Constant.GetFlowType;
 import static com.hj.casps.common.Constant.GetPayType;
 import static com.hj.casps.common.Constant.GetSendsGoodsType;
+import static com.hj.casps.common.Constant.PROTOCOL_TYPE_NUM;
 import static com.hj.casps.common.Constant.finalGoodLevelEntities;
 import static com.hj.casps.common.Constant.getNow;
 import static com.hj.casps.common.Constant.getUUID;
@@ -550,6 +552,10 @@ public class CooperateCreate extends ActivityBaseHeader2 implements View.OnClick
         String note = getEdVaule(cooperate_products_remarks);
         String user_time = getTvVaule(cooperate_protocol_valid_time) + " - " +
                 getTvVaule(cooperate_protocol_valid_time_to);
+        if (!Constant.judgeDate(getTvVaule(cooperate_protocol_valid_time), getTvVaule(cooperate_protocol_valid_time_to))) {
+            toast("开始时间不能大于结束时间");
+            return;
+        }
         if (TextUtils.isEmpty(title)) {
             toastSHORT("标题不能为空");
             return;
@@ -571,12 +577,32 @@ public class CooperateCreate extends ActivityBaseHeader2 implements View.OnClick
             toastSHORT("商品品类不能为空");
             return;
         }
+        if (buy_type) {
+            if (cooperate_products_buy_account.getSelectedItemPosition() == -1) {
+                toast("付款账号不能为空");
+                return;
+            }
+            if (cooperate_products_ship_address.getSelectedItemPosition() == -1) {
+                toast("收货地址不能为空");
+                return;
+            }
+        } else {
+            if (cooperate_products_receipt_account.getSelectedItemPosition() == -1) {
+                toast("收款账号不能为空");
+                return;
+            }
+            if (cooperate_products_delivery_address.getSelectedItemPosition() == -1) {
+                toast("发货地址不能为空");
+                return;
+            }
+        }
 
         CreateData data = null;
         switch (type) {
             //创建合作协议
             case 0:
                 if (buy_type) {
+
                     data = new CreateData(
                             Constant.publicArg.getSys_token(),
                             getUUID(),
@@ -590,9 +616,11 @@ public class CooperateCreate extends ActivityBaseHeader2 implements View.OnClick
                             String.valueOf(cooperate_protocol_settle_rule.getSelectedItemPosition()),
                             String.valueOf(cooperate_protocol_ship_rule.getSelectedItemPosition()),
                             String.valueOf(cooperate_products_transport_mode.getSelectedItemPosition()),
-                            mBankList.get(cooperate_products_buy_account.getSelectedItemPosition()).getAccountno(),
-                            mBankList.get(cooperate_products_buy_account.getSelectedItemPosition()).getBankname(), "", "", "", mAddressList.get(cooperate_products_ship_address.getSelectedItemPosition()).getAddress(), note, "1");
+                            cooperate_products_buy_account.getSelectedItemPosition() == -1 ? "" : mBankList.get(cooperate_products_buy_account.getSelectedItemPosition()).getAccountno(),
+                            cooperate_products_buy_account.getSelectedItemPosition() == -1 ? "" : mBankList.get(cooperate_products_buy_account.getSelectedItemPosition()).getBankname(), "", "", "",
+                            cooperate_products_ship_address.getSelectedItemPosition() == -1 ? "" : mAddressList.get(cooperate_products_ship_address.getSelectedItemPosition()).getAddress(), note, "1");
                 } else {
+
                     data = new CreateData(
                             Constant.publicArg.getSys_token(),
                             getUUID(),
@@ -608,9 +636,9 @@ public class CooperateCreate extends ActivityBaseHeader2 implements View.OnClick
                             String.valueOf(cooperate_products_transport_mode.getSelectedItemPosition()),
                             "",
                             "",
-                            mBankList.get(cooperate_products_receipt_account.getSelectedItemPosition()).getAccountno(),
-                            mBankList.get(cooperate_products_receipt_account.getSelectedItemPosition()).getBankname(),
-                            mAddressList.get(cooperate_products_delivery_address.getSelectedItemPosition()).getAddress(),
+                            cooperate_products_receipt_account.getSelectedItemPosition() == -1 ? "" : mBankList.get(cooperate_products_receipt_account.getSelectedItemPosition()).getAccountno(),
+                            cooperate_products_receipt_account.getSelectedItemPosition() == -1 ? "" : mBankList.get(cooperate_products_receipt_account.getSelectedItemPosition()).getBankname(),
+                            cooperate_products_delivery_address.getSelectedItemPosition() == -1 ? "" : mAddressList.get(cooperate_products_delivery_address.getSelectedItemPosition()).getAddress(),
                             "",
                             note,
                             "2");
@@ -635,12 +663,12 @@ public class CooperateCreate extends ActivityBaseHeader2 implements View.OnClick
                             String.valueOf(cooperate_protocol_settle_rule.getSelectedItemPosition()),
                             String.valueOf(cooperate_protocol_ship_rule.getSelectedItemPosition()),
                             String.valueOf(cooperate_products_transport_mode.getSelectedItemPosition()),
-                            mPayBankList.get(cooperate_products_buy_account.getSelectedItemPosition()).getAccountno(),
-                            mPayBankList.get(cooperate_products_buy_account.getSelectedItemPosition()).getBankname(),
+                            cooperate_products_buy_account.getSelectedItemPosition() == -1 ? "" : mPayBankList.get(cooperate_products_buy_account.getSelectedItemPosition()).getAccountno(),
+                            cooperate_products_buy_account.getSelectedItemPosition() == -1 ? "" : mPayBankList.get(cooperate_products_buy_account.getSelectedItemPosition()).getBankname(),
                             bankListsAccount2,
                             bankLists2[0],
                             addressLists2[0],
-                            mGetAddressList.get(cooperate_products_ship_address.getSelectedItemPosition()).getAddress(),
+                            cooperate_products_ship_address.getSelectedItemPosition() == -1 ? "" : mGetAddressList.get(cooperate_products_ship_address.getSelectedItemPosition()).getAddress(),
                             note);
                 } else {
                     data = new CreateData(Constant.publicArg.getSys_token(),
@@ -658,9 +686,9 @@ public class CooperateCreate extends ActivityBaseHeader2 implements View.OnClick
                             String.valueOf(cooperate_products_transport_mode.getSelectedItemPosition()),
                             bankListsAccount2,
                             bankLists2[0],
-                            mGetBankList.get(cooperate_products_receipt_account.getSelectedItemPosition()).getAccountno(),
-                            mGetBankList.get(cooperate_products_receipt_account.getSelectedItemPosition()).getBankname(),
-                            mSendAddressList.get(cooperate_products_delivery_address.getSelectedItemPosition()).getAddress(),
+                            cooperate_products_receipt_account.getSelectedItemPosition() == -1 ? "" : mGetBankList.get(cooperate_products_receipt_account.getSelectedItemPosition()).getAccountno(),
+                            cooperate_products_receipt_account.getSelectedItemPosition() == -1 ? "" : mGetBankList.get(cooperate_products_receipt_account.getSelectedItemPosition()).getBankname(),
+                            cooperate_products_delivery_address.getSelectedItemPosition() == -1 ? "" : mSendAddressList.get(cooperate_products_delivery_address.getSelectedItemPosition()).getAddress(),
                             addressLists2[0],
                             note);
                 }
@@ -703,6 +731,9 @@ public class CooperateCreate extends ActivityBaseHeader2 implements View.OnClick
         }
         bundle.putBoolean("OrderList", true);
         bundle.putString("title", getString(R.string.order_detail_product_grid));
+        bundle.putString("account", bankListsAccount2);
+        bundle.putString("bankname", bankLists2[0]);
+        bundle.putString("adress", addressLists2[0]);
         bundle.putParcelableArrayList("orders", (ArrayList<? extends Parcelable>) orderShellModels);
         intentActivity(OrderDetail.class, bundle);
         finish();
@@ -728,6 +759,8 @@ public class CooperateCreate extends ActivityBaseHeader2 implements View.OnClick
                             toast("提交完成");
                             finalGoodLevelEntities.clear();
                             oldGoodLevelEntities.clear();
+//                            PROTOCOL_TYPE_NUM = buy_type ? 0 : 1;
+                            setResult(33);
                             finish();
                         }
                     }
