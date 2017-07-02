@@ -25,8 +25,8 @@ import java.util.List;
 
 public class PayMentAdapter extends CommonAdapter<ResponseQueryPayEntity> {
     public static onCheckedkType onCheckedkType;
-    private int index1=-1;
-    private int index2=-1;
+    private int index1 = -1;
+    private int index2 = -1;
 
 
     public static void setOnCheckedkType(PayMentAdapter.onCheckedkType onCheckedkType) {
@@ -41,22 +41,21 @@ public class PayMentAdapter extends CommonAdapter<ResponseQueryPayEntity> {
     @Override
     public void concert(final ViewHolder hooder, final ResponseQueryPayEntity payMnetInfo, final int indexPos) {
         final EditText et_now_money = hooder.getView(R.id.ed_now_money);
-        final CheckBox layout_check_order_1 = hooder.getView(R.id.layout_check_order_1);
-        final  EditText et_payment_remark= hooder.getView(R.id.ed_payment_remark);
+        final EditText et_payment_remark = hooder.getView(R.id.ed_payment_remark);
         //付款方
-        hooder.setTextInt(R.id.tv_bank_name_content_title,R.string.head_payee_title);
+        hooder.setTextInt(R.id.tv_bank_name_content_title, R.string.head_payee_title);
         //总金额
-        hooder.setTextInt(R.id.tv_sum_money_title,R.string.pay_sum_money);
+        hooder.setTextInt(R.id.tv_sum_money_title, R.string.pay_sum_money);
         //已付金额
-        hooder.setTextInt(R.id.tv_already_money_title,R.string.pay_already_money);
+        hooder.setTextInt(R.id.tv_already_money_title, R.string.pay_already_money);
         //待付金额
-        hooder.setTextInt(R.id.tv_await_money_title,R.string.pay_await_money);
+        hooder.setTextInt(R.id.tv_await_money_title, R.string.pay_await_money);
         //本次付款金额
-        hooder.setTextInt(R.id.ed_now_money_title,R.string.pay_now_money);
+        hooder.setTextInt(R.id.ed_now_money_title, R.string.pay_now_money);
         //本次付款账号
-        hooder.setTextInt(R.id.tv_payment_id_title,R.string.pay_ment_id);
+        hooder.setTextInt(R.id.tv_payment_id_title, R.string.pay_ment_id);
 
-       //设置金额为保留两位小数
+        //设置金额为保留两位小数
         ActivityBase.setPricePoint(et_now_money);
 
         if (et_payment_remark.getTag() instanceof TextWatcher) {
@@ -67,20 +66,21 @@ public class PayMentAdapter extends CommonAdapter<ResponseQueryPayEntity> {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
+
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
             }
+
             @Override
             public void afterTextChanged(Editable s) {
                 if (TextUtils.isEmpty(s)) {
                     payMnetInfo.setReMark("");
-                } else  if (StringUtils.isStrTrue(et_payment_remark.getText().toString().trim())){
-                    payMnetInfo.setReMark(et_payment_remark.getText().toString().trim());
+                } else if (StringUtils.isStrTrue(ActivityBase.getEdVaule(et_payment_remark))) {
+                    payMnetInfo.setReMark(ActivityBase.getEdVaule(et_payment_remark));
                 }
             }
         };
-        et_payment_remark.setOnTouchListener(new View.OnTouchListener()
-        {
+        et_payment_remark.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if (event.getAction() == MotionEvent.ACTION_UP) {
@@ -94,7 +94,6 @@ public class PayMentAdapter extends CommonAdapter<ResponseQueryPayEntity> {
         et_payment_remark.setTag(moneyWatcher2);
 
 
-
         //付款的
         if (et_now_money.getTag() instanceof TextWatcher) {
             et_now_money.removeTextChangedListener((TextWatcher) et_now_money.getTag());
@@ -104,20 +103,21 @@ public class PayMentAdapter extends CommonAdapter<ResponseQueryPayEntity> {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
+
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
             }
+
             @Override
             public void afterTextChanged(Editable s) {
                 if (TextUtils.isEmpty(s)) {
                     payMnetInfo.setPayNum("");
-                } else  if (StringUtils.isStrTrue(et_now_money.getText().toString().trim())){
-                    payMnetInfo.setPayNum(et_now_money.getText().toString().trim());
+                } else if (StringUtils.isStrTrue(ActivityBase.getEdVaule(et_now_money))) {
+                    payMnetInfo.setPayNum(ActivityBase.getEdVaule(et_now_money));
                 }
             }
         };
-        et_now_money.setOnTouchListener(new View.OnTouchListener()
-        {
+        et_now_money.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if (event.getAction() == MotionEvent.ACTION_UP) {
@@ -136,24 +136,24 @@ public class PayMentAdapter extends CommonAdapter<ResponseQueryPayEntity> {
         hooder.setText(R.id.tv_sum_money, payMnetInfo.getMoney() + "");
         hooder.setCheckBox(R.id.layout_check_order_1, payMnetInfo.isChecked());
         hooder.setText(R.id.tv_already_money, Constant.getNum(payMnetInfo.getPaymoneyNum()));
-        hooder.setText(R.id.tv_await_money, Constant.getNum( payMnetInfo.getExePaymoneyNum()));
+        hooder.setText(R.id.tv_await_money, Constant.getNum(payMnetInfo.getExePaymoneyNum()));
 
 
-        if(payMnetInfo.getReMark()!=null){
-        hooder.setEdiTextView(R.id.ed_payment_remark,payMnetInfo.getReMark());
+        if (payMnetInfo.getReMark() != null) {
+            hooder.setEdiTextView(R.id.ed_payment_remark, payMnetInfo.getReMark());
         }
         //付款账号
         final TextView tv_payMengCode = hooder.getView(R.id.tv_payment_id);
-        //
 
-         if(payMnetInfo.getAccountlist().size()>0){
-             hooder.setText(R.id.tv_payment_id, payMnetInfo.getAccountlist().get(0).getBankname() + payMnetInfo.getAccountlist().get(0).getAccountno());
-             payMnetInfo.setPayMentCode(payMnetInfo.getAccountlist().get(0).getAccountno());
+        if (payMnetInfo.getAccountlist().size() > 0) {
+            hooder.setText(R.id.tv_payment_id, payMnetInfo.getAccountlist().get(0).getBankname() +
+                    payMnetInfo.getAccountlist().get(0).getAccountno());
+            payMnetInfo.setPayMentCode(payMnetInfo.getAccountlist().get(0).getAccountno());
         }
         hooder.getView(R.id.tv_payment_id).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onCheckedkType.onPayMentCodeItemClickListener(tv_payMengCode,indexPos);
+                onCheckedkType.onPayMentCodeItemClickListener(tv_payMengCode, indexPos);
             }
         });
 
@@ -190,7 +190,7 @@ public class PayMentAdapter extends CommonAdapter<ResponseQueryPayEntity> {
             //重置
             index1 = -1;
         }
-      if (index2 != -1 && index2 ==indexPos) {
+        if (index2 != -1 && index2 == indexPos) {
             //强制加上焦点
             et_payment_remark.requestFocus();
             //设置光标显示到编辑框尾部
@@ -205,14 +205,14 @@ public class PayMentAdapter extends CommonAdapter<ResponseQueryPayEntity> {
         void onCheckedY(int pos);
 
         void onCheckedN(int pos);
+
         //订单的回调
         void onBillsIDItemCilckListener(int pos);
+
         //选择银行账号的回调
-        void onPayMentCodeItemClickListener(TextView v,int pos);
+        void onPayMentCodeItemClickListener(TextView v, int pos);
 
     }
-
-
 
 
 }

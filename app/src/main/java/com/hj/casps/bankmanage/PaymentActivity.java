@@ -3,6 +3,8 @@ package com.hj.casps.bankmanage;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -16,9 +18,7 @@ import com.hj.casps.R;
 import com.hj.casps.adapter.payadapter.PayMentAdapter;
 import com.hj.casps.adapter.payadapter.PayMentCodeAdapter;
 import com.hj.casps.base.ActivityBaseHeader;
-import com.hj.casps.base.QuotePriceNavLeftFragment;
 import com.hj.casps.common.Constant;
-import com.hj.casps.entity.PublicArg;
 import com.hj.casps.entity.appordergoodsCallBack.JsonCallBack;
 import com.hj.casps.entity.appordermoney.QueryMmbBankAccountRespon;
 import com.hj.casps.entity.goodsmanager.Pub;
@@ -73,66 +73,127 @@ public class PaymentActivity extends ActivityBaseHeader implements View.OnClickL
     @BindView(R.id.layout_head_left_btn)
     FancyButton fb;
 
-
     private MyDialog myDialog;
     private int goodsCount = 0;
-    private double goodsMoeny;
+    private double goodsMoeny = 0.0;
     private PayMentAdapter payMentAdapter;
-    private int pageno = 0;
-    private int pagesize = 5;
-    private boolean isReSave = true;//是否缓存
-    private boolean isSave = true;//是否清除数据
+    private boolean isSave = true;//是否保存数据
+    private boolean isRSave = true;//重置时是否保存数据
+    private boolean isSetAdapter = false;//重置时是否保存数据
     private List<ResponseQueryPayEntity> mList = new ArrayList<>();
-    private int pageCount;
-
     private List<ResponseQueryPayEntity> dbList = new ArrayList();
-    private List<ResponseQueryPayEntity> pubList = new ArrayList();
     private List<ReqPayMoneyOffine> orderList = new ArrayList();
     private List<ResponseQueryPayEntity.AccountlistBean> accountlist;
     private View contentView;
 
-
-    //刷新数据
-    private void refreshUI() {
-        if (isSave) {
-            pubList.clear();
+    Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case Constant.HANDLERTYPE_0:
+                    initData(pageNo);
+                    break;
+                case Constant.HANDLERTYPE_1:
+                    //获取数据刷新界面
+                    refreshUI();
+                    break;
+                case Constant.HANDLERTYPE_2:
+                    //保存数据库
+                    saveLocalData();
+                    break;
+            }
         }
-        for (int i = 0; i < mList.size(); i++) {
-            dbList.add(mList.get(i));
-            pubList.add(mList.get(i));
-        }
+    };
 
-        if (pageno == 0) {
-            payMentAdapter = new PayMentAdapter(this, mList);
-            payment_list.setAdapter(payMentAdapter);
-            payMentAdapter.notifyDataSetChanged();
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_payment);
+        ButterKnife.bind(this);
+        initView();
+    }
+
+
+    private void initView() {
+        setTitle(getString(R.string.activity_panment_title));
+        fb.setVisibility(View.GONE);
+        layout_bottom_tv_2.setText(getString(R.string.hint_reset_title));
+        layout_bottom_tv_2.setOnClickListener(this);
+        layout_bottom_tv_2.setBackgroundResource(R.color.light_orange);
+        layout_bottom_tv_3.setVisibility(View.GONE);
+        layout_bottom_tv_4.setText(getString(R.string.bt_offline_payment_title));
+        layout_bottom_tv_4.setOnClickListener(this);
+        layout_bottom_tv_4.setBackgroundResource(R.color.title_bg);
+        layout_head_right_tv.setOnClickListener(this);
+        layout_bottom_check_1.setOnClickListener(this);
+        layout_bottom_check_layout1.setOnClickListener(this);
+        mLoader = new NestRefreshLayout(payment_scroll);
+        mLoader.setOnLoadingListener(this);
+        mLoader.setPullLoadEnable(true);
+        mLoader.setPullRefreshEnable(true);
+        if (hasInternetConnected()) {
+            mHandler.sendEmptyMessage(Constant.HANDLERTYPE_0);
         } else {
-            if (pageno <= ((pageCount - 1) / pagesize)) {
-                payMentAdapter.addRes(mList);
-            } else {
-                mLoader.onLoadAll();
-            }
-        }
-        payMentAdapter.setOnCheckedkType(this);
-
-        if (mList != null)
-            for (int i = 0; i < mList.size(); i++) {
-                if (!mList.get(i).isChecked()) {
-                    layout_bottom_check_1.setChecked(false);
-                    return;
-                }
-            }
-        if (isReSave) {
-            saveLocalData();
+            getDataForLocal();
         }
     }
 
-    //保存数据到数据库
+    /**
+     * 刷新数据
+     */
+    private void refreshUI() {
+        if (isSave) {
+            dbList.clear();
+        }
+
+        dbList.addAll(mList);
+
+        if (isSetAdapter) {
+            if (pageNo == 0) {
+                payMentAdapter = new PayMentAdapter(this, mList);
+                payment_list.setAdapter(payMentAdapter);
+                payMentAdapter.notifyDataSetChanged();
+            } else {
+                if (pageNo <= ((total - 1) / pageSize)) {
+                    payMentAdapter.refreshList(mList);
+                } else {
+                    mLoader.onLoadAll();
+                }
+            }
+        } else {
+            for (int i = 0; i < dbList.size(); i++) {
+                dbList.get(i).clearData();
+            }
+            payMentAdapter = new PayMentAdapter(this, dbList);
+            payment_list.setAdapter(payMentAdapter);
+            payMentAdapter.notifyDataSetChanged();
+        }
+
+        payMentAdapter.setOnCheckedkType(this);
+
+        if (isRSave)
+            mHandler.sendEmptyMessage(Constant.HANDLERTYPE_2);
+
+        for (int i = 0; i < dbList.size(); i++) {
+            if (!dbList.get(i).isChecked()) {
+                layout_bottom_check_1.setChecked(false);
+                return;
+            }
+        }
+
+        waitDialogRectangle.dismiss();
+    }
+
+    /**
+     * 保存数据到数据库
+     */
     private void saveLocalData() {
         WytUtils.getInstance(this).DeleteAllQueryPayEntityInfo();
-        for (int i = 0; i < pubList.size(); i++) {
+        for (int i = 0; i < dbList.size(); i++) {
             ResponseQueryPayBean bean = new ResponseQueryPayBean();
-            ResponseQueryPayEntity entity = pubList.get(i);
+            ResponseQueryPayEntity entity = dbList.get(i);
             bean.setChecked(entity.isChecked());
             bean.setExePaymoneyNum(entity.getExePaymoneyNum());
             bean.setGoodsName(entity.getGoodsName());
@@ -144,25 +205,10 @@ public class PaymentActivity extends ActivityBaseHeader implements View.OnClickL
             bean.setSellersName(entity.getSellersName());
             String gsonString = GsonTools.createGsonString(entity.getAccountlist());
             bean.setAccountlist(gsonString);
-            System.out.println("--" + gsonString);
             WytUtils.getInstance(this).insertQueryPayEntityInfo(bean);
         }
     }
 
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_payment);
-        ButterKnife.bind(this);
-        if (hasInternetConnected()) {
-            initData(pageno);
-        } else {
-            getDataForLocal();
-        }
-
-        initView();
-    }
 
     /**
      * 从本地数据库加载数据
@@ -182,45 +228,41 @@ public class PaymentActivity extends ActivityBaseHeader implements View.OnClickL
             entity.setPaymoneyNum(bean.getPaymoneyNum());
             entity.setSellersName(bean.getSellersName());
             List<ResponseQueryPayEntity.AccountlistBean> been = GsonTools.changeGsonToList(bean.getAccountlist(), ResponseQueryPayEntity.AccountlistBean.class);
-
             entity.setAccountlist(been);
             mList.add(entity);
         }
 
-        if (mList != null && mList.size() > 0) {
-            refreshUI();
-        }
+        if (mList.size() > 0)
+            mHandler.sendEmptyMessage(Constant.HANDLERTYPE_1);
     }
-        //请求数据的接口
+
+    //请求数据的接口
     private void initData(final int pageno) {
         Constant.JSONFATHERRESPON = "QueryMmbBankAccountRespon";
-        PublicArg p = Constant.publicArg;
-        RequestQueryPayMoney r = new RequestQueryPayMoney(p.getSys_token(),
+        RequestQueryPayMoney r = new RequestQueryPayMoney(
+                publicArg.getSys_token(),
                 Constant.getUUID(),
                 Constant.SYS_FUNC,
-                p.getSys_user(),
-                p.getSys_member(),
+                publicArg.getSys_user(),
+                publicArg.getSys_member(),
                 Constant.appOrderMoney_orderId,
                 Constant.appOrderMoney_goodsName,
                 Constant.appOrderMoney_buyersName,
                 String.valueOf(pageno + 1),
-                String.valueOf(pagesize));
-        String param = mGson.toJson(r);
-        System.out.println("r==QueryPayMoneyUrl" + r);
+                String.valueOf(pageSize));
         waitDialogRectangle.show();
-        OkGo.post(Constant.QueryPayMoneyUrl).params("param", param)
+        OkGo.post(Constant.QueryPayMoneyUrl)
+                .params("param", mGson.toJson(r))
                 .execute(new JsonCallBack<QueryMmbBankAccountRespon<List<ResponseQueryPayEntity>>>() {
                     @Override
-                    public void onSuccess(QueryMmbBankAccountRespon<List<ResponseQueryPayEntity>> listData, Call call, Response response) {
+                    public void onSuccess(QueryMmbBankAccountRespon<List<ResponseQueryPayEntity>> listData,
+                                          Call call, Response response) {
                         waitDialogRectangle.dismiss();
                         if (listData.return_code == 0 && listData != null && listData.list != null) {
-                            PaymentActivity.this.mList = listData.list;
-                            PaymentActivity.this.pageCount = listData.pagecount;
-                            refreshUI();
-                        }
-
-
-                        else {
+                            mList = listData.list;
+                            total = listData.pagecount;
+                            mHandler.sendEmptyMessage(Constant.HANDLERTYPE_1);
+                        } else {
                             toastSHORT("查询数据为空");
                         }
                     }
@@ -230,33 +272,11 @@ public class PaymentActivity extends ActivityBaseHeader implements View.OnClickL
                         super.onError(call, response, e);
                         toastSHORT(e.getMessage());
                         waitDialogRectangle.dismiss();
-                        if (Constant.public_code){
+                        if (Constant.public_code) {
                             LogoutUtils.exitUser(PaymentActivity.this);
                         }
                     }
                 });
-    }
-
-    private void initView() {
-        setTitle(getString(R.string.activity_panment_title));
-//        getDatas();
-        fb.setVisibility(View.GONE);
-        layout_bottom_tv_2.setText(getString(R.string.hint_reset_title));
-        layout_bottom_tv_2.setOnClickListener(this);
-        layout_bottom_tv_2.setBackgroundResource(R.color.light_orange);
-        layout_bottom_tv_3.setVisibility(View.GONE);
-        layout_bottom_tv_4.setText(getString(R.string.bt_offline_payment_title));
-        layout_bottom_tv_4.setOnClickListener(this);
-        layout_bottom_tv_4.setBackgroundResource(R.color.title_bg);
-        layout_head_right_tv.setOnClickListener(this);
-        layout_bottom_check_1.setOnClickListener(this);
-        layout_bottom_check_layout1.setOnClickListener(this);
-        mLoader = new NestRefreshLayout(payment_scroll);
-        mLoader.setOnLoadingListener(this);
-        mLoader.setPullLoadEnable(true);
-        mLoader.setPullRefreshEnable(true);
-//        refreshUI();
-
     }
 
 
@@ -273,34 +293,21 @@ public class PaymentActivity extends ActivityBaseHeader implements View.OnClickL
 
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == Constant.PAYMENT_REQUEST_CODE && resultCode == Constant.PAYMENTRESULTOK) {
-            //如果是带参数的 就不缓存
-            isEmptyParam();
-            pageno = 0;
-            dbList.clear();
-            initData(pageno);
-        }
-    }
-
-
-    @Override
     protected void onNavSearchClick() {
         super.onNavSearchClick();
         bundle.putInt(Constant.BUNDLE_TYPE, Constant.PAYMENT_SEARCH_TYPE);
         intentActivity(BillsSearchActivity.class, Constant.PAYMENT_REQUEST_CODE, bundle);
     }
-        //跳转到详情界面的接口回调
+
+    //跳转到详情界面的接口回调
     @Override
     public void onBillsIDItemCilckListener(int pos) {
-//        bundle.putSerializable(Constant.BUNDLE_TYPE, mList.get(pos));
-//       Constant.SEARCH_sendgoods_orderId= String.valueOf(dbList.get(pos).getOrdertitleNumber());
         Constant.SEARCH_sendgoods_orderId = dbList.get(pos).getOrdertitleId();
         intentActivity(BillsDetailsActivity.class);
 
     }
-        //获取金额的回调
+
+    //获取金额的回调
     @Override
     public void onPayMentCodeItemClickListener(TextView view, int pos) {
         accountlist = dbList.get(pos).getAccountlist();
@@ -331,10 +338,7 @@ public class PaymentActivity extends ActivityBaseHeader implements View.OnClickL
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 textView.setText(accountlist.get(position).getBankname() + accountlist.get(position).getAccountno());
-//                mList.get(listpos).setAddressId(addressList.get(position).getId());
                 dbList.get(listpos).setPayMentCode(accountlist.get(position).getAccountno());
-//                mList.get(listpos).setAddressName(addressList.get(position).getAddress());
-//                LogShow(mList.get(listpos).getAddressId() + "......" + listpos);
                 dialog.dismiss();
             }
         });
@@ -353,13 +357,20 @@ public class PaymentActivity extends ActivityBaseHeader implements View.OnClickL
                 selectCheck();
                 break;
             case R.id.layout_bottom_tv_2:
+//                //重置
+//                isRSave = false;
+//                isSave = false;
+//                clearDatas(false);
+                waitDialogRectangle.show();
                 //重置
-                isReSave = false;
+                selectAll(false);
+                deleteBills(false);
                 isSave = false;
-                clearDatas(false);
+                isSetAdapter = false;
+                mHandler.sendEmptyMessage(Constant.HANDLERTYPE_1);
                 break;
-            //执行操作
             case R.id.layout_bottom_tv_4:
+                //付款操作
                 buyAll();
                 break;
             case R.id.layout_head_right_tv:
@@ -387,40 +398,36 @@ public class PaymentActivity extends ActivityBaseHeader implements View.OnClickL
         myDialog.show();
     }
 
-    /**
-     * @param isInitData true 代表请求网络    false    刷新数据
-     */
-    private void clearDatas(boolean isInitData) {
-        selectAll(false);
-        for (int i = 0; i < dbList.size(); i++) {
-            dbList.get(i).clearData();
-        }
-        goodsCount = 0;
-        pageno = 0;
-        orderList.clear();
-        layout_bottom_check_1.setChecked(false);
-        if (isInitData) {
-            dbList.clear();
-            initData(pageno);
-        } else {
-            refreshUI();
-        }
-    }
-
     @Override
     public void onRefresh(AbsRefreshLayout listLoader) {
-        pageno = 0;
-        isEmptyParam();
+        pageNo = 0;
         isSave = true;
-        initData(pageno);
+        if (StringUtils.isStrTrue(Constant.SEARCH_sendgoods_OrdertitleCode) ||
+                StringUtils.isStrTrue(Constant.SEARCH_sendgoods_OrderGoodName)) {
+            isRSave = false;
+        } else {
+            isRSave = true;
+        }
+        if (hasInternetConnected())
+            mHandler.sendEmptyMessage(Constant.HANDLERTYPE_0);
         mLoader.onLoadFinished();//加载结束
     }
 
     @Override
     public void onLoading(AbsRefreshLayout listLoader) {
-        pageno++;
-        isEmptyParam();
-        initData(pageno);
+        pageNo++;
+        isSave = false;
+        if (StringUtils.isStrTrue(Constant.appOrderMoney_orderId)
+                || StringUtils.isStrTrue(Constant.appOrderMoney_goodsName)
+                || StringUtils.isStrTrue(Constant.appOrderMoney_buyersName)) {
+            isRSave = false;
+        } else {
+            isRSave = true;
+        }
+
+        if (dbList.size() < total)
+            if (hasInternetConnected())
+                mHandler.sendEmptyMessage(Constant.HANDLERTYPE_0);
         mLoader.onLoadFinished();//加载结束
     }
 
@@ -435,11 +442,11 @@ public class PaymentActivity extends ActivityBaseHeader implements View.OnClickL
         for (int i = 0; i < dbList.size(); i++) {
             ResponseQueryPayEntity entity = dbList.get(i);
             if (entity.isChecked()) {
-                if (entity.getPayNum() == null || !StringUtils.isStrTrue(entity.getPayNum())) {
+                if (!StringUtils.isStrTrue(entity.getPayNum())) {
                     toastSHORT("请输入付款金额");
                     return;
                 }
-                if(entity.getPayNum().equals("0")||entity.getPayNum().equals("0.0")){
+                if (entity.getPayNum().equals("0") || entity.getPayNum().equals("0.0")) {
                     toastSHORT("金额不能为0");
                     return;
                 }
@@ -463,52 +470,77 @@ public class PaymentActivity extends ActivityBaseHeader implements View.OnClickL
             }
         }
         showBillsDialog();
-
-
     }
 
-    //请求网络接口
+    /**
+     * 付款弹框
+     */
+    public void showBillsDialog() {
+        myDialog = new MyDialog(this);
+        myDialog.setMessage(getString(R.string.dialog_pay_msg));
+        myDialog.setYesOnclickListener(getString(R.string.True), new MyDialog.onYesOnclickListener() {
+            @Override
+            public void onYesClick() {
+                myDialog.dismiss();
+                executePayMoneyForNet();
+            }
+        });
+        myDialog.setNoOnclickListener(getString(R.string.cancel), new MyDialog.onNoOnclickListener() {
+            @Override
+            public void onNoClick() {
+                orderList.clear();
+                myDialog.dismiss();
+            }
+        });
+        myDialog.show();
+    }
+
+    /**
+     * 付款操作
+     */
     private void executePayMoneyForNet() {
-        PublicArg p = Constant.publicArg;
         String timeUUID = Constant.getTimeUUID();
         if (timeUUID.equals("")) {
             toastSHORT(getString(R.string.time_out));
             return;
         }
-        ResPayMoneyOffline r = new ResPayMoneyOffline(p.getSys_token(), timeUUID, Constant.SYS_FUNC, p.getSys_user(), p.getSys_member(), orderList);
-        String param = mGson.toJson(r);
-        log(param);
+        ResPayMoneyOffline r = new ResPayMoneyOffline(
+                publicArg.getSys_token(),
+                timeUUID,
+                Constant.SYS_FUNC,
+                publicArg.getSys_user(),
+                publicArg.getSys_member(),
+                orderList);
         waitDialogRectangle.show();
-        OkGo.post(Constant.PayMoneyOfflineUrl).params("param", param).execute(new StringCallback() {
-            @Override
-            public void onSuccess(String s, Call call, Response response) {
-                waitDialogRectangle.dismiss();
-                Pub pub = GsonTools.changeGsonToBean(s, Pub.class);
-                if (pub.getReturn_code() == 0) {
-                    new MyToast(PaymentActivity.this, pub.getReturn_message());
-                    //传true是需要请求网络
-                    clearDatas(true);
+        OkGo.post(Constant.PayMoneyOfflineUrl)
+                .params("param", mGson.toJson(r))
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(String s, Call call, Response response) {
+                        waitDialogRectangle.dismiss();
+                        Pub pub = GsonTools.changeGsonToBean(s, Pub.class);
+                        if (pub.getReturn_code() == 0) {
+                            new MyToast(PaymentActivity.this, pub.getReturn_message());
+                            if (hasInternetConnected())
+                                mHandler.sendEmptyMessage(Constant.HANDLERTYPE_0);
+                        } else if (pub.getReturn_code() == 1101 || pub.getReturn_code() == 1102) {
+                            toastSHORT("重复登录或令牌超时");
+                            LogoutUtils.exitUser(PaymentActivity.this);
+                        } else {
+                            toastSHORT(pub.getReturn_message());
+                        }
+                        deleteBills(true);
+                    }
 
-                }
-                else if(pub.getReturn_code()==1101||pub.getReturn_code()==1102){
-                    toastSHORT("重复登录或令牌超时");
-                    LogoutUtils.exitUser(PaymentActivity.this);
-                }
-
-
-                else {
-                    toastSHORT(pub.getReturn_message());
-                }
-            }
-
-            @Override
-            public void onError(Call call, Response response, Exception e) {
-                super.onError(call, response, e);
-                waitDialogRectangle.dismiss();
-            }
-        });
+                    @Override
+                    public void onError(Call call, Response response, Exception e) {
+                        super.onError(call, response, e);
+                        waitDialogRectangle.dismiss();
+                    }
+                });
     }
-//全选
+
+    //全选
     private void selectAll(boolean isck) {
         for (int i = 0; i < dbList.size(); i++) {
             // 改变boolean
@@ -525,27 +557,43 @@ public class PaymentActivity extends ActivityBaseHeader implements View.OnClickL
         payMentAdapter.notifyDataSetChanged();
     }
 
-
-    public void showBillsDialog() {
-        myDialog = new MyDialog(this);
-        myDialog.setMessage(getString(R.string.dialog_pay_msg));
-        myDialog.setYesOnclickListener(getString(R.string.True), new MyDialog.onYesOnclickListener() {
-            @Override
-            public void onYesClick() {
-                myDialog.dismiss();
-                executePayMoneyForNet();
-//                new MyToast(context, "付款成功" + bills + "条");
-            }
-        });
-        myDialog.setNoOnclickListener(getString(R.string.cancel), new MyDialog.onNoOnclickListener() {
-            @Override
-            public void onNoClick() {
-                orderList.clear();
-                myDialog.dismiss();
-            }
-        });
-        myDialog.show();
+    /**
+     * 清除数据
+     */
+    private void deleteBills(boolean isDelete) {
+        // 刷新
+        goodsCount = 0;
+        pageNo = 0;
+        //判断要不要清空数据
+        if (isDelete)
+            dbList.clear();
+        mList.clear();
+        orderList.clear();
+        waitDialogRectangle.dismiss();
     }
+
+
+//    /**
+//     * @param isInitData true 代表请求网络    false    刷新数据
+//     */
+//    private void clearDatas(boolean isInitData) {
+//        selectAll(false);
+//        for (int i = 0; i < dbList.size(); i++) {
+//            dbList.get(i).clearData();
+//        }
+//        goodsCount = 0;
+//        pageNo = 0;
+//        orderList.clear();
+//        layout_bottom_check_1.setChecked(false);
+//        if (isInitData) {
+//            dbList.clear();
+//            initData(pageNo);
+//        } else {
+//            if (mList.size() > 0)
+//                mHandler.sendEmptyMessage(Constant.HANDLERTYPE_1);
+//        }
+//    }
+
 
     /**
      * 全局选择
@@ -581,18 +629,33 @@ public class PaymentActivity extends ActivityBaseHeader implements View.OnClickL
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == Constant.PAYMENT_REQUEST_CODE && resultCode == Constant.PAYMENTRESULTOK) {
+            pageNo = 0;
+            isSave = true;
+            isRSave = false;
+            initData(pageNo);
+        }
+    }
+
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         Constant.clearDatas();
     }
-        //判断参数是否为空 来设置是否缓存  是否清理数据集合
+
+    //判断参数是否为空 来设置是否缓存  是否清理数据集合
     public void isEmptyParam() {
-        if (StringUtils.isStrTrue(Constant.appOrderMoney_orderId) || StringUtils.isStrTrue(Constant.appOrderMoney_goodsName) || StringUtils.isStrTrue(Constant.appOrderMoney_buyersName)) {
+        if (StringUtils.isStrTrue(Constant.appOrderMoney_orderId)
+                || StringUtils.isStrTrue(Constant.appOrderMoney_goodsName)
+                || StringUtils.isStrTrue(Constant.appOrderMoney_buyersName)) {
             isSave = true;
-            isReSave = false;
+            isRSave = false;
         } else {
             isSave = false;
-            isReSave = true;
+            isRSave = true;
         }
     }
 }

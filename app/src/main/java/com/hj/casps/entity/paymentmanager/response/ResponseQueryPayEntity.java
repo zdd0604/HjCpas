@@ -177,9 +177,6 @@ public class ResponseQueryPayEntity  {
         }
     }
 
-
-
-
     public void clearData() {
         this.payNum = "";
         this.payMentCode = "";

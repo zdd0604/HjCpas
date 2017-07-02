@@ -409,7 +409,7 @@ public class ActivityBase extends ActivityCommBase implements
      * @param editText
      * @return
      */
-    public String getEdVaule(EditText editText) {
+    public static String getEdVaule(EditText editText) {
         return editText.getText().toString().trim();
     }
 
