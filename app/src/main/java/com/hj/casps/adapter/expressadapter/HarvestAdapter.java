@@ -97,6 +97,7 @@ public class HarvestAdapter extends CommonAdapter<QueryGetGoodsEntity> {
             hooder.setText(R.id.harvest_tv_content_7, queryGetGoodsEntity.getAddressName());
         } else if (queryGetGoodsEntity.getAddress_list().size() > 0) {
             hooder.setText(R.id.harvest_tv_content_7, queryGetGoodsEntity.getAddress_list().get(0).getAddress());
+            queryGetGoodsEntity.setAddressName(queryGetGoodsEntity.getAddress_list().get(0).getAddress());
         }
 
         if (queryGetGoodsEntity.getAddressId() == null &&
@@ -148,10 +149,13 @@ public class HarvestAdapter extends CommonAdapter<QueryGetGoodsEntity> {
     public interface onCheckedkType {
         //单选框选中事件
         void onCheckedY(int pos);
+
         //单选框取消选中事件
         void onCheckedN(int pos);
+
         //订单ID点击事件
         void onBillsIDItemCilckListener(int pos);
+
         //地址列表选择事件
         void onAddressOnClickListener(TextView view, int pos);
     }

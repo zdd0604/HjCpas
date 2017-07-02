@@ -561,7 +561,7 @@ public class QuitHarvestExpress extends ActivityBaseHeader implements OnPullList
                         return;
                     }
 
-                    if (!StringUtils.isStrTrue(dbList.get(i).getAddressName())) {
+                    if (!StringUtils.isStrTrue(dbList.get(i).getAddressId())) {
                         toastSHORT("尚未创建地址，收退货失败");
                         return;
                     }

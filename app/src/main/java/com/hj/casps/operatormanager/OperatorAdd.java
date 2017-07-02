@@ -272,7 +272,6 @@ public class OperatorAdd extends ActivityBaseHeader2 implements View.OnClickList
             toastSHORT("请填写电话号码");
             return;
         }
-
         if (!isMobileNO(getEdVaule(operator_ed_account_mobile))) {
             toastSHORT("请填写正确的电话号码");
             return;
@@ -405,7 +404,7 @@ public class OperatorAdd extends ActivityBaseHeader2 implements View.OnClickList
             toastSHORT("请填写电话号码");
             return;
         }
-        if (isMobileNO(getEdVaule(operator_ed_account_mobile))) {
+        if (!isMobileNO(getEdVaule(operator_ed_account_mobile))) {
             toastSHORT("请填写正确的电话号码");
             return;
         }

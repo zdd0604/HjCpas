@@ -121,6 +121,7 @@ public class QuitHarvestAdapter extends CommonAdapter<QueryGetReturnGoodsGain> {
             hooder.setText(R.id.harvest_tv_content_7, queryGetReturnGoodsGain.getAddressName());
         } else if (queryGetReturnGoodsGain.getAddress_list().size() > 0) {
             hooder.setText(R.id.harvest_tv_content_7, queryGetReturnGoodsGain.getAddress_list().get(0).getAddress());
+            queryGetReturnGoodsGain.setAddressName(queryGetReturnGoodsGain.getAddress_list().get(0).getAddress());
         }
         if (queryGetReturnGoodsGain.getAddressId() == null && queryGetReturnGoodsGain.getAddress_list().size() > 0) {
             queryGetReturnGoodsGain.setAddressId(queryGetReturnGoodsGain.getAddress_list().get(0).getId());

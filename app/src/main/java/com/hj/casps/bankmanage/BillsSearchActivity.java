@@ -1,6 +1,5 @@
 package com.hj.casps.bankmanage;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -92,8 +91,8 @@ public class BillsSearchActivity extends ActivityBaseHeader2 implements View.OnC
                 search_tv_bills_title_2.setText(getText(R.string.tv_search_payment_goods_name));
                 search_ed_bills_content_2.setHint(getText(R.string.ed_search_hint_goods_name));
                 layout_payment_bank_4.setVisibility(View.VISIBLE);
-                search_tv_bills_title_4.setText(getText(R.string.tv_search_payment_buy_name));
-                search_ed_bills_content_4.setHint(getText(R.string.ed_search_hint_buy_name));
+                search_tv_bills_title_4.setText(getText(R.string.tv_search_payment_buy_name2));
+                search_ed_bills_content_4.setHint(getText(R.string.tv_search_payment_buy_name3));
                 break;
             case Constant.RECEIPT_SEARCH_TYPE:
 //                toastSHORT("收款查询界面");
@@ -292,11 +291,11 @@ public class BillsSearchActivity extends ActivityBaseHeader2 implements View.OnC
                 break;
             case Constant.RECEIVE_REFUND_SEARCH_TYPE:
                 //("收退款查询界面");
-                Constant.appOrderMoney_orderId=getEdVaule(search_ed_bills_content_1);
+                Constant.appOrderMoney_orderId = getEdVaule(search_ed_bills_content_1);
                 //商品名
-                Constant.appOrderMoney_goodsName=getEdVaule(search_ed_bills_content_2);
+                Constant.appOrderMoney_goodsName = getEdVaule(search_ed_bills_content_2);
                 //f付款方
-                Constant.appOrderMoney_buyersName=getEdVaule(search_ed_bills_content_4);
+                Constant.appOrderMoney_buyersName = getEdVaule(search_ed_bills_content_4);
                 setResult(Constant.PAYMENTRESULTOK);
                 finish();
 
@@ -316,43 +315,43 @@ public class BillsSearchActivity extends ActivityBaseHeader2 implements View.OnC
                 break;
             case Constant.ECPRESS_ADDRESS_ACTIVITY_TYPE:
                 //("收货查询界面");
-                 Constant.SEARCH_sendgoods_OrdertitleCode = getEdVaule(search_ed_bills_content_1);
-                 Constant.SEARCH_sendgoods_OrderGoodName  = getEdVaule(search_ed_bills_content_2);
+                Constant.SEARCH_sendgoods_OrdertitleCode = getEdVaule(search_ed_bills_content_1);
+                Constant.SEARCH_sendgoods_OrderGoodName = getEdVaule(search_ed_bills_content_2);
                 setResult(Constant.QUIT_GET_SEARCH);
                 finish();
                 break;
             case Constant.ECPRESS_SEND_ACTIVITY_TYPE:
                 //("发货查询界面");
                 Constant.SEARCH_sendgoods_OrdertitleCode = getEdVaule(search_ed_bills_content_1);
-                Constant.SEARCH_sendgoods_OrderGoodName  = getEdVaule(search_ed_bills_content_2);
+                Constant.SEARCH_sendgoods_OrderGoodName = getEdVaule(search_ed_bills_content_2);
                 setResult(Constant.SENDGOODS_SEARCH);
                 finish();
                 break;
             case Constant.ECPRESS_QUIT_ACTIVITY_TYPE:
                 //("退货查询界面");
-                 Constant.SEARCH_sendgoods_OrdertitleCode = getEdVaule(search_ed_bills_content_1);
-                 Constant.SEARCH_sendgoods_OrderGoodName  = getEdVaule(search_ed_bills_content_2);
+                Constant.SEARCH_sendgoods_OrdertitleCode = getEdVaule(search_ed_bills_content_1);
+                Constant.SEARCH_sendgoods_OrderGoodName = getEdVaule(search_ed_bills_content_2);
                 setResult(Constant.QUIT_SEARCH);
                 finish();
                 break;
             case Constant.ECPRESS_QUIT_HARVEST_ACTIVITY_TYPE:
                 //("退货签收查询界面");
 //                toastSHORT("退货签收");
-                 Constant.SEARCH_sendgoods_OrdertitleCode= getEdVaule(search_ed_bills_content_1);
-                 Constant.SEARCH_sendgoods_OrderGoodName = getEdVaule(search_ed_bills_content_2);
+                Constant.SEARCH_sendgoods_OrdertitleCode = getEdVaule(search_ed_bills_content_1);
+                Constant.SEARCH_sendgoods_OrderGoodName = getEdVaule(search_ed_bills_content_2);
                 setResult(Constant.QUIT_RETURN_SEARCH);
                 finish();
                 break;
             case Constant.CREATE_SECTION_BILLS_ACTIVITY_TYPE:
                 //("创建结款单查询界面");
-                Constant.SEARCH_sendgoods_OrdertitleCode   = getEdVaule(search_ed_bills_content_1);
+                Constant.SEARCH_sendgoods_OrdertitleCode = getEdVaule(search_ed_bills_content_1);
                 Constant.SEARCH_sendgoods_OrderGoodName = getEdVaule(search_ed_bills_content_2);
                 setResult(Constant.CREATE_MYPENDINGSTTLE);
                 finish();
                 break;
             case Constant.ADD_SECTION_BILLS_ACTIVITY_TYPE:
                 //("添加订单查询界面");
-                Constant.SEARCH_sendgoods_OrdertitleCode   = getEdVaule(search_ed_bills_content_1);
+                Constant.SEARCH_sendgoods_OrdertitleCode = getEdVaule(search_ed_bills_content_1);
                 Constant.SEARCH_sendgoods_OrderGoodName = getEdVaule(search_ed_bills_content_2);
                 setResult(Constant.ADD_SECTION_BILLS_ACTIVITY_TYPE_SEARCH);
                 finish();

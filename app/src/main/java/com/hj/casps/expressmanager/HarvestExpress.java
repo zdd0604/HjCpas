@@ -206,12 +206,13 @@ public class HarvestExpress extends ActivityBaseHeader implements OnPullListener
 
         waitDialogRectangle.dismiss();
 
-        for (int i = 0; i < dbList.size(); i++) {
-            if (!dbList.get(i).isCheck()) {
-                layout_bottom_check_1.setChecked(false);
-                return;
+        if (dbList != null)
+            for (int i = 0; i < dbList.size(); i++) {
+                if (!dbList.get(i).isCheck()) {
+                    layout_bottom_check_1.setChecked(false);
+                    return;
+                }
             }
-        }
     }
 
     /**
@@ -300,7 +301,7 @@ public class HarvestExpress extends ActivityBaseHeader implements OnPullListener
                     return;
                 }
 
-                if (!StringUtils.isStrTrue(queryGetGoodsEntity.getAddressName())) {
+                if (!StringUtils.isStrTrue(queryGetGoodsEntity.getAddressId())) {
                     toastSHORT("尚未创建地址，收货失败");
                     return;
                 }
@@ -474,7 +475,6 @@ public class HarvestExpress extends ActivityBaseHeader implements OnPullListener
                 .tag(this)
                 .params("param", mGson.toJson(getGoods))
                 .execute(new JsonCallBack<HarvestExpressRespon<List<QueryGetGoodsEntity>>>() {
-
                     @Override
                     public void onSuccess(HarvestExpressRespon<List<QueryGetGoodsEntity>> listHarvestExpressRespon, Call call, Response response) {
                         if (listHarvestExpressRespon.rows != null) {

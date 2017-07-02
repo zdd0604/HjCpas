@@ -102,4 +102,18 @@ public class ResQueryGetMoneyEntity {
     public void setPaymoneyTime(long paymoneyTime) {
         this.paymoneyTime = paymoneyTime;
     }
+
+    @Override
+    public String toString() {
+        return "ResQueryGetMoneyEntity{" +
+                "goodsName='" + goodsName + '\'' +
+                ", id='" + id + '\'' +
+                ", money=" + money +
+                ", ordertitleId='" + ordertitleId + '\'' +
+                ", ordertitleNumber=" + ordertitleNumber +
+                ", paymoneyName='" + paymoneyName + '\'' +
+                ", paymoneyTime=" + paymoneyTime +
+                ", isChecked=" + isChecked +
+                '}';
+    }
 }

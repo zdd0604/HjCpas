@@ -163,6 +163,8 @@
     <string name="tv_search_payment_id">订单号</string>
     <string name="tv_search_payment_goods_name">商品名</string>
     <string name="tv_search_payment_buy_name">付款方</string>
+    <string name="tv_search_payment_buy_name2">收款方</string>
+    <string name="tv_search_payment_buy_name3">请输入首款方</string>
 
     <string name="ed_search_hint_id">请输入订单号</string>
     <string name="ed_search_hint_goods_name">请输入商品名</string>

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
+import android.text.InputType;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
@@ -214,6 +215,7 @@ public class EditCardActivity extends ActivityBaseHeader2 implements View.OnClic
         account_number.setOnClickListener(this);
         account_number.setHint("请选择所属地域");
         bank_name.setHint(R.string.hint_ed_express_postcode_title);
+        bank_name.setInputType(InputType.TYPE_CLASS_NUMBER);
         contacts_name.setHint(R.string.hint_ed_express_contacts_title);
         mobile_number.setHint(R.string.hint_ed_express_mobile_title);
         telephone_number.setHint(R.string.hint_ed_express_phone_title);
@@ -544,16 +546,17 @@ public class EditCardActivity extends ActivityBaseHeader2 implements View.OnClic
         waitDialogRectangle.show();
         Constant.JSONFATHERRESPON = "AddressEditRespon";
         if (!StringUtils.isStrTrue(getEdVaule(account_name))) {
-            toastSHORT("收货地址不能为空");
+            toastSHORT("地址不能为空");
             waitDialogRectangle.dismiss();
             return;
         }
 
-        if (!isMobileNO(getEdVaule(mobile_number))) {
-            toastSHORT("请输入正确的手机号");
-            waitDialogRectangle.dismiss();
-            return;
-        }
+        if (StringUtils.isStrTrue(getEdVaule(mobile_number)))
+            if (!isMobileNO(getEdVaule(mobile_number))) {
+                toastSHORT("请输入正确的手机号");
+                waitDialogRectangle.dismiss();
+                return;
+            }
         OkGo.post(Constant.CreateMmbWarehousetUrl)
                 .tag(this)
                 .params("param", mGson.toJson(addAddressContent()))
@@ -623,11 +626,18 @@ public class EditCardActivity extends ActivityBaseHeader2 implements View.OnClic
         Constant.JSONFATHERRESPON = "ReturnMessageRespon";
         waitDialogRectangle.show();
         if (!StringUtils.isStrTrue(getEdVaule(account_name))) {
-            toastSHORT("收货地址不能为空");
+            toastSHORT("地址不能为空");
             waitDialogRectangle.dismiss();
             return;
         }
-        LogShow("--" + mGson.toJson(getEditContent()));
+        if (StringUtils.isStrTrue(getEdVaule(mobile_number)))
+            if (!isMobileNO(getEdVaule(mobile_number))) {
+                toastSHORT("请输入正确的手机号");
+                waitDialogRectangle.dismiss();
+                return;
+            }
+
+        LogShow(mGson.toJson(getEditContent()));
         OkGo.post(Constant.UpdateMmbWarehouseUrl)
                 .tag(this)
                 .params("param", mGson.toJson(getEditContent()))
