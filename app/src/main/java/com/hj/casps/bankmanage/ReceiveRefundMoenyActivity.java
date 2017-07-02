@@ -98,7 +98,8 @@ public class ReceiveRefundMoenyActivity extends ActivityBaseHeader implements On
             getDataForLocal();
         }
     }
-            //从本地数据库加载数据
+
+    //从本地数据库加载数据
     private void getDataForLocal() {
         List<ResqueryGetRefundMoneyEntity> entityList = WytUtils.getInstance(this).QuerytgetRefundMoneyInfo();
         if (entityList != null && entityList.size() > 0) {
@@ -106,8 +107,6 @@ public class ReceiveRefundMoenyActivity extends ActivityBaseHeader implements On
             mList.addAll(entityList);
             refreshUI();
         }
-
-
     }
 
     private void refreshUI() {
@@ -136,7 +135,7 @@ public class ReceiveRefundMoenyActivity extends ActivityBaseHeader implements On
 
 
         for (int i = 0; i < dbList.size(); i++) {
-            if (!dbList.get(i).getIsChecked()) {
+            if (!dbList.get(i).isChecked()) {
                 layout_bottom_check_1.setChecked(false);
                 return;
             }
@@ -170,12 +169,10 @@ public class ReceiveRefundMoenyActivity extends ActivityBaseHeader implements On
                 if (pub.getReturn_code() == 0) {
                     clearDatas();
                     new MyToast(ReceiveRefundMoenyActivity.this, pub.getReturn_message());
-                }
-                else if(pub.getReturn_code()==1101||pub.getReturn_code()==1102){
+                } else if (pub.getReturn_code() == 1101 || pub.getReturn_code() == 1102) {
                     toastSHORT("重复登录或令牌超时");
                     LogoutUtils.exitUser(ReceiveRefundMoenyActivity.this);
-                }
-                else {
+                } else {
                     toastSHORT(pub.getReturn_message());
                 }
             }
@@ -193,34 +190,43 @@ public class ReceiveRefundMoenyActivity extends ActivityBaseHeader implements On
     //请求数据
     private void initData(final int pageno) {
         Constant.JSONFATHERRESPON = "QueryMmbBankAccountRespon";
-        PublicArg p = Constant.publicArg;
-        RequestQueryGetRefundMoney r = new RequestQueryGetRefundMoney(p.getSys_token(), Constant.getUUID(), Constant.SYS_FUNC, p.getSys_user(), p.getSys_member(), Constant.appOrderMoney_orderId, Constant.appOrderMoney_goodsName, Constant.appOrderMoney_buyersName, String.valueOf(pageno + 1), String.valueOf(pagesize));
-        String param = mGson.toJson(r);
+        RequestQueryGetRefundMoney r = new RequestQueryGetRefundMoney(
+                publicArg.getSys_token(),
+                Constant.getUUID(),
+                Constant.SYS_FUNC,
+                publicArg.getSys_user(),
+                publicArg.getSys_member(),
+                Constant.appOrderMoney_orderId,
+                Constant.appOrderMoney_goodsName,
+                Constant.appOrderMoney_buyersName,
+                String.valueOf(pageno + 1),
+                String.valueOf(pagesize));
         waitDialogRectangle.show();
-        System.out.println("rfffffffffffffffffffff-----------------------------------------------------");
-        OkGo.post(Constant.QueryGetRefundMoney).params("param", param).execute(new JsonCallBack<QueryMmbBankAccountRespon<List<ResqueryGetRefundMoneyEntity>>>() {
-            @Override
-            public void onSuccess(QueryMmbBankAccountRespon<List<ResqueryGetRefundMoneyEntity>> listData, Call call, Response response) {
-                waitDialogRectangle.dismiss();
-                if (listData != null && listData.return_code == 0 && listData.list != null) {
-                    ReceiveRefundMoenyActivity.this.mList = listData.list;
-                    ReceiveRefundMoenyActivity.this.pageCount = listData.pagecount;
-                    refreshUI();
-                } else {
-                    toastSHORT(listData.return_message);
-                }
-            }
+        OkGo.post(Constant.QueryGetRefundMoney)
+                .params("param", mGson.toJson(r))
+                .execute(new JsonCallBack<QueryMmbBankAccountRespon<List<ResqueryGetRefundMoneyEntity>>>() {
+                    @Override
+                    public void onSuccess(QueryMmbBankAccountRespon<List<ResqueryGetRefundMoneyEntity>> listData, Call call, Response response) {
+                        waitDialogRectangle.dismiss();
+                        if (listData != null && listData.return_code == 0 && listData.list != null) {
+                            mList = listData.list;
+                            pageCount = listData.pagecount;
+                            refreshUI();
+                        } else {
+                            toastSHORT(listData.return_message);
+                        }
+                    }
 
-            @Override
-            public void onError(Call call, Response response, Exception e) {
-                super.onError(call, response, e);
-                toastSHORT(e.getMessage());
-                waitDialogRectangle.dismiss();
-                if (Constant.public_code){
-                    LogoutUtils.exitUser(ReceiveRefundMoenyActivity.this);
-                }
-            }
-        });
+                    @Override
+                    public void onError(Call call, Response response, Exception e) {
+                        super.onError(call, response, e);
+                        toastSHORT(e.getMessage());
+                        waitDialogRectangle.dismiss();
+                        if (Constant.public_code) {
+                            LogoutUtils.exitUser(ReceiveRefundMoenyActivity.this);
+                        }
+                    }
+                });
     }
 
     private void initView() {
@@ -308,7 +314,8 @@ public class ReceiveRefundMoenyActivity extends ActivityBaseHeader implements On
             selectAll(false);
         }
     }
-//执行操作
+
+    //执行操作
     private void buyAll() {
         if (goodsCount <= 0) {
             toastSHORT("请勾选一条订单");
@@ -316,7 +323,7 @@ public class ReceiveRefundMoenyActivity extends ActivityBaseHeader implements On
         }
         for (int i = 0; i < dbList.size(); i++) {
             ResqueryGetRefundMoneyEntity entity = dbList.get(i);
-            if (entity.getIsChecked()) {
+            if (entity.isChecked()) {
               /*  HashMap<String, String> map = new HashMap<>();
                 map.put("id",entity.getId());*/
                 orderList.add(new ResGetMoney.Sub(entity.getId()));
@@ -379,7 +386,8 @@ public class ReceiveRefundMoenyActivity extends ActivityBaseHeader implements On
             initData(pageno);
         }
     }
-//搜查查询方法
+
+    //搜查查询方法
     @Override
     protected void onNavSearchClick() {
         super.onNavSearchClick();
@@ -398,7 +406,8 @@ public class ReceiveRefundMoenyActivity extends ActivityBaseHeader implements On
         if (goodsCount > 0)
             goodsCount--;
     }
-//跳转到详情页面
+
+    //跳转到详情页面
     @Override
     public void onBillsIDItemCilckListener(int pos) {
         Intent intent = new Intent(context, BillsDetailsActivity.class);
@@ -409,9 +418,9 @@ public class ReceiveRefundMoenyActivity extends ActivityBaseHeader implements On
     private void selectAll(boolean isck) {
         for (int i = 0; i < dbList.size(); i++) {
             // 改变boolean
-            dbList.get(i).setIsChecked(isck);
+            dbList.get(i).setChecked(isck);
             // 如果为选中
-            if (dbList.get(i).getIsChecked()) {
+            if (dbList.get(i).isChecked()) {
                 goodsCount++;
 //                goodsMoeny += Double.valueOf(mList.get(i).getAwait_money());
             } else {
@@ -422,6 +431,7 @@ public class ReceiveRefundMoenyActivity extends ActivityBaseHeader implements On
         }
 
     }
+
     //判断是否有参数来确定 是否缓存和清空集合数据
     public void isEmptyParam() {
         if (StringUtils.isStrTrue(Constant.appOrderMoney_orderId) ||

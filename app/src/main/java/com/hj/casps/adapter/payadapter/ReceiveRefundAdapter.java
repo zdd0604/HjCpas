@@ -53,11 +53,11 @@ public class ReceiveRefundAdapter extends CommonAdapter<ResqueryGetRefundMoneyEn
         });
 
         final CheckBox checkBox = hooder.getView(R.id.ck_receipt_bills);
-        checkBox.setChecked(info.getIsChecked());
+        checkBox.setChecked(info.isChecked());
         checkBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                info.setIsChecked(checkBox.isChecked());
+                info.setChecked(checkBox.isChecked());
                 if (checkBox.isChecked()) {
                     if (onCheckedkType != null)
                         onCheckedkType.onCheckedY(indexPos);
