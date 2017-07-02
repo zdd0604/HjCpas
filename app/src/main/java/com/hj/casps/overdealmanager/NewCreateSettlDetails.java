@@ -34,9 +34,11 @@ import com.hj.casps.entity.appsettle.CreateSettleLoading;
 import com.hj.casps.entity.appsettle.QueryMyPendingSttleRespon;
 import com.hj.casps.ui.MyDialog;
 import com.hj.casps.util.StringUtils;
+import com.hj.casps.widget.WrapContentLinearLayoutManager;
 import com.lzy.okgo.OkGo;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import butterknife.BindView;
@@ -145,7 +147,11 @@ public class NewCreateSettlDetails extends ActivityBaseHeader2 implements View.O
                 break;
             case R.id.layout_bottom_tv_2:
                 //删除订单行
-                showDeleteDialog();
+                if (goodsCount > 0) {
+                    showDeleteDialog();
+                } else {
+                    toastSHORT("请选择一条订单");
+                }
                 break;
             case R.id.layout_bottom_tv_3:
                 intentActivity(AddCommodityInfo.class, Constant.START_ACTIVITY_TYPE);
@@ -265,12 +271,15 @@ public class NewCreateSettlDetails extends ActivityBaseHeader2 implements View.O
      * 删除选中的订单
      */
     private void deleteDatas() {
-        for (int i = 0; i < commList.size(); i++) {
-            if (commList.get(i).isCheck()) {
-                commList.remove(commList.get(i));
-                mHandler.sendEmptyMessage(Constant.HANDLERTYPE_2);
+        Iterator iter = commList.iterator();
+        while (iter.hasNext()) {
+            QueryPayMoneyOrderForSettleEntity queryPayMoneyOrderForSettleEntity = (QueryPayMoneyOrderForSettleEntity) iter.next();
+            if (queryPayMoneyOrderForSettleEntity.isCheck()) {
+                iter.remove();
+                goodsCount--;
             }
         }
+        mHandler.sendEmptyMessage(Constant.HANDLERTYPE_2);
     }
 
     /**
@@ -298,7 +307,7 @@ public class NewCreateSettlDetails extends ActivityBaseHeader2 implements View.O
         overList.add(oEntity);
 
         createSettlDetailsAdapter = new CreateSettlDetailsAdapter(this, overList, commList, title);
-        settl_recyclerview.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        settl_recyclerview.setLayoutManager(new WrapContentLinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         settl_recyclerview.setAdapter(createSettlDetailsAdapter);
         createSettlDetailsAdapter.notifyDataSetChanged();
     }
@@ -390,19 +399,6 @@ public class NewCreateSettlDetails extends ActivityBaseHeader2 implements View.O
     @Override
     public void onLoading(AbsRefreshLayout listLoader) {
         mLoader.onLoadFinished();//加载结束
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == Constant.START_ACTIVITY_TYPE && resultCode == Constant.ADDCOMMDITY) {
-            if (Constant.OrderForSettleEntityList.size() > 0) {
-                commList = Constant.OrderForSettleEntityList;
-                if (commList.size() > 0)
-                    selectAll(false);
-                mHandler.sendEmptyMessage(Constant.HANDLERTYPE_2);
-            }
-        }
     }
 
     @Override
@@ -565,5 +561,18 @@ public class NewCreateSettlDetails extends ActivityBaseHeader2 implements View.O
         waitDialogRectangle.dismiss();
         layout_bottom_check_1.setChecked(false);
         mHandler.sendEmptyMessage(Constant.HANDLERTYPE_2);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == Constant.START_ACTIVITY_TYPE && resultCode == Constant.ADDCOMMDITY) {
+            if (Constant.OrderForSettleEntityList.size() > 0) {
+                commList = Constant.OrderForSettleEntityList;
+                if (commList.size() > 0)
+                    selectAll(false);
+                mHandler.sendEmptyMessage(Constant.HANDLERTYPE_2);
+            }
+        }
     }
 }

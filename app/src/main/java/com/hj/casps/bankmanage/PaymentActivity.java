@@ -75,7 +75,6 @@ public class PaymentActivity extends ActivityBaseHeader implements View.OnClickL
 
     private MyDialog myDialog;
     private int goodsCount = 0;
-    private double goodsMoeny = 0.0;
     private PayMentAdapter payMentAdapter;
     private boolean isSave = true;//是否保存数据
     private boolean isRSave = true;//重置时是否保存数据
@@ -236,50 +235,6 @@ public class PaymentActivity extends ActivityBaseHeader implements View.OnClickL
             mHandler.sendEmptyMessage(Constant.HANDLERTYPE_1);
     }
 
-    //请求数据的接口
-    private void initData(final int pageno) {
-        Constant.JSONFATHERRESPON = "QueryMmbBankAccountRespon";
-        RequestQueryPayMoney r = new RequestQueryPayMoney(
-                publicArg.getSys_token(),
-                Constant.getUUID(),
-                Constant.SYS_FUNC,
-                publicArg.getSys_user(),
-                publicArg.getSys_member(),
-                Constant.appOrderMoney_orderId,
-                Constant.appOrderMoney_goodsName,
-                Constant.appOrderMoney_buyersName,
-                String.valueOf(pageno + 1),
-                String.valueOf(pageSize));
-        waitDialogRectangle.show();
-        OkGo.post(Constant.QueryPayMoneyUrl)
-                .params("param", mGson.toJson(r))
-                .execute(new JsonCallBack<QueryMmbBankAccountRespon<List<ResponseQueryPayEntity>>>() {
-                    @Override
-                    public void onSuccess(QueryMmbBankAccountRespon<List<ResponseQueryPayEntity>> listData,
-                                          Call call, Response response) {
-                        waitDialogRectangle.dismiss();
-                        if (listData.return_code == 0 && listData != null && listData.list != null) {
-                            mList = listData.list;
-                            total = listData.pagecount;
-                            mHandler.sendEmptyMessage(Constant.HANDLERTYPE_1);
-                        } else {
-                            toastSHORT("查询数据为空");
-                        }
-                    }
-
-                    @Override
-                    public void onError(Call call, Response response, Exception e) {
-                        super.onError(call, response, e);
-                        toastSHORT(e.getMessage());
-                        waitDialogRectangle.dismiss();
-                        if (Constant.public_code) {
-                            LogoutUtils.exitUser(PaymentActivity.this);
-                        }
-                    }
-                });
-    }
-
-
     @Override
     public void onCheckedY(int pos) {
         goodsCount++;
@@ -357,10 +312,6 @@ public class PaymentActivity extends ActivityBaseHeader implements View.OnClickL
                 selectCheck();
                 break;
             case R.id.layout_bottom_tv_2:
-//                //重置
-//                isRSave = false;
-//                isSave = false;
-//                clearDatas(false);
                 waitDialogRectangle.show();
                 //重置
                 selectAll(false);
@@ -377,25 +328,6 @@ public class PaymentActivity extends ActivityBaseHeader implements View.OnClickL
                 CreateDialog(Constant.DIALOG_CONTENT_31);
                 break;
         }
-    }
-
-    public void reSetBillsDialog() {
-        myDialog = new MyDialog(this);
-        myDialog.setMessage(getString(R.string.dialog_reset_msg));
-        myDialog.setYesOnclickListener(getString(R.string.True), new MyDialog.onYesOnclickListener() {
-            @Override
-            public void onYesClick() {
-
-//                mHandler.sendEmptyMessage(Constant.HANDLERTYPE_2);
-            }
-        });
-        myDialog.setNoOnclickListener(getString(R.string.cancel), new MyDialog.onNoOnclickListener() {
-            @Override
-            public void onNoClick() {
-                myDialog.dismiss();
-            }
-        });
-        myDialog.show();
     }
 
     @Override
@@ -496,6 +428,53 @@ public class PaymentActivity extends ActivityBaseHeader implements View.OnClickL
     }
 
     /**
+     * 请求数据的接口
+     *
+     * @param pageno
+     */
+    private void initData(final int pageno) {
+        Constant.JSONFATHERRESPON = "QueryMmbBankAccountRespon";
+        RequestQueryPayMoney r = new RequestQueryPayMoney(
+                publicArg.getSys_token(),
+                Constant.getUUID(),
+                Constant.SYS_FUNC,
+                publicArg.getSys_user(),
+                publicArg.getSys_member(),
+                Constant.appOrderMoney_orderId,
+                Constant.appOrderMoney_goodsName,
+                Constant.appOrderMoney_buyersName,
+                String.valueOf(pageno + 1),
+                String.valueOf(pageSize));
+        waitDialogRectangle.show();
+        OkGo.post(Constant.QueryPayMoneyUrl)
+                .params("param", mGson.toJson(r))
+                .execute(new JsonCallBack<QueryMmbBankAccountRespon<List<ResponseQueryPayEntity>>>() {
+                    @Override
+                    public void onSuccess(QueryMmbBankAccountRespon<List<ResponseQueryPayEntity>> listData,
+                                          Call call, Response response) {
+                        waitDialogRectangle.dismiss();
+                        if (listData.return_code == 0 && listData != null && listData.list != null) {
+                            mList = listData.list;
+                            total = listData.pagecount;
+                            mHandler.sendEmptyMessage(Constant.HANDLERTYPE_1);
+                        } else {
+                            toastSHORT("查询数据为空");
+                        }
+                    }
+
+                    @Override
+                    public void onError(Call call, Response response, Exception e) {
+                        super.onError(call, response, e);
+                        toastSHORT(e.getMessage());
+                        waitDialogRectangle.dismiss();
+                        if (Constant.public_code) {
+                            LogoutUtils.exitUser(PaymentActivity.this);
+                        }
+                    }
+                });
+    }
+
+    /**
      * 付款操作
      */
     private void executePayMoneyForNet() {
@@ -504,6 +483,7 @@ public class PaymentActivity extends ActivityBaseHeader implements View.OnClickL
             toastSHORT(getString(R.string.time_out));
             return;
         }
+        waitDialogRectangle.show();
         ResPayMoneyOffline r = new ResPayMoneyOffline(
                 publicArg.getSys_token(),
                 timeUUID,
@@ -511,7 +491,7 @@ public class PaymentActivity extends ActivityBaseHeader implements View.OnClickL
                 publicArg.getSys_user(),
                 publicArg.getSys_member(),
                 orderList);
-        waitDialogRectangle.show();
+        LogShow(mGson.toJson(r));
         OkGo.post(Constant.PayMoneyOfflineUrl)
                 .params("param", mGson.toJson(r))
                 .execute(new StringCallback() {
@@ -548,10 +528,8 @@ public class PaymentActivity extends ActivityBaseHeader implements View.OnClickL
             // 如果为选中
             if (dbList.get(i).isChecked()) {
                 goodsCount++;
-                goodsMoeny += Double.valueOf(dbList.get(i).getPaymoneyNum());
             } else {
                 goodsCount = 0;
-                goodsMoeny = 0;
             }
         }
         payMentAdapter.notifyDataSetChanged();
@@ -571,29 +549,6 @@ public class PaymentActivity extends ActivityBaseHeader implements View.OnClickL
         orderList.clear();
         waitDialogRectangle.dismiss();
     }
-
-
-//    /**
-//     * @param isInitData true 代表请求网络    false    刷新数据
-//     */
-//    private void clearDatas(boolean isInitData) {
-//        selectAll(false);
-//        for (int i = 0; i < dbList.size(); i++) {
-//            dbList.get(i).clearData();
-//        }
-//        goodsCount = 0;
-//        pageNo = 0;
-//        orderList.clear();
-//        layout_bottom_check_1.setChecked(false);
-//        if (isInitData) {
-//            dbList.clear();
-//            initData(pageNo);
-//        } else {
-//            if (mList.size() > 0)
-//                mHandler.sendEmptyMessage(Constant.HANDLERTYPE_1);
-//        }
-//    }
-
 
     /**
      * 全局选择
@@ -639,23 +594,10 @@ public class PaymentActivity extends ActivityBaseHeader implements View.OnClickL
         }
     }
 
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
         Constant.clearDatas();
     }
 
-    //判断参数是否为空 来设置是否缓存  是否清理数据集合
-    public void isEmptyParam() {
-        if (StringUtils.isStrTrue(Constant.appOrderMoney_orderId)
-                || StringUtils.isStrTrue(Constant.appOrderMoney_goodsName)
-                || StringUtils.isStrTrue(Constant.appOrderMoney_buyersName)) {
-            isSave = true;
-            isRSave = false;
-        } else {
-            isSave = false;
-            isRSave = true;
-        }
-    }
 }

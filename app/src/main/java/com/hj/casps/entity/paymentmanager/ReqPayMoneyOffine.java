@@ -2,6 +2,8 @@ package com.hj.casps.entity.paymentmanager;
 
 /**
  * Created by Administrator on 2017/5/19.
+ * 接口Url: appOrderMoney / payMoneyOffline
+ * 功能描述：线下付款操作
  */
 
 public class ReqPayMoneyOffine {
@@ -11,7 +13,6 @@ public class ReqPayMoneyOffine {
     private String payMoneyCode;
     private String num;
     private String goodName;
-
 
     public String getId() {
         return id;

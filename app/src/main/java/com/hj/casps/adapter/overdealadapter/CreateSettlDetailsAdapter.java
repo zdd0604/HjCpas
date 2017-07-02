@@ -2,6 +2,7 @@ package com.hj.casps.adapter.overdealadapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -103,6 +104,7 @@ public class CreateSettlDetailsAdapter extends RecyclerView.Adapter<RecyclerView
         addlistBytype(type_one, listOne);
         addlistBytype(type_three, listTitle);
         addlistBytype(type_two, listTwo);
+        Log.e("show", mPositions.get(type_two) + "------" + types.size());
         if (list.size() > 0) {
             for (int i = mPositions.get(type_two); i < types.size(); i++) {
                 this.notifyItemChanged(i);
