@@ -394,11 +394,10 @@ public class OperatorAdd extends ActivityBaseHeader2 implements View.OnClickList
             return;
         }
 
-        if (StringUtils.isStrTrue(getEdVaule(operator_ed_account_name)))
-            if (!StringUtils.isStrTrue(getEdVaule(operator_ed_account_name))) {
-                toastSHORT("请填写名称");
-                return;
-            }
+        if (!StringUtils.isStrTrue(getEdVaule(operator_ed_account_name))) {
+            toastSHORT("请填写名称");
+            return;
+        }
 
         if (!StringUtils.isStrTrue(getEdVaule(operator_ed_account_mobile))) {
             toastSHORT("请填写电话号码");
@@ -560,5 +559,12 @@ public class OperatorAdd extends ActivityBaseHeader2 implements View.OnClickList
                 statetype = 0;
                 break;
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Constant.editUser_password = "";
+        Constant.editUser_password1 = "";
     }
 }

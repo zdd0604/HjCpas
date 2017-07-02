@@ -187,7 +187,7 @@ public class RegisterAssureFragment extends ViewPagerFragment implements
 
     @Override
     public void onBtnClickListener(int pos) {
-        showBillsDialog(getString(R.string.dialog_stop_msg), dbList.get(pos).getId());
+        showBillsDialog(getString(R.string.dialog_stop_msg1), dbList.get(pos).getId());
     }
 
     //登记操作

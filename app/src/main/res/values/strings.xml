@@ -381,6 +381,7 @@
     <string name="hint_textview_title_5">已付金额：</string>
 
     <string name="dialog_stop_msg">确认要终止吗？</string>
+    <string name="dialog_stop_msg1">确认要申请登记吗？</string>
     <string name="dialog_revokeToStop_msg">确认要撤回终止吗？</string>
     <string name="toast_stop_msg">请求终止结款单成功</string>
     <!-- 搜索 -->
