@@ -511,6 +511,7 @@ public class GroupManager extends ActivityBaseHeader implements View.OnClickList
     public void onRefresh(AbsRefreshLayout listLoader) {
         pageno = 1;
         initData();
+        select_all_order.setChecked(false);
         mLoader.onLoadFinished();//加载结束
     }
 
@@ -519,6 +520,7 @@ public class GroupManager extends ActivityBaseHeader implements View.OnClickList
     public void onLoading(AbsRefreshLayout listLoader) {
         pageno++;
         initData();
+        select_all_order.setChecked(false);
         mLoader.onLoadFinished();//加载结束
     }
 

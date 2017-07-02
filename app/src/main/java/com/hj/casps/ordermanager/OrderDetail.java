@@ -155,8 +155,6 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
             if (orders.size() > 0)
                 mHandler.sendEmptyMessage(Constant.HANDLERTYPE_2);
         }
-        stringArrayAdapter4 = new TestArrayAdapter(getApplicationContext(), new String[]{adress2});
-        stringArrayAdapter5 = new TestArrayAdapter(getApplicationContext(), new String[]{bankname2 + "\n" + account2});
 
 
     }
@@ -217,20 +215,26 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
                             orders = new ArrayList<OrderShellModel>();
                             if (state == 1) {
                                 //采购
-                                String[] get_accounts = new String[]{appOrderCheckOrderOrdertitle.getBank + "\n" + appOrderCheckOrderOrdertitle.getAccount};
-                                String[] get_address = new String[]{appOrderCheckOrderOrdertitle.sellersAddressName};
-                                order_detail_get_account.setAdapter(new TestArrayAdapter(getApplicationContext(), get_accounts));
-                                order_detail_get_address.setAdapter(new TestArrayAdapter(getApplicationContext(), get_address));
-                                order_detail_get_account.setEnabled(false);
-                                order_detail_get_address.setEnabled(false);
+                                account2 = "";
+                                bankname2 = listListListListListListAppOrderCheckOrderRespon.sellersAccountList.size() == 0 ? "" : listListListListListListAppOrderCheckOrderRespon.sellersAccountList.get(0).getBankname();
+                                adress2 = listListListListListListAppOrderCheckOrderRespon.sellersAddressList.size() == 0 ? "" : listListListListListListAppOrderCheckOrderRespon.sellersAddressList.get(0).getAddress();
+//                                String[] get_accounts = new String[]{appOrderCheckOrderOrdertitle.getBank + "\n" + appOrderCheckOrderOrdertitle.getAccount};
+//                                String[] get_address = new String[]{appOrderCheckOrderOrdertitle.sellersAddressName};
+//                                order_detail_get_account.setAdapter(new TestArrayAdapter(getApplicationContext(), get_accounts));
+//                                order_detail_get_address.setAdapter(new TestArrayAdapter(getApplicationContext(), get_address));
+//                                order_detail_get_account.setEnabled(false);
+//                                order_detail_get_address.setEnabled(false);
                             } else {
                                 //销售
-                                String[] pay_accounts = new String[]{appOrderCheckOrderOrdertitle.payBank + "\n" + appOrderCheckOrderOrdertitle.payAccount};
-                                String[] pay_address = new String[]{appOrderCheckOrderOrdertitle.buyersAddressName};
-                                order_detail_pay_account.setAdapter(new TestArrayAdapter(getApplicationContext(), pay_accounts));
-                                order_detail_pay_address.setAdapter(new TestArrayAdapter(getApplicationContext(), pay_address));
-                                order_detail_pay_account.setEnabled(false);
-                                order_detail_pay_address.setEnabled(false);
+                                account2 = "";
+                                bankname2 = listListListListListListAppOrderCheckOrderRespon.buyersAccountList.size() == 0 ? "" : listListListListListListAppOrderCheckOrderRespon.buyersAccountList.get(0).getBankname();
+                                adress2 = listListListListListListAppOrderCheckOrderRespon.buyersAddressList.size() == 0 ? "" : listListListListListListAppOrderCheckOrderRespon.buyersAddressList.get(0).getAddress();
+//                                String[] pay_accounts = new String[]{appOrderCheckOrderOrdertitle.payBank + "\n" + appOrderCheckOrderOrdertitle.payAccount};
+//                                String[] pay_address = new String[]{appOrderCheckOrderOrdertitle.buyersAddressName};
+//                                order_detail_pay_account.setAdapter(new TestArrayAdapter(getApplicationContext(), pay_accounts));
+//                                order_detail_pay_address.setAdapter(new TestArrayAdapter(getApplicationContext(), pay_address));
+//                                order_detail_pay_account.setEnabled(false);
+//                                order_detail_pay_address.setEnabled(false);
                             }
                             for (int i = 0; i < listListListListListListAppOrderCheckOrderRespon.ordertitle.orderList.size(); i++) {
                                 OrdertitleData ordertitleData = appOrderCheckOrderOrdertitle.orderList.get(i);
@@ -341,15 +345,15 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
         allPrice = 0.0;
         LogShow(orders.size() + "------------" + orders.toString());
         for (int i = 0; i < orders.size(); i++) {
-//            if (!StringUtils.isStrTrue(orders.get(i).getFinalprice())
-//                    || Double.parseDouble(orders.get(i).getFinalprice()) <= 0) {
-//                return;
-//            }
+            if (!StringUtils.isStrTrue(orders.get(i).getFinalprice())
+                    || Double.parseDouble(orders.get(i).getFinalprice()) <= 0) {
+                return;
+            }
 
-//            if (!StringUtils.isStrTrue(String.valueOf(orders.get(i).getNum()))
-//                    || orders.get(i).getNum() <= 0) {
-//                return;
-//            }
+            if (!StringUtils.isStrTrue(String.valueOf(orders.get(i).getNum()))
+                    || orders.get(i).getNum() <= 0) {
+                return;
+            }
 
             if (Double.parseDouble(orders.get(i).getFinalprice()) < orders.get(i).getMinPrice()) {
                 return;
@@ -361,7 +365,7 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
             allPrice += Double.valueOf(orders.get(i).getAllprice());
 
         }
-        DecimalFormat df = new DecimalFormat(".##");
+        DecimalFormat df = new DecimalFormat("#.##");
         order_detail_product_pay.setText(df.format(allPrice) + "");
     }
 
@@ -573,8 +577,10 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
                                     nos = nos + "," + String.valueOf(orders.get(i).getNo());
                                 }
                             }
-                            if (!orderList) {
+                            if ((!orderList) && (type != 1)) {
                                 delete(state, nos);
+                            } else {
+                                finish();
                             }
 
                         }
@@ -686,6 +692,7 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
                                 bankLists[i] = mList.get(i).getBankname() + "\n" + mList.get(i).getAccountno();
                             }
                             stringArrayAdapter2 = new TestArrayAdapter(getApplicationContext(), bankLists);
+                            stringArrayAdapter5 = new TestArrayAdapter(getApplicationContext(), new String[]{bankname2 + "\n" + account2});
                             switch (state) {
                                 case 0://销售拣单车
                                     order_detail_get_account.setAdapter(stringArrayAdapter2);
@@ -749,6 +756,8 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
                                 addressLists[i] = mAddressList.get(i).getAddress();
                             }
                             stringArrayAdapter1 = new TestArrayAdapter(getApplicationContext(), addressLists);
+                            stringArrayAdapter4 = new TestArrayAdapter(getApplicationContext(), new String[]{adress2});
+
                             switch (state) {
                                 case 0://销售拣单车
                                     order_detail_get_address.setAdapter(stringArrayAdapter1);

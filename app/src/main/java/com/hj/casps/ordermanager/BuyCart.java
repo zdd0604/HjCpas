@@ -21,6 +21,7 @@ import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import okhttp3.Call;
@@ -38,17 +39,19 @@ public class BuyCart extends ActivityBaseHeader implements View.OnClickListener 
     private String type_name;//设置文字，采购方，销售方
     private List<BuyCartBack.ListBean> orderBuyModels;//从网络上获取购物车后的返回list
     private OrderAdapter adapter;//购物车adapter
+    public static BuyCart buyCart = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_buy_cart);
+        buyCart = this;
         initData();
         initView();
     }
 
     //加载拣单车的数据
-    private void initData() {
+    public void initData() {
         BuyCartPost post = null;
         type = getIntent().getIntExtra(Constant.ORDER_TYPE, Constant.order_type_buy);//从外面传递过来是采购还是销售
         switch (type) {
@@ -108,6 +111,7 @@ public class BuyCart extends ActivityBaseHeader implements View.OnClickListener 
                                     no++;
                                 }
                             }
+                            Collections.reverse(orderBuyModels);
                             adapter.updateRes(orderBuyModels);//刷新adapter
                         }
                     }

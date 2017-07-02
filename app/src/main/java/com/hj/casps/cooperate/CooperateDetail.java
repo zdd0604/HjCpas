@@ -326,6 +326,7 @@ public class CooperateDetail extends ActivityBaseHeader2 implements View.OnClick
                             mHandler.sendEmptyMessage(Constant.HANDLERTYPE_1);
                             if (isFinish)
                                 setResult(22);
+                            setResult(22);
                             finish();
                         } else {
                             setResult(22);

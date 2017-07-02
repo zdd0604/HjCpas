@@ -124,7 +124,8 @@ public class OrderShellAdapter extends WZYBaseAdapter<OrderShellModel> {
 
                 Intent intent = new Intent(context, BuyShell.class);
                 intent.putExtra("choose", true);
-                intent.putExtra("no", orderShellModel.getNo());
+                intent.putExtra("no", indexPos);
+                intent.putExtra("index", orderShellModel.getNo());
                 intent.putExtra("categoryId", orderShellModel.getCategoryId());
                 activity.startActivityForResult(intent, 11);
             }

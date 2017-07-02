@@ -20,6 +20,7 @@ import java.util.List;
 import mehdi.sakout.fancybuttons.FancyButton;
 
 import static com.hj.casps.common.Constant.GOODS_NAME;
+import static com.hj.casps.common.Constant.GOODS_ID;
 import static com.hj.casps.common.Constant.SYS_FUNC;
 
 //群组管理的搜索页面
@@ -38,7 +39,6 @@ public class CooperateGroupSearch extends ActivityBaseHeader2 implements View.On
     private LinearLayout names_layout;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +48,8 @@ public class CooperateGroupSearch extends ActivityBaseHeader2 implements View.On
     }
 
     private void initData() {
+        GOODS_NAME = "";
+        GOODS_ID = "";
         type = getIntent().getIntExtra("type", 3);
         typeQ = getIntent().getIntExtra("typeQ", 0);
 

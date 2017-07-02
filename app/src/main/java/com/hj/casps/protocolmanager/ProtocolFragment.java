@@ -68,6 +68,7 @@ public class ProtocolFragment extends ViewPagerFragment1 implements View.OnClick
     private ListView protocol_list;
     private List<ProtocolListBean> protocolModels = new ArrayList<>();
     private List<OrderRowBean> orderDoingModels;
+    private List<OrderRowBean> orderDoingModels_add;
     private ProtocolAdapter adapter;
     private OrderDoingAdapter adapter_order;
     private int protocol_type_j;
@@ -365,6 +366,7 @@ public class ProtocolFragment extends ViewPagerFragment1 implements View.OnClick
                         url = Constant.QueryMyPendingOrderUrl;
                         break;
                     case 1:
+
                         post1 = new ProtocolModelForPost(
                                 publicArg.getSys_token(),
                                 getUUID(),
@@ -379,6 +381,7 @@ public class ProtocolFragment extends ViewPagerFragment1 implements View.OnClick
                         url = Constant.AppOrderListUrl;
                         break;
                     case 2:
+
                         //String sys_token, String sys_uuid, String sys_func, String sys_user, String sys_name, String sys_member, String pageno, String pagesize, String orderId, String status, String name, String executeStatus, String startTime, String endTime
                         post1 = new ProtocolModelForPost(
                                 publicArg.getSys_token(),
@@ -397,6 +400,7 @@ public class ProtocolFragment extends ViewPagerFragment1 implements View.OnClick
                         url = Constant.QueryOrderManageUrl;
                         break;
                 }
+                orderDoingModels_add = new ArrayList<>();
                 OkGo.post(url)
                         .params("param", mGson.toJson(post1))
                         .execute(new StringCallback() {
@@ -412,20 +416,22 @@ public class ProtocolFragment extends ViewPagerFragment1 implements View.OnClick
                                     } else if (backDetail.getReturn_code() == 1101 || backDetail.getReturn_code() == 1102) {
                                         LogoutUtils.exitUser(ProtocolFragment.this);
                                     } else {
-                                        orderDoingModels = backDetail.getRows();
-                                        if (orderDoingModels.isEmpty()) {
+                                        orderDoingModels_add = backDetail.getRows();
+                                        if (orderDoingModels_add.isEmpty()) {
 //                                            Toast.makeText(context, "无订单", Toast.LENGTH_SHORT).show();
                                             adapter_order.removeAll();
                                         }
                                         if (page != 0) {
                                             if (page <= (backDetail.getTotal() - 1) / 10) {
-                                                adapter_order.addRes(orderDoingModels);
-
+                                                adapter_order.addRes(orderDoingModels_add);
+                                                orderDoingModels.addAll(orderDoingModels_add);
                                             } else {
                                                 mLoader.onLoadAll();
                                             }
                                         } else {
-                                            adapter_order.updateRes(orderDoingModels);
+                                            adapter_order.updateRes(orderDoingModels_add);
+                                            orderDoingModels=new ArrayList<>();
+                                            orderDoingModels.addAll(orderDoingModels_add);
                                         }
                                     }
                                 } catch (Exception e) {
@@ -586,6 +592,7 @@ public class ProtocolFragment extends ViewPagerFragment1 implements View.OnClick
     public void onRefresh(AbsRefreshLayout listLoader) {
         page = 0;
         initData();
+        select_all_order.setChecked(false);
         mLoader.onLoadFinished();//加载结束
     }
 
@@ -594,6 +601,7 @@ public class ProtocolFragment extends ViewPagerFragment1 implements View.OnClick
     public void onLoading(AbsRefreshLayout listLoader) {
         page++;
         initData();
+        select_all_order.setChecked(false);
         mLoader.onLoadFinished();//加载结束
     }
 

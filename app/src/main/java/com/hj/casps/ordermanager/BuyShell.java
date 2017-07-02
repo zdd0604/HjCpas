@@ -40,7 +40,11 @@ import okhttp3.Response;
 import static com.hj.casps.common.Constant.HTTPURLIMAGE;
 import static com.hj.casps.common.Constant.SHORTHTTPURL;
 import static com.hj.casps.common.Constant.SYS_FUNC;
+import static com.hj.casps.common.Constant.adapterNew;
 import static com.hj.casps.common.Constant.getUUID;
+import static com.hj.casps.common.Constant.orderShellModelsNew;
+import static com.hj.casps.common.Constant.order_buy_num_shell1;
+import static com.hj.casps.common.Constant.relation_all1;
 
 //采购销售拣单车点击进入下单界面
 public class BuyShell extends ActivityBaseHeader2 implements View.OnClickListener {
@@ -64,6 +68,7 @@ public class BuyShell extends ActivityBaseHeader2 implements View.OnClickListene
     private int state;
     private String buy_id;
     private int no;
+    private int index;
     public static BuyShell buyShell = null;
     private ArrayList<BuyCartBack.ListBean.ListGoodsBean> buy_list;
     private boolean choose;
@@ -100,7 +105,7 @@ public class BuyShell extends ActivityBaseHeader2 implements View.OnClickListene
             orderShellModels.get(no).setName(goodsName);
             orderShellModels.get(no).setGoodsId(goodsId);
 //            orderShellModels.get(no).setQuoteId(quoteId);
-            orderShellModels.get(no).setPrice(minPrice + "-" + maxPrice);
+//            orderShellModels.get(no).setPrice(minPrice + "-" + maxPrice);
             adapter.notifyDataSetChanged();
         }
     }
@@ -126,8 +131,8 @@ public class BuyShell extends ActivityBaseHeader2 implements View.OnClickListene
             goodsName = data.getExtras().getString("goodsName");
             goodsId = data.getExtras().getString("goodsId");
 //            quoteId = data.getExtras().getString("quoteId");
-            minPrice = data.getExtras().getString("minPrice");
-            maxPrice = data.getExtras().getString("maxPrice");
+//            minPrice = data.getExtras().getString("minPrice");
+//            maxPrice = data.getExtras().getString("maxPrice");
             //bundle.putString("goodsId", finalChooseGood.getGoodsId());
 //            bundle.putString("goodsName", finalChooseGood.getName());
 //            bundle.putString("minPrice", String.valueOf(finalChooseGood.getMinPrice()));
@@ -153,6 +158,7 @@ public class BuyShell extends ActivityBaseHeader2 implements View.OnClickListene
         choose = getIntent().getBooleanExtra("choose", false);//是选择指定商品还是拣单车
         if (choose) {//如果是选择指定商品，就从网络加载数据
             no = getIntent().getIntExtra("no", -1);
+            index = getIntent().getIntExtra("index", -1);
             categoryId = getIntent().getStringExtra("categoryId");
 //            toast(no + "," + categoryId);
             ChooseGoodsPost post = new ChooseGoodsPost(
@@ -164,7 +170,7 @@ public class BuyShell extends ActivityBaseHeader2 implements View.OnClickListene
                     publicArg.getSys_member(),
                     categoryId,
                     "1",
-                    "20",
+                    "100",
                     "0",
                     groupName);
             LogShow(mGson.toJson(post));
@@ -239,15 +245,26 @@ public class BuyShell extends ActivityBaseHeader2 implements View.OnClickListene
 
     }
 
-    public void deleteFromOk(){
+    public void deleteFromOk() {
+        orderShellModels = new ArrayList<>();
+        orderShellModels.addAll(orderShellModelsNew);
+        adapter = adapterNew;
+        relation_all = relation_all1;
+        order_buy_num_shell = order_buy_num_shell1;
+        if (orderShellModels == null) {
+//            toast("CNM");
+            return;
+        }
+
         for (int i = 0; i < orderShellModels.size(); i++) {
-            if (Constant.numbers.contains(String.valueOf(orderShellModels.get(i).getNo()))){
+            if (Constant.numbers.contains(String.valueOf(orderShellModels.get(i).getNo()))) {
 //                toast(String.valueOf(orderShellModels.get(i).getNo()));
                 orderShellModels.get(i).setDelete(true);
             }
         }
         refresh();
     }
+
     //刷新页面
     public void refresh() {
         List<OrderShellModel> orderShellModels1 = new ArrayList<>();
@@ -258,12 +275,14 @@ public class BuyShell extends ActivityBaseHeader2 implements View.OnClickListene
         }
         if (orderShellModels1.size() == 0) {
             adapter.removeAll();
+            relation_all.setVisibility(View.GONE);
         } else {
             adapter.updateRes(orderShellModels1);
         }
         buy_num = orderShellModels1.size();
         order_buy_num_shell.setText(String.valueOf(buy_num));
-        setResult(RESULT_OK);
+//        setResult(RESULT_OK);
+        BuyCart.buyCart.initData();
     }
 
     //加载布局
@@ -386,7 +405,16 @@ public class BuyShell extends ActivityBaseHeader2 implements View.OnClickListene
                             toast("请填写数量");
                             return;
                         }
+                        if (state == 0 && (!orderShellModels2.get(i).isStatus())) {
+                            toast("请指定商品");
+                            return;
+                        }
                     }
+                    orderShellModelsNew = new ArrayList<>();
+                    orderShellModelsNew.addAll(orderShellModels);
+                    adapterNew = adapter;
+                    relation_all1 = relation_all;
+                    order_buy_num_shell1 = order_buy_num_shell;
                     bundle.putString("title", getString(R.string.order_detail_product_grid));
                     bundle.putInt("state", state);
                     bundle.putString("buy_name", buy_name);
@@ -416,7 +444,7 @@ public class BuyShell extends ActivityBaseHeader2 implements View.OnClickListene
         if (goods_id == null || goods_id.isEmpty()) {
             toast("请选择商品");
         } else {
-            ChooseGoodsPost post = new ChooseGoodsPost(publicArg.getSys_token(), getUUID(), SYS_FUNC, publicArg.getSys_user(), publicArg.getSys_name(), publicArg.getSys_member(), goods_id + "," + goods_name, "0", "0");
+            ChooseGoodsPost post = new ChooseGoodsPost(publicArg.getSys_token(), getUUID(), SYS_FUNC, publicArg.getSys_user(), publicArg.getSys_name(), publicArg.getSys_member(), goods_id + "," + goods_name, "0", String.valueOf(index));
             final ChooseGoodsBack.MtListBean finalChooseGood = chooseGood;
             OkGo.post(Constant.UpdateQuoteSHPCUrl)
                     .params("param", mGson.toJson(post))
@@ -438,8 +466,8 @@ public class BuyShell extends ActivityBaseHeader2 implements View.OnClickListene
                                 bundle.putInt("no", no);
                                 bundle.putString("goodsId", finalChooseGood.getGoodsId());
                                 bundle.putString("goodsName", finalChooseGood.getName());
-                                bundle.putString("minPrice", String.valueOf(finalChooseGood.getMinPrice()));
-                                bundle.putString("maxPrice", String.valueOf(finalChooseGood.getMaxPrice()));
+//                                bundle.putString("minPrice", String.valueOf(finalChooseGood.getMinPrice()));
+//                                bundle.putString("maxPrice", String.valueOf(finalChooseGood.getMaxPrice()));
                                 setResult(33, getIntent().putExtras(bundle));
                                 finish();
 

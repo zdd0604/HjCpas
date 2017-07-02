@@ -3,6 +3,8 @@ package com.hj.casps.common;
 import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.hj.casps.R;
 import com.hj.casps.cooperate.ProtocalProductItem;
@@ -11,6 +13,8 @@ import com.hj.casps.entity.appordermoney.MmbBankAccountEntity;
 import com.hj.casps.entity.appordermoney.QueryPayMoneyOrderForSettleEntity;
 import com.hj.casps.entity.appsettle.QuerySttleManageGain;
 import com.hj.casps.entity.goodsmanager.response.NoteEntity;
+import com.hj.casps.ordermanager.OrderShellAdapter;
+import com.hj.casps.ordermanager.OrderShellModel;
 import com.hj.casps.util.MenuUtils;
 import com.hj.casps.util.ToastUtils;
 import com.hj.casps.util.XmlUtils;
@@ -875,6 +879,10 @@ public class Constant {
     public static String ORDER_NAME = "";//交易对方
     public static String START_TIME = "";//签约开始时间
     public static String END_TIME = "";//签约结束时间
+    public static List<OrderShellModel> orderShellModelsNew;//
+    public static OrderShellAdapter adapterNew;//
+    public static RelativeLayout relation_all1;//
+    public static TextView order_buy_num_shell1;//
 
     //报价管理
     public static String GOODS_ID = "";

@@ -75,6 +75,7 @@ public class OrderShellDetailAdapter extends WZYBaseAdapter<OrderShellModel> {
                         @Override
                         public void afterTextChanged(Editable s) {
                             if (TextUtils.isEmpty(s)) {
+                                orderShellModel.setFinalprice("");
                                 return;
                             }
                             /**
@@ -111,6 +112,9 @@ public class OrderShellDetailAdapter extends WZYBaseAdapter<OrderShellModel> {
                                 }
                             } else {
                                 order_detail_item_price.setText("");
+                                orderShellModel.setFinalprice("");
+//                                orderShellModel.setAllprice("");
+//                                item_detail_order_price.setText("");
                             }
 
                         }
@@ -152,6 +156,7 @@ public class OrderShellDetailAdapter extends WZYBaseAdapter<OrderShellModel> {
                         @Override
                         public void afterTextChanged(Editable s) {
                             if (TextUtils.isEmpty(s)) {
+                                orderShellModel.setNum(0);
                                 return;
                             }
                             if (!order_detail_item_number.getText().toString().isEmpty()) {
@@ -159,7 +164,7 @@ public class OrderShellDetailAdapter extends WZYBaseAdapter<OrderShellModel> {
                                 orderShellModel.setNum(oneNumb);
                                 //判断当前有没有单价
                                 if (StringUtils.isStrTrue(ActivityBase.getTvVaule(order_detail_item_price))) {
-                                    DecimalFormat df = new DecimalFormat(".##");
+                                    DecimalFormat df = new DecimalFormat("#.##");
                                     String allPrice = df.format(
                                             MathUtil.mul(Double.valueOf(ActivityBase.getTvVaule(order_detail_item_price)),
                                                     Double.valueOf(ActivityBase.getTvVaule(order_detail_item_number)
@@ -170,6 +175,9 @@ public class OrderShellDetailAdapter extends WZYBaseAdapter<OrderShellModel> {
                                 }
                             } else {
                                 order_detail_item_number.setText("0");
+                                orderShellModel.setNum(0);
+//                                orderShellModel.setAllprice("");
+//                                item_detail_order_price.setText("");
                             }
                         }
                     });
