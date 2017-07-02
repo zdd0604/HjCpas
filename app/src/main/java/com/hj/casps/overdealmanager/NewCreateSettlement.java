@@ -113,6 +113,7 @@ public class NewCreateSettlement extends ActivityBaseHeader2
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.create_setttlement_rb_buyersId:
+                //本方付款
                 Constant.isbuy = Constant.buy;
                 mList.clear();
                 getNetWorkSendExpress(Constant.isbuy);
@@ -122,6 +123,7 @@ public class NewCreateSettlement extends ActivityBaseHeader2
                 create_setttlement_tv_sellersId.setEnabled(true);
                 break;
             case R.id.create_setttlement_rb_sellersId:
+                //对方付款
                 Constant.isbuy = Constant.sell;
                 mList.clear();
                 getNetWorkSendExpress(Constant.isbuy);
@@ -181,7 +183,7 @@ public class NewCreateSettlement extends ActivityBaseHeader2
                         super.onError(call, response, e);
                         toastSHORT(e.getMessage());
                         waitDialogRectangle.dismiss();
-                        if (Constant.public_code){
+                        if (Constant.public_code) {
                             //退出操作
                             LogoutUtils.exitUser(NewCreateSettlement.this);
                         }
@@ -244,5 +246,11 @@ public class NewCreateSettlement extends ActivityBaseHeader2
         LogShow(bsid + "--" + bsName + "--" + ssellid + "--" + ssellName);
         create_setttlement_tv_buyersId.setText(Constant.appOrderMoney_buyersName);
         create_setttlement_tv_sellersId.setText(Constant.appOrderMoney_sellersName);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Constant.isbuy = Constant.buy;
     }
 }

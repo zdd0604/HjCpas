@@ -127,6 +127,11 @@ public class AddCommodityInfo extends ActivityBaseHeader2 implements View.OnClic
                     Constant.OrderForSettleEntityList.add(mList.get(i));
                 }
             }
+
+        if (Constant.OrderForSettleEntityList.size() == 0) {
+            toastSHORT("至少选择一条数据");
+            return;
+        }
         setResult(Constant.ADDCOMMDITY);
         finish();
     }
@@ -219,7 +224,7 @@ public class AddCommodityInfo extends ActivityBaseHeader2 implements View.OnClic
                     @Override
                     public void onSuccess(QueryMyPendingSttleRespon<List<QueryPayMoneyOrderForSettleEntity>> listQueryMyPendingSttleRespon, Call call, Response response) {
                         waitDialogRectangle.dismiss();
-                        if (listQueryMyPendingSttleRespon.list != null && listQueryMyPendingSttleRespon.list.size() > 0) {
+                        if (listQueryMyPendingSttleRespon.list != null) {
                             mList = listQueryMyPendingSttleRespon.list;
                             mHandler.sendEmptyMessage(Constant.HANDLERTYPE_0);
                         }

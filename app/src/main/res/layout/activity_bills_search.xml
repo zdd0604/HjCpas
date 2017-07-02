@@ -28,8 +28,9 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@null"
-            android:maxLines="1"
             android:gravity="center_vertical"
+            android:inputType="number"
+            android:maxLines="1"
             android:paddingLeft="@dimen/size_15"
             android:textSize="@dimen/font_size_16" />
     </LinearLayout>
@@ -62,8 +63,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@null"
-            android:maxLines="1"
             android:gravity="center_vertical"
+            android:maxLines="1"
             android:paddingLeft="@dimen/size_15"
             android:textSize="@dimen/font_size_16" />
     </LinearLayout>
@@ -128,9 +129,9 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@null"
-            android:maxLines="1"
             android:gravity="center_vertical"
             android:hint="@string/ed_search_hint_buy_name"
+            android:maxLines="1"
             android:paddingLeft="@dimen/size_15"
             android:textSize="@dimen/font_size_16" />
     </LinearLayout>
@@ -163,8 +164,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@null"
-            android:maxLines="1"
             android:gravity="center_vertical"
+            android:maxLines="1"
             android:paddingLeft="@dimen/size_15"
             android:textSize="@dimen/font_size_16" />
     </LinearLayout>

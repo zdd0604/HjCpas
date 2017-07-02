@@ -305,6 +305,8 @@ public class NewCreateSettlDetails extends ActivityBaseHeader2 implements View.O
 
     @Override
     public void onBuyersName(final TextView textView) {
+        if (Constant.isbuy.equals(Constant.sell))
+            return;
         if (buyList.size() <= 0)
             return;
         CreateDialog();
@@ -324,6 +326,8 @@ public class NewCreateSettlDetails extends ActivityBaseHeader2 implements View.O
 
     @Override
     public void onSellersName(final TextView textView) {
+        if (Constant.isbuy.equals(Constant.buy))
+            return;
         if (sellList.size() <= 0)
             return;
         CreateDialog();
@@ -404,7 +408,6 @@ public class NewCreateSettlDetails extends ActivityBaseHeader2 implements View.O
     @Override
     public void onCheckedY(int pos) {
         goodsCount++;
-//        toastSHORT("" + pos);
         commList.get(pos - 2).setCheck(true);
     }
 
