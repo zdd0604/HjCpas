@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -1102,7 +1103,12 @@ public class ProtocolFragment extends ViewPagerFragment1 implements View.OnClick
                             postOperate(id, "refuse", "已拒绝");
                             break;
                     }
-                    initData();
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            initData();
+                        }
+                    },500);
 
                 }
             });
