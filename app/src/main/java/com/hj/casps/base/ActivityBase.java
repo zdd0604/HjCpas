@@ -336,6 +336,7 @@ public class ActivityBase extends ActivityCommBase implements
                 return true;
             }
         }
+        toastSHORT("");
         return false;
     }
 

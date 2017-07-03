@@ -149,6 +149,7 @@ public class ReceiptActivity extends ActivityBaseHeader implements OnPullListene
 
         dbList.addAll(mList);
 
+        LogShow(dbList.toString());
         if (pageNo == 0) {
             receiptAdapter = new ReceiptAdapter(this, mList);
             payment_list.setAdapter(receiptAdapter);

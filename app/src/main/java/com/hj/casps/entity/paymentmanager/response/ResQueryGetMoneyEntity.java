@@ -9,46 +9,32 @@ import org.greenrobot.greendao.annotation.Generated;
  */
 @Entity
 public class ResQueryGetMoneyEntity {
+    @Transient
+    private boolean isChecked;
     /**
-     * goodsName : 散装农场青菜
-     * id : 2b03575b364b4466bd9099a732ea8bad
-     * money : 155
-     * ordertitleId : 82469a58cdaa45d7a8f6a24f09fe36aa
-     * ordertitleNumber : 10039016
-     * paymoneyName : 奥森学校
-     * paymoneyTime : 1497863399000
+     * goodsName : 水果
+     * id : 379f82b779154f6184b24fb7c18b51ea
+     * money : 2
+     * ordertitleId : 6837722b629943fbbacd2b16afe05afb
+     * ordertitleNumber : 10002241
+     * paymoneyName : 合肥市上好食品贸易公司
+     * paymoneyTime : 1499045928000
+     * remark : 破坏民工
      */
-//    private String goodsName;
-//    private String id;
-//    private double money;
-//    private String ordertitleId;
-//    private int ordertitleNumber;
-//    private String paymoneyName;
-//    private long paymoneyTime;
-//    @Transient
-//    private boolean isChecked;
+
     private String goodsName;
     private String id;
-    private int money;
+    private double money;
     private String ordertitleId;
     private int ordertitleNumber;
     private String paymoneyName;
     private long paymoneyTime;
-    @Transient
-    private boolean isChecked;
+    private String remark;
 
-    public boolean getIsChecked() {
-        return isChecked;
-    }
-
-    public void setIsChecked(boolean checked) {
-        isChecked = checked;
-    }
-
-    @Generated(hash = 252814618)
-    public ResQueryGetMoneyEntity(String goodsName, String id, int money,
+    @Generated(hash = 1408055739)
+    public ResQueryGetMoneyEntity(String goodsName, String id, double money,
             String ordertitleId, int ordertitleNumber, String paymoneyName,
-            long paymoneyTime) {
+            long paymoneyTime, String remark) {
         this.goodsName = goodsName;
         this.id = id;
         this.money = money;
@@ -56,64 +42,81 @@ public class ResQueryGetMoneyEntity {
         this.ordertitleNumber = ordertitleNumber;
         this.paymoneyName = paymoneyName;
         this.paymoneyTime = paymoneyTime;
+        this.remark = remark;
     }
     @Generated(hash = 652790676)
     public ResQueryGetMoneyEntity() {
     }
-    public String getGoodsName() {
-        return this.goodsName;
+
+    public boolean getIsChecked() {
+        return isChecked;
     }
+    public void setIsChecked(boolean checked) {
+        isChecked = checked;
+    }
+
+
+    public String getGoodsName() {
+        return goodsName;
+    }
+
     public void setGoodsName(String goodsName) {
         this.goodsName = goodsName;
     }
+
     public String getId() {
-        return this.id;
+        return id;
     }
+
     public void setId(String id) {
         this.id = id;
     }
-    public int getMoney() {
-        return this.money;
+
+    public double getMoney() {
+        return money;
     }
-    public void setMoney(int money) {
+
+    public void setMoney(double money) {
         this.money = money;
     }
+
     public String getOrdertitleId() {
-        return this.ordertitleId;
+        return ordertitleId;
     }
+
     public void setOrdertitleId(String ordertitleId) {
         this.ordertitleId = ordertitleId;
     }
+
     public int getOrdertitleNumber() {
-        return this.ordertitleNumber;
+        return ordertitleNumber;
     }
+
     public void setOrdertitleNumber(int ordertitleNumber) {
         this.ordertitleNumber = ordertitleNumber;
     }
+
     public String getPaymoneyName() {
-        return this.paymoneyName;
+        return paymoneyName;
     }
+
     public void setPaymoneyName(String paymoneyName) {
         this.paymoneyName = paymoneyName;
     }
+
     public long getPaymoneyTime() {
-        return this.paymoneyTime;
+        return paymoneyTime;
     }
+
     public void setPaymoneyTime(long paymoneyTime) {
         this.paymoneyTime = paymoneyTime;
     }
 
-    @Override
-    public String toString() {
-        return "ResQueryGetMoneyEntity{" +
-                "goodsName='" + goodsName + '\'' +
-                ", id='" + id + '\'' +
-                ", money=" + money +
-                ", ordertitleId='" + ordertitleId + '\'' +
-                ", ordertitleNumber=" + ordertitleNumber +
-                ", paymoneyName='" + paymoneyName + '\'' +
-                ", paymoneyTime=" + paymoneyTime +
-                ", isChecked=" + isChecked +
-                '}';
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
 }
