@@ -160,15 +160,7 @@ public class ProtocolFragment extends ViewPagerFragment1 implements View.OnClick
         Log.e("k", String.valueOf(type_k));
         String json = CooperateDirUtils.getInstance(getActivity()).queryFragmentDaoInfo(protocol_type, protocol_type_j, type_k);
 
-//        String json = "";
-//        for (int i = 0; i < fragmentDaos.size(); i++) {
-//            Log.e("all", fragmentDaos.get(i).toString());
-//            if (fragmentDaos.get(i).getType_i().equalsIgnoreCase(String.valueOf(protocol_type))
-//                    && fragmentDaos.get(i).getType_j().equalsIgnoreCase(String.valueOf(protocol_type_j))
-//                    && fragmentDaos.get(i).getType_i().equalsIgnoreCase(String.valueOf(type_k))) {
-//                json = fragmentDaos.get(i).getJson();
-//            }
-//        }
+
         Log.e("json", String.valueOf(json));
 
         if (!TextUtils.isEmpty(json)) {

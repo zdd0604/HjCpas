@@ -247,6 +247,11 @@ public class CooperateDirUtils {
         bd.executeDeleteWithoutDetachingEntities();
 
     }
-
+    /**
+     * 查询所有
+     */
+    public List<FragmentDao> queryFragmentDaoInfo() {
+        return fragmentDao.queryBuilder().build().list();
+    }
 
 }

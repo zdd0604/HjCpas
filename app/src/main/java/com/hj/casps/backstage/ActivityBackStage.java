@@ -52,6 +52,8 @@ import java.util.List;
 import okhttp3.Call;
 import okhttp3.Response;
 
+import static com.hj.casps.common.Constant.order_type_dao;
+
 /**
  * Created by YaoChen on 2017/4/17.
  */
@@ -130,7 +132,6 @@ public class ActivityBackStage extends ActivityBaseHeader2 {
     }
 
 
-
     private void initView() {
         bundle = new Bundle();
         recyclerView = (RecyclerView) findViewById(R.id.backstage_rv);
@@ -139,7 +140,7 @@ public class ActivityBackStage extends ActivityBaseHeader2 {
         recyclerView.setAdapter(new BaseListNavAdapter(data));
     }
 
-        //加载目录数据
+    //加载目录数据
     private ArrayList<LevelEntity> generateData() {
         ArrayList<LevelEntity> res = new ArrayList<>();
 
@@ -266,178 +267,180 @@ public class ActivityBackStage extends ActivityBaseHeader2 {
         switch (name) {
 //            case "商品管理":
             case "101100210001":
-                Constant.SYS_FUNC="101100210001";
+                Constant.SYS_FUNC = "101100210001";
                 context.startActivity(new Intent(context, ActivityManageGoods.class));
 //                context.startActivity(new Intent(context, ActivityGoodsClass.class));
                 break;
 //            case "报价列表":
             case "10110028":
-                Constant.SYS_FUNC="10110028";
+                Constant.SYS_FUNC = "10110028";
                 context.startActivity(new Intent(context, QuoteQuery.class));
                 break;
 //            case "新建结款单":
             case "101100810001":
-                Constant.SYS_FUNC="101100810001";
+                Constant.SYS_FUNC = "101100810001";
                 context.startActivity(new Intent(context, CreateSectionBills.class));
                 break;
 //            case "待审批结款单":
             case "101100810002":
-                Constant.SYS_FUNC="101100810002";
+                Constant.SYS_FUNC = "101100810002";
                 context.startActivity(new Intent(context, CheckWaitBills.class));
                 break;
 //            case "执行中结款单":
             case "101100810003":
-                Constant.SYS_FUNC="101100810003";
+                Constant.SYS_FUNC = "101100810003";
                 context.startActivity(new Intent(context, ExecuteBills.class));
                 break;
 //            case "登记担保资源":
             case "101100810005":
-                Constant.SYS_FUNC="101100810005";
+                Constant.SYS_FUNC = "101100810005";
                 context.startActivity(new Intent(context, RegisterAssureBills.class));
                 break;
 //            case "银行账号":
             case "101100610001":
-                Constant.SYS_FUNC="101100610001";
+                Constant.SYS_FUNC = "101100610001";
                 bundle.putInt(Constant.BUNDLE_TYPE, Constant.BANK_BILLS_ACTIVITY_TYPE);
                 context.startActivity(initActivity(context, BankBillsActivity.class, bundle));
                 break;
 //            case "地址管理":
             case "101100510001":
-                Constant.SYS_FUNC="101100510001";
+                Constant.SYS_FUNC = "101100510001";
                 bundle.putInt(Constant.BUNDLE_TYPE, Constant.ECPRESS_ADDRESS_ACTIVITY_TYPE);
                 context.startActivity(initActivity(context, BankBillsActivity.class, bundle));
                 break;
 //            case "收货":
             case "101100510002":
-                Constant.SYS_FUNC="101100510002";
+                Constant.SYS_FUNC = "101100510002";
                 context.startActivity(new Intent(context, HarvestExpress.class));
                 break;
 //            case "发货":
             case "101100510003":
-                Constant.SYS_FUNC="101100510003";
+                Constant.SYS_FUNC = "101100510003";
                 context.startActivity(new Intent(context, SendExpress.class));
                 break;
 //            case "退货":
             case "101100510004":
-                Constant.SYS_FUNC="101100510004";
+                Constant.SYS_FUNC = "101100510004";
                 context.startActivity(new Intent(context, QuitExpress.class));
                 break;
 //            case "退货签收":
             case "101100510005":
-                Constant.SYS_FUNC="101100510005";
+                Constant.SYS_FUNC = "101100510005";
                 context.startActivity(new Intent(context, QuitHarvestExpress.class));
                 break;
 
 //            case "付款":
             case "101100610002":
-                Constant.SYS_FUNC="101100610002";
+                Constant.SYS_FUNC = "101100610002";
                 context.startActivity(new Intent(context, PaymentActivity.class));
                 break;
 //            case "收款":
             case "101100610003":
-                Constant.SYS_FUNC="101100610003";
+                Constant.SYS_FUNC = "101100610003";
                 context.startActivity(new Intent(context, ReceiptActivity.class));
                 break;
 //            case "退款":
             case "101100610004":
-                Constant.SYS_FUNC="101100610004";
+                Constant.SYS_FUNC = "101100610004";
                 context.startActivity(new Intent(context, RefundActivity.class));
                 break;
 //            case "收退款":
             case "101100610005":
-                Constant.SYS_FUNC="101100610005";
+                Constant.SYS_FUNC = "101100610005";
                 context.startActivity(new Intent(context, ReceiveRefundMoenyActivity.class));
                 break;
 
 //            case "操作员列表":
             case "1021":
-                Constant.SYS_FUNC="1021";
+                Constant.SYS_FUNC = "1021";
                 context.startActivity(new Intent(context, OperatorListActivity.class));
                 break;
 //            case "业务合作会员目录":
             case "101100310001":
-                Constant.SYS_FUNC="101100310001";
+                Constant.SYS_FUNC = "101100310001";
                 context.startActivity(new Intent(context, CooperateDirectory.class));
                 break;
 //            case "关系会员 管理"(目录):
             case "101100310002":
-                Constant.SYS_FUNC="101100310002";
+                Constant.SYS_FUNC = "101100310002";
                 context.startActivity(new Intent(context, CooperateContents.class));
                 break;
 //            case "待审批申请":
             case "101100310003":
-                Constant.SYS_FUNC="101100310003";
+                Constant.SYS_FUNC = "101100310003";
                 bundle.putInt(Constant.PROTOCOL_TYPE, Constant.protocol_0);
                 context.startActivity(new Intent(context, CooperateRequest.class).putExtras(bundle));
                 break;
 //            case "群组管理":
             case "101100310004":
-                Constant.SYS_FUNC="101100310004";
+                Constant.SYS_FUNC = "101100310004";
                 bundle.putInt(Constant.PROTOCOL_TYPE, Constant.protocol_0);
                 context.startActivity(new Intent(context, GroupManager.class).putExtras(bundle));
                 break;
 //            case "搜索供应商":
             case "101100310011":
-                Constant.SYS_FUNC="101100310011";
+                Constant.SYS_FUNC = "101100310011";
                 bundle.putInt(Constant.PROTOCOL_TYPE, Constant.protocol_2);
                 context.startActivity(new Intent(context, GroupManager.class).putExtras(bundle));
                 break;
 //            case "谁在关注我":
             case "101100310012":
-                Constant.SYS_FUNC="101100310012";
+                Constant.SYS_FUNC = "101100310012";
                 bundle.putInt(Constant.PROTOCOL_TYPE, Constant.protocol_1);
                 context.startActivity(new Intent(context, GroupManager.class).putExtras(bundle));
                 break;
 //            case "已提交合作协议":
             case "101100350003":
-                Constant.SYS_FUNC="101100350003";
+                Constant.SYS_FUNC = "101100350003";
                 bundle.putInt(Constant.PROTOCOL_TYPE, Constant.protocol_0);
                 bundle.putInt(Constant.FRA_TYPE, Constant.fra_1);
                 context.startActivity(new Intent(context, RequestProtocol.class).putExtras(bundle));
                 break;
 //            case "待审批合作协议":
             case "101100350004":
-                Constant.SYS_FUNC="101100350004";
+                Constant.SYS_FUNC = "101100350004";
                 bundle.putInt(Constant.PROTOCOL_TYPE, Constant.protocol_1);
                 bundle.putInt(Constant.FRA_TYPE, Constant.fra_1);
                 context.startActivity(new Intent(context, RequestProtocol.class).putExtras(bundle));
                 break;
 //            case "执行中合作协议":
             case "101100350005":
-                Constant.SYS_FUNC="101100350005";
+                Constant.SYS_FUNC = "101100350005";
                 bundle.putInt(Constant.PROTOCOL_TYPE, Constant.protocol_2);
                 bundle.putInt(Constant.FRA_TYPE, Constant.fra_1);
                 context.startActivity(initActivity(context, RequestProtocol.class, bundle));
                 break;
 //            case "采购拣单车":
             case "101100410002":
-                Constant.SYS_FUNC="101100410002";
+                Constant.SYS_FUNC = "101100410002";
                 bundle.putInt(Constant.ORDER_TYPE, Constant.order_type_buy);
-                context.startActivity(new Intent(context, BuyCart.class).putExtras(bundle));
+                order_type_dao = 0;
+                context.startActivity(initActivity(context, BuyCart.class, bundle));
                 break;
 //            case "销售拣单车":
             case "101100410003":
-                Constant.SYS_FUNC="101100410003";
+                Constant.SYS_FUNC = "101100410003";
                 bundle.putInt(Constant.ORDER_TYPE, Constant.order_type_sell);
+                order_type_dao = 1;
                 context.startActivity(initActivity(context, BuyCart.class, bundle));
                 break;
 //            case "新建订单列表":
             case "101100410004":
-                Constant.SYS_FUNC="101100410004";
+                Constant.SYS_FUNC = "101100410004";
                 bundle.putInt(Constant.PROTOCOL_TYPE, Constant.protocol_0);
                 bundle.putInt(Constant.FRA_TYPE, Constant.fra_2);
                 context.startActivity(initActivity(context, RequestProtocol.class, bundle));
                 break;
 //            case "待审批订单列表":
             case "101100410005":
-                Constant.SYS_FUNC="101100410005";
+                Constant.SYS_FUNC = "101100410005";
                 bundle.putInt(Constant.PROTOCOL_TYPE, Constant.protocol_1);
                 bundle.putInt(Constant.FRA_TYPE, Constant.fra_2);
                 context.startActivity(initActivity(context, RequestProtocol.class, bundle));
                 break;
 //            case "执行中订单列表":
             case "101100410006":
-                Constant.SYS_FUNC="101100410006";
+                Constant.SYS_FUNC = "101100410006";
                 bundle.putInt(Constant.PROTOCOL_TYPE, Constant.protocol_2);
                 bundle.putInt(Constant.FRA_TYPE, Constant.fra_2);
                 context.startActivity(initActivity(context, RequestProtocol.class, bundle));

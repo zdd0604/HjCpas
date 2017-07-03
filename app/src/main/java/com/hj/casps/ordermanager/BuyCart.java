@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -14,8 +16,12 @@ import com.hj.casps.R;
 import com.hj.casps.adapter.WZYBaseAdapter;
 import com.hj.casps.base.ActivityBaseHeader;
 import com.hj.casps.common.Constant;
+import com.hj.casps.cooperate.CooperateDirUtils;
+import com.hj.casps.entity.appContract.BackBean;
+import com.hj.casps.entity.appContract.OrderBackList;
 import com.hj.casps.entity.appOrder.BuyCartBack;
 import com.hj.casps.entity.appOrder.BuyCartPost;
+import com.hj.casps.protocolmanager.FragmentDao;
 import com.hj.casps.util.LogoutUtils;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
@@ -29,6 +35,7 @@ import okhttp3.Response;
 
 import static com.hj.casps.common.Constant.SYS_FUNC;
 import static com.hj.casps.common.Constant.getUUID;
+import static com.hj.casps.common.Constant.order_type_dao;
 
 //采购拣单车 销售拣单车
 public class BuyCart extends ActivityBaseHeader implements View.OnClickListener {
@@ -46,8 +53,62 @@ public class BuyCart extends ActivityBaseHeader implements View.OnClickListener 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_buy_cart);
         buyCart = this;
-        initData();
         initView();
+        if (hasInternetConnected()) {
+            initData();
+        } else {
+            addLocality();
+        }
+
+    }
+
+
+    /**
+     * 保存数据库
+     */
+    private void saveDaoData(String s) {
+        Log.e("json", String.valueOf(s));
+        CooperateDirUtils.getInstance(this).deleteFragmentDaoAll(0, 0, order_type_dao + 4);//4采购，5销售
+        FragmentDao fragmentDao = new FragmentDao();
+        fragmentDao.setJson(s);
+        fragmentDao.setType_i(String.valueOf(0));
+        fragmentDao.setType_j(String.valueOf(0));
+        fragmentDao.setType_k(String.valueOf(order_type_dao + 4));
+        CooperateDirUtils.getInstance(this).insertInfo(fragmentDao);
+    }
+
+
+    /**
+     * 加载本地数据
+     */
+    private void addLocality() {
+//        List<FragmentDao> fragmentDaos = CooperateDirUtils.getInstance(this).queryFragmentDaoInfo();
+//        for (int i = 0; i < fragmentDaos.size(); i++) {
+//            Log.e("all", fragmentDaos.get(i).toString());
+//        }
+        String json = CooperateDirUtils.getInstance(this).queryFragmentDaoInfo(0, 0, order_type_dao + 4);
+        Log.e("json", String.valueOf(json));
+        if (!TextUtils.isEmpty(json)) {
+            BuyCartBack backDetail = mGson.fromJson(json, BuyCartBack.class);
+            if (backDetail == null) {
+                return;
+            }
+            orderBuyModels = backDetail.getList();
+            if (orderBuyModels.isEmpty()) {
+//                                Toast.makeText(context, "没有订单", Toast.LENGTH_SHORT).show();
+                adapter.removeAll();//订单为空的时候把adapter的数据清空
+            }
+            int no = 0;//指定一个no，为所有商品排个序
+            for (int i = 0; i < orderBuyModels.size(); i++) {
+                for (int i1 = 0; i1 < orderBuyModels.get(i).getListGoods().size(); i1++) {
+                    orderBuyModels.get(i).getListGoods().get(i1).setNo(no);
+                    no++;
+                }
+            }
+            Collections.reverse(orderBuyModels);
+            adapter.updateRes(orderBuyModels);//刷新adapter
+
+        }
     }
 
     //加载拣单车的数据
@@ -91,14 +152,12 @@ public class BuyCart extends ActivityBaseHeader implements View.OnClickListener 
                         if (backDetail == null) {
                             return;
                         }
-                        if(backDetail.getReturn_code()==1101||backDetail.getReturn_code()==1102){
+                        if (backDetail.getReturn_code() == 1101 || backDetail.getReturn_code() == 1102) {
                             toastSHORT("重复登录或令牌超时");
                             LogoutUtils.exitUser(BuyCart.this);
-                        }
-                        else if (backDetail.getReturn_code() != 0) {
+                        } else if (backDetail.getReturn_code() != 0) {
                             Toast.makeText(context, backDetail.getReturn_message(), Toast.LENGTH_SHORT).show();
-                        }
-                        else {
+                        } else {
                             orderBuyModels = backDetail.getList();
                             if (orderBuyModels.isEmpty()) {
 //                                Toast.makeText(context, "没有订单", Toast.LENGTH_SHORT).show();
@@ -113,6 +172,7 @@ public class BuyCart extends ActivityBaseHeader implements View.OnClickListener 
                             }
                             Collections.reverse(orderBuyModels);
                             adapter.updateRes(orderBuyModels);//刷新adapter
+                            saveDaoData(s);
                         }
                     }
 

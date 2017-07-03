@@ -794,6 +794,7 @@ public class Constant {
     public static final String ORDER_TYPE = "ORDER_TYPE";
     public static final int order_type_buy = 0;
     public static final int order_type_sell = 1;
+    public static int order_type_dao = 0;
     //协议商品品类全局变量
     public static List<ProtocalProductItem.GoodLevelEntity> finalGoodLevelEntities;
     public static List<ProtocalProductItem.GoodLevelEntity> oldGoodLevelEntities;
