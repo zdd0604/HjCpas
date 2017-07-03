@@ -70,20 +70,19 @@ public class ActivityManageGoods extends ActivityBaseHeader implements View.OnCl
             }
         }
     };
+    private GoodListAdapter adapter;
 
     //更新UI
     private void refrushUi() {
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
         if (categoryList == null || categoryList.size() <= 0) {
             toastSHORT("商品分类初始化失败，可能网络或用户没有该分类");
             return;
         }
         ArrayList<GoodLevelEntity> dataList = generateData2();
         //如果数据为空，就跳到添加数据页面
-        recyclerView.setAdapter(new GoodListAdapter(dataList));
-        //添加分割线
-        recyclerView.addItemDecoration(new GoodDividerItemDecoration(ActivityManageGoods.this));
-        recyclerView.addOnItemTouchListener(new GoodSimpleItemClick());
+        adapter.setNewData(dataList);
+
     }
 
     @Override
@@ -169,6 +168,14 @@ public class ActivityManageGoods extends ActivityBaseHeader implements View.OnCl
         if (fra_type == 1) {
             head_title.setVisibility(View.GONE);
         }
+
+        List<GoodLevelEntity> dataList=new ArrayList<>();
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        adapter = new GoodListAdapter(dataList);
+        recyclerView.setAdapter(adapter);
+        //添加分割线
+        recyclerView.addItemDecoration(new GoodDividerItemDecoration(ActivityManageGoods.this));
+        recyclerView.addOnItemTouchListener(new GoodSimpleItemClick());
 
     }
 
