@@ -374,10 +374,10 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
         refreshAllPrice();
         // validate
         String pay = order_detail_time_pay.getText().toString().trim();
-        if (TextUtils.isEmpty(pay)) {
-            toastSHORT("付款时间不能为空");
-            return;
-        }
+//        if (TextUtils.isEmpty(pay)) {
+//            toastSHORT("付款时间不能为空");
+//            return;
+//        }
 
         String start = order_detail_time_start.getText().toString().trim();
         if (TextUtils.isEmpty(start)) {
@@ -580,6 +580,7 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
                             if ((!orderList) && (type != 1)) {
                                 delete(state, nos);
                             } else {
+                                setResult(22);
                                 finish();
                             }
 

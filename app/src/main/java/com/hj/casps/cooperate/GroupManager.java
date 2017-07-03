@@ -87,6 +87,7 @@ public class GroupManager extends ActivityBaseHeader implements View.OnClickList
     private LinearLayout order_check_function;
     private MyDialog myDialog;
     private AbsRefreshLayout mLoader;
+    private boolean canChoose;//上拉刷新时，让全选按钮设置为未选中状态
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -106,6 +107,7 @@ public class GroupManager extends ActivityBaseHeader implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_manager);
         ButterKnife.bind(this);
+        canChoose = true;
         type = getIntent().getIntExtra(Constant.PROTOCOL_TYPE, Constant.protocol_0);
         initView();
         if (hasInternetConnected()) {
@@ -340,7 +342,12 @@ public class GroupManager extends ActivityBaseHeader implements View.OnClickList
         select_all_order.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                selectAll(b);
+                if (canChoose) {
+                    selectAll(b);
+
+                } else {
+                    canChoose = true;
+                }
             }
         });
         layout_group_button_check1.setOnClickListener(new View.OnClickListener() {
@@ -520,6 +527,7 @@ public class GroupManager extends ActivityBaseHeader implements View.OnClickList
     public void onLoading(AbsRefreshLayout listLoader) {
         pageno++;
         initData();
+        canChoose = false;
         select_all_order.setChecked(false);
         mLoader.onLoadFinished();//加载结束
     }
@@ -551,6 +559,10 @@ public class GroupManager extends ActivityBaseHeader implements View.OnClickList
                     });
                     break;
                 case 1:
+                    state.setText(context.getString(R.string.cooperate_group_checking));
+                    state.setBackgroundColor(context.getResources().getColor(R.color.white));
+                    state.setTextColor(context.getResources().getColor(R.color.title_bg));
+
                     break;
                 case 2:
                     state.setText(context.getString(R.string.cooperate_group_gone));

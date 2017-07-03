@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.Parcelable;
 import android.support.v4.content.res.ResourcesCompat;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.CheckBox;
@@ -160,6 +161,10 @@ public class BuyShell extends ActivityBaseHeader2 implements View.OnClickListene
             no = getIntent().getIntExtra("no", -1);
             index = getIntent().getIntExtra("index", -1);
             categoryId = getIntent().getStringExtra("categoryId");
+            if (categoryId==null) {
+                toast("对不起，您没有该品类商品");
+                return;
+            }
 //            toast(no + "," + categoryId);
             ChooseGoodsPost post = new ChooseGoodsPost(
                     publicArg.getSys_token(),
@@ -233,7 +238,12 @@ public class BuyShell extends ActivityBaseHeader2 implements View.OnClickListene
                 orderShellModel.setNo(buy_list.get(i).getNo());
                 orderShellModel.setCategoryId(buy_list.get(i).getCategoryId());
                 orderShellModel.setChecked(false);
-                orderShellModel.setStatus(false);
+                if (!TextUtils.isEmpty(buy_list.get(i).getMateId())){
+                    orderShellModel.setStatus(true);
+                }else {
+                    orderShellModel.setStatus(false);
+                }
+
                 orderShellModel.setDelete(false);
                 orderShellModel.setName(buy_list.get(i).getGoodsName());
                 orderShellModel.setGoodsId(buy_list.get(i).getGoodsId());

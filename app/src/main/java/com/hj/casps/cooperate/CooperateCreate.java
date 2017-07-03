@@ -100,14 +100,21 @@ public class CooperateCreate extends ActivityBaseHeader2 implements View.OnClick
     private LinearLayout products_receipt_account;
     private LinearLayout products_delivery_address;
     private int type;
+    private boolean isFirst;
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             switch (msg.what) {
                 case 0:
+                    isFirst = false;
 //                    initData(grade);
-                    adapter.updateRes(Constant.finalGoodLevelEntities);
+                    if (finalGoodLevelEntities.size() == 0) {
+                        adapter.removeAll();
+                    } else {
+                        adapter.updateRes(finalGoodLevelEntities);
+                    }
+
                     oldGoodLevelEntities.clear();
                     break;
 
@@ -134,6 +141,7 @@ public class CooperateCreate extends ActivityBaseHeader2 implements View.OnClick
 
     //加载该关系下的协议数据
     private void initData() {
+        isFirst = true;
         finalGoodLevelEntities = new ArrayList<>();
         finalGoodLevelEntities.clear();
         Constant.oldGoodLevelEntities = new ArrayList<>();
@@ -204,6 +212,7 @@ public class CooperateCreate extends ActivityBaseHeader2 implements View.OnClick
                             if (b && databack.getData().getGoods() != null) {
                                 for (int i = 0; i < databack.getData().getGoods().size(); i++) {
                                     ProtocalProductItem.GoodLevelEntity goodLevelEntity = new ProtocalProductItem.GoodLevelEntity(databack.getData().getGoods().get(i).getCategoryName(), databack.getData().getGoods().get(i).getCtgId());
+                                    goodLevelEntity.setChoose(true);
                                     finalGoodLevelEntities.add(goodLevelEntity);
 
                                 }
@@ -486,7 +495,13 @@ public class CooperateCreate extends ActivityBaseHeader2 implements View.OnClick
                     if (finalGoodLevelEntities.size() == 0) {
                         adapter.removeAll();
                     } else {
-                        adapter.updateRes(finalGoodLevelEntities);
+                        if (isFirst){
+                            adapter.notifyDataSetChanged();
+                        }else {
+                            adapter.updateRes(finalGoodLevelEntities);
+
+                        }
+
 
                     }
 //                    refreshAdapter();
@@ -722,6 +737,7 @@ public class CooperateCreate extends ActivityBaseHeader2 implements View.OnClick
         for (int i = 0; i < finalGoodLevelEntities.size(); i++) {
             OrderShellModel orderShellModel = new OrderShellModel();
             orderShellModel.setStatus(true);
+//            orderShellModel.setStatus(true);
             orderShellModel.setName(finalGoodLevelEntities.get(i).getName());
             orderShellModel.setGoodsId(finalGoodLevelEntities.get(i).getCategoryId());
 //            orderShellModels.get(no).setQuoteId(quoteId);

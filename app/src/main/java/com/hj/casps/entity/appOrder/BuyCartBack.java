@@ -124,6 +124,7 @@ public class BuyCartBack {
             private double maxPrice;//最高价格
             private double minPrice;//最低价格
             private String mmbName;//供应商名称
+            private String mateId;//是否是指定商品
 
             protected ListGoodsBean(Parcel in) {
                 categoryId = in.readString();
@@ -134,6 +135,7 @@ public class BuyCartBack {
                 maxPrice = in.readDouble();
                 minPrice = in.readDouble();
                 mmbName = in.readString();
+                mateId = in.readString();
             }
 
             public static final Creator<ListGoodsBean> CREATOR = new Creator<ListGoodsBean>() {
@@ -212,6 +214,14 @@ public class BuyCartBack {
                 this.mmbName = mmbName;
             }
 
+            public String getMateId() {
+                return mateId;
+            }
+
+            public void setMateId(String mateId) {
+                this.mateId = mateId;
+            }
+
             @Override
             public int describeContents() {
                 return 0;
@@ -227,6 +237,7 @@ public class BuyCartBack {
                 parcel.writeDouble(maxPrice);
                 parcel.writeDouble(minPrice);
                 parcel.writeString(mmbName);
+                parcel.writeString(mateId);
             }
         }
     }

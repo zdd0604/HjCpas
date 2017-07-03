@@ -435,7 +435,12 @@ public class ProtocalProductItem extends ActivityBaseHeader2 implements View.OnC
     private static void refreshAdapter() {
 //        toast(goodLevelEntities.get(0).getName());
         finalGoodLevelEntities.clear();
-        finalGoodLevelEntities.addAll(oldGoodLevelEntities);
+//        finalGoodLevelEntities.addAll(oldGoodLevelEntities);
+        for (int i = 0; i < oldGoodLevelEntities.size(); i++) {
+            if (oldGoodLevelEntities.get(i).isChoose()) {
+                finalGoodLevelEntities.add(oldGoodLevelEntities.get(i));
+            }
+        }
         for (int i = 0; i < goodLevelEntities.size(); i++) {
             if (goodLevelEntities.get(i).isChoose()) {
                 finalGoodLevelEntities.add(goodLevelEntities.get(i));

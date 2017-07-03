@@ -84,6 +84,7 @@ public class ProtocolFragment extends ViewPagerFragment1 implements View.OnClick
     //    public static ProtocolFragment protocolFragment = null;
     private AbsRefreshLayout mLoader;
     LinearLayout layout_fragment_button_check1;
+    private boolean canChoose;//上拉刷新时，让全选按钮设置为未选中状态
 //    private String name = "";
 //    private String status = "3";
 
@@ -161,6 +162,7 @@ public class ProtocolFragment extends ViewPagerFragment1 implements View.OnClick
         // Inflate the layout for this fragment
 //        layout = inflater.inflate(R.layout.fragment_blank, container, false);
 //        protocolFragment = this;
+        canChoose = true;
         if (rootView == null) {
             rootView = inflater.inflate(R.layout.fragment_blank, container, false);
 
@@ -206,7 +208,7 @@ public class ProtocolFragment extends ViewPagerFragment1 implements View.OnClick
                 protocol_list.setAdapter(adapter);
                 break;
             case 2:
-                adapter_order = new OrderDoingAdapter(orderDoingModels, getActivity(), R.layout.item_order_going);
+                adapter_order = new OrderDoingAdapter(orderDoingModels, getActivity(), R.layout.item_order_going, getActivity());
                 protocol_list.setAdapter(adapter_order);
                 if (protocol_type == 1) {
                     order_divider.setVisibility(View.VISIBLE);
@@ -217,7 +219,12 @@ public class ProtocolFragment extends ViewPagerFragment1 implements View.OnClick
         select_all_order.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                selectAll(b);
+                if (canChoose) {
+                    selectAll(b);
+
+                } else {
+                    canChoose = true;
+                }
             }
         });
         layout_fragment_button_check1.setOnClickListener(new View.OnClickListener() {
@@ -431,7 +438,7 @@ public class ProtocolFragment extends ViewPagerFragment1 implements View.OnClick
                                             }
                                         } else {
                                             adapter_order.updateRes(orderDoingModels_add);
-                                            orderDoingModels=new ArrayList<>();
+                                            orderDoingModels = new ArrayList<>();
                                             orderDoingModels.addAll(orderDoingModels_add);
                                         }
                                     }
@@ -602,6 +609,7 @@ public class ProtocolFragment extends ViewPagerFragment1 implements View.OnClick
     public void onLoading(AbsRefreshLayout listLoader) {
         page++;
         initData();
+        canChoose = false;
         select_all_order.setChecked(false);
         mLoader.onLoadFinished();//加载结束
     }
@@ -861,7 +869,13 @@ public class ProtocolFragment extends ViewPagerFragment1 implements View.OnClick
                                 LogoutUtils.exitUser(ProtocolFragment.this);
                             } else {
                                 new MyToast(context, string);
-                                initData();
+                                new Handler().postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        initData();
+                                    }
+                                }, 500);
+//                                initData();
                             }
                         }
 
@@ -877,6 +891,7 @@ public class ProtocolFragment extends ViewPagerFragment1 implements View.OnClick
     //订单管理界面的适配器
     public class OrderDoingAdapter extends WZYBaseAdapter<OrderRowBean> {
         private Context context;
+        private Activity activity;
 
         private void postOperate(String id, String refuse, final String string) {
             ProtocolModelForPost post = new ProtocolModelForPost(
@@ -916,9 +931,10 @@ public class ProtocolFragment extends ViewPagerFragment1 implements View.OnClick
 
         }
 
-        public OrderDoingAdapter(List<OrderRowBean> data, Context context, int layoutRes) {
+        public OrderDoingAdapter(List<OrderRowBean> data, Context context, int layoutRes, Activity activity) {
             super(data, context, layoutRes);
             this.context = context;
+            this.activity = activity;
         }
 
         @Override
@@ -980,7 +996,7 @@ public class ProtocolFragment extends ViewPagerFragment1 implements View.OnClick
                             intent.putExtra("state", 2 - protocol_type_j);
 //                            intent.putExtra("buy_id", 1);
 //                            intent.putExtra("buy_name", 1);
-                            context.startActivity(intent);
+                            activity.startActivityForResult(intent, 11);
                         }
                     });
                     break;
@@ -988,6 +1004,7 @@ public class ProtocolFragment extends ViewPagerFragment1 implements View.OnClick
                     create_time.setText(context.getString(R.string.tv_bills_contract_time_title));
                     time.setText(Constant.stmpToDate(orderDoingModel.getLockTime()));
                     if (orderDoingModel.getExecuteStatus() == 1) {
+                        String buyId = orderDoingModel.getBuyersId();
                         switch (orderDoingModel.getStopStatus()) {
                             case 1://请求终止
                                 checkBox.setVisibility(View.GONE);
@@ -1000,39 +1017,106 @@ public class ProtocolFragment extends ViewPagerFragment1 implements View.OnClick
                                 order_going_btn.setTextColor(context.getResources().getColor(R.color.title_bg));
                                 order_item_state.setText(context.getString(R.string.order_doing_going));
                                 order_item_state.setBackgroundColor(context.getResources().getColor(R.color.light_green));
-                                break;
-                            case 2://撤回请求终止
-                                checkBox.setVisibility(View.GONE);
-                                order_going_btn2.setVisibility(View.GONE);
-                                order_item_state.setVisibility(View.VISIBLE);
-                                order_going_btn.setVisibility(View.VISIBLE);
-                                order_going_btn.setText(context.getString(R.string.order_doing_reject_request));
-                                order_going_btn.setPadding(5, 0, 5, 0);
-                                order_going_btn.setBorderColor(context.getResources().getColor(R.color.title_bg));
-                                order_going_btn.setTextColor(context.getResources().getColor(R.color.title_bg));
-                                order_item_state.setText(context.getString(R.string.order_doing_going));
-                                order_item_state.setBackgroundColor(context.getResources().getColor(R.color.light_green));
-                                break;
-                            case 3://同意终止
-                                checkBox.setVisibility(View.GONE);
-                                order_item_state.setVisibility(View.VISIBLE);
-                                order_going_btn.setVisibility(View.VISIBLE);
-                                order_going_btn.setText(context.getString(R.string.order_doing_sure_stop));
-                                order_going_btn.setPadding(20, 0, 20, 0);
-                                order_going_btn.setBorderColor(context.getResources().getColor(R.color.red));
-                                order_going_btn.setTextColor(context.getResources().getColor(R.color.red));
-                                order_going_btn2.setVisibility(View.VISIBLE);
-                                order_going_btn2.setText(context.getString(R.string.protocol_refuse_re));
-                                order_going_btn2.setPadding(20, 0, 20, 0);
-                                order_going_btn2.setOnClickListener(new View.OnClickListener() {
+                                order_going_btn.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
-                                        showDialog(4, orderDoingModel.getId());
-
+                                        showDialog(1, orderDoingModel.getId());
                                     }
                                 });
-                                order_item_state.setText(context.getString(R.string.order_doing_going));
-                                order_item_state.setBackgroundColor(context.getResources().getColor(R.color.light_green));
+                                break;
+                            case 2://撤回请求终止
+                                if (buyId.equalsIgnoreCase(publicArg.getSys_member())) {
+                                    checkBox.setVisibility(View.GONE);
+                                    order_going_btn2.setVisibility(View.GONE);
+                                    order_item_state.setVisibility(View.VISIBLE);
+                                    order_going_btn.setVisibility(View.VISIBLE);
+                                    order_going_btn.setText(context.getString(R.string.order_doing_reject_request));
+                                    order_going_btn.setPadding(5, 0, 5, 0);
+                                    order_going_btn.setBorderColor(context.getResources().getColor(R.color.title_bg));
+                                    order_going_btn.setTextColor(context.getResources().getColor(R.color.title_bg));
+                                    order_item_state.setText(context.getString(R.string.order_doing_going));
+                                    order_item_state.setBackgroundColor(context.getResources().getColor(R.color.light_green));
+                                    order_going_btn.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+                                            showDialog(2, orderDoingModel.getId());
+                                        }
+                                    });
+                                } else {//同意终止，拒绝终止
+                                    checkBox.setVisibility(View.GONE);
+                                    order_item_state.setVisibility(View.VISIBLE);
+                                    order_going_btn.setVisibility(View.VISIBLE);
+                                    order_going_btn.setText(context.getString(R.string.order_doing_sure_stop));
+                                    order_going_btn.setPadding(20, 0, 20, 0);
+                                    order_going_btn.setBorderColor(context.getResources().getColor(R.color.red));
+                                    order_going_btn.setTextColor(context.getResources().getColor(R.color.red));
+                                    order_going_btn2.setVisibility(View.VISIBLE);
+                                    order_going_btn2.setText(context.getString(R.string.protocol_refuse_re));
+                                    order_going_btn2.setPadding(20, 0, 20, 0);
+                                    order_going_btn2.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+                                            showDialog(4, orderDoingModel.getId());
+
+                                        }
+                                    });
+                                    order_going_btn.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+                                            showDialog(3, orderDoingModel.getId());
+                                        }
+                                    });
+                                    order_item_state.setText(context.getString(R.string.order_doing_going));
+                                    order_item_state.setBackgroundColor(context.getResources().getColor(R.color.light_green));
+                                }
+
+                                break;
+                            case 3://同意终止
+                                if (buyId.equalsIgnoreCase(publicArg.getSys_member())) {
+                                    checkBox.setVisibility(View.GONE);
+                                    order_item_state.setVisibility(View.VISIBLE);
+                                    order_going_btn.setVisibility(View.VISIBLE);
+                                    order_going_btn.setText(context.getString(R.string.order_doing_sure_stop));
+                                    order_going_btn.setPadding(20, 0, 20, 0);
+                                    order_going_btn.setBorderColor(context.getResources().getColor(R.color.red));
+                                    order_going_btn.setTextColor(context.getResources().getColor(R.color.red));
+                                    order_going_btn2.setVisibility(View.VISIBLE);
+                                    order_going_btn2.setText(context.getString(R.string.protocol_refuse_re));
+                                    order_going_btn2.setPadding(20, 0, 20, 0);
+                                    order_going_btn2.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+                                            showDialog(4, orderDoingModel.getId());
+
+                                        }
+                                    });
+                                    order_going_btn.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+                                            showDialog(3, orderDoingModel.getId());
+                                        }
+                                    });
+                                    order_item_state.setText(context.getString(R.string.order_doing_going));
+                                    order_item_state.setBackgroundColor(context.getResources().getColor(R.color.light_green));
+                                } else {//撤回终止请求
+                                    checkBox.setVisibility(View.GONE);
+                                    order_going_btn2.setVisibility(View.GONE);
+                                    order_item_state.setVisibility(View.VISIBLE);
+                                    order_going_btn.setVisibility(View.VISIBLE);
+                                    order_going_btn.setText(context.getString(R.string.order_doing_reject_request));
+                                    order_going_btn.setPadding(5, 0, 5, 0);
+                                    order_going_btn.setBorderColor(context.getResources().getColor(R.color.title_bg));
+                                    order_going_btn.setTextColor(context.getResources().getColor(R.color.title_bg));
+                                    order_item_state.setText(context.getString(R.string.order_doing_going));
+                                    order_item_state.setBackgroundColor(context.getResources().getColor(R.color.light_green));
+                                    order_going_btn.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+                                            showDialog(2, orderDoingModel.getId());
+                                        }
+                                    });
+                                }
+
 
                                 break;
                         }
@@ -1044,12 +1128,7 @@ public class ProtocolFragment extends ViewPagerFragment1 implements View.OnClick
                         order_item_state.setBackgroundColor(context.getResources().getColor(R.color.text_color_blue2));
                         order_going_btn.setVisibility(View.GONE);
                     }
-                    order_going_btn.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            showDialog(orderDoingModel.getStopStatus(), orderDoingModel.getId());
-                        }
-                    });
+
 
 //                order_going_btn.setPadding(10, 0, 10, 0);
 
@@ -1108,7 +1187,7 @@ public class ProtocolFragment extends ViewPagerFragment1 implements View.OnClick
                         public void run() {
                             initData();
                         }
-                    },500);
+                    }, 500);
 
                 }
             });
