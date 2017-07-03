@@ -83,6 +83,7 @@ public class PeoplePicture extends ActivityBaseHeader2 implements OnPullListener
     private List<ShowPicEntity.DataListBean> mList = new ArrayList<>();
     private ArrayList<SelectPicture02ListEntity> checkListEntity;
     public ProgressDialog prdialog;
+    private int ImageSum = 50; //默认显示的图片张数
 
     Handler mHadler = new Handler() {
         @Override
@@ -309,18 +310,19 @@ public class PeoplePicture extends ActivityBaseHeader2 implements OnPullListener
             RxGalleryFinal.with(PeoplePicture.this)
                     .image()
                     .multiple()
-                    .maxSize(8)
+                    .maxSize(ImageSum)
                     .imageLoader(ImageLoaderType.GLIDE)
                     .subscribe(new RxBusResultSubscriber<ImageMultipleResultEvent>() {
                         @Override
                         protected void onEvent(ImageMultipleResultEvent imageMultipleResultEvent) throws Exception {
-//                            log(imageMultipleResultEvent.getResult().size() + "张图片");
-//                            System.out.println("imageMultipleResultEvent.getResult().size()====" + imageMultipleResultEvent.getResult().size());
+//                            if (imageMultipleResultEvent.getResult().size() > ImageSum) {
+//                                toastSHORT("同时最多上传8张图片");
+//                                return;
+//                            }
                             for (int i = 0; i < imageMultipleResultEvent.getResult().size(); i++) {
                                 String imagePath = imageMultipleResultEvent.getResult().get(i).getOriginalPath();
                                 LogShow(imagePath);
                                 File e = new File(BitmapUtils2.getCompressFile(imagePath));
-                                System.out.println("e=" + DataCleanManager.getFormatSize(e.length()));
                                 imagePathList.add(e);
                             }
                             onSelectImage();
@@ -454,7 +456,6 @@ public class PeoplePicture extends ActivityBaseHeader2 implements OnPullListener
 
     private void onSelectImage() {
         Intent intent = new Intent(this, SelectPicture03.class);
-//        intent.putExtra(SelectPicture03.ExtraImagePath, imagePath);
         intent.putExtra(Constant.INTENT_DIV_ID, divId);
         startActivityForResult(intent, RequestCodeForEditImageRes);
     }
