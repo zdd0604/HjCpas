@@ -283,11 +283,14 @@ public class RegisterAssureFragment extends ViewPagerFragment implements
                     @Override
                     public void onSuccess(ReturnMessageRespon<Void> voidReturnMessageRespon,
                                           Call call, Response response) {
-                        toastSHORT(voidReturnMessageRespon.return_message);
+
                         if (voidReturnMessageRespon.return_code != 999) {
                             //判断状态
                             new MyToast(getActivity(), voidReturnMessageRespon.return_message);
+                        } else {
+                            toastSHORT(voidReturnMessageRespon.return_message);
                         }
+                        refurbishNetWork1();
                         waitDialogRectangle.dismiss();
                     }
 
@@ -326,5 +329,13 @@ public class RegisterAssureFragment extends ViewPagerFragment implements
             pageNo = 0;
             mHandler.sendEmptyMessage(Constant.HANDLERTYPE_1);
         }
+    }
+
+    /**
+     * 刷新数据
+     */
+    public void refurbishNetWork1() {
+        pageNo = 0;
+        mHandler.sendEmptyMessage(Constant.HANDLERTYPE_1);
     }
 }
