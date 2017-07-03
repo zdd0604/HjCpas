@@ -58,7 +58,7 @@ public class AddCommodityAdapter extends CommonAdapter<QueryPayMoneyOrderForSett
         hooder.getView(R.id.layout_tv_order_3).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onCheckedkType.onClickBillsId(indexPos);
+//                onCheckedkType.onClickBillsId(indexPos);
             }
         });
     }
