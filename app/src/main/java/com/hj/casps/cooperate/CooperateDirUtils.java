@@ -3,12 +3,18 @@ package com.hj.casps.cooperate;
 import android.app.Activity;
 
 import com.hj.casps.app.HejiaApp;
+import com.hj.casps.protocolmanager.FragmentDao;
+import com.hj.casps.protocolmanager.FragmentDaoDao;
 import com.hj.casps.protocolmanager.OrderRowBean;
 import com.hj.casps.protocolmanager.OrderRowBeanDao;
 import com.hj.casps.protocolmanager.ProtocolListBean;
 import com.hj.casps.protocolmanager.ProtocolListBeanDao;
 import com.hj.casps.quotes.QuoteModel;
 import com.hj.casps.quotes.QuoteModelDao;
+
+import org.greenrobot.greendao.query.DeleteQuery;
+import org.greenrobot.greendao.query.Query;
+import org.greenrobot.greendao.query.QueryBuilder;
 
 import java.util.List;
 
@@ -26,6 +32,7 @@ public class CooperateDirUtils {
     public WhoCareListBeanDao whoCareListBeanDao;//供应商关注的数据库
     public ProtocolListBeanDao protocolListBeanDao;//协议管理的数据库
     public OrderRowBeanDao orderRowBeanDao;//订单管理的数据库
+    public FragmentDaoDao fragmentDao;//协议管理，订单管理的数据库
 
     public CooperateDirUtils(Activity context) {
         DaoSession daoSession = ((HejiaApp) context.getApplication()).getDaoSession();
@@ -36,6 +43,7 @@ public class CooperateDirUtils {
         whoCareListBeanDao = daoSession.getWhoCareListBeanDao();
         protocolListBeanDao = daoSession.getProtocolListBeanDao();
         orderRowBeanDao = daoSession.getOrderRowBeanDao();
+        fragmentDao = daoSession.getFragmentDaoDao();
     }
 
     public static CooperateDirUtils getInstance(Activity context) {
@@ -204,6 +212,40 @@ public class CooperateDirUtils {
      */
     public void deleteOrderRowBeanAll() {
         orderRowBeanDao.deleteAll();
+    }
+
+    /**
+     * 查询协议，订单
+     */
+    public String queryFragmentDaoInfo(int i, int j, int k) {
+        QueryBuilder<FragmentDao> qb = fragmentDao.queryBuilder();
+        Query query = qb.where(qb.and(FragmentDaoDao.Properties.Type_i.eq(String.valueOf(i)),
+                FragmentDaoDao.Properties.Type_j.eq(String.valueOf(j)),
+                FragmentDaoDao.Properties.Type_k.eq(String.valueOf(k))))
+                .build();
+        List<FragmentDao> list = query.list();
+        return list.get(0).getJson();
+    }
+
+    /**
+     * 插入数据库
+     *
+     * @param qEntity
+     */
+    public void insertInfo(FragmentDao qEntity) {
+        fragmentDao.insert(qEntity);
+    }
+
+    /**
+     * 删除数据
+     */
+    public void deleteFragmentDaoAll(int i, int j, int k) {
+        QueryBuilder<FragmentDao> qb = fragmentDao.queryBuilder();
+        DeleteQuery<FragmentDao> bd = qb.where(qb.and(FragmentDaoDao.Properties.Type_i.eq(String.valueOf(i)),
+                FragmentDaoDao.Properties.Type_j.eq(String.valueOf(j)),
+                FragmentDaoDao.Properties.Type_k.eq(String.valueOf(k)))).buildDelete();
+        bd.executeDeleteWithoutDetachingEntities();
+
     }
 
 

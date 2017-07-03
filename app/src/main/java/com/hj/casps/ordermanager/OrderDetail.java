@@ -54,6 +54,7 @@ import okhttp3.Call;
 import okhttp3.Response;
 
 import static com.hj.casps.common.Constant.SYS_FUNC;
+import static com.hj.casps.common.Constant.getToday;
 import static com.hj.casps.common.Constant.getUUID;
 import static com.hj.casps.common.Constant.publicArg;
 
@@ -152,7 +153,7 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
             bankname2 = getIntent().getStringExtra("bankname") == null ? "" : getIntent().getStringExtra("bankname");
             adress2 = getIntent().getStringExtra("adress") == null ? "" : getIntent().getStringExtra("adress");
             state = getIntent().getIntExtra("state", 0);
-            if (orders.size() > 0)
+            if (orderList && orders.size() > 0)
                 mHandler.sendEmptyMessage(Constant.HANDLERTYPE_2);
         }
 
@@ -240,6 +241,7 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
                                 OrdertitleData ordertitleData = appOrderCheckOrderOrdertitle.orderList.get(i);
                                 OrderShellModel orderShellModel = new OrderShellModel();
                                 orderShellModel.setGoodsId(ordertitleData.goodsId);
+                                orderShellModel.setId(ordertitleData.id);
                                 orderShellModel.setCategoryId(ordertitleData.categoryId);
                                 orderShellModel.setName(ordertitleData.goodsName);
                                 orderShellModel.setQuoteId(ordertitleData.quoteId);
@@ -374,10 +376,11 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
         refreshAllPrice();
         // validate
         String pay = order_detail_time_pay.getText().toString().trim();
-//        if (TextUtils.isEmpty(pay)) {
+        if (TextUtils.isEmpty(pay)) {
 //            toastSHORT("付款时间不能为空");
 //            return;
-//        }
+            pay = getToday();
+        }
 
         String start = order_detail_time_start.getText().toString().trim();
         if (TextUtils.isEmpty(start)) {
@@ -440,7 +443,7 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
                         String.valueOf(orders.get(i).getNum()),
                         orders.get(i).getAllprice(),
                         orders.get(i).getFinalprice(),
-                        orders.get(i).getQuoteId(), id);
+                        orders.get(i).getQuoteId(), orders.get(i).getId());
                 listBeen.add(orderListBean);
             }
             post = new CreateOrder(publicArg.getSys_token(),

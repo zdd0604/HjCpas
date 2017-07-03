@@ -547,7 +547,7 @@ public class GroupManager extends ActivityBaseHeader implements View.OnClickList
             name.setText(cooperateModel.getGroupName());
             FancyButton state = (FancyButton) holder.getView(R.id.cooperate_group_state);
             switch (cooperateModel.getGroupStatus()) {
-                case 0:
+                case 1:
                     state.setText(context.getString(R.string.cooperate_group_add));
                     state.setBackgroundColor(context.getResources().getColor(R.color.title_bg));
                     state.setTextColor(context.getResources().getColor(R.color.white));
@@ -558,7 +558,7 @@ public class GroupManager extends ActivityBaseHeader implements View.OnClickList
                         }
                     });
                     break;
-                case 1:
+                case 0:
                     state.setText(context.getString(R.string.cooperate_group_checking));
                     state.setBackgroundColor(context.getResources().getColor(R.color.white));
                     state.setTextColor(context.getResources().getColor(R.color.title_bg));

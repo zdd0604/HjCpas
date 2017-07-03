@@ -8,6 +8,8 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,6 +38,8 @@ import com.hj.casps.util.ToastUtils;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 
+import org.w3c.dom.Text;
+
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -50,6 +54,7 @@ import okhttp3.Response;
 import static com.hj.casps.base.ActivityBase.context;
 import static com.hj.casps.base.ActivityBase.mGson;
 import static com.hj.casps.common.Constant.END_TIME;
+import static com.hj.casps.common.Constant.LoginOutUrl;
 import static com.hj.casps.common.Constant.ORDER_NAME;
 import static com.hj.casps.common.Constant.ORDER_ORDER_ID;
 import static com.hj.casps.common.Constant.ORDER_STATUS;
@@ -69,6 +74,8 @@ public class ProtocolFragment extends ViewPagerFragment1 implements View.OnClick
     private ListView protocol_list;
     private List<ProtocolListBean> protocolModels = new ArrayList<>();
     private List<OrderRowBean> orderDoingModels;
+    //    private List<FragmentDao> fragmentDaos;
+//    private String fragmentJson;
     private List<OrderRowBean> orderDoingModels_add;
     private ProtocolAdapter adapter;
     private OrderDoingAdapter adapter_order;
@@ -112,22 +119,19 @@ public class ProtocolFragment extends ViewPagerFragment1 implements View.OnClick
     /**
      * 保存数据库
      */
-    private void saveDaoData() {
-        CooperateDirUtils.getInstance(getActivity()).deleteAll();
-        switch (type_k) {
-            case 1:
-                //代表协议管理
-                for (int i = 0; i < protocolModels.size(); i++) {
-                    CooperateDirUtils.getInstance(getActivity()).insertInfo(protocolModels.get(i));
-                }
-                break;
-            case 2:
-                //代表订单管理
-                for (int i = 0; i < orderDoingModels.size(); i++) {
-                    CooperateDirUtils.getInstance(getActivity()).insertInfo(orderDoingModels.get(i));
-                }
-                break;
-        }
+    private void saveDaoData(String s) {
+        Log.e("i", String.valueOf(protocol_type));
+        Log.e("j", String.valueOf(protocol_type_j));
+        Log.e("k", String.valueOf(type_k));
+        Log.e("json", String.valueOf(s));
+        CooperateDirUtils.getInstance(getActivity()).deleteFragmentDaoAll(protocol_type, protocol_type_j, type_k);
+        FragmentDao fragmentDao = new FragmentDao();
+        fragmentDao.setJson(s);
+        fragmentDao.setType_i(String.valueOf(protocol_type));
+        fragmentDao.setType_j(String.valueOf(protocol_type_j));
+        fragmentDao.setType_k(String.valueOf(type_k));
+
+        CooperateDirUtils.getInstance(getActivity()).insertInfo(fragmentDao);
     }
 
 
@@ -135,24 +139,58 @@ public class ProtocolFragment extends ViewPagerFragment1 implements View.OnClick
      * 加载本地数据
      */
     private void addLocality() {
-        switch (type_k) {
-            case 1:
-                List<ProtocolListBean> usrList = CooperateDirUtils.getInstance(getActivity()).queryProtocolListBeanInfo();
-                if (usrList.size() > 0) {
-                    protocolModels = usrList;
-                }
-                adapter.updateRes(protocolModels);
-                break;
-            case 2://代表订单管理
-                List<OrderRowBean> usrList1 = CooperateDirUtils.getInstance(getActivity()).queryOrderRowBeanDaoInfo();
-                if (usrList1.size() > 0) {
-                    orderDoingModels = usrList1;
-                }
-                adapter_order.updateRes(orderDoingModels);
-                break;
+//        switch (type_k) {
+//            case 1:
+//                List<ProtocolListBean> usrList = CooperateDirUtils.getInstance(getActivity()).queryProtocolListBeanInfo();
+//                if (usrList.size() > 0) {
+//                    protocolModels = usrList;
+//                }
+//                adapter.updateRes(protocolModels);
+//                break;
+//            case 2://代表订单管理
+//                List<OrderRowBean> usrList1 = CooperateDirUtils.getInstance(getActivity()).queryOrderRowBeanDaoInfo();
+//                if (usrList1.size() > 0) {
+//                    orderDoingModels = usrList1;
+//                }
+//                adapter_order.updateRes(orderDoingModels);
+//                break;
+//        }
+        Log.e("i", String.valueOf(protocol_type));
+        Log.e("j", String.valueOf(protocol_type_j));
+        Log.e("k", String.valueOf(type_k));
+        String json = CooperateDirUtils.getInstance(getActivity()).queryFragmentDaoInfo(protocol_type, protocol_type_j, type_k);
+
+//        String json = "";
+//        for (int i = 0; i < fragmentDaos.size(); i++) {
+//            Log.e("all", fragmentDaos.get(i).toString());
+//            if (fragmentDaos.get(i).getType_i().equalsIgnoreCase(String.valueOf(protocol_type))
+//                    && fragmentDaos.get(i).getType_j().equalsIgnoreCase(String.valueOf(protocol_type_j))
+//                    && fragmentDaos.get(i).getType_i().equalsIgnoreCase(String.valueOf(type_k))) {
+//                json = fragmentDaos.get(i).getJson();
+//            }
+//        }
+        Log.e("json", String.valueOf(json));
+
+        if (!TextUtils.isEmpty(json)) {
+            switch (type_k) {
+                case 1://协议管理
+                    BackBean backDetail = mGson.fromJson(json, BackBean.class);
+                    if (backDetail == null) {
+                        return;
+                    }
+                    protocolModels = backDetail.getList();
+                    adapter.updateRes(protocolModels);
+                    break;
+                case 2://订单管理
+                    OrderBackList orderBackList = mGson.fromJson(json, OrderBackList.class);
+                    if (orderBackList == null) {
+                        return;
+                    }
+                    orderDoingModels_add = orderBackList.getRows();
+                    adapter_order.updateRes(orderDoingModels_add);
+                    break;
+            }
         }
-
-
     }
 
     //在fragment中类似于activity的安卓公共方法
@@ -341,6 +379,7 @@ public class ProtocolFragment extends ViewPagerFragment1 implements View.OnClick
                                     } else {
 
                                         adapter.updateRes(protocolModels);
+                                        saveDaoData(s);
 
                                     }
                                 }
@@ -440,6 +479,7 @@ public class ProtocolFragment extends ViewPagerFragment1 implements View.OnClick
                                             adapter_order.updateRes(orderDoingModels_add);
                                             orderDoingModels = new ArrayList<>();
                                             orderDoingModels.addAll(orderDoingModels_add);
+                                            saveDaoData(s);
                                         }
                                     }
                                 } catch (Exception e) {

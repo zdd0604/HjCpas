@@ -12,6 +12,7 @@ public class OrdertitleData implements Serializable {
     public String goodsName;//	string	商品名
     public String goodsId;//	string	商品名id
     public String categoryId;//	string	商品分类id
+    public String id;//	string	id
     public String quoteId;//	string	报价id
     public double money;//	string	金额
     public double price;//double	单价

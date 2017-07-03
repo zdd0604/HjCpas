@@ -17,6 +17,7 @@ public class OrderShellModel implements Parcelable {
     private String allprice;//最后的总价
     private String size;//商品型号，后来取消了这个参数
     private String categoryId;//商品品类ID
+    private String id;//商品品类ID
     private int num;//商品数量
     private int no;//商品的no，为了删除商品使用
     private double minPrice = 0.0;//最小单价
@@ -31,6 +32,7 @@ public class OrderShellModel implements Parcelable {
         quoteId = in.readString();
         price = in.readString();
         finalprice = in.readString();
+        id = in.readString();
         allprice = in.readString();
         size = in.readString();
         categoryId = in.readString();
@@ -98,8 +100,13 @@ public class OrderShellModel implements Parcelable {
     public OrderShellModel() {
     }
 
+    public String getId() {
+        return id;
+    }
 
-
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getGoodsId() {
         return goodsId;
@@ -223,6 +230,7 @@ public class OrderShellModel implements Parcelable {
         parcel.writeString(goodsId);
         parcel.writeString(quoteId);
         parcel.writeString(price);
+        parcel.writeString(id);
         parcel.writeString(finalprice);
         parcel.writeString(allprice);
         parcel.writeString(size);

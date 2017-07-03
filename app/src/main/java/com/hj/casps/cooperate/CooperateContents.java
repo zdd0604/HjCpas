@@ -81,7 +81,7 @@ public class CooperateContents extends ActivityBaseHeader implements View.OnClic
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 //        super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 11 && resultCode == 22) {
-            grade = data.getExtras().getInt("grade");
+            grade = data.getExtras().getInt("grade");//根据搜索的会员等级返回
             handler.sendEmptyMessage(0);
 
         }
@@ -92,7 +92,7 @@ public class CooperateContents extends ActivityBaseHeader implements View.OnClic
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cooperate_contents);
         initView();
-        if (hasInternetConnected()) {
+        if (hasInternetConnected()) {//判断有没有网络
             initData(grade);
         } else {
             addLocality();
@@ -101,14 +101,14 @@ public class CooperateContents extends ActivityBaseHeader implements View.OnClic
     }
 
     //加载合作会员
-    private void initData(int grage) {
+    private void initData(int grage) {//根据会员等级加载，因为搜索加载的数据是根据会员等级加载的
         cooperateModels = new ArrayList<>();
         QueryMMBConcerns concerns = new QueryMMBConcerns(publicArg.getSys_token(),
                 getUUID(), SYS_FUNC,
                 publicArg.getSys_user(),
                 publicArg.getSys_member(),
                 grade == 0 ? "" : String.valueOf(grage),
-                "1", "10");
+                "1", "10");//合作会员提交数据
         OkGo.post(Constant.QueryMMBConcernsUrl)
                 .tag(this)
                 .params("param", mGson.toJson(concerns))
