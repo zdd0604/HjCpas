@@ -25,7 +25,6 @@ import com.hj.casps.ui.MyToast;
 import com.hj.casps.util.LogoutUtils;
 import com.hj.casps.widget.WaitDialogRectangle;
 import com.lzy.okgo.OkGo;
-import com.lzy.okgo.exception.OkGoException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -253,9 +252,8 @@ public class RegisterAssureFragment extends ViewPagerFragment implements
                     @Override
                     public void onError(Call call, Response response, Exception e) {
                         super.onError(call, response, e);
-//                        toastSHORT(e.getMessage());
                         waitDialogRectangle.dismiss();
-                        if (Constant.public_code){
+                        if (Constant.public_code) {
                             //退出操作
                             LogoutUtils.exitUser(RegisterAssureFragment.this);
                         }
@@ -288,7 +286,7 @@ public class RegisterAssureFragment extends ViewPagerFragment implements
                         toastSHORT(voidReturnMessageRespon.return_message);
                         if (voidReturnMessageRespon.return_code != 999) {
                             //判断状态
-                            new MyToast(context, getString(R.string.toast_stop_msg));
+                            new MyToast(getActivity(), voidReturnMessageRespon.return_message);
                         }
                         waitDialogRectangle.dismiss();
                     }
@@ -296,7 +294,7 @@ public class RegisterAssureFragment extends ViewPagerFragment implements
                     @Override
                     public void onError(Call call, Response response, Exception e) {
                         super.onError(call, response, e);
-                            toastSHORT(e.getMessage());
+                        toastSHORT(e.getMessage());
                         waitDialogRectangle.dismiss();
                     }
                 });
@@ -307,7 +305,6 @@ public class RegisterAssureFragment extends ViewPagerFragment implements
     public void onRefresh(AbsRefreshLayout listLoader) {
         //刷新操作
         pageNo = 0;
-//        Constant.clearDatas();
         isSave = true;
         getNetWotk();
         mLoader.onLoadFinished();//加载全部
@@ -317,7 +314,6 @@ public class RegisterAssureFragment extends ViewPagerFragment implements
     public void onLoading(AbsRefreshLayout listLoader) {
         //加载更多操作
         pageNo++;
-//        Constant.clearDatas();
         isSave = false;
         getNetWotk();
         mLoader.onLoadFinished();//加载结束
