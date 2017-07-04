@@ -113,10 +113,8 @@ public class BuyCart extends ActivityBaseHeader implements View.OnClickListener 
     public void initData() {
         BuyCartPost post = null;
         type = getIntent().getIntExtra(Constant.ORDER_TYPE, Constant.order_type_buy);//从外面传递过来是采购还是销售
-        switch (order_type_dao) {
+        switch (type) {
             case Constant.order_type_buy://如果是采购
-                setTitle(getString(R.string.order_buy_cart));//设置标题
-                type_name = getString(R.string.cooperate_buy_part);//设置采购方还是销售方文字
                 post = new BuyCartPost(publicArg.getSys_token(),//请求，注意这里采购提交1，销售提交0
                         getUUID(),
                         SYS_FUNC,
@@ -127,8 +125,6 @@ public class BuyCart extends ActivityBaseHeader implements View.OnClickListener 
 
                 break;
             case Constant.order_type_sell://销售拣单车请求，同采购
-                setTitle(getString(R.string.order_sell_cart));
-                type_name = getString(R.string.cooperate_buy_role);
                 post = new BuyCartPost(publicArg.getSys_token(),
                         getUUID(),
                         SYS_FUNC,
@@ -191,6 +187,16 @@ public class BuyCart extends ActivityBaseHeader implements View.OnClickListener 
         adapter = new OrderAdapter(orderBuyModels, this, R.layout.item_buy_cart);
         buy_cart_list.setAdapter(adapter);
         buy_cart_info.setOnClickListener(this);
+        switch (order_type_dao) {
+            case Constant.order_type_buy://如果是采购
+                setTitle(getString(R.string.order_buy_cart));//设置标题
+                type_name = getString(R.string.cooperate_buy_part);//设置采购方还是销售方文字
+                break;
+            case Constant.order_type_sell://销售拣单车请求，同采购
+                setTitle(getString(R.string.order_sell_cart));
+                type_name = getString(R.string.cooperate_buy_role);
+                break;
+        }
     }
 
     //点击事件
