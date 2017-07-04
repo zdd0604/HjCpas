@@ -174,13 +174,13 @@ public class PaymentActivity extends ActivityBaseHeader implements View.OnClickL
 
         if (isRSave)
             mHandler.sendEmptyMessage(Constant.HANDLERTYPE_2);
-
-        for (int i = 0; i < dbList.size(); i++) {
-            if (!dbList.get(i).isChecked()) {
-                layout_bottom_check_1.setChecked(false);
-                return;
+        if (dbList != null && dbList.size() > 0)
+            for (int i = 0; i < dbList.size(); i++) {
+                if (!dbList.get(i).isChecked()) {
+                    layout_bottom_check_1.setChecked(false);
+                    return;
+                }
             }
-        }
 
         waitDialogRectangle.dismiss();
     }
@@ -453,6 +453,7 @@ public class PaymentActivity extends ActivityBaseHeader implements View.OnClickL
                     public void onSuccess(QueryMmbBankAccountRespon<List<ResponseQueryPayEntity>> listData,
                                           Call call, Response response) {
                         waitDialogRectangle.dismiss();
+                        mList.clear();
                         if (listData.return_code == 0 && listData != null && listData.list != null) {
                             mList = listData.list;
                             total = listData.pagecount;

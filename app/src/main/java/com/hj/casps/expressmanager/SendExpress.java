@@ -203,13 +203,13 @@ public class SendExpress extends ActivityBaseHeader implements OnPullListener,
             mHandler.sendEmptyMessage(Constant.HANDLERTYPE_1);
 
         waitDialogRectangle.dismiss();
-
-        for (int i = 0; i < dbList.size(); i++) {
-            if (!dbList.get(i).isCheck()) {
-                layout_bottom_check_1.setChecked(false);
-                return;
+        if (dbList != null && dbList.size() > 0)
+            for (int i = 0; i < dbList.size(); i++) {
+                if (!dbList.get(i).isCheck()) {
+                    layout_bottom_check_1.setChecked(false);
+                    return;
+                }
             }
-        }
     }
 
     /**

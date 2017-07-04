@@ -1,4 +1,4 @@
-package com.hj.casps.entity.appOrder;
+package com.hj.casps.entity.apporder;
 
 import android.os.Parcel;
 import android.os.Parcelable;

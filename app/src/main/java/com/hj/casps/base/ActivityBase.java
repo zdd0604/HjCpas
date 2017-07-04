@@ -336,7 +336,7 @@ public class ActivityBase extends ActivityCommBase implements
                 return true;
             }
         }
-        toastSHORT("");
+        toastSHORT("网络连接失败，请检查网络");
         return false;
     }
 
@@ -590,6 +590,7 @@ public class ActivityBase extends ActivityCommBase implements
 
     /**
      * 提供精确乘法运算的mul方法
+     *
      * @return 两个参数的积
      */
     public static double doubleValue(double d1, double d2) {

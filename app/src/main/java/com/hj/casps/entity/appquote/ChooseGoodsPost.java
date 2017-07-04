@@ -1,4 +1,4 @@
-package com.hj.casps.entity.appQuote;
+package com.hj.casps.entity.appquote;
 
 //商品选择提交类
 public class ChooseGoodsPost {

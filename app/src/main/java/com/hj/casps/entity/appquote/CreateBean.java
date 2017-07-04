@@ -1,4 +1,4 @@
-package com.hj.casps.entity.appQuote;
+package com.hj.casps.entity.appquote;
 
 /**
  * 提交的基类

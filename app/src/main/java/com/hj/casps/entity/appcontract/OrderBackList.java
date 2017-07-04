@@ -1,4 +1,4 @@
-package com.hj.casps.entity.appContract;
+package com.hj.casps.entity.appcontract;
 
 import com.hj.casps.protocolmanager.OrderRowBean;
 

@@ -115,6 +115,7 @@ public class QuitExpress extends ActivityBaseHeader implements OnPullListener,
         layout_bottom_check_1.setOnClickListener(this);
         layout_head_right_tv.setOnClickListener(this);
         layout_bottom_check_layout1.setOnClickListener(this);
+        mList = new ArrayList<>();
         dbList = new ArrayList<>();
         layout_head_left_btn.setVisibility(View.GONE);
         mLoader = new NestRefreshLayout(payment_scroll);
@@ -203,13 +204,13 @@ public class QuitExpress extends ActivityBaseHeader implements OnPullListener,
             mHandler.sendEmptyMessage(Constant.HANDLERTYPE_1);
 
         waitDialogRectangle.dismiss();
-
-        for (int i = 0; i < dbList.size(); i++) {
-            if (!dbList.get(i).isCheck()) {
-                layout_bottom_check_1.setChecked(false);
-                return;
+        if (dbList != null && dbList.size() > 0)
+            for (int i = 0; i < dbList.size(); i++) {
+                if (!dbList.get(i).isCheck()) {
+                    layout_bottom_check_1.setChecked(false);
+                    return;
+                }
             }
-        }
     }
 
 
@@ -385,6 +386,7 @@ public class QuitExpress extends ActivityBaseHeader implements OnPullListener,
                     @Override
                     public void onSuccess(HarvestExpressRespon<List<QueryReturnGoodsEntity>> listHarvestExpressRespon,
                                           Call call, Response response) {
+                        mList.clear();
                         if (listHarvestExpressRespon.rows != null) {
                             total = listHarvestExpressRespon.total;
                             mList = listHarvestExpressRespon.rows;
@@ -398,7 +400,7 @@ public class QuitExpress extends ActivityBaseHeader implements OnPullListener,
                         super.onError(call, response, e);
                         toastSHORT(e.getMessage());
                         waitDialogRectangle.dismiss();
-                        if (Constant.public_code){
+                        if (Constant.public_code) {
                             //退出操作
                             LogoutUtils.exitUser(QuitExpress.this);
                         }
@@ -443,7 +445,7 @@ public class QuitExpress extends ActivityBaseHeader implements OnPullListener,
                         super.onError(call, response, e);
                         toastSHORT(e.getMessage());
                         waitDialogRectangle.dismiss();
-                        if (Constant.public_code){
+                        if (Constant.public_code) {
                             //退出操作
                             LogoutUtils.exitUser(QuitExpress.this);
                         }

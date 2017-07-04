@@ -6,10 +6,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
-import android.text.Editable;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
-import android.text.TextWatcher;
 import android.text.style.ForegroundColorSpan;
 import android.view.Gravity;
 import android.view.View;
@@ -25,6 +23,8 @@ import com.hj.casps.R;
 import com.hj.casps.base.ActivityBase;
 import com.hj.casps.common.Constant;
 import com.hj.casps.entity.PublicArg;
+import com.hj.casps.entity.appsecurity.LoginEntity;
+import com.hj.casps.entity.appsecurity.ReLoginEntity;
 import com.hj.casps.http.LoginBean;
 import com.hj.casps.util.LogoutUtils;
 import com.hj.casps.util.NetUtil;
@@ -85,17 +85,11 @@ public class ActivityLogin extends ActivityBase {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
-       /* UserBean currentUser = UserBeanUtils.getInstance(this).getCurrentUser();
-        if (currentUser!=null){
-            user_name_Et.setText(currentUser.getSys_account());
-            password_Et.setText(currentUser.getSys_pwd());
-//            httpReLogin();
-        }*/
         initView();
     }
+
     private void initView() {
         SubmitClickUtils.addView(submit, verfyBv, showNameSelectBt);
-
         user_name_Et.setOnFocusChangeListener(new NameEtFocusChangeListener());
     }
 
@@ -128,7 +122,7 @@ public class ActivityLogin extends ActivityBase {
         UserBeanUtils instance = UserBeanUtils.getInstance(ActivityLogin.this);
         List<UserBean> userBeanList = instance.getList();
         for (UserBean u : userBeanList) {
-            System.out.println("l="+u);
+            System.out.println("l=" + u);
         }
         if (userBeanList != null && userBeanList.size() > 0) {
             /*如果存在token有效的，则直接登录了*/
@@ -166,20 +160,21 @@ public class ActivityLogin extends ActivityBase {
         if (!isCheckGetVerfy()) return false;
         if (userBean == null) {
             if (verfyEt.getText().toString().length() == 0) {
-                ToastUtils.showToast(ActivityLogin.this, getString(R.string.verfy_password));
+                toastSHORT(getString(R.string.verfy_password));
                 return false;
             }
         }
         return true;
     }
-//验证用户名和密码
+
+    //验证用户名和密码
     private boolean isCheckGetVerfy() {
         if (user_name_Et.getText().toString().length() == 0) {
-            ToastUtils.showToast(ActivityLogin.this, getString(R.string.error_user_name));
+            toastSHORT(getString(R.string.error_user_name));
             return false;
         }
         if (password_Et.getText().toString().length() == 0) {
-            ToastUtils.showToast(ActivityLogin.this, getString(R.string.error_password));
+            toastSHORT(getString(R.string.error_password));
             return false;
         }
         return true;
@@ -196,11 +191,10 @@ public class ActivityLogin extends ActivityBase {
      */
     private void httpInit() {
         if (!hasInternetConnected()) {
-            ToastUtils.showToast(this, "网络连接失败");
             return;
         }
-        if(!NetUtil.ping()){
-            ToastUtils.showToast(this, "访问服务器失败");
+        if (!NetUtil.ping()) {
+            toastSHORT("访问服务器失败");
             return;
         }
 
@@ -214,10 +208,9 @@ public class ActivityLogin extends ActivityBase {
                         //处理短信登录返回结果
                         if (initloginBean != null) {
                             verfyLogin(initloginBean);
-                        }else if (initloginBean.getReturn_code() == 1101 || initloginBean.getReturn_code() == 2101) {
-                           LogoutUtils.exitUser(ActivityLogin.this);
-                        }
-                        else {
+                        } else if (initloginBean.getReturn_code() == 1101 || initloginBean.getReturn_code() == 2101) {
+                            LogoutUtils.exitUser(ActivityLogin.this);
+                        } else {
                             new IllegalStateException("httpInit方法异常，获取短信失败接口失败");
                         }
                     }
@@ -228,80 +221,47 @@ public class ActivityLogin extends ActivityBase {
                         toastSHORT(e.getMessage());
                     }
                 });
-//        String s="{\"sys_account\":\""+sys_account+"\",\"sys_pwd\":\""+sys_pwd+"\"}";
     }
+
     //短信验证接口的状态码判断
     private void verfyLogin(LoginBean loginBean) {
         int return_code = loginBean.getReturn_code();
         if (return_code == 0) {
             this.loginBean = loginBean;
             countDown(verfyBv, 30, "倒计时", "", "获取验证码");
-//                ToastUtils.showToast(ActivityLogin.this, "短信已发送");
-            ToastUtils.showToast(ActivityLogin.this, "短信已发送");
-            return;
-        }else if(return_code==110){
-            ToastUtils.showToast(ActivityLogin.this, "用户未启用");
-            return;
-        }
-        else if(return_code==101){
-            ToastUtils.showToast(ActivityLogin.this, "用户名不存在");
-            return;
-        }
-        else if(return_code==102){
-            ToastUtils.showToast(ActivityLogin.this, "密码错误，无法获取验证码");
-            return;
-        }
-        else if(return_code==999){
-            ToastUtils.showToast(ActivityLogin.this, "用户名或密码错误，获取验证码失败");
-            return;
-        }else if(return_code==2101){
-            ToastUtils.showToast(ActivityLogin.this, getString(R.string.no_authorizations));
-        }
-        else if(return_code==3101){
-            ToastUtils.showToast(ActivityLogin.this, getString(R.string.repeat_submit));
-        }
-        else {
+            toastSHORT("短信已发送");
+        } else if (return_code == 110) {
+            toastSHORT("用户未启用");
+        } else if (return_code == 101) {
+            toastSHORT("用户名不存在");
+        } else if (return_code == 102) {
+            toastSHORT("密码错误，无法获取验证码");
+        } else if (return_code == 999) {
+            toastSHORT("用户名或密码错误，获取验证码失败");
+        } else if (return_code == 2101) {
+            toastSHORT(getString(R.string.no_authorizations));
+        } else if (return_code == 3101) {
+            toastSHORT(getString(R.string.repeat_submit));
+        } else {
             toastSHORT(loginBean.getReturn_message());
-            return;
         }
-//        switch (loginBean.getReturn_code()) {
-//            case 0:
-//                this.loginBean = loginBean;
-//                countDown(verfyBv, 30, "倒计时", "", "获取验证码");
-////                ToastUtils.showToast(ActivityLogin.this, "短信已发送");
-//                toastSHORT("短信已发送");
-//                break;
-//            case 101:
-////                ToastUtils.showToast(ActivityLogin.this, "用户名不存在");
-//                toastSHORT("用户名不存在");
-//                break;
-//            case 102:
-////                ToastUtils.showToast(ActivityLogin.this, "密码错误");
-//                toastSHORT("密码错误");
-//                break;
-//            case 999:
-////                ToastUtils.showToast(ActivityLogin.this, "用户名或密码错误，获取验证码失败");
-//                toastSHORT("用户名或密码错误，获取验证码失败");
-//                break;
-//        }
     }
+
     //登录接口
     private void httpLogin() {
         waitDialogRectangle.show();
-        String url = Constant.LoginUrl;
         final String username = user_name_Et.getText().toString().trim();
         final String password = password_Et.getText().toString().trim();
         final String userId = loginBean.getUserId();
         String et_verfy = verfyEt.getText().toString().trim();
-        if(et_verfy.length()!=6){
-            ToastUtils.showToast(ActivityLogin.this,"验证码长度不正确");
+        if (et_verfy.length() != 6) {
+            toastSHORT("验证码长度不正确");
             waitDialogRectangle.dismiss();
             return;
         }
-        OkGo.post(url).params("param", "{\"sys_user\":\"" + userId + "\"," +
-                "\"sys_account\":\"" + username + "\"," +
-                "\"sys_pwd\":\"" + password + "\"," +
-                "\"sys_message\":\"" + et_verfy + "\"}")
+        LoginEntity loginEntity = new LoginEntity(userId, username, password, et_verfy);
+        OkGo.post(Constant.LoginUrl)
+                .params("param", mGson.toJson(loginEntity))
                 .execute(new LoginJsonCallBack<LoginBean>() {
                              @Override
                              public void onSuccess(LoginBean httploginBean, Call call, Response response) {
@@ -310,48 +270,31 @@ public class ActivityLogin extends ActivityBase {
                                      if (httploginBean.getReturn_code() == 0) {
                                          //判断数据库有没有该用户数据，有就直接登录
                                          httpGetContext(httploginBean, username, password);
-                                     }else if(httploginBean.getReturn_code()==110){
-                                         ToastUtils.showToast(ActivityLogin.this, "用户未启用");
-                                         return;
-                                     }
-                                     else if (httploginBean.getReturn_code() == 101) {
-                                         ToastUtils.showToast(ActivityLogin.this, "用户不存在");
-                                         return;
+                                     } else if (httploginBean.getReturn_code() == 110) {
+                                         toastSHORT("用户未启用");
+                                     } else if (httploginBean.getReturn_code() == 101) {
+                                         toastSHORT("用户不存在");
                                      } else if (httploginBean.getReturn_code() == 102) {
-                                         ToastUtils.showToast(ActivityLogin.this, "密码错误");
-                                         return;
+                                         toastSHORT("密码错误");
                                      } else if (httploginBean.getReturn_code() == 103) {
-                                         ToastUtils.showToast(ActivityLogin.this, "短信码错误");
-                                         return;
+                                         toastSHORT("短信码错误");
                                      } else if (httploginBean.getReturn_code() == 104) {
-                                         ToastUtils.showToast(ActivityLogin.this, "短信未发送");
-                                         return;
+                                         toastSHORT("短信未发送");
                                      } else if (httploginBean.getReturn_code() == 999) {
-                                         ToastUtils.showToast(ActivityLogin.this, "未知错误");
-                                         return;
-                                     }
-                                     else if(httploginBean.getReturn_code()==2101){
-                                         ToastUtils.showToast(ActivityLogin.this, getString(R.string.no_authorizations));
-                                     }
-                                     else if(httploginBean.getReturn_code()==3101){
-                                         ToastUtils.showToast(ActivityLogin.this, getString(R.string.repeat_submit));
-                                     }
-                                     else if (httploginBean.getReturn_code() == 1101 || httploginBean.getReturn_code() == 2101) {
+                                         toastSHORT("未知错误");
+                                     } else if (httploginBean.getReturn_code() == 2101) {
+                                         toastSHORT(getString(R.string.no_authorizations));
+                                     } else if (httploginBean.getReturn_code() == 3101) {
+                                         toastSHORT(getString(R.string.repeat_submit));
+                                     } else if (httploginBean.getReturn_code() == 1101 || httploginBean.getReturn_code() == 2101) {
                                          toastSHORT(httploginBean.getReturn_message());
                                          LogoutUtils.exitUser(ActivityLogin.this);
-                                     }
-                                     else {
-                                         ToastUtils.showToast(ActivityLogin.this, httploginBean.getReturn_message());
-                                         return;
+                                     } else {
+                                         toastSHORT(httploginBean.getReturn_message());
                                      }
                                  }
                              }
 
-                    /*else if(httploginBean.getReturn_code()==1101){
-                                toastSHORT("被别的设备登录了");
-                            }else if(httploginBean.getReturn_code()==1102){
-                                toastSHORT("令牌超时或者退出登录失效了");
-                            }*/
                              @Override
                              public void onError(Call call, Response response, Exception e) {
                                  super.onError(call, response, e);
@@ -369,7 +312,8 @@ public class ActivityLogin extends ActivityBase {
      */
     private void httpReLogin() {
         waitDialogRectangle.show();
-        final UserBean reUserBean = UserBeanUtils.getInstance(ActivityLogin.this).getUserBean(user_name_Et.getText().toString().trim());
+        final UserBean reUserBean = UserBeanUtils.getInstance(ActivityLogin.this)
+                .getUserBean(getEdVaule(user_name_Et));
         if (reUserBean == null) {
             httpLogin();
             return;
@@ -379,13 +323,12 @@ public class ActivityLogin extends ActivityBase {
         String et_userName = getEdVaule(user_name_Et);
         String et_password = getEdVaule(password_Et);
 
-//        String sys_user = loginBean.getUserId();
         if ("".equals(reToken) || reToken == null) {
             httpLogin();
         } else {
-
-            String url = Constant.ReLoginUrl;
-            OkGo.post(url).params("param", "{\"sys_account\":\"" + et_userName + "\",\"sys_pwd\":\"" + et_password + "\",\"sys_user\":\"" + sys_user + "\",\"sys_token\":\"" + reToken + "\"}")
+            ReLoginEntity reLoginEntity = new ReLoginEntity(et_userName, et_password, sys_user, reToken);
+            OkGo.post(Constant.ReLoginUrl)
+                    .params("param", mGson.toJson(reLoginEntity))
                     .execute(new LoginJsonCallBack<LoginBean<Void>>() {
                         @Override
                         public void onSuccess(LoginBean loginBean, Call call, Response response) {
@@ -399,24 +342,22 @@ public class ActivityLogin extends ActivityBase {
                                     setPublicArg(reUserBean);
                                     goNext();
                                 } else if (loginBean.getReturn_code() == 101) {
-                                    ToastUtils.showToast(ActivityLogin.this, "用户不存在");
+                                    toastSHORT("用户不存在");
                                     return;
                                 } else if (loginBean.getReturn_code() == 102) {
-                                    ToastUtils.showToast(ActivityLogin.this, "密码错误");
+                                    toastSHORT("密码错误");
                                     return;
                                 } else if (loginBean.getReturn_code() == 105) {
-                                    ToastUtils.showToast(ActivityLogin.this, "用户未登陆过");
+                                    toastSHORT("用户未登陆过");
                                     return;
                                 } else if (loginBean.getReturn_code() == 999) {
-                                    ToastUtils.showToast(ActivityLogin.this, "未知错误");
+                                    toastSHORT("未知错误");
                                     return;
-                                }
-                                else if (loginBean.getReturn_code() == 1101 || loginBean.getReturn_code() == 2101) {
+                                } else if (loginBean.getReturn_code() == 1101 || loginBean.getReturn_code() == 2101) {
                                     toastSHORT(loginBean.getReturn_message());
                                     LogoutUtils.exitUser(ActivityLogin.this);
-                                }
-                                else{
-                                    ToastUtils.showToast(ActivityLogin.this, loginBean.getReturn_message());
+                                } else {
+                                    toastShow(loginBean.getReturn_message());
                                 }
                             }
                         }
@@ -431,7 +372,8 @@ public class ActivityLogin extends ActivityBase {
         }
 
     }
-        //设置上传所需的公共参数
+
+    //设置上传所需的公共参数
     private void setPublicArg(UserBean reUserBean) {
         Constant.publicArg = new PublicArg(
                 reUserBean.getToken(),
@@ -454,10 +396,7 @@ public class ActivityLogin extends ActivityBase {
     private void httpGetContext(final LoginBean initloginBean, final String et_username, final String et_pwd) {
         final String sys_user = this.loginBean.getUserId();
         final String sys_token = initloginBean.getToken();
-        String url = Constant.GetContextUrl;
-//        String url = "http://192.168.1.120:8081/v2/appSecurity/getContext.app?param={\"sys_user\":\"e6ae4ad55d5b44769d2a54a0fedbfff7\",\"sys_token\":\"x4jiwtk2eyq8bsg9\"}";
-        OkGo.post(url)
-//                .params("param", "{\"sys_user\":\"" + sys_user + "\",\"sys_token\":\"" + sys_token + "\"}")
+        OkGo.post(Constant.GetContextUrl)
                 .params("param", "{\"sys_user\":\"" + sys_user + "\",\"sys_token\":\"" + sys_token + "\"}")
                 .execute(new LoginCallBack<LoginContextBean<SubLoginBean>>() {
 
@@ -465,16 +404,12 @@ public class ActivityLogin extends ActivityBase {
                     public void onSuccess(LoginContextBean<SubLoginBean> subLoginBeanLoginContextBean, Call call, Response response) {
                         super.onSuccess(subLoginBeanLoginContextBean, call, response);
                         waitDialogRectangle.dismiss();
-//                        UserBean currentUser = UserBeanUtils.getInstance(ActivityLogin.this).getCurrentUser();
-//                        UserBean userBean1 = new UserBean();
-//                        userBean1.setSys_pwd("sdfd");
-
-                            SubLoginBean context = subLoginBeanLoginContextBean.Context;
-                            UserBean userBean = new UserBean(null, et_username, et_pwd, sys_user, sys_token, context.getSys_mmb(),
-                                    context.getSys_username(), context.getSys_mmbname(), true, true);
-                            UserBeanUtils.getInstance(ActivityLogin.this).setCurrentUserBean(userBean);
-                            setPublicArg(userBean);
-                            goNext();
+                        SubLoginBean context = subLoginBeanLoginContextBean.Context;
+                        UserBean userBean = new UserBean(null, et_username, et_pwd, sys_user, sys_token, context.getSys_mmb(),
+                                context.getSys_username(), context.getSys_mmbname(), true, true);
+                        UserBeanUtils.getInstance(ActivityLogin.this).setCurrentUserBean(userBean);
+                        setPublicArg(userBean);
+                        goNext();
 
                     }
 
@@ -483,13 +418,11 @@ public class ActivityLogin extends ActivityBase {
                         super.onError(call, response, e);
                         waitDialogRectangle.dismiss();
                         toastSHORT(e.getMessage());
-                        if(Constant.public_code){
+                        if (Constant.public_code) {
                             LogoutUtils.exitUser(ActivityLogin.this);
                         }
                     }
                 });
-
-//        String s="\"{\"sys_user\":\"sys_user\",\"sys_token\":\"sys_user\"}\"";
     }
 
     private void goNext() {
@@ -553,37 +486,29 @@ public class ActivityLogin extends ActivityBase {
      */
     @OnClick(R.id.login_true_Btn)
     void onLoadClick(View v) {
-       /* if(timer!=null){
-        timer.cancel();
-            verfyBv.setText("获取验证码");
-            password_Et.setText("");
-        }*/
-
         switch (v.getId()) {
             case R.id.login_true_Btn:
                 if (!hasInternetConnected()) {
-                    ToastUtils.showToast(ActivityLogin.this, "网络连接失败");
+                    toastSHORT("网络连接失败，请检查网络");
                     return;
                 }
                 String userName = user_name_Et.getText().toString().trim();
-//                UserBean _userBean = UserBeanUtils.getInstance(this).getUserBean(userName);
                 et_verfy = (String) verfyEt.getTag();
                 message = verfyEt.getText().toString().trim();
                 String password = password_Et.getText().toString().trim();
                 if (password.length() == 0 || userName.length() == 0) {
-                    ToastUtils.showToast(ActivityLogin.this, "用户名或密码为空");
+                    toastSHORT("用户名或密码为空");
                     return;
                 }
                 checkVerfyLayoutVisible(userName);
 
                 if (isCheck) {
                     if (loginBean == null) {
-                        ToastUtils.showToast(ActivityLogin.this, "首次登陆请获取验证码");
+                        toastSHORT("首次登陆请获取验证码");
                         return;
                     }
                 }
                 if (isCheckLogin()) {
-                    // TODO: 2017/5/5
                     if (this.userBean == null) {
                         httpLogin();
                     } else {
@@ -592,7 +517,8 @@ public class ActivityLogin extends ActivityBase {
                 }
         }
     }
-        //判断本地数据库是否有该用户
+
+    //判断本地数据库是否有该用户
     private void checkVerfyLayoutVisible(String userName) {
         UserBean _userBean = UserBeanUtils.getInstance(this).getUserBean(userName);
         verfyLayout.setVisibility(_userBean == null ? View.VISIBLE : View.GONE);
@@ -602,20 +528,13 @@ public class ActivityLogin extends ActivityBase {
             isCheck = true;
         }
         userBean = _userBean;
-/**
- * 判断输入获取验证码是否可见
- *
- * @param userName
- */
     }
-
 
     private void dismissPop() {
         if (listPopupWindow != null && listPopupWindow.isShowing()) {
             listPopupWindow.dismiss();
         }
     }
-
 
     private class NameEtFocusChangeListener implements View.OnFocusChangeListener {
 
@@ -646,7 +565,6 @@ public class ActivityLogin extends ActivityBase {
         }
         verfyBv.setClickable(true);
         dismissPop();
-
     }
 
     /**
@@ -667,7 +585,8 @@ public class ActivityLogin extends ActivityBase {
      */
     private int countTime;
     private TimerTask timerTask;
-        //发送短信的倒计时方法
+
+    //发送短信的倒计时方法
     public void countDown(final TextView view, final int sumTime, final String leftContent,
                           final String rightContent, final String content) {
         timer = new Timer();

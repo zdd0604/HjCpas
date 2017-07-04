@@ -168,6 +168,7 @@ public class QuitHarvestExpress extends ActivityBaseHeader implements OnPullList
         layout_head_right_tv.setOnClickListener(this);
         layout_bottom_check_layout1.setOnClickListener(this);
         layout_head_left_btn.setVisibility(View.GONE);
+        mList = new ArrayList<>();
         dbList = new ArrayList<>();
         mLoader = new NestRefreshLayout(payment_scroll);
         mLoader.setOnLoadingListener(this);
@@ -216,13 +217,13 @@ public class QuitHarvestExpress extends ActivityBaseHeader implements OnPullList
         waitDialogRectangle.dismiss();
         if (isRSave)
             mHandler.sendEmptyMessage(Constant.HANDLERTYPE_1);
-
-        for (int i = 0; i < dbList.size(); i++) {
-            if (!dbList.get(i).isCheck()) {
-                layout_bottom_check_1.setChecked(false);
-                return;
+        if (dbList != null && dbList.size() > 0)
+            for (int i = 0; i < dbList.size(); i++) {
+                if (!dbList.get(i).isCheck()) {
+                    layout_bottom_check_1.setChecked(false);
+                    return;
+                }
             }
-        }
     }
 
     /**
@@ -388,6 +389,7 @@ public class QuitHarvestExpress extends ActivityBaseHeader implements OnPullList
 
                     @Override
                     public void onSuccess(HarvestExpressRespon<List<QueryGetReturnGoodsGain>> listHarvestExpressRespon, Call call, Response response) {
+                        mList.clear();
                         if (listHarvestExpressRespon.rows != null) {
                             total = listHarvestExpressRespon.total;
                             mList = listHarvestExpressRespon.rows;

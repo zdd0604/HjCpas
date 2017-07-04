@@ -118,7 +118,7 @@ public class ReceiptActivity extends ActivityBaseHeader implements OnPullListene
         mLoader.setOnLoadingListener(this);
         mLoader.setPullLoadEnable(true);
         mLoader.setPullRefreshEnable(true);
-
+        mList = new ArrayList<>();
         dbList = new ArrayList<>();
 
         //如果有网就加载数据
@@ -164,7 +164,7 @@ public class ReceiptActivity extends ActivityBaseHeader implements OnPullListene
 
         receiptAdapter.setOnCheckedkType(this);
 
-        if (dbList != null)
+        if (dbList != null && dbList.size() > 0)
             for (int i = 0; i < dbList.size(); i++) {
                 if (!dbList.get(i).getIsChecked()) {
                     layout_bottom_check_1.setChecked(false);
@@ -341,6 +341,7 @@ public class ReceiptActivity extends ActivityBaseHeader implements OnPullListene
                     public void onSuccess(QueryMmbBankAccountRespon<List<ResQueryGetMoneyEntity>> listData,
                                           Call call, Response response) {
                         waitDialogRectangle.dismiss();
+                        mList.clear();
                         if (listData != null && listData.return_code == 0 && listData.list != null) {
                             mList = listData.list;
                             total = listData.pagecount;

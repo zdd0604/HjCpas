@@ -18,8 +18,8 @@ import com.hj.casps.adapter.TestArrayAdapter;
 import com.hj.casps.base.ActivityBaseHeader2;
 import com.hj.casps.common.Constant;
 import com.hj.casps.entity.PublicArg;
-import com.hj.casps.entity.appOrder.BuyCartBack;
-import com.hj.casps.entity.appOrder.BuyCartPost;
+import com.hj.casps.entity.apporder.BuyCartBack;
+import com.hj.casps.entity.apporder.BuyCartPost;
 import com.hj.casps.entity.appordercheckorder.BuyersAccountListBean;
 import com.hj.casps.entity.appordercheckorder.BuyersAddressListBean;
 import com.hj.casps.entity.appordercheckorder.DataBean;
@@ -56,7 +56,6 @@ import okhttp3.Response;
 import static com.hj.casps.common.Constant.SYS_FUNC;
 import static com.hj.casps.common.Constant.getToday;
 import static com.hj.casps.common.Constant.getUUID;
-import static com.hj.casps.common.Constant.publicArg;
 
 //下定单的页面
 public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickListener {

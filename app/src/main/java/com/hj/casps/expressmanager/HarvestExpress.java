@@ -157,7 +157,7 @@ public class HarvestExpress extends ActivityBaseHeader implements OnPullListener
         mLoader.setOnLoadingListener(this);
         mLoader.setPullLoadEnable(true);
         mLoader.setPullRefreshEnable(true);
-
+        mList = new ArrayList<>();
         dbList = new ArrayList<>();
         if (hasInternetConnected()) {
             getNetWotk(pageNo);
@@ -206,7 +206,7 @@ public class HarvestExpress extends ActivityBaseHeader implements OnPullListener
 
         waitDialogRectangle.dismiss();
 
-        if (dbList != null)
+        if (dbList != null && dbList.size() > 0)
             for (int i = 0; i < dbList.size(); i++) {
                 if (!dbList.get(i).isCheck()) {
                     layout_bottom_check_1.setChecked(false);
@@ -477,6 +477,7 @@ public class HarvestExpress extends ActivityBaseHeader implements OnPullListener
                 .execute(new JsonCallBack<HarvestExpressRespon<List<QueryGetGoodsEntity>>>() {
                     @Override
                     public void onSuccess(HarvestExpressRespon<List<QueryGetGoodsEntity>> listHarvestExpressRespon, Call call, Response response) {
+                        mList.clear();
                         if (listHarvestExpressRespon.rows != null) {
                             total = listHarvestExpressRespon.total;
                             mList = listHarvestExpressRespon.rows;

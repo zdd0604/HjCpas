@@ -1,4 +1,4 @@
-package com.hj.casps.entity.appContract;
+package com.hj.casps.entity.appcontract;
 
 /**
  * 跳转同意协议输入界面请求参数类

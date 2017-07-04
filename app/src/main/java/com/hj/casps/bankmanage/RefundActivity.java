@@ -3,13 +3,10 @@ package com.hj.casps.bankmanage;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ScrollView;
@@ -24,9 +21,8 @@ import com.hj.casps.entity.PublicArg;
 import com.hj.casps.entity.appordergoodsCallBack.JsonCallBack;
 import com.hj.casps.entity.appordermoney.QueryMmbBankAccountRespon;
 import com.hj.casps.entity.goodsmanager.Pub;
-import com.hj.casps.entity.paymentmanager.RequestQueryPayMoney;
-import com.hj.casps.entity.paymentmanager.ResPayMoneyOffline;
 import com.hj.casps.entity.paymentmanager.ReqPayMoneyOffine;
+import com.hj.casps.entity.paymentmanager.ResPayMoneyOffline;
 import com.hj.casps.entity.paymentmanager.response.RefundMoneyOfflineBean;
 import com.hj.casps.entity.paymentmanager.response.RequestQueryRefundMoney;
 import com.hj.casps.entity.paymentmanager.response.ResRefundMoneyOfflineEntity;
@@ -133,7 +129,8 @@ public class RefundActivity extends ActivityBaseHeader implements OnPullListener
         }
 
     }
-// 刷新UI
+
+    // 刷新UI
     private void refreshUI() {
         System.out.println("r=refreshUI" + pagecount);
         if (isSave) {
@@ -180,7 +177,8 @@ public class RefundActivity extends ActivityBaseHeader implements OnPullListener
         }
 
     }
-//请求数据接口
+
+    //请求数据接口
     private void initData(final int pageno) {
         waitDialogRectangle.show();
         PublicArg p = Constant.publicArg;
@@ -192,6 +190,7 @@ public class RefundActivity extends ActivityBaseHeader implements OnPullListener
             @Override
             public void onSuccess(QueryMmbBankAccountRespon<List<ResRefundMoneyOfflineEntity>> listData, Call call, Response response) {
                 waitDialogRectangle.dismiss();
+                mList.clear();
                 if (listData != null && listData.return_code == 0 && listData.list != null) {
                     RefundActivity.this.mList = listData.list;
                     RefundActivity.this.pagecount = listData.pagecount;
@@ -208,7 +207,7 @@ public class RefundActivity extends ActivityBaseHeader implements OnPullListener
                 toastSHORT(e.getMessage());
                 waitDialogRectangle.dismiss();
 
-                if (Constant.public_code){
+                if (Constant.public_code) {
                     LogoutUtils.exitUser(RefundActivity.this);
                 }
             }
@@ -294,13 +293,13 @@ public class RefundActivity extends ActivityBaseHeader implements OnPullListener
             ResRefundMoneyOfflineEntity entity = dbList.get(i);
 
             if (entity.isChecked()) {
-                System.out.println("entity.getPayNum()"+entity.getPayNum());
+                System.out.println("entity.getPayNum()" + entity.getPayNum());
                 if (entity.getPayNum() == null || !StringUtils.isStrTrue(entity.getPayNum())) {
 
                     toastSHORT("请输入退款金额");
                     return;
                 }
-              if(entity.getPayNum().equals("0")||entity.getPayNum().equals("0.0")){
+                if (entity.getPayNum().equals("0") || entity.getPayNum().equals("0.0")) {
                     toastSHORT("金额不能为0");
                     return;
                 }
@@ -370,7 +369,7 @@ public class RefundActivity extends ActivityBaseHeader implements OnPullListener
     private void executePayMoneyForNet() {
         PublicArg p = Constant.publicArg;
         String timeUUID = Constant.getTimeUUID();
-        if(timeUUID.equals("")){
+        if (timeUUID.equals("")) {
             toastSHORT(getString(R.string.time_out));
             return;
         }
@@ -386,8 +385,7 @@ public class RefundActivity extends ActivityBaseHeader implements OnPullListener
                     if (pub.getReturn_code() == 0) {
                         new MyToast(RefundActivity.this, pub.getReturn_message());
                         clearDatas(true);
-                    }
-                    else if(pub.getReturn_code()==1101||pub.getReturn_code()==1102){
+                    } else if (pub.getReturn_code() == 1101 || pub.getReturn_code() == 1102) {
                         toastSHORT("重复登录或令牌超时");
                         LogoutUtils.exitUser(RefundActivity.this);
                     }

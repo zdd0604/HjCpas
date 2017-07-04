@@ -33,7 +33,6 @@ import com.hj.casps.ui.MyToast;
 import com.hj.casps.util.LogoutUtils;
 import com.hj.casps.util.StringUtils;
 import com.lzy.okgo.OkGo;
-import com.lzy.okgo.exception.OkGoException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -233,7 +232,7 @@ public class BankBillsActivity extends ActivityBaseHeader implements View.OnClic
      */
     private void addLocality() {
         mAddressList = AppOrderGoodsUtils.getInstance(this).queryWarehouseEntityDaoInfo();
-        if (dbList.size() > 0) {
+        if (mAddressList.size() > 0) {
             mHandler.sendEmptyMessage(Constant.HANDLERTYPE_1);
         }
     }
@@ -265,7 +264,7 @@ public class BankBillsActivity extends ActivityBaseHeader implements View.OnClic
         }
 
         if (pageNo == 0) {
-            expressAdapter = new ExpressAdapte(dbList, this);
+            expressAdapter = new ExpressAdapte(mAddressList, this);
             expressAdapter.notifyDataSetChanged();
             bank_card_list.setAdapter(expressAdapter);
         } else {
@@ -451,7 +450,7 @@ public class BankBillsActivity extends ActivityBaseHeader implements View.OnClic
 
     private void deleteBankAccount(int index) {
         String timeUUID = Constant.getTimeUUID();
-        if(timeUUID.equals("")){
+        if (timeUUID.equals("")) {
             toastSHORT(getString(R.string.time_out));
             return;
         }
@@ -485,7 +484,7 @@ public class BankBillsActivity extends ActivityBaseHeader implements View.OnClic
                     public void onError(Call call, Response response, Exception e) {
                         super.onError(call, response, e);
                         toastSHORT(e.getMessage());
-                        if (Constant.public_code){
+                        if (Constant.public_code) {
                             LogoutUtils.exitUser(BankBillsActivity.this);
                         }
                     }
@@ -515,7 +514,7 @@ public class BankBillsActivity extends ActivityBaseHeader implements View.OnClic
                     public void onSuccess(SimpleResponse<List<WarehouseEntity>> data, Call call, Response response) {
                         total = data.total;
                         //获取数据成功后更新UI 界面
-                        if (data.return_code==0&&data.rows != null) {
+                        if (data.return_code == 0 && data.rows != null) {
                             mAddressList = data.rows;
                             mHandler.sendEmptyMessage(Constant.HANDLERTYPE_1);
                         }
@@ -602,10 +601,10 @@ public class BankBillsActivity extends ActivityBaseHeader implements View.OnClic
                     @Override
                     public void onError(Call call, Response response, Exception e) {
                         super.onError(call, response, e);
-                            toastSHORT(e.getMessage());
-                       if(Constant.public_code){
-                           LogoutUtils.exitUser(BankBillsActivity.this);
-                       }
+                        toastSHORT(e.getMessage());
+                        if (Constant.public_code) {
+                            LogoutUtils.exitUser(BankBillsActivity.this);
+                        }
                     }
                 });
     }

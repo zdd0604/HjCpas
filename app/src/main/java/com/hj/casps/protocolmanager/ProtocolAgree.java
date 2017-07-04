@@ -8,8 +8,8 @@ import com.hj.casps.R;
 import com.hj.casps.adapter.TestArrayAdapter;
 import com.hj.casps.base.ActivityBaseHeader2;
 import com.hj.casps.common.Constant;
-import com.hj.casps.entity.appContract.ShowAgreeBack;
-import com.hj.casps.entity.appContract.ShowAgreePost;
+import com.hj.casps.entity.appcontract.ShowAgreeBack;
+import com.hj.casps.entity.appcontract.ShowAgreePost;
 import com.hj.casps.util.LogoutUtils;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
@@ -19,8 +19,6 @@ import java.util.List;
 import mehdi.sakout.fancybuttons.FancyButton;
 import okhttp3.Call;
 import okhttp3.Response;
-
-import static com.hj.casps.common.Constant.PROTOCOL_TYPE_NUM;
 
 //协议管理的同意合作协议
 public class ProtocolAgree extends ActivityBaseHeader2 implements View.OnClickListener {

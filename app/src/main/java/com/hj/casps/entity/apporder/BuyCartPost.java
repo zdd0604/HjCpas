@@ -1,4 +1,4 @@
-package com.hj.casps.entity.appOrder;
+package com.hj.casps.entity.apporder;
 
 //请求类
 public class BuyCartPost {

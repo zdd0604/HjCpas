@@ -133,13 +133,13 @@ public class ReceiveRefundMoenyActivity extends ActivityBaseHeader implements On
             saveLocalData();
         }
 
-
-        for (int i = 0; i < dbList.size(); i++) {
-            if (!dbList.get(i).isChecked()) {
-                layout_bottom_check_1.setChecked(false);
-                return;
+        if (dbList != null && dbList.size() > 0)
+            for (int i = 0; i < dbList.size(); i++) {
+                if (!dbList.get(i).isChecked()) {
+                    layout_bottom_check_1.setChecked(false);
+                    return;
+                }
             }
-        }
     }
 
     //插入数据到本地数据库
@@ -208,6 +208,7 @@ public class ReceiveRefundMoenyActivity extends ActivityBaseHeader implements On
                     @Override
                     public void onSuccess(QueryMmbBankAccountRespon<List<ResqueryGetRefundMoneyEntity>> listData, Call call, Response response) {
                         waitDialogRectangle.dismiss();
+                        mList.clear();
                         if (listData != null && listData.return_code == 0 && listData.list != null) {
                             mList = listData.list;
                             pageCount = listData.pagecount;
