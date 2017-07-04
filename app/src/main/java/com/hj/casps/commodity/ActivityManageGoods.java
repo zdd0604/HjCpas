@@ -477,7 +477,7 @@ public class ActivityManageGoods extends ActivityBaseHeader implements View.OnCl
     private class GoodSimpleItemClick extends SimpleClickListener {
         @Override
         public void onItemClick(BaseQuickAdapter adapter, View view, int pos) {
-            log("onItemClick() called with: " + "adapter = [" + adapter + "], view = [" + view + "], position = [" + pos + "]");
+            LogShow("onItemClick() called with: " + "adapter = [" + adapter + "], view = [" + view + "], position = [" + pos + "]");
             GoodLevelEntity entity = (GoodLevelEntity) adapter.getItem(pos);
             //如果没有子条目就跳转到选择图片的页面
             if (!entity.hasSubItem()) {
@@ -505,6 +505,7 @@ public class ActivityManageGoods extends ActivityBaseHeader implements View.OnCl
          * @param entity
          */
         private void collapse(BaseQuickAdapter adapter, GoodLevelEntity entity) {
+            LogShow("collapse");
             List<GoodLevelEntity> needDelete = new ArrayList<>();
             collapseNeedDelete(needDelete, entity.getSubItems());
             entity.setExpanded(false);
@@ -535,6 +536,7 @@ public class ActivityManageGoods extends ActivityBaseHeader implements View.OnCl
          * @param entity
          */
         private void expand(int pos, BaseQuickAdapter adapter, GoodLevelEntity entity) {
+            LogShow("expand");
             adapter.getData().addAll(pos + 1, entity.getSubItems()); /*要先添加 要不数据会乱掉*/
             List<GoodLevelEntity> needDelete = new ArrayList<>();
             if (entity.getParent() == null) {

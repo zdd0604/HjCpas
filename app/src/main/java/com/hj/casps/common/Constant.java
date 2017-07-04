@@ -40,7 +40,7 @@ public class Constant {
 //
 //    public static final String HTTPURLALL = "http://192.168.0.120:8081";
     //    public static final String HTTPURLALL = "http://192.168.0.250:8080";
-//    public static final String HTTPURLALL = "http://192.168.1.120:8081";
+    public static final String HTTPURLALL = "http://192.168.1.120:8081";
 //    public static final String HTTPURLALL = "http://123.126.109.166:2000";
     //公共的请求头
     public static final String HTTPURL = HTTPURLALL + "/v2/";
@@ -53,7 +53,7 @@ public class Constant {
     //图片的url
     public static final String HTTPURLIMAGE = HTTPURLALL + "/v2content/upload/";
     //当前会员地址列表
-    public static final String QueryMmbWareHouseUrl = HTTPURL + "FappOrderGoods/queryMmbWareHouse.app";
+    public static final String QueryMmbWareHouseUrl = HTTPURL + "appOrderGoods/queryMmbWareHouse.app";
     //编辑查询
     public static final String ToEditMmbWarehousetUrl = HTTPURL + "appOrderGoods/toEditMmbWarehouse.app";
     //编辑确认
