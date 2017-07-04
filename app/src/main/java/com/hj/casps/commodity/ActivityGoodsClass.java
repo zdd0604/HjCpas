@@ -74,8 +74,6 @@ public class ActivityGoodsClass extends ActivityBaseHeader2 implements View.OnCl
     RelativeLayout Goodsclass_top_Re;
     private PopupWindow sharepopupWindow;
     private View contentView;
-    private int pageno = 0;
-    private int pagesize = 10;
     private int fra_type;
     private boolean isReSave = true;//是否缓存
     private String categoryId;
@@ -94,16 +92,17 @@ public class ActivityGoodsClass extends ActivityBaseHeader2 implements View.OnCl
     };
     private GoodClassAdapter adapter;
     private int totalCount;
-//刷新UI
+
+    //刷新UI
     private void refreshUi() {
-        if (pageno == 0) {
+        if (pageNo == 0) {
             if (adapter == null) {
                 adapter = new GoodClassAdapter(context, null);
                 rv.setAdapter(adapter);
             }
             adapter.setDatas(mList);
         } else {
-            if (pageno <= (totalCount - 1) / pagesize) {
+            if (pageNo <= (totalCount - 1) / pageSize) {
                 adapter.addRes(mList);
                 mLoader.onLoadFinished();
             } else {
@@ -133,6 +132,7 @@ public class ActivityGoodsClass extends ActivityBaseHeader2 implements View.OnCl
             }
         }
     }
+
     //从本地数据库加载数据
     private void getLocalData() {
         List<DataListBean> listBeen = WytUtils.getInstance(this).QuerytDataListBeanInfo(categoryId);
@@ -153,7 +153,7 @@ public class ActivityGoodsClass extends ActivityBaseHeader2 implements View.OnCl
         initView();
         //判断是否有网络
         if (hasInternetConnected()) {
-            initData(pageno);
+            initData(pageNo);
         } else {
             //从本地数据库加载数据
             getLocalData();
@@ -162,7 +162,7 @@ public class ActivityGoodsClass extends ActivityBaseHeader2 implements View.OnCl
     }
 
 
-        //请求数据接口
+    //请求数据接口
     private void initData(final int pageno) {
         PublicArg p = Constant.publicArg;
         RequestSearchGood r = new RequestSearchGood(p.getSys_token(),
@@ -172,32 +172,35 @@ public class ActivityGoodsClass extends ActivityBaseHeader2 implements View.OnCl
                 p.getSys_member(),
                 categoryId,
                 String.valueOf(pageno + 1),
-                String.valueOf(pagesize));
+                String.valueOf(pageSize + 2));
         String param = mGson.toJson(r);
         Constant.JSONFATHERRESPON = "SearchGoodGain";
         waitDialogRectangle.show();
-        OkGo.post(Constant.SearchGoodUrl).params("param", param).execute(new StringCallback() {
-                                                                             @Override
-              public void onSuccess(String data, Call call, Response response) {
-                  waitDialogRectangle.dismiss();
-                  ResSearchGoodEntity entity = GsonTools.changeGsonToBean(data, ResSearchGoodEntity.class);
-                  if (entity.getReturn_code() == 0 && entity.getDataList() != null && entity.getDataList().size() > 0) {
-                      mList = entity.getDataList();
-                      totalCount = entity.getTotalCount();
-                      refreshUi();
-                  }else if(entity.getReturn_code()==1101||entity.getReturn_code()==1102){
-                      toastSHORT(entity.getReturn_message());
-                      LogoutUtils.exitUser(ActivityGoodsClass.this);
-                  }
-                     }
-              @Override
-              public void onError(Call call, Response response, Exception e) {
-                  super.onError(call, response, e);
-                  waitDialogRectangle.dismiss();
-              }
-                                                                         }
+        OkGo.post(Constant.SearchGoodUrl)
+                .params("param", param)
+                .execute(new StringCallback() {
+                             @Override
+                             public void onSuccess(String data, Call call, Response response) {
+                                 waitDialogRectangle.dismiss();
+                                 ResSearchGoodEntity entity = GsonTools.changeGsonToBean(data, ResSearchGoodEntity.class);
+                                 if (entity.getReturn_code() == 0 && entity.getDataList() != null && entity.getDataList().size() > 0) {
+                                     mList = entity.getDataList();
+                                     totalCount = entity.getTotalCount();
+                                     refreshUi();
+                                 } else if (entity.getReturn_code() == 1101 || entity.getReturn_code() == 1102) {
+                                     toastSHORT(entity.getReturn_message());
+                                     LogoutUtils.exitUser(ActivityGoodsClass.this);
+                                 }
+                             }
 
-        );
+                             @Override
+                             public void onError(Call call, Response response, Exception e) {
+                                 super.onError(call, response, e);
+                                 waitDialogRectangle.dismiss();
+                             }
+                         }
+
+                );
     }
 
 
@@ -226,7 +229,8 @@ public class ActivityGoodsClass extends ActivityBaseHeader2 implements View.OnCl
         log("heigth=" + height);
 
     }
-          /*选择图片编辑*/
+
+    /*选择图片编辑*/
     private void choosePictureEdit(int position) {
         if (fra_type == 1) {
             DataListBean d = adapter.getDatas().get(position);
@@ -268,8 +272,8 @@ public class ActivityGoodsClass extends ActivityBaseHeader2 implements View.OnCl
     protected void onRestart() {
 
         super.onRestart();
-        if(Constant.isFreshGood){
-            initData(pageno);
+        if (Constant.isFreshGood) {
+            initData(pageNo);
         }
 
     }
@@ -277,9 +281,10 @@ public class ActivityGoodsClass extends ActivityBaseHeader2 implements View.OnCl
     @Override
     protected void onPause() {
         super.onPause();
-        Constant.isFreshGood=false;
+        Constant.isFreshGood = false;
     }
-//        显示底部的编辑 详情  启用的PopupWindow
+
+    //        显示底部的编辑 详情  启用的PopupWindow
     private void showSharePopupWindow() {
         contentView = LayoutInflater.from(this).inflate(
                 R.layout.pop_goodsclass, null);
@@ -303,7 +308,7 @@ public class ActivityGoodsClass extends ActivityBaseHeader2 implements View.OnCl
         switch (v.getId()) {
             //商品启用停用
             case R.id.gooddeclass_do_do:
-                if(!hasInternetConnected()){
+                if (!hasInternetConnected()) {
                     toastSHORT("没有网络，无法操作");
                     return;
                 }
@@ -317,7 +322,7 @@ public class ActivityGoodsClass extends ActivityBaseHeader2 implements View.OnCl
                 sharepopupWindow.dismiss();
                 break;
             case R.id.gooddeclass_do_edit:
-                if(!hasInternetConnected()){
+                if (!hasInternetConnected()) {
                     toastSHORT("没有网络，无法操作");
                     return;
                 }
@@ -362,7 +367,7 @@ public class ActivityGoodsClass extends ActivityBaseHeader2 implements View.OnCl
     //调用接口 商品启用停用操作
     private void updateStatus() {
         String timeUUID = Constant.getTimeUUID();
-        if(timeUUID.equals("")){
+        if (timeUUID.equals("")) {
             toastSHORT(getString(R.string.time_out));
             return;
         }
@@ -384,11 +389,8 @@ public class ActivityGoodsClass extends ActivityBaseHeader2 implements View.OnCl
                     datas.get(mPostion).setStatus(statusInt == 0 ? 1 : 0);
                     newDatas.addAll(datas);
                     adapter.setDatas(newDatas);
-//                    adapter.notifyItemChanged(mPostion);
                     toastSHORT("操作成功");
-                }
-
-                else {
+                } else {
                     toastSHORT(goodInfo.return_message);
                 }
             }
@@ -396,7 +398,7 @@ public class ActivityGoodsClass extends ActivityBaseHeader2 implements View.OnCl
             @Override
             public void onError(Call call, Response response, Exception e) {
                 super.onError(call, response, e);
-                if (Constant.public_code){
+                if (Constant.public_code) {
                     LogoutUtils.exitUser(ActivityGoodsClass.this);
                 }
             }
@@ -412,82 +414,15 @@ public class ActivityGoodsClass extends ActivityBaseHeader2 implements View.OnCl
 
     @Override
     public void onRefresh(AbsRefreshLayout listLoader) {
-        pageno = 0;
-        initData(pageno);
+        pageNo = 0;
+        initData(pageNo);
         mLoader.onLoadFinished();
     }
 
     @Override
     public void onLoading(AbsRefreshLayout listLoader) {
-        pageno++;
-        initData(pageno);
+        pageNo++;
+        initData(pageNo);
         mLoader.onLoadFinished();
     }
-
-   /* class GoodClassListAdapter extends BaseAdapter {
-
-
-        @Override
-        public int getCount() {
-            return mList != null ? mList.size() : 0;
-        }
-
-        @Override
-        public Object getItem(int position) {
-            return null;
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return 0;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-
-            ViewHolder viewHolder = null;
-            if (convertView == null) {
-                viewHolder = new ViewHolder();
-//                LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-//                convertView=   inflater.inflate(R.layout.selectpic_griditem,parent,false);
-                convertView = View.inflate(parent.getContext(), R.layout.selectpic_griditem, null);
-                viewHolder.im = (ImageView) convertView.findViewById(R.id.selectpic_pic_img);
-                viewHolder.tv = (TextView) convertView.findViewById(R.id.selectpic_tv);
-                viewHolder.ll = (RelativeLayout) convertView.findViewById(R.id.selectpic_ischeck);
-                convertView.setTag(viewHolder);
-            } else {
-                viewHolder = (ViewHolder) convertView.getTag();
-            }
-            DataListEntity data = mList.get(position);
-//            MySearchGoodEntity.DataListBean data = mList.get(position);
-            //TODO
-            Glide.with(ActivityGoodsClass.this).load(Constant.SHORTHTTPURL + data.getImgPath()).error(R.mipmap.c_shop).into(viewHolder.im);
-            viewHolder.tv.setText(data.getName());
-            if (data.getStatus() == 1) {
-                viewHolder.ll.setVisibility(View.VISIBLE);
-            }
-
-           int width = getResources().getDisplayMetrics().widthPixels;
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
-                width -= gridView.getHorizontalSpacing() * 2;
-            }
-            width = width / 3;
-            ViewGroup.LayoutParams layoutParams = parent.getLayoutParams();
-            layoutParams.height = (int) (width * 1.1f);
-            convertView.setLayoutParams(layoutParams);
-            return convertView;
-        }
-
-    }
-
-    class ViewHolder {
-//            convertView.setLayoutParams(new ViewGroup.LayoutParams());
-//            View view = getView(position, convertView, parent);
-        ImageView im;
-        TextView tv;
-        RelativeLayout ll;
-
-    }*/
-
-
 }
