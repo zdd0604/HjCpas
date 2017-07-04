@@ -224,7 +224,8 @@ public class CooperateDirUtils {
                 FragmentDaoDao.Properties.Type_k.eq(String.valueOf(k))))
                 .build();
         List<FragmentDao> list = query.list();
-        return list.get(0).getJson();
+
+        return list.size() <= 0 ? "" : list.get(0).getJson();
     }
 
     /**
@@ -247,6 +248,7 @@ public class CooperateDirUtils {
         bd.executeDeleteWithoutDetachingEntities();
 
     }
+
     /**
      * 查询所有
      */

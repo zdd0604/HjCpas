@@ -9,13 +9,13 @@ import java.util.List;
 
 public class CooperateBack {
 
-    private int return_code;
-    private String return_message;
-    private List<ListBean> list;
+    private int return_code;//返回的code
+    private String return_message;//返回的消息
+    private List<ListBean> list;//返回的list
 
     public class ListBean {
-        private List<CooperateModel> 卖;
-        private List<CooperateModel> 买;
+        private List<CooperateModel> 卖;//销售列表
+        private List<CooperateModel> 买;//采购列表
 
         public List<CooperateModel> get买() {
             return 买;

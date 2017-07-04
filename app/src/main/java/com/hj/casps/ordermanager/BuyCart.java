@@ -113,7 +113,7 @@ public class BuyCart extends ActivityBaseHeader implements View.OnClickListener 
     public void initData() {
         BuyCartPost post = null;
         type = getIntent().getIntExtra(Constant.ORDER_TYPE, Constant.order_type_buy);//从外面传递过来是采购还是销售
-        switch (type) {
+        switch (order_type_dao) {
             case Constant.order_type_buy://如果是采购
                 setTitle(getString(R.string.order_buy_cart));//设置标题
                 type_name = getString(R.string.cooperate_buy_part);//设置采购方还是销售方文字

@@ -19,7 +19,7 @@ public class CooperateAdapter extends WZYBaseAdapter<CooperateModel> {
 
     @Override
     public void bindData(ViewHolder holder, CooperateModel cooperateModel, final int indexPos) {
-        TextView name = (TextView) holder.getView(R.id.cooperate_name);
-        name.setText(cooperateModel.getFname());
+        TextView name = (TextView) holder.getView(R.id.cooperate_name);//名称
+        name.setText(cooperateModel.getFname());//返回来的名称
     }
 }

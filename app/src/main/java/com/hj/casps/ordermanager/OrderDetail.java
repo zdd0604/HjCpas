@@ -721,7 +721,7 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
                     @Override
                     public void onError(Call call, Response response, Exception e) {
                         super.onError(call, response, e);
-                        toastSHORT(e.getMessage());
+//                        toastSHORT(e.getMessage());
                         if (Constant.public_code) {
                             LogoutUtils.exitUser(OrderDetail.this);
                         }
@@ -781,7 +781,7 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
                     @Override
                     public void onError(Call call, Response response, Exception e) {
                         super.onError(call, response, e);
-                        toastSHORT(e.getMessage());
+//                        toastSHORT(e.getMessage());
                         if (Constant.public_code) {
                             LogoutUtils.exitUser(OrderDetail.this);
                         }

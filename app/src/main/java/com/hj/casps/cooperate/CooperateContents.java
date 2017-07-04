@@ -32,12 +32,12 @@ import static com.hj.casps.common.Constant.getUUID;
 //合作会员列表
 public class CooperateContents extends ActivityBaseHeader implements View.OnClickListener {
 
-    private TextView cooperate_contents_info;
-    private ListView contents_list;
-    private CooperateContentsAdapter adapter;
-    private List<CooperateContentsBean> cooperateModels;
+    private TextView cooperate_contents_info;//操作说明
+    private ListView contents_list;//会员名称列表的界面
+    private CooperateContentsAdapter adapter;//会员adapter
+    private List<CooperateContentsBean> cooperateModels;//会员列表
 //    private String concerns_url = Constant.HTTPURL + "appMemberRelationship/queryMMBConcerns.app";
-    private int grade = 0;
+    private int grade = 0;//会员等级
 
     private Handler handler = new Handler() {
         @Override
@@ -45,7 +45,7 @@ public class CooperateContents extends ActivityBaseHeader implements View.OnClic
             super.handleMessage(msg);
             switch (msg.what) {
                 case 0:
-                    initData(grade);
+                    initData(grade);//查询会员等级后，去加载相应等级的会员
                     break;
 
             }
@@ -53,7 +53,7 @@ public class CooperateContents extends ActivityBaseHeader implements View.OnClic
     };
 
     /**
-     * 保存数据库
+     * 保存数据库，通过类名保存。先删除该类的所有数据，然后分别插入数据
      */
     private void saveDaoData() {
         CooperateDirUtils.getInstance(this).deleteAll();
@@ -64,7 +64,7 @@ public class CooperateContents extends ActivityBaseHeader implements View.OnClic
 
 
     /**
-     * 加载本地数据
+     * 加载本地数据，先从数据库查找所有关系管理，会员目录的list集合，然后保存到本地更新adapter的列表中
      */
     private void addLocality() {
         List<CooperateContentsBean> usrList = CooperateDirUtils.getInstance(this).queryCooperateContentsBeanInfo();
@@ -94,7 +94,7 @@ public class CooperateContents extends ActivityBaseHeader implements View.OnClic
         initView();
         if (hasInternetConnected()) {//判断有没有网络
             initData(grade);
-        } else {
+        } else {//如果没有网络，进行数据库数据加载
             addLocality();
         }
 
@@ -108,7 +108,7 @@ public class CooperateContents extends ActivityBaseHeader implements View.OnClic
                 publicArg.getSys_user(),
                 publicArg.getSys_member(),
                 grade == 0 ? "" : String.valueOf(grage),
-                "1", "10");//合作会员提交数据
+                "1", "10");//合作会员提交数据，将需要的数据保存到提交类，以便于转换成json
         OkGo.post(Constant.QueryMMBConcernsUrl)
                 .tag(this)
                 .params("param", mGson.toJson(concerns))
