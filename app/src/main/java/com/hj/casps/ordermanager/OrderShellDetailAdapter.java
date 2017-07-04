@@ -35,8 +35,6 @@ public class OrderShellDetailAdapter extends WZYBaseAdapter<OrderShellModel> {
 
     @Override
     public void bindData(ViewHolder holder, final OrderShellModel orderShellModel, final int indexPos) {
-        Log.e("show", "---------" + orderShellModel.toString());
-        Log.d("indexPos", indexPos + "");
         try {
             minPrice = Double.parseDouble(orderShellModel.getPrice().split("-")[0]);
             maxPrice = Double.parseDouble(orderShellModel.getPrice().split("-")[1]);
