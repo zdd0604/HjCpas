@@ -52,17 +52,14 @@ public class ActivityPriceSearch extends ActivityBaseHeader3 implements View.OnC
     private ImageView totop;
     AbsRefreshLayout mLoader;
     private TextView styleTv;
-    private List<QtListEntity> mList = new ArrayList<>();
-    private List<QtListEntity> dbList = new ArrayList<>();
     private RecyclerView rv;
     private PriceQuoteAdapter adapter;
-    private int pageno = 0;
-    private int pagesize = 10;
     private int type;//类型   0 采购  1 销售
     private boolean isSave = true;//是否保存数据
     private boolean isRSave = true;//重置时是否保存数据
+    private List<QtListEntity> mList = new ArrayList<>();
+    private List<QtListEntity> dbList = new ArrayList<>();
     private String categoryId = "";
-    private int qtCount;
     private int count = 0;
     private TextView shopNum;
 
@@ -73,7 +70,7 @@ public class ActivityPriceSearch extends ActivityBaseHeader3 implements View.OnC
             switch (msg.what) {
                 case Constant.HANDLERTYPE_0:
                     //加载报价检索列表
-                    initData(pageno);
+                    initData(pageNo);
                     break;
                 case Constant.HANDLERTYPE_1:
                     //刷新购物车中中的数据
@@ -214,7 +211,7 @@ public class ActivityPriceSearch extends ActivityBaseHeader3 implements View.OnC
             rv.setAdapter(adapter);
             adapter.notifyDataSetChanged();
         } else {
-            if (pageNo <= ((qtCount - 1) / pageSize)) {
+            if (pageNo <= ((total - 1) / pageSize)) {
                 adapter.addRes(mList);
             } else {
                 mLoader.onLoadAll();//加载全部
@@ -258,7 +255,7 @@ public class ActivityPriceSearch extends ActivityBaseHeader3 implements View.OnC
                 publicArg.getSys_member(),
                 Constant.SEARCH_Price_quote_checkboxId,
                 String.valueOf(pageno + 1),
-                String.valueOf(pagesize),
+                String.valueOf(pageSize),
                 String.valueOf(type),
                 Constant.SEARCH_Price_quote_goodName,
                 categoryId
@@ -273,7 +270,7 @@ public class ActivityPriceSearch extends ActivityBaseHeader3 implements View.OnC
                     public void onSuccess(SearchQuoteGain<List<QtListEntity>> data, Call call, Response response) {
                         waitDialogRectangle.dismiss();
                         if (data != null && data.return_code == 0 && data.qtList != null) {
-                            qtCount = data.qtCount;
+                            total = data.qtCount;
                             mList = data.qtList;
                             //刷新界面
                             mHandler.sendEmptyMessage(Constant.HANDLERTYPE_2);
@@ -422,7 +419,7 @@ public class ActivityPriceSearch extends ActivityBaseHeader3 implements View.OnC
 
     @Override
     public void onRefresh(AbsRefreshLayout listLoader) {
-        pageno = 0;
+        pageNo = 0;
         isSave = true;
         if (StringUtils.isStrTrue(Constant.SEARCH_Price_quote_goodName) ||
                 "3,2,1".equals(Constant.SEARCH_Price_quote_checkboxId) ||
@@ -437,7 +434,7 @@ public class ActivityPriceSearch extends ActivityBaseHeader3 implements View.OnC
 
     @Override
     public void onLoading(AbsRefreshLayout listLoader) {
-        pageno++;
+        pageNo ++;
         isSave = false;
         if (StringUtils.isStrTrue(Constant.SEARCH_Price_quote_goodName) ||
                 "3,2,1".equals(Constant.SEARCH_Price_quote_checkboxId) ||
@@ -446,7 +443,7 @@ public class ActivityPriceSearch extends ActivityBaseHeader3 implements View.OnC
         } else {
             isRSave = true;
         }
-        if (dbList.size() < qtCount)
+        if (dbList.size() < total)
             mHandler.sendEmptyMessage(Constant.HANDLERTYPE_0);
         mLoader.onLoadFinished();//加载结束
     }
@@ -468,7 +465,7 @@ public class ActivityPriceSearch extends ActivityBaseHeader3 implements View.OnC
 
     public void setCategoryId(String categoryId) {
         this.categoryId = categoryId;
-        pageno = 0;
+        pageNo = 0;
         mHandler.sendEmptyMessage(Constant.HANDLERTYPE_0);
     }
 
@@ -476,7 +473,7 @@ public class ActivityPriceSearch extends ActivityBaseHeader3 implements View.OnC
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && requestCode == Constant.REQUEST_QUOTE) {
-            pageno = 0;
+            pageNo = 0;
             isSave = true;
             isRSave = false;
             if (hasInternetConnected())

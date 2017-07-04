@@ -89,4 +89,16 @@ public class DataListBean {
     public void setCategoryId(String categoryId) {
         this.categoryId = categoryId;
     }
+
+    @Override
+    public String toString() {
+        return "DataListBean{" +
+                "id='" + id + '\'' +
+                ", categoryId='" + categoryId + '\'' +
+                ", goodsId='" + goodsId + '\'' +
+                ", imgPath='" + imgPath + '\'' +
+                ", name='" + name + '\'' +
+                ", status=" + status +
+                '}';
+    }
 }

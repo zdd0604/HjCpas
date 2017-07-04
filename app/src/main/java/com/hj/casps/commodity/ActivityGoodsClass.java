@@ -74,6 +74,8 @@ public class ActivityGoodsClass extends ActivityBaseHeader2 implements View.OnCl
     RelativeLayout Goodsclass_top_Re;
     private PopupWindow sharepopupWindow;
     private View contentView;
+    private int pageno = 0;
+    private int pagesize = 12;
     private int fra_type;
     private boolean isReSave = true;//是否缓存
     private String categoryId;
@@ -95,14 +97,14 @@ public class ActivityGoodsClass extends ActivityBaseHeader2 implements View.OnCl
 
     //刷新UI
     private void refreshUi() {
-        if (pageNo == 0) {
+        if (pageno == 0) {
             if (adapter == null) {
                 adapter = new GoodClassAdapter(context, null);
                 rv.setAdapter(adapter);
             }
             adapter.setDatas(mList);
         } else {
-            if (pageNo <= (totalCount - 1) / pageSize) {
+            if (pageno <= (totalCount - 1) / pagesize) {
                 adapter.addRes(mList);
                 mLoader.onLoadFinished();
             } else {
@@ -153,7 +155,7 @@ public class ActivityGoodsClass extends ActivityBaseHeader2 implements View.OnCl
         initView();
         //判断是否有网络
         if (hasInternetConnected()) {
-            initData(pageNo);
+            initData(pageno);
         } else {
             //从本地数据库加载数据
             getLocalData();
@@ -172,7 +174,7 @@ public class ActivityGoodsClass extends ActivityBaseHeader2 implements View.OnCl
                 p.getSys_member(),
                 categoryId,
                 String.valueOf(pageno + 1),
-                String.valueOf(pageSize + 2));
+                String.valueOf(pagesize));
         String param = mGson.toJson(r);
         Constant.JSONFATHERRESPON = "SearchGoodGain";
         waitDialogRectangle.show();
@@ -273,7 +275,7 @@ public class ActivityGoodsClass extends ActivityBaseHeader2 implements View.OnCl
 
         super.onRestart();
         if (Constant.isFreshGood) {
-            initData(pageNo);
+            initData(pageno);
         }
 
     }
@@ -389,6 +391,7 @@ public class ActivityGoodsClass extends ActivityBaseHeader2 implements View.OnCl
                     datas.get(mPostion).setStatus(statusInt == 0 ? 1 : 0);
                     newDatas.addAll(datas);
                     adapter.setDatas(newDatas);
+//                    adapter.notifyItemChanged(mPostion);
                     toastSHORT("操作成功");
                 } else {
                     toastSHORT(goodInfo.return_message);
@@ -414,15 +417,82 @@ public class ActivityGoodsClass extends ActivityBaseHeader2 implements View.OnCl
 
     @Override
     public void onRefresh(AbsRefreshLayout listLoader) {
-        pageNo = 0;
-        initData(pageNo);
+        pageno = 0;
+        initData(pageno);
         mLoader.onLoadFinished();
     }
 
     @Override
     public void onLoading(AbsRefreshLayout listLoader) {
-        pageNo++;
-        initData(pageNo);
+        pageno++;
+        initData(pageno);
         mLoader.onLoadFinished();
     }
+
+   /* class GoodClassListAdapter extends BaseAdapter {
+
+
+        @Override
+        public int getCount() {
+            return mList != null ? mList.size() : 0;
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return null;
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return 0;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+
+            ViewHolder viewHolder = null;
+            if (convertView == null) {
+                viewHolder = new ViewHolder();
+//                LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+//                convertView=   inflater.inflate(R.layout.selectpic_griditem,parent,false);
+                convertView = View.inflate(parent.getContext(), R.layout.selectpic_griditem, null);
+                viewHolder.im = (ImageView) convertView.findViewById(R.id.selectpic_pic_img);
+                viewHolder.tv = (TextView) convertView.findViewById(R.id.selectpic_tv);
+                viewHolder.ll = (RelativeLayout) convertView.findViewById(R.id.selectpic_ischeck);
+                convertView.setTag(viewHolder);
+            } else {
+                viewHolder = (ViewHolder) convertView.getTag();
+            }
+            DataListEntity data = mList.get(position);
+//            MySearchGoodEntity.DataListBean data = mList.get(position);
+            //TODO
+            Glide.with(ActivityGoodsClass.this).load(Constant.SHORTHTTPURL + data.getImgPath()).error(R.mipmap.c_shop).into(viewHolder.im);
+            viewHolder.tv.setText(data.getName());
+            if (data.getStatus() == 1) {
+                viewHolder.ll.setVisibility(View.VISIBLE);
+            }
+
+           int width = getResources().getDisplayMetrics().widthPixels;
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
+                width -= gridView.getHorizontalSpacing() * 2;
+            }
+            width = width / 3;
+            ViewGroup.LayoutParams layoutParams = parent.getLayoutParams();
+            layoutParams.height = (int) (width * 1.1f);
+            convertView.setLayoutParams(layoutParams);
+            return convertView;
+        }
+
+    }
+
+    class ViewHolder {
+//            convertView.setLayoutParams(new ViewGroup.LayoutParams());
+//            View view = getView(position, convertView, parent);
+        ImageView im;
+        TextView tv;
+        RelativeLayout ll;
+
+    }*/
+
+
 }

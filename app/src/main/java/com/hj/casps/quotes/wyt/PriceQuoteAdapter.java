@@ -2,11 +2,11 @@ package com.hj.casps.quotes.wyt;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import com.hj.casps.R;
-import com.hj.casps.adapter.payadapter.ViewHolderTitle;
 import com.hj.casps.quotes.MyViewHolder;
 
 import java.util.ArrayList;
@@ -26,7 +26,6 @@ public class PriceQuoteAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         this.context = context;
         if (list != null) {
             this.list = list;
-
         }
     }
 
@@ -50,18 +49,14 @@ public class PriceQuoteAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         return list.size();
     }
 
-    public void setDatas(List<QtListEntity> list) {
+    public void setDatas(List<QtListEntity> datas) {
         this.list.clear();
-        this.list = list;
+        this.list = datas;
         notifyDataSetChanged();
     }
 
-    public void addRes(List<QtListEntity> list) {
-        if(list!=null&&list.size()>0){
-            this.list.addAll(list);
-        }
+    public void addRes(List<QtListEntity> datas) {
+        this.list.addAll(datas);
         notifyDataSetChanged();
     }
-
-
 }
