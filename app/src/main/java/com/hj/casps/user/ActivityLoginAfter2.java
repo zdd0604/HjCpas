@@ -175,6 +175,7 @@ public class ActivityLoginAfter2 extends ActivityBaseHeader2 {
             //去销售
             case R.id.goBuy:
                  /*报价检索的sysfunc是随便传的获取菜单的任意一个 不做验证的sysfunc*/
+                queryMmbForNet(false) ;
                  if(Constant.MenuList!=null&&Constant.MenuList.size()>0){
                 Constant.SYS_FUNC=Constant.MenuList.get(0).getEntity().getDircode();
                  }
@@ -185,6 +186,7 @@ public class ActivityLoginAfter2 extends ActivityBaseHeader2 {
                 break;
             //去采购
             case R.id.goSell:
+                queryMmbForNet(false) ;
                  /*报价检索的sysfunc是随便传的获取菜单的任意一个 不做验证的sysfunc*/
                 if(Constant.MenuList!=null&&Constant.MenuList.size()>0){
                     Constant.SYS_FUNC=Constant.MenuList.get(0).getEntity().getDircode();
@@ -196,7 +198,7 @@ public class ActivityLoginAfter2 extends ActivityBaseHeader2 {
                 break;
             //收藏店铺
             case R.id.save:
-                queryMmbForNet();
+                queryMmbForNet(true);
                 break;
             case R.id.manager_back:
                 //跳转到后台管理界面
@@ -206,7 +208,8 @@ public class ActivityLoginAfter2 extends ActivityBaseHeader2 {
     }
 
     //根据会员主页url查询有没有会员信息，如果有就可以收藏店铺
-    private void queryMmbForNet() {
+    //如果flag是true就表示是收藏店铺   如果是false就表示去销售或去采购  就不调用收藏店铺的接口了
+    private void queryMmbForNet(final boolean flag) {
         if(Constant.MenuList!=null&&Constant.MenuList.size()>0){
             Constant.SYS_FUNC=Constant.MenuList.get(0).getEntity().getDircode();
         }
@@ -220,7 +223,12 @@ public class ActivityLoginAfter2 extends ActivityBaseHeader2 {
                 waitDialogRectangle.dismiss();
                 ResMmb resMmb = GsonTools.changeGsonToBean(data, ResMmb.class);
                 if (resMmb.getReturn_code() == 0 && resMmb.getData() != null) {
-                    markMemberForNet(resMmb.getData().getMmbId());
+                    String mmbId = resMmb.getData().getMmbId();
+                    if(flag){
+                    markMemberForNet(mmbId);
+                    }else{
+                        Constant.sys_actionId=mmbId;
+                    }
                 } else if (resMmb.getReturn_code() == 105) {
                     toast("不是合法会员");
                     return;

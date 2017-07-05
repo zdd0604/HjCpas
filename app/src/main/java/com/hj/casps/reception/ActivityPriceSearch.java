@@ -259,7 +259,7 @@ public class ActivityPriceSearch extends ActivityBaseHeader3 implements View.OnC
                 String.valueOf(type),
                 Constant.SEARCH_Price_quote_goodName,
                 categoryId
-                , "");
+                , Constant.sys_actionId);
         waitDialogRectangle.show();
         Constant.JSONFATHERRESPON = "SearchQuoteGain";
         LogShow(mGson.toJson(r));
@@ -454,6 +454,7 @@ public class ActivityPriceSearch extends ActivityBaseHeader3 implements View.OnC
         categoryId = "";
         Constant.SEARCH_Price_quote_goodName = "";//商品名
         Constant.SEARCH_Price_quote_checkboxId = "3,2,1";//选项 默认选中123
+        Constant.sys_actionId="";
     }
 
     @Override
