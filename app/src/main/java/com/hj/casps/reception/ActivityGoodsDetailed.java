@@ -73,7 +73,7 @@ public class ActivityGoodsDetailed extends ActivityBaseHeader2 implements View.O
     TextView doTime;
     private Banner banner;
     private String quoteId;
-    private ResQuoteDetailEntity mEntity=new ResQuoteDetailEntity();
+    private ResQuoteDetailEntity mEntity = new ResQuoteDetailEntity();
 
     private int count = 0;
 
@@ -81,7 +81,7 @@ public class ActivityGoodsDetailed extends ActivityBaseHeader2 implements View.O
     //数据保存到本地数据库
     private void saveLocalData(ResQuoteDetailEntity entity) {
         ResQuoteDetailBean bean = WytUtils.getInstance(this).QuerytResQuoteDetailInfo(quoteId);
-        if(bean!=null){
+        if (bean != null) {
             bean.setAreaName(entity.getAreaName());
             bean.setExplan(entity.getExplan());
             bean.setGoodsId(entity.getGoodsId());
@@ -95,8 +95,8 @@ public class ActivityGoodsDetailed extends ActivityBaseHeader2 implements View.O
             bean.setStartEnd(entity.getStartEnd());
             bean.setStartTime(entity.getStartTime());
             WytUtils.getInstance(this).updateResQuoteDetailInfo(bean);
-        }else{
-            ResQuoteDetailBean bean2=new ResQuoteDetailBean();
+        } else {
+            ResQuoteDetailBean bean2 = new ResQuoteDetailBean();
             bean2.setAreaName(entity.getAreaName());
             bean2.setExplan(entity.getExplan());
             bean2.setGoodsId(entity.getGoodsId());
@@ -137,7 +137,7 @@ public class ActivityGoodsDetailed extends ActivityBaseHeader2 implements View.O
 
     private void getLocalData(String quoteId) {
         ResQuoteDetailBean bean = WytUtils.getInstance(this).QuerytResQuoteDetailInfo(quoteId);
-        if(bean!=null){
+        if (bean != null) {
             mEntity.setAreaName(bean.getAreaName());
             mEntity.setExplan(bean.getExplan());
             mEntity.setGoodsId(bean.getGoodsId());
@@ -146,7 +146,7 @@ public class ActivityGoodsDetailed extends ActivityBaseHeader2 implements View.O
             mEntity.setMmbName(bean.getMmbName());
             mEntity.setGoodsName(bean.getGoodsName());
             mEntity.setNum(bean.getNum());
-            mEntity.setPathlist(GsonTools.changeGsonToList(bean.getPathlist(),String.class));
+            mEntity.setPathlist(GsonTools.changeGsonToList(bean.getPathlist(), String.class));
             mEntity.setQuoteId(bean.getQuoteId());
             mEntity.setStartEnd(bean.getStartEnd());
             mEntity.setStartTime(bean.getStartTime());
@@ -165,13 +165,13 @@ public class ActivityGoodsDetailed extends ActivityBaseHeader2 implements View.O
                 waitDialogRectangle.dismiss();
                 ResQuoteDetailEntity entity = GsonTools.changeGsonToBean(data, ResQuoteDetailEntity.class);
                 if (entity != null && entity.getReturn_code() == 0) {
-                    ActivityGoodsDetailed.this.mEntity=entity;
+                    ActivityGoodsDetailed.this.mEntity = entity;
                     setDatas(entity);
                     saveLocalData(entity);
-                }else if(entity.getReturn_code()==1101||entity.getReturn_code()==1102){
+                } else if (entity.getReturn_code() == 1101 || entity.getReturn_code() == 1102) {
                     toastSHORT("重复登录或令牌超时");
                     LogoutUtils.exitUser(ActivityGoodsDetailed.this);
-                }else{
+                } else {
                     toastSHORT(entity.getReturn_message());
                 }
             }
@@ -245,7 +245,7 @@ public class ActivityGoodsDetailed extends ActivityBaseHeader2 implements View.O
 
 
         String timeUUID = Constant.getTimeUUID();
-        if(timeUUID.equals("")){
+        if (timeUUID.equals("")) {
             toastSHORT(getString(R.string.time_out));
             return;
         }
@@ -262,12 +262,10 @@ public class ActivityGoodsDetailed extends ActivityBaseHeader2 implements View.O
                     new MyToast(ActivityGoodsDetailed.this, pubMap.getMsg());
                     count = 0;
                     initShopCarData();
-                }
-                else if(pubMap.getReturn_code()==1101||pubMap.getReturn_code()==1102){
+                } else if (pubMap.getReturn_code() == 1101 || pubMap.getReturn_code() == 1102) {
                     toastSHORT("重复登录或令牌超时");
                     LogoutUtils.exitUser(ActivityGoodsDetailed.this);
-                }
-                else{
+                } else {
                     toastSHORT(pubMap.getReturn_message());
                 }
             }
@@ -287,10 +285,12 @@ public class ActivityGoodsDetailed extends ActivityBaseHeader2 implements View.O
         switch (view.getId()) {
             case R.id.goodsdetailed_shopcart:
                 if (type == 0) {
+                    Constant.order_type_dao = 1;
                     bundle.putInt(Constant.ORDER_TYPE, Constant.order_type_sell);
                     context.startActivity(new Intent(context, BuyCart.class).putExtras(bundle));
                 }
                 if (type == 1) {
+                    Constant.order_type_dao = 0;
                     bundle.putInt(Constant.ORDER_TYPE, Constant.order_type_buy);
                     context.startActivity(new Intent(context, BuyCart.class).putExtras(bundle));
                 }
@@ -339,19 +339,16 @@ public class ActivityGoodsDetailed extends ActivityBaseHeader2 implements View.O
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(String s, Call call, Response response) {
-                       BuyCartBack backDetail = mGson.fromJson(s, BuyCartBack.class);
+                        BuyCartBack backDetail = mGson.fromJson(s, BuyCartBack.class);
                         if (backDetail == null) {
                             return;
                         }
                         if (backDetail.getReturn_code() != 0) {
                             Toast.makeText(context, backDetail.getReturn_message(), Toast.LENGTH_SHORT).show();
-                        }
-                        else if(backDetail.getReturn_code()==1101||backDetail.getReturn_code()==1102){
+                        } else if (backDetail.getReturn_code() == 1101 || backDetail.getReturn_code() == 1102) {
                             toastSHORT("重复登录或令牌超时");
                             LogoutUtils.exitUser(ActivityGoodsDetailed.this);
-                        }
-
-                        else {
+                        } else {
 
                             List<BuyCartBack.ListBean> list = backDetail.getList();
                             for (int i = 0; i < list.size(); i++) {

@@ -405,10 +405,12 @@ public class ActivityPriceSearch extends ActivityBaseHeader3 implements View.OnC
             case R.id.price_search_shopcar:
                 // 0 采购  1 销售
                 if (type == 0) {
+                    Constant.order_type_dao = 1;
                     bundle.putInt(Constant.ORDER_TYPE, Constant.order_type_sell);
                     context.startActivity(new Intent(this, BuyCart.class).putExtras(bundle));
                 }
                 if (type == 1) {
+                    Constant.order_type_dao = 0;
                     bundle.putInt(Constant.ORDER_TYPE, Constant.order_type_buy);
                     context.startActivity(new Intent(this, BuyCart.class).putExtras(bundle));
                 }
