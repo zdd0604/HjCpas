@@ -175,7 +175,9 @@ public class ActivityLoginAfter2 extends ActivityBaseHeader2 {
             //去销售
             case R.id.goBuy:
                  /*报价检索的sysfunc是随便传的获取菜单的任意一个 不做验证的sysfunc*/
-                queryMmbForNet(false) ;
+                if(mUrl!=null&&mUrl!=""){
+                    queryMmbForNet(false) ;
+                }
                  if(Constant.MenuList!=null&&Constant.MenuList.size()>0){
                 Constant.SYS_FUNC=Constant.MenuList.get(0).getEntity().getDircode();
                  }
@@ -186,7 +188,9 @@ public class ActivityLoginAfter2 extends ActivityBaseHeader2 {
                 break;
             //去采购
             case R.id.goSell:
+                if(mUrl!=null&&mUrl!=""){
                 queryMmbForNet(false) ;
+                }
                  /*报价检索的sysfunc是随便传的获取菜单的任意一个 不做验证的sysfunc*/
                 if(Constant.MenuList!=null&&Constant.MenuList.size()>0){
                     Constant.SYS_FUNC=Constant.MenuList.get(0).getEntity().getDircode();

@@ -14,8 +14,6 @@ import com.hj.casps.R;
 import com.hj.casps.base.ActivityBaseHeader3;
 import com.hj.casps.commodity.SelectPicture02;
 import com.hj.casps.common.Constant;
-import com.hj.casps.entity.apporder.BuyCartBack;
-import com.hj.casps.entity.apporder.BuyCartPost;
 import com.hj.casps.entity.appordergoodsCallBack.JsonCallBack;
 import com.hj.casps.entity.paymentmanager.response.WytUtils;
 import com.hj.casps.ordermanager.BuyCart;
