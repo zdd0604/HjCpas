@@ -60,8 +60,6 @@ public class MyViewHolder extends TypeAbstractViewHolder<QtListEntity> {
         String end = Constant.stmpToDate(item.getStartEnd());
         priceSearchGridTime.setText(start + "至" + end);
         tv_publishName.setText(item.getMmbName());
-
-
         mV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -74,7 +72,6 @@ public class MyViewHolder extends TypeAbstractViewHolder<QtListEntity> {
                 onClickMyLienter.onAddShopCarLisenter(postion);
             }
         });
-
     }
 
     public interface onClickMyLienter {
