@@ -279,6 +279,8 @@ public class Constant {
     public static final String DeleteQuoteSHPCUrl = HTTPURL + "appOrder/deleteQuoteSHPC.app";
     //批量删除采购 (销售)拣单车中商品
     public static final String DeleteMoreSHPCUrl = HTTPURL + "appOrder/deleteMoreSHPC.app";
+    //根据订单号删除商品
+    public static final String deleteMoreSHPCByGoodsId = HTTPURL + "appOrder/deleteMoreSHPCByGoodsId.app";
     //点击发布范围查询合作会员
     public static final String GetMmbUrl = HTTPURL + "appQuote/getMmb.app";
     //删除采购 (销售)拣单车中商品
