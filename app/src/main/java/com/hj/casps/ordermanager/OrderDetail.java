@@ -574,9 +574,9 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
                             for (int i = 0; i < orders.size(); i++) {
                                 Constant.numbers.add(String.valueOf(orders.get(i).getNo()));
                                 if (i == 0) {
-                                    nos = String.valueOf(orders.get(i).getNo());
+                                    nos = orders.get(i).getGoodsId();
                                 } else {
-                                    nos = nos + "," + String.valueOf(orders.get(i).getNo());
+                                    nos = nos + "," + orders.get(i).getGoodsId();
                                 }
                             }
                             if ((!orderList) && (type != 1)) {
@@ -616,9 +616,9 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
                 publicArg.getSys_name(),
                 publicArg.getSys_member(),
                 String.valueOf(type),
-                String.valueOf(no));
+                no);
         final Gson mGson = new Gson();
-        OkGo.post(Constant.DeleteMoreSHPCUrl)
+        OkGo.post(Constant.deleteMoreSHPCByGoodsId)
                 .params("param", mGson.toJson(post))
                 .execute(new StringCallback() {
                     @Override

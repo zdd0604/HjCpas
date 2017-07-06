@@ -153,9 +153,9 @@ public class OrderShellAdapter extends WZYBaseAdapter<OrderShellModel> {
                 publicArg.getSys_name(),
                 publicArg.getSys_member(),
                 String.valueOf(type),
-                String.valueOf(no));
+                orderShellModel.getGoodsId());
         final Gson mGson = new Gson();
-        OkGo.post(Constant.DeleteQuoteSHPCUrl)
+        OkGo.post(Constant.deleteMoreSHPCByGoodsId)
                 .params("param", mGson.toJson(post))
                 .execute(new StringCallback() {
                     @Override
