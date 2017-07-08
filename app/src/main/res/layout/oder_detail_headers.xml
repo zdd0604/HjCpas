@@ -17,6 +17,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:text="@string/order_detail_time_pay"
+            android:textColor="@color/black"
             android:textSize="@dimen/font_size_16" />
 
         <EditText
@@ -29,6 +30,7 @@
             android:background="@drawable/edittext_contains_border"
             android:drawableRight="@mipmap/fo_calendar"
             android:focusable="false"
+            android:textColor="@color/black"
             android:gravity="center"
             android:paddingRight="@dimen/size_10" />
     </LinearLayout>
@@ -46,6 +48,7 @@
             android:layout_width="@dimen/size_100"
             android:layout_height="wrap_content"
             android:text="@string/order_detail_process"
+            android:textColor="@color/black"
             android:textSize="@dimen/font_size_16" />
 
         <Spinner
@@ -70,6 +73,7 @@
             android:layout_width="@dimen/size_120"
             android:layout_height="wrap_content"
             android:text="@string/order_detail_time_start"
+            android:textColor="@color/black"
             android:textSize="@dimen/font_size_16" />
 
         <EditText
@@ -78,6 +82,7 @@
             android:layout_height="match_parent"
             android:layout_margin="@dimen/size_5"
             android:layout_marginLeft="@dimen/size_20"
+            android:textColor="@color/black"
             android:layout_weight="1"
             android:background="@drawable/edittext_contains_border"
             android:drawableRight="@mipmap/fo_calendar"
@@ -99,6 +104,7 @@
             android:layout_width="@dimen/size_120"
             android:layout_height="wrap_content"
             android:text="@string/order_detail_time_end"
+            android:textColor="@color/black"
             android:textSize="@dimen/font_size_16" />
 
         <EditText
@@ -107,6 +113,7 @@
             android:layout_height="match_parent"
             android:layout_margin="@dimen/size_5"
             android:layout_marginLeft="@dimen/size_20"
+            android:textColor="@color/black"
             android:layout_weight="1"
             android:background="@drawable/edittext_contains_border"
             android:drawableRight="@mipmap/fo_calendar"
@@ -128,6 +135,7 @@
             android:layout_width="@dimen/size_100"
             android:layout_height="wrap_content"
             android:text="@string/order_detail_pay_account"
+            android:textColor="@color/black"
             android:textSize="@dimen/font_size_16" />
 
         <Spinner
@@ -152,6 +160,7 @@
             android:layout_width="@dimen/size_100"
             android:layout_height="wrap_content"
             android:text="@string/order_detail_pay_address"
+            android:textColor="@color/black"
             android:textSize="@dimen/font_size_16" />
 
         <Spinner
@@ -176,6 +185,7 @@
             android:layout_width="@dimen/size_100"
             android:layout_height="wrap_content"
             android:text="@string/order_detail_get_account"
+            android:textColor="@color/black"
             android:textSize="@dimen/font_size_16" />
 
         <Spinner
@@ -200,6 +210,7 @@
             android:layout_width="@dimen/size_100"
             android:layout_height="wrap_content"
             android:text="@string/order_detail_get_address"
+            android:textColor="@color/black"
             android:textSize="@dimen/font_size_16" />
 
         <Spinner

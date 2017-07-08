@@ -28,13 +28,13 @@ public class OrderDetailsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     public static final int type_three = 3;
     private Context context;
     private LayoutInflater layoutInflater;
-    private List listOne;
+    private List<String> listOne;
     private List<OrderShellModel> listTwo;
     private List<String> listTitle;
     private List<Integer> types = new ArrayList<>();
     private Map<Integer, Integer> mPositions = new HashMap<>();
 
-    public OrderDetailsAdapter(Context context, List listOne,
+    public OrderDetailsAdapter(Context context, List<String> listOne,
                                List<OrderShellModel> listTwo,
                                List<String> listTitle) {
         layoutInflater = LayoutInflater.from(context);

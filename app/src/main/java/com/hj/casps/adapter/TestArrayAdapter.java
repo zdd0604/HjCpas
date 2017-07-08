@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.hj.casps.R;
+
 /**
  * Created by zy on 2017/6/2.
  */
@@ -26,7 +28,7 @@ public class TestArrayAdapter extends ArrayAdapter<String> {
         //修改Spinner展开后的字体颜色
         if (convertView == null) {
             LayoutInflater inflater = LayoutInflater.from(mContext);
-            convertView = inflater.inflate(android.R.layout.simple_spinner_dropdown_item, parent,false);
+            convertView = inflater.inflate(R.layout.simple_spinner_dropdown_item1, parent,false);
         }
 
         //此处text1是Spinner默认的用来显示文字的TextView

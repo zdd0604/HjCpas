@@ -28,7 +28,6 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/size_5"
             android:layout_weight="1"
-            android:text="四月份的临时采购任务"
             android:textColor="@color/black"
             android:textSize="@dimen/font_size_16" />
 
@@ -63,7 +62,6 @@
             android:gravity="center_vertical"
             android:paddingLeft="@dimen/size_15"
             android:paddingRight="@dimen/size_10"
-            android:text="采购"
             android:textSize="@dimen/font_size_14" />
     </LinearLayout>
 
@@ -90,7 +88,6 @@
             android:gravity="center_vertical"
             android:paddingLeft="@dimen/size_15"
             android:paddingRight="@dimen/size_10"
-            android:text="奥森学院"
             android:textSize="@dimen/font_size_14" />
     </LinearLayout>
 
@@ -117,7 +114,6 @@
             android:gravity="center_vertical"
             android:paddingLeft="@dimen/size_15"
             android:paddingRight="@dimen/size_10"
-            android:text="长城商行"
             android:textSize="@dimen/font_size_14" />
     </LinearLayout>
 
@@ -200,7 +196,6 @@
             android:gravity="center_vertical"
             android:paddingLeft="@dimen/size_15"
             android:paddingRight="@dimen/size_10"
-            android:text="2017-04-28—2017-06-30"
             android:textSize="@dimen/font_size_14" />
     </LinearLayout>
 
@@ -227,7 +222,6 @@
             android:gravity="center_vertical"
             android:paddingLeft="@dimen/size_15"
             android:paddingRight="@dimen/size_10"
-            android:text="每月"
             android:textSize="@dimen/font_size_14" />
     </LinearLayout>
 
@@ -254,7 +248,6 @@
             android:gravity="center_vertical"
             android:paddingLeft="@dimen/size_15"
             android:paddingRight="@dimen/size_10"
-            android:text="自取"
             android:textSize="@dimen/font_size_14" />
     </LinearLayout>
 
@@ -281,7 +274,6 @@
             android:gravity="center_vertical"
             android:paddingLeft="@dimen/size_15"
             android:paddingRight="@dimen/size_10"
-            android:text="行运"
             android:textSize="@dimen/font_size_14" />
     </LinearLayout>
 
@@ -309,7 +301,6 @@
             android:gravity="center_vertical"
             android:paddingLeft="@dimen/size_15"
             android:paddingRight="@dimen/size_10"
-            android:text="建设银行\n23985200425"
             android:textSize="@dimen/font_size_14" />
     </LinearLayout>
 
@@ -337,7 +328,6 @@
             android:gravity="center_vertical"
             android:paddingLeft="@dimen/size_15"
             android:paddingRight="@dimen/size_10"
-            android:text="奥森学院教工食堂奥森学院教工食堂"
             android:textSize="@dimen/font_size_14" />
     </LinearLayout>
 
@@ -370,7 +360,6 @@
             android:gravity="center_vertical"
             android:paddingLeft="@dimen/size_15"
             android:paddingRight="@dimen/size_10"
-            android:text="禽类鲜品；禽类鲜品；叶花类菜；根茎类菜"
             android:textSize="@dimen/font_size_14" />
     </LinearLayout>
 
@@ -403,7 +392,6 @@
             android:gravity="center_vertical"
             android:paddingLeft="@dimen/size_15"
             android:paddingRight="@dimen/size_10"
-            android:text="临时采购计划"
             android:textSize="@dimen/font_size_14" />
     </LinearLayout>
 </LinearLayout>

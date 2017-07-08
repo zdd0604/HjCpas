@@ -31,6 +31,7 @@ import com.hj.casps.entity.appcontract.BackBean;
 import com.hj.casps.entity.appcontract.OrderBackList;
 import com.hj.casps.entity.appcontract.ProtocolModelForPost;
 import com.hj.casps.ordermanager.OrderDetail;
+import com.hj.casps.ordermanager.OrderDetailInfo;
 import com.hj.casps.ui.MyDialog;
 import com.hj.casps.ui.MyToast;
 import com.hj.casps.util.LogoutUtils;
@@ -121,7 +122,7 @@ public class ProtocolFragment extends ViewPagerFragment1 implements View.OnClick
         Log.e("j", String.valueOf(protocol_type_j));
         Log.e("k", String.valueOf(type_k));
         Log.e("json", String.valueOf(s));
-        CooperateDirUtils.getInstance(getActivity()).deleteFragmentDaoAll(protocol_type, protocol_type_j, type_k);
+        CooperateDirUtils.getInstance(getActivity()).deleteFragmentDaoAll(String.valueOf(protocol_type), String.valueOf(protocol_type_j), String.valueOf(type_k));
         FragmentDao fragmentDao = new FragmentDao();
         fragmentDao.setJson(s);
         fragmentDao.setType_i(String.valueOf(protocol_type));
@@ -155,7 +156,7 @@ public class ProtocolFragment extends ViewPagerFragment1 implements View.OnClick
         Log.e("i", String.valueOf(protocol_type));
         Log.e("j", String.valueOf(protocol_type_j));
         Log.e("k", String.valueOf(type_k));
-        String json = CooperateDirUtils.getInstance(getActivity()).queryFragmentDaoInfo(protocol_type, protocol_type_j, type_k);
+        String json = CooperateDirUtils.getInstance(getActivity()).queryFragmentDaoInfo(String.valueOf(protocol_type), String.valueOf(protocol_type_j), String.valueOf(type_k));
 
 
         Log.e("json", String.valueOf(json));
@@ -1022,7 +1023,20 @@ public class ProtocolFragment extends ViewPagerFragment1 implements View.OnClick
                             intent.putExtra("title", context.getString(R.string.edit));
                             intent.putExtra("type", 1);
                             intent.putExtra("id", orderDoingModel.getId());
-                            intent.putExtra("state", 2 - protocol_type_j);
+                            if (orderDoingModel.getBuyersId().equalsIgnoreCase(publicArg.getSys_member())) {
+                                intent.putExtra("state", 1);
+                                intent.putExtra("account", orderDoingModel.getGetAccount());
+                                intent.putExtra("bankname", orderDoingModel.getGetBank());
+                                intent.putExtra("adress", orderDoingModel.getSellersAddressName());
+                            } else {
+                                intent.putExtra("state", 0);
+                                intent.putExtra("account", orderDoingModel.getPayAccount());
+                                intent.putExtra("bankname", orderDoingModel.getPayBank());
+                                intent.putExtra("adress", orderDoingModel.getBuyersAddressName());
+
+                            }
+
+
 //                            intent.putExtra("buy_id", 1);
 //                            intent.putExtra("buy_name", 1);
                             activity.startActivityForResult(intent, 11);

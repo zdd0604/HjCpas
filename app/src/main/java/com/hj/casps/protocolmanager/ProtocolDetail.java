@@ -1,15 +1,22 @@
 package com.hj.casps.protocolmanager;
 
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
 import android.widget.TextView;
 
 import com.hj.casps.R;
 import com.hj.casps.base.ActivityBaseHeader2;
 import com.hj.casps.common.Constant;
+import com.hj.casps.cooperate.CooperateDirUtils;
+import com.hj.casps.entity.appcontract.BackBean;
+import com.hj.casps.entity.appcontract.OrderBackList;
+import com.hj.casps.entity.apporder.BuyCartBack;
 import com.hj.casps.util.LogoutUtils;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 
+import java.util.Collections;
 import java.util.List;
 
 import okhttp3.Call;
@@ -20,6 +27,7 @@ import static com.hj.casps.common.Constant.GetPayType;
 import static com.hj.casps.common.Constant.GetSendsGoodsType;
 import static com.hj.casps.common.Constant.SYS_FUNC;
 import static com.hj.casps.common.Constant.getUUID;
+import static com.hj.casps.common.Constant.order_type_dao;
 
 //协议详情页面
 public class ProtocolDetail extends ActivityBaseHeader2 {
@@ -48,14 +56,84 @@ public class ProtocolDetail extends ActivityBaseHeader2 {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_protocol_detail);
-        initData();
         initView();
+        if (hasInternetConnected()) {
+            initData();
+        } else {
+            addLocality();
+        }
+    }
+
+    /**
+     * 保存数据库
+     */
+    private void saveDaoData(String s) {
+        Log.e("json", String.valueOf(s));
+        CooperateDirUtils.getInstance(this).deleteFragmentDaoAll("100", contract_id, "101");//101协议
+        FragmentDao fragmentDao = new FragmentDao();
+        fragmentDao.setJson(s);
+        fragmentDao.setType_i(String.valueOf(100));
+        fragmentDao.setType_j(String.valueOf(contract_id));
+        fragmentDao.setType_k(String.valueOf(101));
+        CooperateDirUtils.getInstance(this).insertInfo(fragmentDao);
+    }
+
+
+    /**
+     * 加载本地数据
+     */
+    private void addLocality() {
+//        List<FragmentDao> fragmentDaos = CooperateDirUtils.getInstance(this).queryFragmentDaoInfo();
+//        for (int i = 0; i < fragmentDaos.size(); i++) {
+//            Log.e("all", fragmentDaos.get(i).toString());
+//        }
+        String json = CooperateDirUtils.getInstance(this).queryFragmentDaoInfo("100", contract_id, "101");
+        Log.e("json", String.valueOf(json));
+        if (!TextUtils.isEmpty(json)) {
+            DetailBack backDetail = mGson.fromJson(json, DetailBack.class);
+            if (backDetail.getReturn_code() != 0) {
+                toast(backDetail.getReturn_message());
+            } else if (backDetail.getReturn_code() == 1101 || backDetail.getReturn_code() == 1102) {
+                toastSHORT("重复登录或令牌超时");
+                LogoutUtils.exitUser(ProtocolDetail.this);
+            } else {
+                protocol_contract_title.setText(backDetail.getData().getContract_title());
+                protocol_contract_type.setText(backDetail.getData().getContract_type().equalsIgnoreCase("1") ? "采购" : "销售");
+                protocol_buy_membername.setText(backDetail.getData().getBuy_membername());
+                protocol_sell_membername.setText(backDetail.getData().getSell_membername());
+                String others_name = backDetail.getData().getBuy_membername().equalsIgnoreCase(publicArg.getSys_mmbname()) ? backDetail.getData().getSell_membername() : backDetail.getData().getBuy_membername();
+                protocol_operate_user.setText(backDetail.getData().getOperate_user().equalsIgnoreCase(publicArg.getSys_user()) ? publicArg.getSys_mmbname() : others_name);
+                protocol_operate_time.setText(Constant.stmpToTime(backDetail.getData().getOperate_time()));
+                protocol_user_time.setText(backDetail.getData().getUser_time());
+                protocol_pay_type.setText(GetPayType(backDetail.getData().getPay_type()));
+                protocol_flow_type.setText(GetSendsGoodsType(backDetail.getData().getFlow_type()));
+                protocol_sendgoods_type.setText(GetFlowType(backDetail.getData().getSendgoods_type()));
+                protocol_payer_code.setText(backDetail.getData().getPayer_name() + "\n" + (backDetail.getData().getPayer_code().equalsIgnoreCase("undefined") ? "" : backDetail.getData().getPayer_code()));
+                protocol_getgoods_address.setText(backDetail.getData().getGetgoods_address());
+//                                protocol_payer_code.setText(backDetail.getData().getGetmoney_name() + "\n" + backDetail.getData().getGetmoney_code());
+//                                protocol_getgoods_address.setText(backDetail.getData().getSendgoods_address());
+                String goodsName = null;
+                for (int i = 0; i < backDetail.getData().getGoods().size(); i++) {
+                    if (i == 0) {
+                        goodsName = backDetail.getData().getGoods().get(i).getCategoryName();
+                    } else {
+                        goodsName = goodsName + ";" + backDetail.getData().getGoods().get(i).getCategoryName();
+                    }
+                }
+                protocol_goods.setText(goodsName);
+                protocol_note.setText(backDetail.getData().getNote());
+
+            }
+
+
+        }
+
     }
 
     //加载数据，从协议列表中点击的id 和type 提交到这里，通过接口请求，返回协议详情
+
     private void initData() {
-        contract_id = getIntent().getStringExtra("contract_id");
-        contract_type = getIntent().getStringExtra("contract_type");
+
         DetailPost detailPost = new DetailPost(publicArg.getSys_token(), getUUID(), SYS_FUNC, publicArg.getSys_user(), publicArg.getSys_member(), contract_id, contract_type);
         OkGo.post(Constant.ToContractDetailPageUrl)
                 .tag(this)
@@ -95,6 +173,7 @@ public class ProtocolDetail extends ActivityBaseHeader2 {
                             }
                             protocol_goods.setText(goodsName);
                             protocol_note.setText(backDetail.getData().getNote());
+                            saveDaoData(s);
                         }
                     }
 
@@ -109,7 +188,8 @@ public class ProtocolDetail extends ActivityBaseHeader2 {
 
     //页面布局拿过来，就是让代码能利用界面，一般都写到initView中用来规范代码
     private void initView() {
-
+        contract_id = getIntent().getStringExtra("contract_id");
+        contract_type = getIntent().getStringExtra("contract_type");
         setTitle(getString(R.string.protocol_detail));
         protocol_contract_title = (TextView) findViewById(R.id.protocol_contract_title);
         protocol_contract_type = (TextView) findViewById(R.id.protocol_contract_type);

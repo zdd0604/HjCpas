@@ -51,7 +51,7 @@
     <GridView
         android:id="@+id/cooperate_protocol_gv"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/size_200"
         android:numColumns="3" />
 
     <View

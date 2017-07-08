@@ -19,6 +19,7 @@ import com.hj.casps.util.MathUtil;
 import com.hj.casps.util.StringUtils;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -30,11 +31,18 @@ public class OrderShellDetAdapter extends BaseAdapter {
     private Context context;
     private List<OrderShellModel> dataList;
     private LayoutInflater layoutInflater;
+    private double minPrice = 0.0;//最小单价
+    private double maxPrice = 0.0;//最大单价
 
 
     public OrderShellDetAdapter(List<OrderShellModel> dataList, Context context) {
         this.context = context;
-        this.dataList = dataList;
+        if (dataList == null) {
+            //如果传递进来的数据源是null,我们就实例化一个size为0的数据源
+            this.dataList = new ArrayList<>();
+        } else {
+            this.dataList = dataList;
+        }
         layoutInflater = LayoutInflater.from(context);
     }
 
@@ -53,7 +61,7 @@ public class OrderShellDetAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return dataList.size();
+        return dataList != null ? dataList.size() : 0;
     }
 
     @Override
@@ -93,23 +101,46 @@ public class OrderShellDetAdapter extends BaseAdapter {
         }
 
         public void initViewHolder(View parent) {
-            final double minPrice = Double.parseDouble(mInfo.getPrice().split("-")[0]);
-            final double maxPrice = Double.parseDouble(mInfo.getPrice().split("-")[1]);
-            try {
-                mInfo.setMinPrice(minPrice);
-                mInfo.setMaxPrice(maxPrice);
-            } catch (Exception e) {
-                Log.e("show", "文字截取异常");
-            }
+
+
             order_item_detail_name = (TextView) parent.findViewById(R.id.order_item_detail_name);
             item_detail_order_price = (TextView) parent.findViewById(R.id.item_detail_order_price);
             order_detail_item_price = (EditText) parent.findViewById(R.id.order_detail_item_price);
             order_detail_item_number = (EditText) parent.findViewById(R.id.order_detail_item_number);
             final DecimalFormat df = new DecimalFormat("#.##");
 
+            order_detail_item_price.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                @Override
+                public void onFocusChange(View v, boolean hasFocus) {
+                    if (hasFocus) {
+                        try {
+                            String[] prices = mInfo.getPrice().split("-");
+                            if (prices.length > 0) {
+                                minPrice = Double.parseDouble(prices[0]);
+                                maxPrice = Double.parseDouble(prices[1]);
+                                mInfo.setMinPrice(minPrice);
+                                mInfo.setMaxPrice(maxPrice);
+                            }
+                        } catch (Exception e) {
+                            Log.e("show", "文字截取异常");
+                        }
+                    }
+                }
+            });
+
+
             order_detail_item_price.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                    try {
+                        minPrice = Double.parseDouble(mInfo.getPrice().split("-")[0]);
+                        maxPrice = Double.parseDouble(mInfo.getPrice().split("-")[1]);
+
+                        mInfo.setMinPrice(minPrice);
+                        mInfo.setMaxPrice(maxPrice);
+                    } catch (Exception e) {
+                        Log.e("show", "文字截取异常");
+                    }
                 }
 
                 @Override
@@ -143,11 +174,11 @@ public class OrderShellDetAdapter extends BaseAdapter {
                             //判断当前有没有数量
 //                        DecimalFormat df = new DecimalFormat(".##");
                             //判断数量是否为空算总价
-                            if (StringUtils.isStrTrue(String.valueOf(mInfo.getNum()))) {
+                            if (!TextUtils.isEmpty(String.valueOf(mInfo.getNum()))) {
                                 String allPrice = df.format(
                                         MathUtil.mul(
                                                 Double.valueOf(s.toString()),
-                                                Double.valueOf(ActivityBase.getTvVaule(order_detail_item_number))
+                                                Double.valueOf(String.valueOf(mInfo.getNum()))
                                         ));
                                 item_detail_order_price.setText(allPrice);
                                 mInfo.setAllprice(allPrice);
@@ -185,9 +216,9 @@ public class OrderShellDetAdapter extends BaseAdapter {
                         int oneNumb = Integer.valueOf(s.toString());
                         mInfo.setNum(oneNumb);
                         //判断当前有没有单价
-                        if (StringUtils.isStrTrue(ActivityBase.getTvVaule(order_detail_item_price))) {
+                        if (!TextUtils.isEmpty(mInfo.getFinalprice())) {
                             String allPrice = df.format(
-                                    MathUtil.mul(Double.valueOf(ActivityBase.getTvVaule(order_detail_item_price)),
+                                    MathUtil.mul(Double.valueOf(mInfo.getFinalprice()),
                                             Double.valueOf(s.toString()
                                             )));
                             item_detail_order_price.setText(allPrice);
@@ -208,7 +239,7 @@ public class OrderShellDetAdapter extends BaseAdapter {
         public void refreshData(OrderShellModel info) {
             mInfo = info;
             order_detail_item_price.setText(info.getFinalprice());
-            order_detail_item_number.setText(info.getNum());
+            order_detail_item_number.setText(String.valueOf(info.getNum()));
             order_item_detail_name.setText(mInfo.getName());
             item_detail_order_price.setText(mInfo.getAllprice());
 

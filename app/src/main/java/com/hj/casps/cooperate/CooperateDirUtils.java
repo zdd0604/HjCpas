@@ -216,12 +216,13 @@ public class CooperateDirUtils {
 
     /**
      * 查询协议，订单
+     *
      */
-    public String queryFragmentDaoInfo(int i, int j, int k) {
+    public String queryFragmentDaoInfo(String i, String j, String k) {
         QueryBuilder<FragmentDao> qb = fragmentDao.queryBuilder();
-        Query query = qb.where(qb.and(FragmentDaoDao.Properties.Type_i.eq(String.valueOf(i)),
-                FragmentDaoDao.Properties.Type_j.eq(String.valueOf(j)),
-                FragmentDaoDao.Properties.Type_k.eq(String.valueOf(k))))
+        Query query = qb.where(qb.and(FragmentDaoDao.Properties.Type_i.eq(i),
+                FragmentDaoDao.Properties.Type_j.eq(j),
+                FragmentDaoDao.Properties.Type_k.eq(k)))
                 .build();
         List<FragmentDao> list = query.list();
 
@@ -240,11 +241,11 @@ public class CooperateDirUtils {
     /**
      * 删除数据
      */
-    public void deleteFragmentDaoAll(int i, int j, int k) {
+    public void deleteFragmentDaoAll(String i, String j, String k) {
         QueryBuilder<FragmentDao> qb = fragmentDao.queryBuilder();
-        DeleteQuery<FragmentDao> bd = qb.where(qb.and(FragmentDaoDao.Properties.Type_i.eq(String.valueOf(i)),
-                FragmentDaoDao.Properties.Type_j.eq(String.valueOf(j)),
-                FragmentDaoDao.Properties.Type_k.eq(String.valueOf(k)))).buildDelete();
+        DeleteQuery<FragmentDao> bd = qb.where(qb.and(FragmentDaoDao.Properties.Type_i.eq(i),
+                FragmentDaoDao.Properties.Type_j.eq(j),
+                FragmentDaoDao.Properties.Type_k.eq(k))).buildDelete();
         bd.executeDeleteWithoutDetachingEntities();
 
     }

@@ -66,7 +66,7 @@ public class BuyCart extends ActivityBaseHeader implements View.OnClickListener 
      */
     private void saveDaoData(String s) {
         Log.e("json", String.valueOf(s));
-        CooperateDirUtils.getInstance(this).deleteFragmentDaoAll(0, 0, order_type_dao + 4);//4采购，5销售
+        CooperateDirUtils.getInstance(this).deleteFragmentDaoAll("0", "0", String.valueOf(order_type_dao + 4));//4采购，5销售
         FragmentDao fragmentDao = new FragmentDao();
         fragmentDao.setJson(s);
         fragmentDao.setType_i(String.valueOf(0));
@@ -84,7 +84,7 @@ public class BuyCart extends ActivityBaseHeader implements View.OnClickListener 
 //        for (int i = 0; i < fragmentDaos.size(); i++) {
 //            Log.e("all", fragmentDaos.get(i).toString());
 //        }
-        String json = CooperateDirUtils.getInstance(this).queryFragmentDaoInfo(0, 0, order_type_dao + 4);
+        String json = CooperateDirUtils.getInstance(this).queryFragmentDaoInfo("0", "0", String.valueOf(order_type_dao + 4));
         Log.e("json", String.valueOf(json));
         if (!TextUtils.isEmpty(json)) {
             BuyCartBack backDetail = mGson.fromJson(json, BuyCartBack.class);

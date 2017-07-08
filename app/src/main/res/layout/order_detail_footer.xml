@@ -29,6 +29,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/order_detail_product_num"
+                android:textColor="@color/black"
                 android:textSize="@dimen/font_size_14" />
 
         </LinearLayout>
@@ -43,6 +44,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/size_10"
                 android:text="@string/order_detail_product_pay"
+                android:textColor="@color/black"
                 android:textSize="@dimen/font_size_14" />
 
             <TextView

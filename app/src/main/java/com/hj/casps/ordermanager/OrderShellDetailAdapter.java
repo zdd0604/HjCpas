@@ -35,6 +35,8 @@ public class OrderShellDetailAdapter extends WZYBaseAdapter<OrderShellModel> {
 
     @Override
     public void bindData(ViewHolder holder, final OrderShellModel orderShellModel, final int indexPos) {
+        Log.e("show", "---------" + orderShellModel.toString());
+        Log.d("indexPos", indexPos + "");
         try {
             minPrice = Double.parseDouble(orderShellModel.getPrice().split("-")[0]);
             maxPrice = Double.parseDouble(orderShellModel.getPrice().split("-")[1]);
@@ -162,7 +164,7 @@ public class OrderShellDetailAdapter extends WZYBaseAdapter<OrderShellModel> {
                                 orderShellModel.setNum(oneNumb);
                                 //判断当前有没有单价
                                 if (StringUtils.isStrTrue(ActivityBase.getTvVaule(order_detail_item_price))) {
-                                    DecimalFormat df = new DecimalFormat("#.##");
+                                    DecimalFormat df = new DecimalFormat(".##");
                                     String allPrice = df.format(
                                             MathUtil.mul(Double.valueOf(ActivityBase.getTvVaule(order_detail_item_price)),
                                                     Double.valueOf(ActivityBase.getTvVaule(order_detail_item_number)
