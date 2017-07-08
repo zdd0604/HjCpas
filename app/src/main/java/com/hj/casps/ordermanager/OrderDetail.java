@@ -3,11 +3,15 @@ package com.hj.casps.ordermanager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.Layout;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -68,11 +72,12 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
     private Spinner order_detail_pay_address;
     private Spinner order_detail_get_account;
     private Spinner order_detail_get_address;
-    private MyWListView order_detail_add_layout;
+    private ListView order_detail_add_layout;
+    private LinearLayout order_detail_header_layout;
     private TextView order_detail_num;
     private TextView order_detail_product_pay;
     private List<OrderShellModel> orders;
-    private OrderShellDetailAdapter adapter;
+    private OrderShellDetAdapter adapter;
     private double allPrice;
     public static OrderDetail orderDetail = null;
     private Button order_detail_submit;
@@ -112,8 +117,12 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
                     getQueryMmbWareHouseGainDatas();
                     break;
                 case Constant.HANDLERTYPE_2:
-                    if (ordersSize < orders.size())
+                    if (ordersSize < orders.size()) {
                         searchPrice(orders.get(ordersSize));
+
+                    } else {
+                        waitDialogRectangle.dismiss();
+                    }
                     break;
             }
         }
@@ -152,8 +161,12 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
             bankname2 = getIntent().getStringExtra("bankname") == null ? "" : getIntent().getStringExtra("bankname");
             adress2 = getIntent().getStringExtra("adress") == null ? "" : getIntent().getStringExtra("adress");
             state = getIntent().getIntExtra("state", 0);
-            if (orderList && orders.size() > 0)
+            if (orderList && orders.size() > 0) {
+                waitDialogRectangle.show();
+                waitDialogRectangle.setText("正在搜索商品价格，请稍后");
                 mHandler.sendEmptyMessage(Constant.HANDLERTYPE_2);
+
+            }
         }
 
 
@@ -309,27 +322,33 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
 
     private void initView() {
         setTitle(getIntent().getStringExtra("title"));
-        order_detail_time_pay = (EditText) findViewById(R.id.order_detail_time_pay);
+        View inflate = LayoutInflater.from(getApplicationContext()).inflate(R.layout.oder_detail_headers, null);
+        View footer = LayoutInflater.from(getApplicationContext()).inflate(R.layout.order_detail_footer, null);
+        order_detail_add_layout = (ListView) findViewById(R.id.order_detail_add_layout);
+        order_detail_add_layout.addHeaderView(inflate);
+        order_detail_add_layout.addFooterView(footer);
+
+        order_detail_time_pay = (EditText) inflate.findViewById(R.id.order_detail_time_pay);
         order_detail_time_pay.setOnClickListener(this);
-        order_detail_process = (Spinner) findViewById(R.id.order_detail_process);
-        order_detail_time_start = (EditText) findViewById(R.id.order_detail_time_start);
+        order_detail_process = (Spinner) inflate.findViewById(R.id.order_detail_process);
+        order_detail_time_start = (EditText) inflate.findViewById(R.id.order_detail_time_start);
         order_detail_time_start.setOnClickListener(this);
-        order_detail_time_end = (EditText) findViewById(R.id.order_detail_time_end);
+        order_detail_time_end = (EditText) inflate.findViewById(R.id.order_detail_time_end);
         order_detail_time_end.setOnClickListener(this);
-        order_detail_pay_account = (Spinner) findViewById(R.id.order_detail_pay_account);
-        order_detail_pay_address = (Spinner) findViewById(R.id.order_detail_pay_address);
-        order_detail_get_account = (Spinner) findViewById(R.id.order_detail_get_account);
-        order_detail_get_address = (Spinner) findViewById(R.id.order_detail_get_address);
-        order_detail_add_layout = (MyWListView) findViewById(R.id.order_detail_add_layout);
-        order_detail_num = (TextView) findViewById(R.id.order_detail_num);
+        order_detail_pay_account = (Spinner) inflate.findViewById(R.id.order_detail_pay_account);
+        order_detail_pay_address = (Spinner) inflate.findViewById(R.id.order_detail_pay_address);
+        order_detail_get_account = (Spinner) inflate.findViewById(R.id.order_detail_get_account);
+        order_detail_get_address = (Spinner) inflate.findViewById(R.id.order_detail_get_address);
+
+        order_detail_num = (TextView) footer.findViewById(R.id.order_detail_num);
         if (type == 0) {
             order_detail_num.setText(String.valueOf(orders.size()));
         }
-        order_detail_product_pay = (TextView) findViewById(R.id.order_detail_product_pay);
+        order_detail_product_pay = (TextView) footer.findViewById(R.id.order_detail_product_pay);
 
-        adapter = new OrderShellDetailAdapter(orders, this, R.layout.item_order_detail);
+        adapter = new OrderShellDetAdapter(orders, this);
         order_detail_add_layout.setAdapter(adapter);
-        order_detail_submit = (Button) findViewById(R.id.order_detail_submit);
+        order_detail_submit = (Button) footer.findViewById(R.id.order_detail_submit);
         order_detail_submit.setOnClickListener(this);
         order_detail_process.setAdapter(stringArrayAdapter3);
 //        OrderShellDetailAdapter.setUpDataPrice(this);

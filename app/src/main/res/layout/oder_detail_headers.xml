@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/order_detail_headers"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical">
 
     <LinearLayout
@@ -47,7 +48,7 @@
             android:text="@string/order_detail_process"
             android:textSize="@dimen/font_size_16" />
 
-        <TextView
+        <Spinner
             android:id="@+id/order_detail_process"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -129,7 +130,7 @@
             android:text="@string/order_detail_pay_account"
             android:textSize="@dimen/font_size_16" />
 
-        <TextView
+        <Spinner
             android:id="@+id/order_detail_pay_account"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -153,7 +154,7 @@
             android:text="@string/order_detail_pay_address"
             android:textSize="@dimen/font_size_16" />
 
-        <TextView
+        <Spinner
             android:id="@+id/order_detail_pay_address"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -177,7 +178,7 @@
             android:text="@string/order_detail_get_account"
             android:textSize="@dimen/font_size_16" />
 
-        <TextView
+        <Spinner
             android:id="@+id/order_detail_get_account"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -201,7 +202,7 @@
             android:text="@string/order_detail_get_address"
             android:textSize="@dimen/font_size_16" />
 
-        <TextView
+        <Spinner
             android:id="@+id/order_detail_get_address"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -209,4 +210,15 @@
             android:layout_weight="1"
             android:gravity="center" />
     </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_45"
+        android:layout_marginLeft="@dimen/size_10"
+        android:gravity="center_vertical"
+        android:text="@string/order_detail_product"
+        android:textColor="@color/black"
+        android:textSize="@dimen/font_size_16" />
+
+
 </LinearLayout>
