@@ -219,7 +219,6 @@ public class HarvestExpress extends ActivityBaseHeader implements OnPullListener
      * 加载本地数据
      */
     private void addLocality() {
-        AppOrderGoodsUtils.getInstance(this).deleteHarvestExpressAll();
         List<QueryGetGoodsBean> beanList = AppOrderGoodsUtils.getInstance(this).queryHarvestExpressInfo();
         if (beanList.size() > 0 && beanList != null) {
             for (int i = 0; i < beanList.size(); i++) {
@@ -286,7 +285,9 @@ public class HarvestExpress extends ActivityBaseHeader implements OnPullListener
         }
     }
 
-
+    /**
+     * 收货操作的判断
+     */
     private void setDatas() {
         for (int i = 0; i < dbList.size(); i++) {
             QueryGetGoodsEntity queryGetGoodsEntity = dbList.get(i);

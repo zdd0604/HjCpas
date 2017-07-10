@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -12,7 +13,6 @@ import android.widget.TextView;
 
 import com.hj.casps.R;
 import com.hj.casps.base.ActivityBaseHeader3;
-import com.hj.casps.commodity.SelectPicture02;
 import com.hj.casps.common.Constant;
 import com.hj.casps.entity.apporder.BuyCartBack;
 import com.hj.casps.entity.apporder.BuyCartPost;
@@ -118,9 +118,9 @@ public class ActivityPriceSearch extends ActivityBaseHeader3 implements View.OnC
         totop.setOnClickListener(this);
         MyViewHolder.setOnClickMyLienter(this);
 
-        GridLayoutManager gl = new GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false);
-        rv.setLayoutManager(gl);
-        rv.addItemDecoration(new SelectPicture02.SelectPicture02ItemDecoration(this));
+//        GridLayoutManager gl = new GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false);
+        rv.setLayoutManager(new GridLayoutManager(this, 2));
+        rv.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL));
         mLoader = new NestRefreshLayout(rv);
         mLoader.setOnLoadingListener(this);
         mLoader.setPullLoadEnable(true);
@@ -436,7 +436,7 @@ public class ActivityPriceSearch extends ActivityBaseHeader3 implements View.OnC
 
     @Override
     public void onLoading(AbsRefreshLayout listLoader) {
-        pageNo ++;
+        pageNo++;
         isSave = false;
         if (StringUtils.isStrTrue(Constant.SEARCH_Price_quote_goodName) ||
                 "3,2,1".equals(Constant.SEARCH_Price_quote_checkboxId) ||
