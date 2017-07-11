@@ -473,16 +473,16 @@ public class EditCardActivity extends ActivityBaseHeader2 implements View.OnClic
          * 验证银行账号信息  只能填数字  不可空白
          */
         if (!StringUtils.isStrTrue(getEdVaule(account_name))) {
-            toastSHORT("账户全称空白");
+            toastSHORT("账户全称不能为空");
             return false;
         } else if (!CheckFormUtils.stringCheck(getEdVaule(account_name))) {
             toastSHORT("账户全称只能是中文英文汉字");
             return false;
         } else if (!StringUtils.isStrTrue(getEdVaule(bank_name))) {
-            toastSHORT("银行名称空白");
+            toastSHORT("银行名称不能为空");
             return false;
         } else if (!StringUtils.isStrTrue(getEdVaule(account_number))) {
-            toastSHORT("账户号码空白");
+            toastSHORT("账户号码不能为空");
             return false;
         } else if (!CheckFormUtils.isDigits(getEdVaule(account_number))) {
             toastSHORT("账户号码只能是数字");
