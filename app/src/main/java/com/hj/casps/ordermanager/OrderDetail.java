@@ -3,7 +3,6 @@ package com.hj.casps.ordermanager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.text.Layout;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -24,11 +23,6 @@ import com.hj.casps.common.Constant;
 import com.hj.casps.entity.PublicArg;
 import com.hj.casps.entity.apporder.BuyCartBack;
 import com.hj.casps.entity.apporder.BuyCartPost;
-import com.hj.casps.entity.appordercheckorder.BuyersAccountListBean;
-import com.hj.casps.entity.appordercheckorder.BuyersAddressListBean;
-import com.hj.casps.entity.appordercheckorder.DataBean;
-import com.hj.casps.entity.appordercheckorder.SellersAccountListBean;
-import com.hj.casps.entity.appordercheckorder.SellersAddressListBean;
 import com.hj.casps.entity.appordergoods.AppOrderCheckOrderLoading;
 import com.hj.casps.entity.appordergoods.AppOrderCheckOrderOrdertitle;
 import com.hj.casps.entity.appordergoods.AppOrderCheckOrderRespon;
@@ -46,7 +40,6 @@ import com.hj.casps.entity.protocalproductentity.CreateOrder;
 import com.hj.casps.entity.protocalproductentity.OrderBack;
 import com.hj.casps.util.LogoutUtils;
 import com.hj.casps.util.StringUtils;
-import com.hj.casps.widget.MyWListView;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 
@@ -119,8 +112,9 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
                 case Constant.HANDLERTYPE_2:
                     if (ordersSize < orders.size())
                         searchPrice(orders.get(ordersSize));
-
-
+                    break;
+                case Constant.HANDLERTYPE_3:
+                    getData();
                     break;
             }
         }
@@ -164,7 +158,6 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
             mHandler.sendEmptyMessage(Constant.HANDLERTYPE_0);
 
 
-
     }
 
     //根据id和类型进行订单加载操作
@@ -180,14 +173,93 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
         log(mGson.toJson(getGoods));
         Constant.JSONFATHERRESPON = "AppOrderCheckOrderRespon";
 
+//        OkGo.post(Constant.AppOrderCheckOrderUrl)
+//                .tag(this)
+//                .params("param", mGson.toJson(getGoods))
+//                .execute(new JsonCallBack<AppOrderCheckOrderRespon>() {
+//                    @Override
+//                    public void onSuccess(AppOrderCheckOrderRespon
+//                                                  listListListListListListAppOrderCheckOrderRespon,
+//                                          Call call, Response response) {
+//                        if (listListListListListListAppOrderCheckOrderRespon.ordertitle != null) {
+//                            AppOrderCheckOrderOrdertitle<List<OrdertitleData>> appOrderCheckOrderOrdertitle = listListListListListListAppOrderCheckOrderRespon.ordertitle;
+//                            order_detail_time_pay.setText(Constant.stmpToDate(appOrderCheckOrderOrdertitle.payTime));
+//                            order_detail_process.setSelection(appOrderCheckOrderOrdertitle.workflowTypeId - 1);
+//                            order_detail_time_start.setText(Constant.stmpToDate(appOrderCheckOrderOrdertitle.executeStartTime));
+//                            order_detail_time_end.setText(Constant.stmpToDate(appOrderCheckOrderOrdertitle.executeEndTime));
+//                            order_detail_product_pay.setText(appOrderCheckOrderOrdertitle.totalMoney + "");
+//                            buy_id = appOrderCheckOrderOrdertitle.buyersId;
+//                            if (state == 2) {
+//                                if (buy_id.equalsIgnoreCase(publicArg.getSys_member())) {
+//                                    state = 1;
+//                                } else {
+//                                    state = 0;
+//                                }
+////                                getQueryMmbBankAccountGainDatas();
+////                                getQueryMmbWareHouseGainDatas();
+//                            }
+//
+//                            buy_name = appOrderCheckOrderOrdertitle.buyersName;
+//                            sell_id = appOrderCheckOrderOrdertitle.sellersId;
+//                            sell_name = appOrderCheckOrderOrdertitle.sellersName;
+//                            orders = new ArrayList<OrderShellModel>();
+//                            if (state == 1) {
+//                                //采购
+//                                account2 = "";
+//                                bankname2 = listListListListListListAppOrderCheckOrderRespon.sellersAccountList.size() == 0 ? "" : listListListListListListAppOrderCheckOrderRespon.sellersAccountList.get(0).getBankname();
+//                                adress2 = listListListListListListAppOrderCheckOrderRespon.sellersAddressList.size() == 0 ? "" : listListListListListListAppOrderCheckOrderRespon.sellersAddressList.get(0).getAddress();
+////                                String[] get_accounts = new String[]{appOrderCheckOrderOrdertitle.getBank + "\n" + appOrderCheckOrderOrdertitle.getAccount};
+////                                String[] get_address = new String[]{appOrderCheckOrderOrdertitle.sellersAddressName};
+////                                order_detail_get_account.setAdapter(new TestArrayAdapter(getApplicationContext(), get_accounts));
+////                                order_detail_get_address.setAdapter(new TestArrayAdapter(getApplicationContext(), get_address));
+////                                order_detail_get_account.setEnabled(false);
+////                                order_detail_get_address.setEnabled(false);
+//                            } else {
+//                                //销售
+//                                account2 = "";
+//                                bankname2 = listListListListListListAppOrderCheckOrderRespon.buyersAccountList.size() == 0 ? "" : listListListListListListAppOrderCheckOrderRespon.buyersAccountList.get(0).getBankname();
+//                                adress2 = listListListListListListAppOrderCheckOrderRespon.buyersAddressList.size() == 0 ? "" : listListListListListListAppOrderCheckOrderRespon.buyersAddressList.get(0).getAddress();
+////                                String[] pay_accounts = new String[]{appOrderCheckOrderOrdertitle.payBank + "\n" + appOrderCheckOrderOrdertitle.payAccount};
+////                                String[] pay_address = new String[]{appOrderCheckOrderOrdertitle.buyersAddressName};
+////                                order_detail_pay_account.setAdapter(new TestArrayAdapter(getApplicationContext(), pay_accounts));
+////                                order_detail_pay_address.setAdapter(new TestArrayAdapter(getApplicationContext(), pay_address));
+////                                order_detail_pay_account.setEnabled(false);
+////                                order_detail_pay_address.setEnabled(false);
+//                            }
+//                            for (int i = 0; i < listListListListListListAppOrderCheckOrderRespon.ordertitle.orderList.size(); i++) {
+//                                OrdertitleData ordertitleData = appOrderCheckOrderOrdertitle.orderList.get(i);
+//                                OrderShellModel orderShellModel = new OrderShellModel();
+//                                orderShellModel.setGoodsId(ordertitleData.goodsId);
+//                                orderShellModel.setId(ordertitleData.id);
+//                                orderShellModel.setCategoryId(ordertitleData.categoryId);
+//                                orderShellModel.setName(ordertitleData.goodsName);
+//                                orderShellModel.setQuoteId(ordertitleData.quoteId);
+//                                orderShellModel.setPrice("0-1000000000000000000");
+//                                orderShellModel.setFinalprice(String.valueOf(ordertitleData.price));
+//                                orderShellModel.setAllprice(String.valueOf(ordertitleData.money));
+//                                orderShellModel.setNum((int) ordertitleData.goodsNum);
+//                                orders.add(orderShellModel);
+//
+//                            }
+//                            order_detail_num.setText(String.valueOf(orders.size()));
+//                            adapter.updateRes(orders);
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onError(Call call, Response response, Exception e) {
+//                        super.onError(call, response, e);
+//                    }
+//                });
         OkGo.post(Constant.AppOrderCheckOrderUrl)
                 .tag(this)
                 .params("param", mGson.toJson(getGoods))
-                .execute(new JsonCallBack<AppOrderCheckOrderRespon>() {
+                .execute(new StringCallback() {
                     @Override
-                    public void onSuccess(AppOrderCheckOrderRespon
-                                                  listListListListListListAppOrderCheckOrderRespon,
-                                          Call call, Response response) {
+                    public void onSuccess(String s, Call call, Response response) {
+                        if (TextUtils.isEmpty(s))
+                            return;
+                        AppOrderCheckOrderRespon listListListListListListAppOrderCheckOrderRespon=mGson.fromJson(s, AppOrderCheckOrderRespon.class);
                         if (listListListListListListAppOrderCheckOrderRespon.ordertitle != null) {
                             AppOrderCheckOrderOrdertitle<List<OrdertitleData>> appOrderCheckOrderOrdertitle = listListListListListListAppOrderCheckOrderRespon.ordertitle;
                             order_detail_time_pay.setText(Constant.stmpToDate(appOrderCheckOrderOrdertitle.payTime));
@@ -768,7 +840,6 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
                             }
                             stringArrayAdapter1 = new TestArrayAdapter(getApplicationContext(), addressLists);
                             stringArrayAdapter4 = new TestArrayAdapter(getApplicationContext(), new String[]{adress2});
-
                             switch (state) {
                                 case 0://销售拣单车
                                     order_detail_get_address.setAdapter(stringArrayAdapter1);
@@ -785,8 +856,7 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
                         }
                         waitDialogRectangle.dismiss();
                         if (type == 1) {
-
-                            getData();
+                            mHandler.sendEmptyMessage(Constant.HANDLERTYPE_3);
                         } else {
 
                             if (orderList && orders.size() > 0) {
