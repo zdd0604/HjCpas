@@ -364,7 +364,7 @@ public class CooperateDetail extends ActivityBaseHeader2 implements View.OnClick
                             toast(backDetail.getReturn_message());
                         } else {
                             cooperate_person_name.setText(backDetail.getData().getMmbfname());
-                            cooperate_address.setText(backDetail.getData().getMmbfname());
+                            cooperate_address.setText(backDetail.getData().getMmbaddress());
                             sellbiz = backDetail.getData().getSellBiz();
                             buybiz = backDetail.getData().getBuyBiz();
                             switchData();

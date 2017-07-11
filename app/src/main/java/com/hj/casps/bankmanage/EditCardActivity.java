@@ -447,18 +447,18 @@ public class EditCardActivity extends ActivityBaseHeader2 implements View.OnClic
         switch (card_type) {
             case Constant.CARD_ADD:
                 if (!StringUtils.isStrTrue(getEdVaule(account_number))) {
-                    toastSHORT("账户号码空白");
+                    toastSHORT("账户号码不能为空");
                     return false;
                 }
                 return checkFormValidity();
 
             case Constant.CARD_EDIT:
                 if (cardInfo == null || cardInfo.getId() == null) {
-                    toastSHORT("验证所需id为空");
+                    toastSHORT("验证所需id不能为空");
                     return false;
                 }
                 if (!StringUtils.isStrTrue(getEdVaule(account_number))) {
-                    toastSHORT("银行账号空白");
+                    toastSHORT("银行账号不能为空");
                     return false;
                 }
                 return checkFormValidity();

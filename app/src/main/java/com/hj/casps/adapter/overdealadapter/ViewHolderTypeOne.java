@@ -65,6 +65,7 @@ public class ViewHolderTypeOne extends TypeAbstractViewHolder<QuerysettleDetailO
         itemView.findViewById(R.id.layout_bills_9).setVisibility(View.GONE);
         itemView.findViewById(R.id.layout_bills_10).setVisibility(View.GONE);
         itemView.findViewById(R.id.layout_bills_11).setVisibility(View.GONE);
+        itemView.findViewById(R.id.layout_bills_11_f).setVisibility(View.GONE);
     }
 
     @Override
