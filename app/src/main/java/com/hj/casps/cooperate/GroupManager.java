@@ -23,6 +23,7 @@ import com.hj.casps.common.Constant;
 import com.hj.casps.entity.appnemberrelationship.GroupBack;
 import com.hj.casps.entity.appnemberrelationship.QueryMMBConcerns;
 import com.hj.casps.entity.appnemberrelationship.WhoCareMe;
+import com.hj.casps.protocolmanager.FragmentDao;
 import com.hj.casps.ui.MyDialog;
 import com.hj.casps.ui.MyListView;
 import com.hj.casps.ui.MyToast;
@@ -120,23 +121,29 @@ public class GroupManager extends ActivityBaseHeader implements View.OnClickList
     /**
      * 保存数据库
      */
-    private void saveDaoData() {
-        CooperateDirUtils.getInstance(this).deleteAll();
+    private void saveDaoData(String s) {
+
         switch (type) {
             case 0:
+                CooperateDirUtils.getInstance(this).deleteAll();
                 for (int i = 0; i < cooperateGroupModels.size(); i++) {
                     CooperateDirUtils.getInstance(this).insertInfo(cooperateGroupModels.get(i));
                 }
                 break;
             case 1:
+                CooperateDirUtils.getInstance(this).deleteAll();
                 for (int i = 0; i < whocaremes.size(); i++) {
                     CooperateDirUtils.getInstance(this).insertInfo(whocaremes.get(i));
                 }
                 break;
             case 2:
-                for (int i = 0; i < whocaremes.size(); i++) {
-                    CooperateDirUtils.getInstance(this).insertInfo(whocaremes.get(i));
-                }
+                CooperateDirUtils.getInstance(this).deleteFragmentDaoAll("201", "0", "0");
+                FragmentDao fragmentDao = new FragmentDao();
+                fragmentDao.setJson(s);
+                fragmentDao.setType_i("201");
+                fragmentDao.setType_j("0");
+                fragmentDao.setType_k("0");
+                CooperateDirUtils.getInstance(this).insertInfo(fragmentDao);
                 break;
         }
 
@@ -157,12 +164,23 @@ public class GroupManager extends ActivityBaseHeader implements View.OnClickList
                 adapter.updateRes(cooperateGroupModels);
                 break;
             case 1:
-            case 2:
                 List<WhoCareListBean> usrList1 = CooperateDirUtils.getInstance(this).queryWhoCareListBeanInfo();
                 if (usrList1.size() > 0) {
                     whocaremes = usrList1;
                 }
                 whoCareMeAdapter.updateRes(whocaremes);
+                break;
+            case 2:
+                String json = CooperateDirUtils.getInstance(this).queryFragmentDaoInfo("201", "0", "0");
+                WhoCareMe whoCareMe = mGson.fromJson(json, WhoCareMe.class);
+                addwhocaremes = whoCareMe.getList();
+                if (addwhocaremes.isEmpty()) {
+                    toast("没有结果");
+                    whoCareMeAdapter.removeAll();
+                }
+                whoCareMeAdapter.updateRes(addwhocaremes);
+                whocaremes = new ArrayList<>();
+                whocaremes.addAll(addwhocaremes);
                 break;
         }
 
@@ -200,7 +218,7 @@ public class GroupManager extends ActivityBaseHeader implements View.OnClickList
                                     adapter.removeAll();
                                 }
                                 adapter.updateRes(cooperateGroupModels);
-                                saveDaoData();
+                                saveDaoData(s);
                             }
                         }
 
@@ -268,7 +286,7 @@ public class GroupManager extends ActivityBaseHeader implements View.OnClickList
                                     whoCareMeAdapter.updateRes(addwhocaremes);
                                     whocaremes = new ArrayList<>();
                                     whocaremes.addAll(addwhocaremes);
-                                    saveDaoData();
+                                    saveDaoData(s);
                                 }
                             }
                         }
