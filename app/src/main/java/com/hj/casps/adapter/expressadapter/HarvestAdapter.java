@@ -86,11 +86,11 @@ public class HarvestAdapter extends CommonAdapter<QueryGetGoodsEntity> {
         hooder.setText(R.id.layout_tv_order_3, queryGetGoodsEntity.getOrdertitleNumber() + "");
         hooder.setText(R.id.harvest_tv_title_1, queryGetGoodsEntity.getGood_sname());
         hooder.setText(R.id.harvest_tv_content_2, queryGetGoodsEntity.getSellers_name());
-        hooder.setText(R.id.harvest_tv_content_3, "" + (queryGetGoodsEntity.getGoods_num()));
-        hooder.setText(R.id.harvest_tv_content_4, queryGetGoodsEntity.getGetgoods_num() + "");
-        hooder.setText(R.id.harvest_tv_content_5, queryGetGoodsEntity.getExe_getgoods_num() + "");
+        hooder.setText(R.id.harvest_tv_content_3, (queryGetGoodsEntity.getGoods_num()) + " 件");
+        hooder.setText(R.id.harvest_tv_content_4, queryGetGoodsEntity.getGetgoods_num() + " 件");
+        hooder.setText(R.id.harvest_tv_content_5, queryGetGoodsEntity.getExe_getgoods_num() + " 件");
         if (StringUtils.isStrTrue(queryGetGoodsEntity.getNum()))
-            hooder.setEdiTextView(R.id.harvest_ed_content_6, queryGetGoodsEntity.getNum() + "");
+            hooder.setEdiTextView(R.id.harvest_ed_content_6, queryGetGoodsEntity.getNum() + " 件");
 
         final TextView harvest_tv_content_7 = hooder.getView(R.id.harvest_tv_content_7);
         if (queryGetGoodsEntity.getAddressName() != null) {

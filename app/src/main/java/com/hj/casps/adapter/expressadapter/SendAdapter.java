@@ -107,9 +107,9 @@ public class SendAdapter extends CommonAdapter<QuerySendGoodsEntity> {
         hooder.setText(R.id.layout_tv_order_3, querySendGoodsEntity.getOrdertitleNumber() + "");
         hooder.setText(R.id.harvest_tv_title_1, querySendGoodsEntity.getGoodsName());
         hooder.setText(R.id.harvest_tv_content_2, querySendGoodsEntity.getBuyers_name());
-        hooder.setText(R.id.harvest_tv_content_3, querySendGoodsEntity.getGoods_num() + "");
-        hooder.setText(R.id.harvest_tv_content_4, querySendGoodsEntity.getSendgoods_num() + "");
-        hooder.setText(R.id.harvest_tv_content_5, querySendGoodsEntity.getExe_sendgoods_num() + "");
+        hooder.setText(R.id.harvest_tv_content_3, querySendGoodsEntity.getGoods_num() + " 件");
+        hooder.setText(R.id.harvest_tv_content_4, querySendGoodsEntity.getSendgoods_num() + " 件");
+        hooder.setText(R.id.harvest_tv_content_5, querySendGoodsEntity.getExe_sendgoods_num() + " 件");
         if (index1 != -1 && index1 == indexPos) {
             //强制加上焦点
             moneyEd.requestFocus();

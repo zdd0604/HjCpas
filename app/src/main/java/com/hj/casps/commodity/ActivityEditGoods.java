@@ -487,18 +487,18 @@ public class ActivityEditGoods extends ActivityBaseHeader2 implements View.OnCli
             toastSHORT("商品名不能为空");
             return;
         }
-        if (!StringUtils.isStrTrue(getTvVaule(productDate))) {
-            toastSHORT("生产日期不能为空");
-            return;
-        }
-        if (!StringUtils.isStrTrue(getEdVaule(stock_Et))) {
-            toastSHORT("库存不能为空");
-            return;
-        }
-        if (!StringUtils.isStrTrue(getTvVaule(productTime_et))) {
-            toastSHORT("保质期不能为空");
-            return;
-        }
+//        if (!StringUtils.isStrTrue(getTvVaule(productDate))) {
+//            toastSHORT("生产日期不能为空");
+//            return;
+//        }
+//        if (!StringUtils.isStrTrue(getEdVaule(stock_Et))) {
+//            toastSHORT("库存不能为空");
+//            return;
+//        }
+//        if (!StringUtils.isStrTrue(getTvVaule(productTime_et))) {
+//            toastSHORT("保质期不能为空");
+//            return;
+//        }
         if (!StringUtils.isStrTrue(getEdVaule(price_from_Et))) {
             toastSHORT("最低单价不能为空");
             return;
@@ -507,10 +507,10 @@ public class ActivityEditGoods extends ActivityBaseHeader2 implements View.OnCli
             toastSHORT("最高单价不能为空");
             return;
         }
-        if (imagePath == null || imagePath.equals("")) {
-            toastSHORT("请选择标题");
-            return;
-        }
+//        if (imagePath == null || imagePath.equals("")) {
+//            toastSHORT("请选择标题");
+//            return;
+//        }
         //如果是添加 需要验证  商品名称是否唯一
         if (flag) {
             checkNameGoNet();

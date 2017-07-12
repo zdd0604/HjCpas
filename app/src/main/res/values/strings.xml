@@ -62,7 +62,7 @@
     <string name="pro_shelf_life">保质期</string>
     <string name="pro_shelf_lifes">保质期:</string>
     <string name="pro_Specificationss">规格:</string>
-    <string name="addcart">加入购物车</string>
+    <string name="addcart">加入拣单车</string>
     <string name="pro_Specifications">规格</string>
     <string name="ple_input_goodsname">请输入商品名称</string>
     <string name="ple_input_time">请输入生产日期</string>
@@ -414,7 +414,7 @@
     <string name="publisher">发布人:</string>
     <string name="usetime">适用期间:</string>
     <string name="uselocation">适用地区:</string>
-    <string name="shopcart">购物车</string>
+    <string name="shopcart">拣单车</string>
     <string name="detailed">报价详情</string>
     <string name="address">产地：</string>
     <string name="user_NetError">网络错误</string>

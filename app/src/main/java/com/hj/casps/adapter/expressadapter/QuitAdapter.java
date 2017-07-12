@@ -109,10 +109,10 @@ public class QuitAdapter extends CommonAdapter<QueryReturnGoodsEntity> {
         hooder.setText(R.id.layout_tv_order_3, queryReturnGoodsEntity.getOrdertitleNumber() + "");
         hooder.setText(R.id.harvest_tv_title_1, queryReturnGoodsEntity.getGoodsName());
         hooder.setText(R.id.harvest_tv_content_2, queryReturnGoodsEntity.getSellers_name());
-        hooder.setText(R.id.harvest_tv_content_3, queryReturnGoodsEntity.getGoods_num() + "");
-        hooder.setText(R.id.harvest_tv_content_4, queryReturnGoodsEntity.getExe_returngoods_num() + "");
+        hooder.setText(R.id.harvest_tv_content_3, queryReturnGoodsEntity.getGoods_num() +" 件");
+        hooder.setText(R.id.harvest_tv_content_4, queryReturnGoodsEntity.getExe_returngoods_num() + " 件");
         if (StringUtils.isStrTrue(queryReturnGoodsEntity.getNum()))
-            hooder.setEdiTextView(R.id.harvest_ed_content_6, queryReturnGoodsEntity.getNum() + "");
+            hooder.setEdiTextView(R.id.harvest_ed_content_6, queryReturnGoodsEntity.getNum() + " 件");
 
         if (index1 != -1 && index1 == indexPos) {
             //强制加上焦点
