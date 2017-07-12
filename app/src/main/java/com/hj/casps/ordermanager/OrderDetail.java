@@ -139,9 +139,7 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
         account2 = getIntent().getStringExtra("account") == null ? "" : getIntent().getStringExtra("account");
         bankname2 = getIntent().getStringExtra("bankname") == null ? "" : getIntent().getStringExtra("bankname");
         adress2 = getIntent().getStringExtra("adress") == null ? "" : getIntent().getStringExtra("adress");
-        if (type == 0) {
-            order_detail_num.setText(String.valueOf(orders.size()));
-        }
+
         if (type == 1) {
             id = getIntent().getStringExtra("id");
             state = getIntent().getIntExtra("state", 0);
@@ -156,7 +154,9 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
             order_detail_time_start.setText(getToday());
             order_detail_time_end.setText(getToday());
         }
-
+        if (type == 0) {
+            order_detail_num.setText(String.valueOf(orders.size()));
+        }
         if (hasInternetConnected())
             mHandler.sendEmptyMessage(Constant.HANDLERTYPE_0);
 
