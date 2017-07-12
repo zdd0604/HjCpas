@@ -125,8 +125,8 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_detail);
         orderDetail = this;
-        initData();
         initView();
+        initData();
 
     }
 
@@ -135,9 +135,13 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
         type = getIntent().getIntExtra("type", 0);
         statusItems = new String[]{"货款两清", "先货后款", "先货后款已交货", "先款后货", "先款后货已收款"};
         stringArrayAdapter3 = new TestArrayAdapter(getApplicationContext(), statusItems);
+        order_detail_process.setAdapter(stringArrayAdapter3);
         account2 = getIntent().getStringExtra("account") == null ? "" : getIntent().getStringExtra("account");
         bankname2 = getIntent().getStringExtra("bankname") == null ? "" : getIntent().getStringExtra("bankname");
         adress2 = getIntent().getStringExtra("adress") == null ? "" : getIntent().getStringExtra("adress");
+        if (type == 0) {
+            order_detail_num.setText(String.valueOf(orders.size()));
+        }
         if (type == 1) {
             id = getIntent().getStringExtra("id");
             state = getIntent().getIntExtra("state", 0);
@@ -401,16 +405,14 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
         order_detail_get_address = (Spinner) inflate.findViewById(R.id.order_detail_get_address);
 
         order_detail_num = (TextView) footer.findViewById(R.id.order_detail_num);
-        if (type == 0) {
-            order_detail_num.setText(String.valueOf(orders.size()));
-        }
+
         order_detail_product_pay = (TextView) footer.findViewById(R.id.order_detail_product_pay);
 
         adapter = new OrderShellDetAdapter(orders, this);
         order_detail_add_layout.setAdapter(adapter);
         order_detail_submit = (Button) footer.findViewById(R.id.order_detail_submit);
         order_detail_submit.setOnClickListener(this);
-        order_detail_process.setAdapter(stringArrayAdapter3);
+
 //        OrderShellDetailAdapter.setUpDataPrice(this);
     }
 
