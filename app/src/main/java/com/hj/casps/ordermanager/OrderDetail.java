@@ -157,6 +157,8 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
         if (type == 0) {
             order_detail_num.setText(String.valueOf(orders.size()));
         }
+        adapter = new OrderShellDetAdapter(orders, this);
+        order_detail_add_layout.setAdapter(adapter);
         if (hasInternetConnected())
             mHandler.sendEmptyMessage(Constant.HANDLERTYPE_0);
 
@@ -408,8 +410,7 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
 
         order_detail_product_pay = (TextView) footer.findViewById(R.id.order_detail_product_pay);
 
-        adapter = new OrderShellDetAdapter(orders, this);
-        order_detail_add_layout.setAdapter(adapter);
+
         order_detail_submit = (Button) footer.findViewById(R.id.order_detail_submit);
         order_detail_submit.setOnClickListener(this);
 
