@@ -161,7 +161,7 @@ public class BuyShell extends ActivityBaseHeader2 implements View.OnClickListene
             no = getIntent().getIntExtra("no", -1);
             index = getIntent().getIntExtra("index", -1);
             categoryId = getIntent().getStringExtra("categoryId");
-            if (categoryId==null) {
+            if (categoryId == null) {
                 toast("对不起，您没有该品类商品");
                 return;
             }
@@ -238,9 +238,9 @@ public class BuyShell extends ActivityBaseHeader2 implements View.OnClickListene
                 orderShellModel.setNo(buy_list.get(i).getNo());
                 orderShellModel.setCategoryId(buy_list.get(i).getCategoryId());
                 orderShellModel.setChecked(false);
-                if (!TextUtils.isEmpty(buy_list.get(i).getMateId())){
+                if (!TextUtils.isEmpty(buy_list.get(i).getMateId())) {
                     orderShellModel.setStatus(true);
-                }else {
+                } else {
                     orderShellModel.setStatus(false);
                 }
 
@@ -249,6 +249,8 @@ public class BuyShell extends ActivityBaseHeader2 implements View.OnClickListene
                 orderShellModel.setGoodsId(buy_list.get(i).getGoodsId());
                 orderShellModel.setQuoteId(buy_list.get(i).getId());
                 orderShellModel.setPrice(buy_list.get(i).getMinPrice() + "-" + buy_list.get(i).getMaxPrice());
+                orderShellModel.setFinalprice(String.valueOf((buy_list.get(i).getMinPrice()
+                        + buy_list.get(i).getMaxPrice()) / 2));
                 orderShellModels.add(orderShellModel);
             }
         }

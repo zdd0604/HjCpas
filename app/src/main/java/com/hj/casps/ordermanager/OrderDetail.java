@@ -148,10 +148,9 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
             orderList = getIntent().getBooleanExtra("OrderList", false);
             buy_name = getIntent().getStringExtra("buy_name");
             buy_id = getIntent().getStringExtra("buy_id");
-
             state = getIntent().getIntExtra("state", 0);
-
-
+            order_detail_time_start.setText(getToday());
+            order_detail_time_end.setText(getToday());
         }
 
         if (hasInternetConnected())
@@ -259,7 +258,7 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
                     public void onSuccess(String s, Call call, Response response) {
                         if (TextUtils.isEmpty(s))
                             return;
-                        AppOrderCheckOrderRespon listListListListListListAppOrderCheckOrderRespon=mGson.fromJson(s, AppOrderCheckOrderRespon.class);
+                        AppOrderCheckOrderRespon listListListListListListAppOrderCheckOrderRespon = mGson.fromJson(s, AppOrderCheckOrderRespon.class);
                         if (listListListListListListAppOrderCheckOrderRespon.ordertitle != null) {
                             AppOrderCheckOrderOrdertitle<List<OrdertitleData>> appOrderCheckOrderOrdertitle = listListListListListListAppOrderCheckOrderRespon.ordertitle;
                             order_detail_time_pay.setText(Constant.stmpToDate(appOrderCheckOrderOrdertitle.payTime));
@@ -361,6 +360,8 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
                         } else {
                             result[0] = databack.getGoodsInfo().getMinPrice() + "-" + databack.getGoodsInfo().getMaxPrice();
                             orderShellModel.setPrice(result[0]);
+                            orderShellModel.setFinalprice(String.valueOf((databack.getGoodsInfo().getMinPrice()
+                                    + databack.getGoodsInfo().getMaxPrice()) / 2));
                             LogShow(orders.size() + ",,,," + ordersSize + "orderShellModel:" + orderShellModel.toString());
                             adapter.notifyDataSetChanged();
                         }
