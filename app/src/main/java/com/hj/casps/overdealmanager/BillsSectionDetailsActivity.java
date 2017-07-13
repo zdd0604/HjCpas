@@ -11,8 +11,11 @@ import com.hj.casps.R;
 import com.hj.casps.adapter.overdealadapter.SectionDetailsAdapter;
 import com.hj.casps.base.ActivityBaseHeader2;
 import com.hj.casps.common.Constant;
+import com.hj.casps.entity.appordergoodsCallBack.AppOrderGoodsUtils;
+import com.hj.casps.entity.appsettle.CheckWaitBillsEntity;
 import com.hj.casps.entity.appsettle.QuerysettleDetailLoading;
 import com.hj.casps.entity.appsettle.QuerysettleDetailOneGain;
+import com.hj.casps.util.StringUtils;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 
@@ -36,6 +39,9 @@ public class BillsSectionDetailsActivity extends ActivityBaseHeader2 {
     private List<QuerysettleDetailOneGain> listOne;
     private List<QuerysettleDetailOneGain.ListBean> listTow;
     private List<String> listTitle;
+    private int SettleCode;//订单号
+    private String billJson;//字符串
+    private boolean isSaveDats = true;//是否保存数据
 
     Handler mHandler = new Handler() {
         @Override
@@ -76,8 +82,10 @@ public class BillsSectionDetailsActivity extends ActivityBaseHeader2 {
         titleRight.setVisibility(View.GONE);
         bills_details_rlview.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         if (hasInternetConnected()) {
+            isSaveDats = true;
             getNetWorkSendExpress();
         } else {
+            isSaveDats = false;
             addLocality();
         }
     }
@@ -89,21 +97,38 @@ public class BillsSectionDetailsActivity extends ActivityBaseHeader2 {
         mRecyclerAdapter = new SectionDetailsAdapter(this, listOne, listTow, listTitle);
         bills_details_rlview.setAdapter(mRecyclerAdapter);
         mRecyclerAdapter.notifyDataSetChanged();
-        mHandler.sendEmptyMessage(Constant.HANDLERTYPE_1);
+        if (isSaveDats)
+            mHandler.sendEmptyMessage(Constant.HANDLERTYPE_1);
     }
 
     /**
      * 保存数据
      */
     private void saveSendData() {
-
+        AppOrderGoodsUtils.getInstance(this).deleteAllCheckWaitBillsEntity();
+        CheckWaitBillsEntity checkWaitBillsEntity = new CheckWaitBillsEntity(SettleCode + "", billJson);
+        if (StringUtils.isStrTrue(billJson)) {
+            AppOrderGoodsUtils.getInstance(this).insertCheckWaitBillsEntity(checkWaitBillsEntity);
+        }
     }
 
     /**
      * 添加本地数据
      */
     private void addLocality() {
+        List<CheckWaitBillsEntity> list =
+                AppOrderGoodsUtils.getInstance(this).queryCheckWaitBillsEntity(id);
+        if (list.size() == 0)
+            return;
 
+        for (int i = 0; i < list.size(); i++) {
+            CheckWaitBillsEntity entity = list.get(i);
+            String json = entity.getBillsJson();
+            QuerysettleDetailOneGain oneGain = mGson.fromJson(json, QuerysettleDetailOneGain.class);
+            listOne.add(oneGain);
+            listTow = oneGain.getList();
+        }
+        mHandler.sendEmptyMessage(Constant.HANDLERTYPE_0);
     }
 
     /**
@@ -128,6 +153,8 @@ public class BillsSectionDetailsActivity extends ActivityBaseHeader2 {
                     public void onSuccess(String s, Call call, Response response) {
                         QuerysettleDetailOneGain oneGain = mGson.fromJson(s, QuerysettleDetailOneGain.class);
                         if (oneGain.getReturn_code() == 0) {
+                            SettleCode = oneGain.getSettleCode();
+                            billJson = s;
                             listOne.add(oneGain);
                             listTow = oneGain.getList();
                             mHandler.sendEmptyMessage(Constant.HANDLERTYPE_0);

@@ -14,6 +14,8 @@ import com.hj.casps.entity.appordergoods.QuerySendGoodsEntity;
 import com.hj.casps.entity.appordergoods.QuerySendGoodsEntityDao;
 import com.hj.casps.entity.appordergoods.WarehouseEntity;
 import com.hj.casps.entity.appordergoods.WarehouseEntityDao;
+import com.hj.casps.entity.appsettle.CheckWaitBillsEntity;
+import com.hj.casps.entity.appsettle.CheckWaitBillsEntityDao;
 import com.hj.casps.entity.appsettle.QueryMyPendingSttleEntity;
 import com.hj.casps.entity.appsettle.QueryMyPendingSttleEntityDao;
 import com.hj.casps.entity.appsettle.QueryPendingSttleGain;
@@ -44,6 +46,8 @@ public class AppOrderGoodsUtils {
     public QueryPendingSttleGainDao queryPendingSttleGainDao;
     //执行中借款单
     public QuerySttleManageGainDao querySttleManageGainDao;
+    //结款单详情缓存
+    public CheckWaitBillsEntityDao checkWaitBillsEntityDao;
 
     public AppOrderGoodsUtils(Activity context) {
         daoSession = ((HejiaApp) context.getApplication()).getDaoSession();
@@ -279,6 +283,32 @@ public class AppOrderGoodsUtils {
      */
     public void deleteAllQuerySttleRegist() {
         querySttleRegistGain.deleteAll();
+    }
+
+    /**
+     * 结款单详情界面
+     * 插入数据
+     * @param checkWaitBillsEntity
+     */
+    public void insertCheckWaitBillsEntity(CheckWaitBillsEntity checkWaitBillsEntity) {
+        checkWaitBillsEntityDao.insert(checkWaitBillsEntity);
+    }
+
+    /**
+     * 结款单详情界面
+     * 查询所有
+     */
+    public List<CheckWaitBillsEntity> queryCheckWaitBillsEntity(String Register_id) {
+        return checkWaitBillsEntityDao.queryBuilder().
+                where(CheckWaitBillsEntityDao.Properties.AppSettle.eq(Register_id)).list();
+    }
+
+    /**
+     * 结款单详情界面
+     * 删除所有数据
+     */
+    public void deleteAllCheckWaitBillsEntity() {
+        checkWaitBillsEntityDao.deleteAll();
     }
 
 
