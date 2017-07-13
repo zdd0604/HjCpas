@@ -359,8 +359,14 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
                         } else {
                             result[0] = databack.getGoodsInfo().getMinPrice() + "-" + databack.getGoodsInfo().getMaxPrice();
                             orderShellModel.setPrice(result[0]);
-                            orderShellModel.setFinalprice(String.valueOf((databack.getGoodsInfo().getMinPrice()
-                                    + databack.getGoodsInfo().getMaxPrice()) / 2));
+                            if (databack.getGoodsInfo().getMinPrice() == 0 || databack.getGoodsInfo().getMaxPrice() == 0) {
+                                orderShellModel.setFinalprice(String.valueOf(databack.getGoodsInfo().getMinPrice()
+                                        + databack.getGoodsInfo().getMaxPrice()));
+                            } else {
+                                orderShellModel.setFinalprice(String.valueOf((databack.getGoodsInfo().getMinPrice()
+                                        + databack.getGoodsInfo().getMaxPrice()) / 2));
+                            }
+
                             LogShow(orders.size() + ",,,," + ordersSize + "orderShellModel:" + orderShellModel.toString());
                             adapter.notifyDataSetChanged();
                         }
@@ -398,7 +404,7 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
         order_detail_pay_address = (Spinner) inflate.findViewById(R.id.order_detail_pay_address);
         order_detail_get_account = (Spinner) inflate.findViewById(R.id.order_detail_get_account);
         order_detail_get_address = (Spinner) inflate.findViewById(R.id.order_detail_get_address);
-        if (type!=1){
+        if (type != 1) {
             order_detail_time_start.setText(getToday());
             order_detail_time_end.setText(getToday());
         }
