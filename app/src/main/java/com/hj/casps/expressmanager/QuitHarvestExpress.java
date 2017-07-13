@@ -85,7 +85,7 @@ public class QuitHarvestExpress extends ActivityBaseHeader implements OnPullList
     private ListView listView;
     private boolean isSave = true;//是否保存数据
     private boolean isRSave = true;//重置时是否保存数据
-    private boolean isSetAdapter = false;//重置时是否保存数据
+    private boolean isSetAdapter = true;//重置时是否保存数据
     private List<QueryGetReturnGoodsGain.AddressListBean> addressList;
     private List<GetReturnGoodsOperation.GetReturnGoodsList> orderList = new ArrayList<>();
 
@@ -389,7 +389,7 @@ public class QuitHarvestExpress extends ActivityBaseHeader implements OnPullList
 
                     @Override
                     public void onSuccess(HarvestExpressRespon<List<QueryGetReturnGoodsGain>> listHarvestExpressRespon, Call call, Response response) {
-                        mList.clear();
+//                        mList.clear();
                         if (listHarvestExpressRespon.rows != null) {
                             total = listHarvestExpressRespon.total;
                             mList = listHarvestExpressRespon.rows;

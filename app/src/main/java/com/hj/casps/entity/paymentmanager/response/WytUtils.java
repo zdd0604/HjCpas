@@ -109,8 +109,7 @@ public class WytUtils {
      * @return
      */
     public List<ResQueryGetMoneyEntity> QuerytQueryGetMoneyInfo() {
-        List<ResQueryGetMoneyEntity> list = getMoneyEntityDao.queryBuilder().build().list();
-        return list;
+        return getMoneyEntityDao.queryBuilder().build().list();
     }
 
     /**

@@ -82,7 +82,7 @@ public class HarvestExpress extends ActivityBaseHeader implements OnPullListener
     private ListView listView;
     private boolean isSave = true;//是否保存数据
     private boolean isRSave = true;//重置时是否保存数据
-    private boolean isSetAdapter = false;//重置时是否保存数据
+    private boolean isSetAdapter = true;//重置时是否保存数据
     private List<QueryGetGoodsEntity> mList;//每次请求服务器的数据
     private List<QueryGetGoodsEntity> dbList;//上啦加载的数据缓存
     private List<GetGoodsLoading.NumListBean> goodLsit = new ArrayList<>();
@@ -478,7 +478,6 @@ public class HarvestExpress extends ActivityBaseHeader implements OnPullListener
                 .execute(new JsonCallBack<HarvestExpressRespon<List<QueryGetGoodsEntity>>>() {
                     @Override
                     public void onSuccess(HarvestExpressRespon<List<QueryGetGoodsEntity>> listHarvestExpressRespon, Call call, Response response) {
-                        mList.clear();
                         if (listHarvestExpressRespon.rows != null) {
                             total = listHarvestExpressRespon.total;
                             mList = listHarvestExpressRespon.rows;

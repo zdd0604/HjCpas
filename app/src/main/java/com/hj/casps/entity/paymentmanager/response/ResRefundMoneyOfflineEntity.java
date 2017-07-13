@@ -163,4 +163,22 @@ public class ResRefundMoneyOfflineEntity {
     public void setOrdertitleId(String ordertitleId) {
         this.ordertitleId = ordertitleId;
     }
+
+
+    @Override
+    public String toString() {
+        return "ResRefundMoneyOfflineEntity{" +
+                "payNum='" + payNum + '\'' +
+                ", payMentCode='" + payMentCode + '\'' +
+                ", reMark='" + reMark + '\'' +
+                ", isChecked=" + isChecked +
+                ", buyersName='" + buyersName + '\'' +
+                ", exeRefundNum=" + exeRefundNum +
+                ", goodsName='" + goodsName + '\'' +
+                ", id='" + id + '\'' +
+                ", ordertitleId='" + ordertitleId + '\'' +
+                ", ordertitleNumber=" + ordertitleNumber +
+                ", accountlist=" + accountlist +
+                '}';
+    }
 }

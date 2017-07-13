@@ -71,7 +71,7 @@ public class QuitExpress extends ActivityBaseHeader implements OnPullListener,
     private QuitAdapter quitAdapter;
     private boolean isSave = true;//是否保存数据
     private boolean isRSave = true;//重置时是否保存数据
-    private boolean isSetAdapter = false;//重置时是否保存数据
+    private boolean isSetAdapter = true;//重置时是否保存数据
     private List<QueryReturnGoodsEntity> mList;
     private List<QueryReturnGoodsEntity> dbList;
     private List<ReturnGoodsLoading.OrderListBean> orderList = new ArrayList<>();
@@ -386,7 +386,7 @@ public class QuitExpress extends ActivityBaseHeader implements OnPullListener,
                     @Override
                     public void onSuccess(HarvestExpressRespon<List<QueryReturnGoodsEntity>> listHarvestExpressRespon,
                                           Call call, Response response) {
-                        mList.clear();
+//                        mList.clear();
                         if (listHarvestExpressRespon.rows != null) {
                             total = listHarvestExpressRespon.total;
                             mList = listHarvestExpressRespon.rows;

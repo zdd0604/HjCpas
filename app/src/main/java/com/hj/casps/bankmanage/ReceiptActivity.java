@@ -88,6 +88,9 @@ public class ReceiptActivity extends ActivityBaseHeader implements OnPullListene
                 case Constant.HANDLERTYPE_0:
                     refreshUI();
                     break;
+                case Constant.HANDLERTYPE_1:
+                    saveLocalData();
+                    break;
             }
         }
     };
@@ -162,6 +165,9 @@ public class ReceiptActivity extends ActivityBaseHeader implements OnPullListene
             }
         }
 
+        if (isRSave)
+            mHandler.sendEmptyMessage(Constant.HANDLERTYPE_1);
+
         receiptAdapter.setOnCheckedkType(this);
 
         if (dbList != null && dbList.size() > 0)
@@ -171,9 +177,6 @@ public class ReceiptActivity extends ActivityBaseHeader implements OnPullListene
                     return;
                 }
             }
-
-        if (isRSave)
-            saveLocalData();
     }
 
     /**
@@ -341,7 +344,7 @@ public class ReceiptActivity extends ActivityBaseHeader implements OnPullListene
                     public void onSuccess(QueryMmbBankAccountRespon<List<ResQueryGetMoneyEntity>> listData,
                                           Call call, Response response) {
                         waitDialogRectangle.dismiss();
-                        mList.clear();
+//                        mList.clear();
                         if (listData != null && listData.return_code == 0 && listData.list != null) {
                             mList = listData.list;
                             total = listData.pagecount;

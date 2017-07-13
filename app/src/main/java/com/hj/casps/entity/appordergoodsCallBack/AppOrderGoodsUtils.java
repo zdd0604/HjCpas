@@ -305,6 +305,22 @@ public class AppOrderGoodsUtils {
     }
 
     /**
+     * 登记资源列表
+     * 删除数据
+     */
+    public void deleteCheckWaitBillsEntity(String Register_id) {
+        List<CheckWaitBillsEntity> dList = checkWaitBillsEntityDao.queryBuilder().
+                where(CheckWaitBillsEntityDao.Properties.AppSettle.eq(Register_id)).list();
+
+        if (dList.size() <= 0)
+            return;
+
+        for (int i = 0; i < dList.size(); i++) {
+            checkWaitBillsEntityDao.delete(dList.get(i));
+        }
+    }
+
+    /**
      * 结款单详情界面
      * 删除所有数据
      */

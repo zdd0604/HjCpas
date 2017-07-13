@@ -71,7 +71,7 @@ public class SendExpress extends ActivityBaseHeader implements OnPullListener,
     private SendAdapter sendAdapter;
     private boolean isSave = true;//是否保存数据
     private boolean isRSave = true;//重置时是否保存数据
-    private boolean isSetAdapter = false;//重置时是否保存数据
+    private boolean isSetAdapter = true;//重置时是否保存数据
     private List<QuerySendGoodsEntity> mList = new ArrayList<>();
     private List<QuerySendGoodsEntity> dbList = new ArrayList<>();//上啦加载的数据缓存
     private List<SendGoodsOperation.OrderListBean> sendGoodsListList;
@@ -398,7 +398,7 @@ public class SendExpress extends ActivityBaseHeader implements OnPullListener,
                 .execute(new JsonCallBack<SimpleResponse<List<QuerySendGoodsEntity>>>() {
                     @Override
                     public void onSuccess(SimpleResponse<List<QuerySendGoodsEntity>> listSendExpressRespon, Call call, Response response) {
-                        mList.clear();
+//                        mList.clear();
                         if (listSendExpressRespon.rows != null) {
                             total = listSendExpressRespon.total;
                             mList = listSendExpressRespon.rows;

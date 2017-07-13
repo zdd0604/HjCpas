@@ -78,7 +78,7 @@ public class PaymentActivity extends ActivityBaseHeader implements View.OnClickL
     private PayMentAdapter payMentAdapter;
     private boolean isSave = true;//是否保存数据
     private boolean isRSave = true;//重置时是否保存数据
-    private boolean isSetAdapter = false;//重置时是否保存数据
+    private boolean isSetAdapter = true;//重置时是否保存数据
     private List<ResponseQueryPayEntity> mList = new ArrayList<>();
     private List<ResponseQueryPayEntity> dbList = new ArrayList();
     private List<ReqPayMoneyOffine> orderList = new ArrayList();
@@ -453,7 +453,7 @@ public class PaymentActivity extends ActivityBaseHeader implements View.OnClickL
                     public void onSuccess(QueryMmbBankAccountRespon<List<ResponseQueryPayEntity>> listData,
                                           Call call, Response response) {
                         waitDialogRectangle.dismiss();
-                        mList.clear();
+//                        mList.clear();
                         if (listData.return_code == 0 && listData != null && listData.list != null) {
                             mList = listData.list;
                             total = listData.pagecount;

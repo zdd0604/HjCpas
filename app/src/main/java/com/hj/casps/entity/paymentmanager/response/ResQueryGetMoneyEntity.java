@@ -9,8 +9,6 @@ import org.greenrobot.greendao.annotation.Generated;
  */
 @Entity
 public class ResQueryGetMoneyEntity {
-    @Transient
-    private boolean isChecked;
     /**
      * goodsName : 水果
      * id : 379f82b779154f6184b24fb7c18b51ea
@@ -22,6 +20,8 @@ public class ResQueryGetMoneyEntity {
      * remark : 破坏民工
      */
 
+    @Transient
+    private boolean isChecked;
     private String goodsName;
     private String id;
     private double money;
@@ -118,5 +118,20 @@ public class ResQueryGetMoneyEntity {
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    @Override
+    public String toString() {
+        return "ResQueryGetMoneyEntity{" +
+                "isChecked=" + isChecked +
+                ", goodsName='" + goodsName + '\'' +
+                ", id='" + id + '\'' +
+                ", money=" + money +
+                ", ordertitleId='" + ordertitleId + '\'' +
+                ", ordertitleNumber=" + ordertitleNumber +
+                ", paymoneyName='" + paymoneyName + '\'' +
+                ", paymoneyTime=" + paymoneyTime +
+                ", remark='" + remark + '\'' +
+                '}';
     }
 }

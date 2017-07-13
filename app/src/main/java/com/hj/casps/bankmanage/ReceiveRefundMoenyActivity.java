@@ -208,7 +208,6 @@ public class ReceiveRefundMoenyActivity extends ActivityBaseHeader implements On
                     @Override
                     public void onSuccess(QueryMmbBankAccountRespon<List<ResqueryGetRefundMoneyEntity>> listData, Call call, Response response) {
                         waitDialogRectangle.dismiss();
-                        mList.clear();
                         if (listData != null && listData.return_code == 0 && listData.list != null) {
                             mList = listData.list;
                             pageCount = listData.pagecount;

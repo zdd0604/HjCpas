@@ -105,21 +105,17 @@ public class BillsSectionDetailsActivity extends ActivityBaseHeader2 {
      * 保存数据
      */
     private void saveSendData() {
-        AppOrderGoodsUtils.getInstance(this).deleteAllCheckWaitBillsEntity();
-        CheckWaitBillsEntity checkWaitBillsEntity = new CheckWaitBillsEntity(Constant.getUUID(),String.valueOf(SettleCode), billJson);
-        LogShow("save:" + SettleCode + "-----" + mGson.toJson(billJson));
-        if (StringUtils.isStrTrue(billJson)) {
-            AppOrderGoodsUtils.getInstance(this).insertCheckWaitBillsEntity(checkWaitBillsEntity);
-        }
+        AppOrderGoodsUtils.getInstance(this).deleteCheckWaitBillsEntity(id);
+        CheckWaitBillsEntity checkWaitBillsEntity = new CheckWaitBillsEntity(Constant.getUUID(), id, billJson);
+        AppOrderGoodsUtils.getInstance(this).insertCheckWaitBillsEntity(checkWaitBillsEntity);
     }
 
     /**
      * 添加本地数据
      */
     private void addLocality() {
-        List<CheckWaitBillsEntity> list =
-                AppOrderGoodsUtils.getInstance(this).queryCheckWaitBillsEntity(id);
-        LogShow("addLocality:" +list.toString());
+        List<CheckWaitBillsEntity> list = AppOrderGoodsUtils.getInstance(this).queryCheckWaitBillsEntity(id);
+
         if (list.size() == 0)
             return;
 

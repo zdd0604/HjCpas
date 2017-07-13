@@ -3,6 +3,8 @@ package com.hj.casps.bankmanage;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -13,6 +15,8 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.hj.casps.R;
+import com.hj.casps.adapter.payadapter.PayMentAdapter;
+import com.hj.casps.adapter.payadapter.ReceiptAdapter;
 import com.hj.casps.adapter.payadapter.RefundAdapter;
 import com.hj.casps.adapter.payadapter.RefundPayMentCodeAdapter;
 import com.hj.casps.base.ActivityBaseHeader;
@@ -25,6 +29,7 @@ import com.hj.casps.entity.paymentmanager.ReqPayMoneyOffine;
 import com.hj.casps.entity.paymentmanager.ResPayMoneyOffline;
 import com.hj.casps.entity.paymentmanager.response.RefundMoneyOfflineBean;
 import com.hj.casps.entity.paymentmanager.response.RequestQueryRefundMoney;
+import com.hj.casps.entity.paymentmanager.response.ResQueryGetMoneyEntity;
 import com.hj.casps.entity.paymentmanager.response.ResRefundMoneyOfflineEntity;
 import com.hj.casps.entity.paymentmanager.response.WytUtils;
 import com.hj.casps.ui.MyDialog;
@@ -79,33 +84,71 @@ public class RefundActivity extends ActivityBaseHeader implements OnPullListener
     FancyButton fb;
 
     private RefundAdapter refundAdapter;
-    private List<ResRefundMoneyOfflineEntity> mList = new ArrayList<>();
-    private List<ResRefundMoneyOfflineEntity> dbList = new ArrayList<>();
-    private List<ResRefundMoneyOfflineEntity> pubList = new ArrayList<>();
     //提交数据的集合
     private List<ReqPayMoneyOffine> orderList = new ArrayList();
     private MyDialog myDialog;
     private int goodsCount = 0;
-    private double goodsMoeny;
-    private int pageno = 0;
-    private int pagesize = 5;
     private View contentView;
-    private boolean isReSave = true;//是否缓存
-    private boolean isSave = true;//是否清除数据
-    private int pagecount;
+    private boolean isSave = true;//是否保存数据
+    private boolean isRSave = true;//重置时是否保存数据
+    private boolean isSetAdapter = true;//重置时是否保存数据
+    private List<ResRefundMoneyOfflineEntity> mList;
+    private List<ResRefundMoneyOfflineEntity> dbList;
     private List<ResRefundMoneyOfflineEntity.AccountlistBean> accountlist;
+
+    private Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case Constant.HANDLERTYPE_0:
+                    initData(pageNo);
+                    break;
+                case Constant.HANDLERTYPE_1:
+                    refreshUI();
+                    break;
+                case Constant.HANDLERTYPE_2:
+                    saveLocalData();
+                    break;
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_payment);
         ButterKnife.bind(this);
+        initView();
+    }
+
+
+    private void initView() {
+        setTitle(getString(R.string.head_retreat_money_title));
+        refundAdapter.setOnCheckedkType(this);
+        layout_bottom_tv_2.setText(getString(R.string.hint_reset_title));
+        layout_bottom_tv_2.setOnClickListener(this);
+        layout_bottom_tv_2.setBackgroundResource(R.color.light_orange);
+        layout_bottom_tv_3.setOnClickListener(this);
+        layout_bottom_tv_3.setText(getText(R.string.head_retreat_money_verify_title));
+        layout_bottom_tv_4.setVisibility(View.GONE);
+        fb.setVisibility(View.GONE);
+        layout_head_right_tv.setOnClickListener(this);
+        layout_bottom_check_1.setOnClickListener(this);
+        layout_bottom_check_layout1.setOnClickListener(this);
+
+        mList = new ArrayList<>();
+        dbList = new ArrayList<>();
+        mLoader = new NestRefreshLayout(payment_scroll);
+        mLoader.setOnLoadingListener(this);
+        mLoader.setPullLoadEnable(true);
+        mLoader.setPullRefreshEnable(true);
+
         if (hasInternetConnected()) {
-            initData(pageno);
+            mHandler.sendEmptyMessage(Constant.HANDLERTYPE_0);
         } else {
             getDataForLocal();
         }
-        initView();
 
     }
 
@@ -132,40 +175,56 @@ public class RefundActivity extends ActivityBaseHeader implements OnPullListener
 
     // 刷新UI
     private void refreshUI() {
-        System.out.println("r=refreshUI" + pagecount);
         if (isSave) {
-            pubList.clear();
+            dbList.clear();
         }
-        for (int i = 0; i < mList.size(); i++) {
-            dbList.add(mList.get(i));
-            pubList.add(mList.get(i));
-        }
-        if (pageno == 0) {
-            refundAdapter = new RefundAdapter(this, mList);
+
+        dbList.addAll(mList);
+        LogShow("mList:" + mList.toString());
+        LogShow("dblist:" + dbList.toString());
+
+        if (isSetAdapter) {
+            if (pageNo == 0) {
+                refundAdapter = new RefundAdapter(this, mList);
+                payment_list.setAdapter(refundAdapter);
+                refundAdapter.notifyDataSetChanged();
+            } else {
+                if (pageNo <= ((total - 1) / pageSize)) {
+                    refundAdapter.refreshList(mList);
+                } else {
+                    mLoader.onLoadAll();//加载全部
+                }
+            }
+        } else {
+            for (int i = 0; i < dbList.size(); i++) {
+                dbList.get(i).clearData();
+            }
+            refundAdapter = new RefundAdapter(this, dbList);
             payment_list.setAdapter(refundAdapter);
             refundAdapter.notifyDataSetChanged();
-        } else {
-            if (pageno <= ((pagecount - 1) / pagesize)) {
-                refundAdapter.addRes(mList);
-            } else {
-                mLoader.onLoadAll();
+        }
+        if (isRSave)
+            mHandler.sendEmptyMessage(Constant.HANDLERTYPE_2);
+
+        refundAdapter.setOnCheckedkType(this);
+
+        if (dbList != null && dbList.size() > 0)
+            for (int i = 0; i < dbList.size(); i++) {
+                if (!dbList.get(i).isChecked()) {
+                    layout_bottom_check_1.setChecked(false);
+                    return;
+                }
             }
-        }
-
-        if (isReSave) {
-            saveLocalData();
-        }
-
+        waitDialogRectangle.dismiss();
     }
 
     //保存数据到本地数据库
     private void saveLocalData() {
         //先删除数据
         WytUtils.getInstance(this).DeleteAllRefundMoneyInfo();
-        ;
-        for (int i = 0; i < pubList.size(); i++) {
+        for (int i = 0; i < dbList.size(); i++) {
             RefundMoneyOfflineBean bean = new RefundMoneyOfflineBean();
-            ResRefundMoneyOfflineEntity entity = pubList.get(i);
+            ResRefundMoneyOfflineEntity entity = dbList.get(i);
             bean.setId(entity.getId());
             bean.setBuyersName(entity.getBuyersName());
             bean.setExeRefundNum(entity.getExeRefundNum());
@@ -181,61 +240,46 @@ public class RefundActivity extends ActivityBaseHeader implements OnPullListener
     //请求数据接口
     private void initData(final int pageno) {
         waitDialogRectangle.show();
-        PublicArg p = Constant.publicArg;
         Constant.JSONFATHERRESPON = "QueryMmbBankAccountRespon";
-        RequestQueryRefundMoney r = new RequestQueryRefundMoney(p.getSys_token(), Constant.getUUID(), Constant.SYS_FUNC, p.getSys_user(), p.getSys_member(), Constant.appOrderMoney_orderId, Constant.appOrderMoney_goodsName, Constant.appOrderMoney_buyersName, String.valueOf(pageno + 1), String.valueOf(pagesize));
-        String param = mGson.toJson(r);
-        log("r=QueryReFundMoneyUrl" + r.toString());
-        OkGo.post(Constant.QueryReFundMoneyUrl).params("param", param).execute(new JsonCallBack<QueryMmbBankAccountRespon<List<ResRefundMoneyOfflineEntity>>>() {
-            @Override
-            public void onSuccess(QueryMmbBankAccountRespon<List<ResRefundMoneyOfflineEntity>> listData, Call call, Response response) {
-                waitDialogRectangle.dismiss();
-                mList.clear();
-                if (listData != null && listData.return_code == 0 && listData.list != null) {
-                    RefundActivity.this.mList = listData.list;
-                    RefundActivity.this.pagecount = listData.pagecount;
-                    refreshUI();
-                } else {
-                    toastSHORT(listData.return_message);
-                }
+        RequestQueryRefundMoney r = new RequestQueryRefundMoney(
+                publicArg.getSys_token(),
+                Constant.getUUID(),
+                Constant.SYS_FUNC,
+                publicArg.getSys_user(),
+                publicArg.getSys_member(),
+                Constant.appOrderMoney_orderId,
+                Constant.appOrderMoney_goodsName,
+                Constant.appOrderMoney_buyersName,
+                String.valueOf(pageno + 1),
+                String.valueOf(pageSize));
+        LogShow("r=QueryReFundMoneyUrl" + mGson.toJson(r));
+        OkGo.post(Constant.QueryReFundMoneyUrl)
+                .params("param", mGson.toJson(r))
+                .execute(new JsonCallBack<QueryMmbBankAccountRespon<List<ResRefundMoneyOfflineEntity>>>() {
+                    @Override
+                    public void onSuccess(QueryMmbBankAccountRespon<List<ResRefundMoneyOfflineEntity>> listData, Call call, Response response) {
+                        waitDialogRectangle.dismiss();
+                        if (listData != null && listData.return_code == 0 && listData.list != null) {
+                            mList = listData.list;
+                            total = listData.pagecount;
+                            mHandler.sendEmptyMessage(Constant.HANDLERTYPE_1);
+                        } else {
+                            toastSHORT(listData.return_message);
+                        }
+                    }
 
-            }
-
-            @Override
-            public void onError(Call call, Response response, Exception e) {
-                super.onError(call, response, e);
-                toastSHORT(e.getMessage());
-                waitDialogRectangle.dismiss();
-
-                if (Constant.public_code) {
-                    LogoutUtils.exitUser(RefundActivity.this);
-                }
-            }
-        });
+                    @Override
+                    public void onError(Call call, Response response, Exception e) {
+                        super.onError(call, response, e);
+                        toastSHORT(e.getMessage());
+                        waitDialogRectangle.dismiss();
+                        if (Constant.public_code) {
+                            LogoutUtils.exitUser(RefundActivity.this);
+                        }
+                    }
+                });
     }
 
-
-    private void initView() {
-        setTitle(getString(R.string.head_retreat_money_title));
-        refundAdapter.setOnCheckedkType(this);
-        layout_bottom_tv_2.setText(getString(R.string.hint_reset_title));
-        layout_bottom_tv_2.setOnClickListener(this);
-        layout_bottom_tv_2.setBackgroundResource(R.color.light_orange);
-        layout_bottom_tv_3.setOnClickListener(this);
-        layout_bottom_tv_3.setText(getText(R.string.head_retreat_money_verify_title));
-        layout_bottom_tv_4.setVisibility(View.GONE);
-        fb.setVisibility(View.GONE);
-        layout_head_right_tv.setOnClickListener(this);
-        layout_bottom_check_1.setOnClickListener(this);
-        layout_bottom_check_layout1.setOnClickListener(this);
-
-        mLoader = new NestRefreshLayout(payment_scroll);
-        mLoader.setOnLoadingListener(this);
-        mLoader.setPullLoadEnable(true);
-        mLoader.setPullRefreshEnable(true);
-
-
-    }
 
     @Override
     public void onClick(View v) {
@@ -254,10 +298,11 @@ public class RefundActivity extends ActivityBaseHeader implements OnPullListener
                 CreateDialog(Constant.DIALOG_CONTENT_34);
                 break;
             case R.id.layout_bottom_tv_2:
-                //重置
-                isReSave = false;
-                isSave = true;
-                clearDatas(false);
+                isSave = false;
+                isSetAdapter = false;
+                selectAll(false);
+                deleteBills(false);
+                mHandler.sendEmptyMessage(Constant.HANDLERTYPE_1);
                 break;
         }
     }
@@ -268,15 +313,14 @@ public class RefundActivity extends ActivityBaseHeader implements OnPullListener
             dbList.get(i).clearData();
         }
         goodsCount = 0;
-        pageno = 0;
+        pageNo = 0;
         orderList.clear();
         layout_bottom_check_1.setChecked(false);
         if (isInitData) {
             dbList.clear();
-            initData(pageno);
+            initData(pageNo);
         } else {
             refreshUI();
-
         }
     }
 
@@ -373,7 +417,13 @@ public class RefundActivity extends ActivityBaseHeader implements OnPullListener
             toastSHORT(getString(R.string.time_out));
             return;
         }
-        ResPayMoneyOffline r = new ResPayMoneyOffline(p.getSys_token(), timeUUID, Constant.SYS_FUNC, p.getSys_user(), p.getSys_member(), orderList);
+        ResPayMoneyOffline r = new ResPayMoneyOffline(
+                p.getSys_token(),
+                timeUUID,
+                Constant.SYS_FUNC,
+                p.getSys_user(),
+                p.getSys_member(),
+                orderList);
         String param = mGson.toJson(r);
         waitDialogRectangle.show();
         OkGo.post(Constant.RefundMoneyOffline).params("param", param).execute(new StringCallback() {
@@ -384,11 +434,11 @@ public class RefundActivity extends ActivityBaseHeader implements OnPullListener
                 if (pub != null) {
                     if (pub.getReturn_code() == 0) {
                         new MyToast(RefundActivity.this, pub.getReturn_message());
-                        clearDatas(true);
                     } else if (pub.getReturn_code() == 1101 || pub.getReturn_code() == 1102) {
                         toastSHORT("重复登录或令牌超时");
                         LogoutUtils.exitUser(RefundActivity.this);
                     }
+                    deleteBills(false);
                 } else {
                     toastSHORT(pub.getReturn_message());
                 }
@@ -472,21 +522,36 @@ public class RefundActivity extends ActivityBaseHeader implements OnPullListener
 
     @Override
     public void onRefresh(AbsRefreshLayout listLoader) {
-        pageno = 0;
-        layout_bottom_check_1.setChecked(false);
-        isEmptyParam();
+        pageNo = 0;
         isSave = true;
-        initData(pageno);
+        if (StringUtils.isStrTrue(Constant.appOrderMoney_orderId) ||
+                StringUtils.isStrTrue(Constant.appOrderMoney_goodsName)
+                || StringUtils.isStrTrue(Constant.appOrderMoney_buyersName)) {
+            isRSave = false;
+        } else {
+            isRSave = true;
+        }
+        if (hasInternetConnected())
+            mHandler.sendEmptyMessage(Constant.HANDLERTYPE_0);
+
         mLoader.onLoadFinished();//加载结束
+
     }
 
     @Override
     public void onLoading(AbsRefreshLayout listLoader) {
-        pageno++;
-        layout_bottom_check_1.setChecked(false);
-//        selectAll(false);
-        isEmptyParam();
-        initData(pageno);
+        pageNo++;
+        isSave = false;
+        if (StringUtils.isStrTrue(Constant.appOrderMoney_orderId) ||
+                StringUtils.isStrTrue(Constant.appOrderMoney_goodsName)
+                || StringUtils.isStrTrue(Constant.appOrderMoney_buyersName)) {
+            isRSave = false;
+        } else {
+            isRSave = true;
+        }
+        if (dbList.size() < total)
+            if (hasInternetConnected())
+                mHandler.sendEmptyMessage(Constant.HANDLERTYPE_0);
         mLoader.onLoadFinished();//加载结束
     }
 
@@ -494,10 +559,10 @@ public class RefundActivity extends ActivityBaseHeader implements OnPullListener
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == Constant.PAYMENT_REQUEST_CODE && resultCode == Constant.PAYMENTRESULTOK) {
-            isEmptyParam();
-            pageno = 0;
-            dbList.clear();
-            initData(pageno);
+            pageNo = 0;
+            isSave = true;
+            isRSave = false;
+            initData(pageNo);
         }
     }
 
@@ -528,24 +593,38 @@ public class RefundActivity extends ActivityBaseHeader implements OnPullListener
         startActivity(intent);
     }
 
+
+    //全选
     private void selectAll(boolean isck) {
         for (int i = 0; i < dbList.size(); i++) {
             // 改变boolean
-            ResRefundMoneyOfflineEntity entity = dbList.get(i);
-            entity.setChecked(isck);
+            dbList.get(i).setChecked(isck);
             // 如果为选中
-            if (entity.isChecked()) {
+            if (dbList.get(i).isChecked()) {
                 goodsCount++;
-               /* if(entity.getPayNum()!=null){
-//                goodsMoeny += Double.valueOf(entity.getPayNum());
-                }*/
             } else {
                 goodsCount = 0;
-                goodsMoeny = 0;
             }
         }
         refundAdapter.notifyDataSetChanged();
     }
+
+
+    /**
+     * 清除数据
+     */
+    private void deleteBills(boolean isDelete) {
+        // 刷新
+        goodsCount = 0;
+        pageNo = 0;
+        //判断要不要清空数据
+        if (isDelete)
+            dbList.clear();
+        mList.clear();
+        orderList.clear();
+        waitDialogRectangle.dismiss();
+    }
+
 
     @Override
     protected void onDestroy() {
@@ -553,15 +632,4 @@ public class RefundActivity extends ActivityBaseHeader implements OnPullListener
         Constant.clearDatas();
     }
 
-    public void isEmptyParam() {
-        if (StringUtils.isStrTrue(Constant.appOrderMoney_orderId) ||
-                StringUtils.isStrTrue(Constant.appOrderMoney_goodsName)
-                || StringUtils.isStrTrue(Constant.appOrderMoney_buyersName)) {
-            isSave = true;
-            isReSave = false;
-        } else {
-            isSave = false;
-            isReSave = true;
-        }
-    }
 }
