@@ -60,6 +60,7 @@ public class AppOrderGoodsUtils {
         WarehouseEntityDao = daoSession.getWarehouseEntityDao();
         querySttleRegistGain = daoSession.getQuerySttleRegistGainDao();
         querySttleManageGainDao = daoSession.getQuerySttleManageGainDao();
+        checkWaitBillsEntityDao = daoSession.getCheckWaitBillsEntityDao();
     }
 
     public static AppOrderGoodsUtils getInstance(Activity context) {
