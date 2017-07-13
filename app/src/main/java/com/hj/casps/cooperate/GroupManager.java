@@ -173,14 +173,14 @@ public class GroupManager extends ActivityBaseHeader implements View.OnClickList
             case 2:
                 String json = CooperateDirUtils.getInstance(this).queryFragmentDaoInfo("201", "0", "0");
                 WhoCareMe whoCareMe = mGson.fromJson(json, WhoCareMe.class);
-                addwhocaremes = whoCareMe.getList();
-                if (addwhocaremes.isEmpty()) {
+                whocaremes = whoCareMe.getList();
+                if (whocaremes.isEmpty()) {
                     toast("没有结果");
                     whoCareMeAdapter.removeAll();
                 }
-                whoCareMeAdapter.updateRes(addwhocaremes);
-                whocaremes = new ArrayList<>();
-                whocaremes.addAll(addwhocaremes);
+                whoCareMeAdapter.updateRes(whocaremes);
+//                whocaremes = new ArrayList<>();
+//                whocaremes.addAll(addwhocaremes);
                 break;
         }
 
