@@ -183,8 +183,8 @@ public class CheckWaitBills extends ActivityBaseHeader implements View.OnClickLi
      * 加载本地数据
      */
     private void addLocality() {
-        dbList = AppOrderGoodsUtils.getInstance(this).queryQueryPendingSttleGainInfo();
-        if (dbList.size() > 0) {
+        mList = AppOrderGoodsUtils.getInstance(this).queryQueryPendingSttleGainInfo();
+        if (mList.size() > 0) {
             mHandler.sendEmptyMessage(Constant.HANDLERTYPE_0);
         }
     }

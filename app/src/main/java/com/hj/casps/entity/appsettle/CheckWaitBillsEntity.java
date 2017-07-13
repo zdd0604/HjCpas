@@ -34,4 +34,12 @@ public class CheckWaitBillsEntity implements Serializable {
     public void setBillsJson(String billsJson) {
         this.billsJson = billsJson;
     }
+
+    @Override
+    public String toString() {
+        return "CheckWaitBillsEntity{" +
+                "appSettle='" + appSettle + '\'' +
+                ", billsJson='" + billsJson + '\'' +
+                '}';
+    }
 }
