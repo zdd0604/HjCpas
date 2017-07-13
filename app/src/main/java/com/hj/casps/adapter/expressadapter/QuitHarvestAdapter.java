@@ -110,9 +110,9 @@ public class QuitHarvestAdapter extends CommonAdapter<QueryGetReturnGoodsGain> {
         hooder.setText(R.id.layout_tv_order_3, queryGetReturnGoodsGain.getOrdertitleNumber() + "");
         hooder.setText(R.id.harvest_tv_title_1, queryGetReturnGoodsGain.getGoodsName());
         hooder.setText(R.id.harvest_tv_content_2, queryGetReturnGoodsGain.getBuyers_name());
-        hooder.setText(R.id.harvest_tv_content_3, queryGetReturnGoodsGain.getGoods_num() + " 件");
-        hooder.setText(R.id.harvest_tv_content_4, queryGetReturnGoodsGain.getGetreturngoodsNum() + " 件");
-        hooder.setText(R.id.harvest_tv_content_5, queryGetReturnGoodsGain.getExeGetreturngoodsNum() + " 件");
+        hooder.setText(R.id.harvest_tv_content_3, queryGetReturnGoodsGain.getGoods_num() + "");
+        hooder.setText(R.id.harvest_tv_content_4, queryGetReturnGoodsGain.getGetreturngoodsNum() + "");
+        hooder.setText(R.id.harvest_tv_content_5, queryGetReturnGoodsGain.getExeGetreturngoodsNum() + "");
         if (StringUtils.isStrTrue(queryGetReturnGoodsGain.getNum()))
             hooder.setEdiTextView(R.id.harvest_ed_content_6, queryGetReturnGoodsGain.getNum());
 
