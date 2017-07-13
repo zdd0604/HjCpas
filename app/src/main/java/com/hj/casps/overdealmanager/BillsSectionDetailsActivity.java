@@ -106,7 +106,7 @@ public class BillsSectionDetailsActivity extends ActivityBaseHeader2 {
      */
     private void saveSendData() {
         AppOrderGoodsUtils.getInstance(this).deleteAllCheckWaitBillsEntity();
-        CheckWaitBillsEntity checkWaitBillsEntity = new CheckWaitBillsEntity(SettleCode + "", billJson);
+        CheckWaitBillsEntity checkWaitBillsEntity = new CheckWaitBillsEntity(Constant.getUUID(),String.valueOf(SettleCode), billJson);
         LogShow("save:" + SettleCode + "-----" + mGson.toJson(billJson));
         if (StringUtils.isStrTrue(billJson)) {
             AppOrderGoodsUtils.getInstance(this).insertCheckWaitBillsEntity(checkWaitBillsEntity);
@@ -119,9 +119,10 @@ public class BillsSectionDetailsActivity extends ActivityBaseHeader2 {
     private void addLocality() {
         List<CheckWaitBillsEntity> list =
                 AppOrderGoodsUtils.getInstance(this).queryCheckWaitBillsEntity(id);
+        LogShow("addLocality:" +list.toString());
         if (list.size() == 0)
             return;
-        LogShow("addLocality:" +list.toString());
+
         for (int i = 0; i < list.size(); i++) {
             CheckWaitBillsEntity entity = list.get(i);
             String json = entity.getBillsJson();
