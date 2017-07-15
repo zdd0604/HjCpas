@@ -118,10 +118,10 @@
                     android:id="@+id/editGoods_select_pic_delete"
                     android:layout_width="@dimen/size_20"
                     android:layout_height="@dimen/size_20"
-                    android:visibility="gone"
                     android:layout_alignRight="@+id/editGoods_select_pic"
                     android:layout_alignTop="@+id/editGoods_select_pic"
-                    android:src="@mipmap/fo_close" />
+                    android:src="@mipmap/fo_close"
+                    android:visibility="gone" />
             </RelativeLayout>
 
         </LinearLayout>
@@ -231,8 +231,8 @@
                     android:id="@+id/editGoods_pro_pre_Et"
                     style="@style/text_style"
                     android:layout_weight="2"
-                    android:maxLength="50"
-                    android:hint="@string/pro_pre" />
+                    android:hint="@string/pro_pre"
+                    android:maxLength="50" />
 
             </LinearLayout>
 
@@ -328,32 +328,30 @@
                     android:textColor="@color/grey" />
 
                 <EditText
-                    android:inputType="numberDecimal"
                     android:id="@+id/editGoods_Specifications_Et"
                     style="@style/text_edittext"
                     android:layout_weight="3"
+                    android:inputType="numberDecimal"
                     android:maxLength="50" />
 
-              <!-- <TextView
-                    android:text="千克"
-                    android:id="@+id/editGoods_Specifications_Spi"
-                    style="@style/text_edittext"
-                    android:layout_marginLeft="@dimen/size_10"
-                    android:layout_weight="1"
-                    android:drawableRight="@mipmap/fo_sjt"
-                    android:paddingLeft="@dimen/size_5"
-                    android:paddingRight="@dimen/size_5" />-->
+                <!-- <TextView
+                      android:text="千克"
+                      android:id="@+id/editGoods_Specifications_Spi"
+                      style="@style/text_edittext"
+                      android:layout_marginLeft="@dimen/size_10"
+                      android:layout_weight="1"
+                      android:drawableRight="@mipmap/fo_sjt"
+                      android:paddingLeft="@dimen/size_5"
+                      android:paddingRight="@dimen/size_5" />-->
 
-            <Spinner
-                android:layout_gravity="center_vertical"
+                <Spinner
                     android:id="@+id/sp_specification"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/size_40"
+                    android:layout_gravity="center_vertical"
                     android:layout_weight="1"
                     android:background="@drawable/edittext_contains_border"
                     android:gravity="center" />
-
-
 
 
             </LinearLayout>
@@ -365,69 +363,71 @@
 
                 <TextView
                     style="@style/text_style"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="2"
                     android:text="@string/quotes_create_price1"
-                    android:textColor="@color/grey"
-                    android:layout_height="match_parent" />
+                    android:textColor="@color/grey" />
 
                 <EditText
-                    android:inputType="numberDecimal"
                     android:id="@+id/editGoods_price01_Et"
                     style="@style/text_edittext"
                     android:layout_weight="3"
+                    android:inputType="numberDecimal"
                     android:maxLength="50"
                     android:singleLine="true" />
 
-               <!-- <View
-                    android:layout_width="0dp"
-                    android:layout_height="3dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_weight="0.2"
-                    android:background="@color/grey" />-->
+                <!-- <View
+                     android:layout_width="0dp"
+                     android:layout_height="3dp"
+                     android:layout_gravity="center_vertical"
+                     android:layout_weight="0.2"
+                     android:background="@color/grey" />-->
                 <TextView
-                    android:text="¥"
-                    android:clickable="false"
-                    android:layout_gravity="center_vertical"
                     android:layout_width="0dp"
-                    android:textSize="@dimen/size_20"
                     android:layout_height="@dimen/size_40"
+                    android:layout_gravity="center_vertical"
                     android:layout_weight="1"
                     android:background="@drawable/edittext_contains_border"
-                    android:gravity="center" />
-
+                    android:clickable="false"
+                    android:gravity="center"
+                    android:text="¥"
+                    android:textSize="@dimen/size_20" />
 
 
             </LinearLayout>
+
             <LinearLayout
                 style="@style/LinearLayout_style"
                 android:layout_height="@dimen/size_65">
+
                 <TextView
                     style="@style/text_style"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="2"
                     android:text="@string/quotes_create_price2"
-                    android:textColor="@color/grey"
-                    android:layout_height="match_parent" />
+                    android:textColor="@color/grey" />
+
                 <EditText
-                    android:inputType="numberDecimal"
                     android:id="@+id/editGoods_price02_Et"
                     style="@style/text_edittext"
                     android:layout_weight="3"
+                    android:inputType="numberDecimal"
                     android:maxLength="50"
                     android:singleLine="true" />
+
                 <TextView
-                    android:text="¥"
-                    android:clickable="false"
-                    android:layout_gravity="center_vertical"
                     android:id="@+id/sp_unitPrice"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/size_40"
+                    android:layout_gravity="center_vertical"
                     android:layout_weight="1"
-                    android:textSize="@dimen/size_20"
                     android:background="@drawable/edittext_contains_border"
-                    android:gravity="center" />
-
+                    android:clickable="false"
+                    android:gravity="center"
+                    android:text="¥"
+                    android:textSize="@dimen/size_20" />
 
 
             </LinearLayout>
@@ -477,6 +477,6 @@
             app:fb_radius="@dimen/size_5"
             app:fb_text="@string/save"
             app:fb_textColor="@color/white"
-            app:fb_textSize="@dimen/btn_size"/>
+            app:fb_textSize="@dimen/btn_size" />
     </LinearLayout>
 </ScrollView>

@@ -30,6 +30,8 @@ import com.hj.casps.R;
 import com.hj.casps.adapter.TestArrayAdapter;
 import com.hj.casps.base.ActivityBaseHeader2;
 import com.hj.casps.common.Constant;
+import com.hj.casps.entity.appgoods.SelectAllunitName;
+import com.hj.casps.entity.appgoods.SelectAllunitNameJson;
 import com.hj.casps.entity.goodsmanager.Pub;
 import com.hj.casps.entity.goodsmanager.SelectPicture02ListEntity;
 import com.hj.casps.entity.goodsmanager.request.RequestCheckName;
@@ -51,6 +53,7 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
@@ -145,7 +148,8 @@ public class ActivityEditGoods extends ActivityBaseHeader2 implements View.OnCli
     private Boolean isRepeat;
     private String imagePath;
     private String imageId;
-
+    private List<SelectAllunitNameJson.AllunitListBean> bean;
+    private String[] specificationArr;
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -153,7 +157,6 @@ public class ActivityEditGoods extends ActivityBaseHeader2 implements View.OnCli
             switch (msg.what) {
                 //数据请求成功
                 case Constant.HANDLERTYPE_0:
-
                     break;
                 case Constant.HANDLERTYPE_1:
                     if (isRepeat) {
@@ -164,20 +167,30 @@ public class ActivityEditGoods extends ActivityBaseHeader2 implements View.OnCli
                     }
                     break;
                 case Constant.HANDLERTYPE_3:
-                    toast("商品添加提交成功");
+                    toastSHORT("商品添加提交成功");
                     Constant.isFreshGood = true;
                     setResult(RESULT_OK);
                     ActivityEditGoods.this.finish();
                     break;
                 case Constant.HANDLERTYPE_4:
-                    toast("商品编辑提交成功");
+                    toastSHORT("商品编辑提交成功");
                     Constant.isFreshGood = true;
                     setResult(RESULT_OK);
                     ActivityEditGoods.this.finish();
                     break;
+                case Constant.HANDLERTYPE_5:
+                    getSelectAllunitName();
+                    break;
+                case Constant.HANDLERTYPE_6:
+                    setSpanrAdapter();
+                    break;
             }
         }
     };
+
+    private void setSpanrAdapter() {
+        sp_specification.setAdapter(new TestArrayAdapter(this, specificationArr));
+    }
 
 
     @Override
@@ -185,19 +198,52 @@ public class ActivityEditGoods extends ActivityBaseHeader2 implements View.OnCli
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editgoods);
         EventBus.getDefault().register(this);
+        ButterKnife.bind(this);
+        initView();
+    }
+
+
+    /**
+     * 初始化布局
+     */
+    private void initView() {
         goodsId = getIntent().getStringExtra(Constant.INTENT_GOODSID);
         flag = getIntent().getBooleanExtra(Constant.INTENTISADDGOODS, false);
         if (flag) {
             setTitle("商品添加");
+            mHandler.sendEmptyMessage(Constant.HANDLERTYPE_5);
         } else {
             setTitle(getString(R.string.editgood));
+            mHandler.sendEmptyMessage(Constant.HANDLERTYPE_5);
         }
         setTitleRight(null, null);
-        ButterKnife.bind(this);
-        initView();
-        if (!flag) {
-            initData2();
-        }
+        selectPic.setOnClickListener(this);
+        title1.setOnClickListener(this);
+        title2.setOnClickListener(this);
+        submit_Fcybtn.setOnClickListener(this);
+        top_desc.setOnClickListener(this);
+        price_from_Et.addTextChangedListener(new TextOnChangeListener());
+        price_to_Et.addTextChangedListener(new TextOnChangeListener());
+        findViewById(R.id.editGoods_select_class_Ll).setOnClickListener(this);
+        productDate.setOnClickListener(this);
+        initData(multCheckDatas);
+        adapter = new GridAdapter(this);
+        gridView.setAdapter(adapter);
+
+//        String[] unitPriceArr = {"￥", "￥"};
+
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (position == (pictrueDatas.size() - 1)) {
+                    //原始的
+                    Intent intent = new Intent(ActivityEditGoods.this, SelectPicture_new.class);
+                    intent.putExtra("PicStyle", 2);
+                    startActivity(intent);
+                }
+            }
+
+        });
     }
 
 
@@ -242,20 +288,18 @@ public class ActivityEditGoods extends ActivityBaseHeader2 implements View.OnCli
         Specification_Et.setText(g.getSpecification());
         //规格
 
+        int positon = Arrays.binarySearch(specificationArr, g.getUnitSpecification());
+        int index = 0;
+        for (int i = 0; i < specificationArr.length; i++) {
+            if (g.getUnitSpecification().equals(specificationArr[i])){
+                index = i;
+            }
+        }
+        LogShow(index + "----" + g.getUnitSpecification());
+        sp_specification.setSelection(index);
 
         price_from_Et.setText(g.getMinPrice() + "");
         price_to_Et.setText(g.getMaxPrice() + "");
-        if (g.getUnitSpecification() != null) {
-            switch (g.getUnitSpecification()) {
-                case "克":
-                    sp_specification.setSelection(0, true);
-                    break;
-                case "千克":
-                    sp_specification.setSelection(1, true);
-                    break;
-            }
-        }
-
         desc_Et.setText(g.getDescribed());
     }
 
@@ -319,39 +363,6 @@ public class ActivityEditGoods extends ActivityBaseHeader2 implements View.OnCli
         }
     }
 
-    /**
-     * 初始化布局
-     */
-    private void initView() {
-        selectPic.setOnClickListener(this);
-        title1.setOnClickListener(this);
-        title2.setOnClickListener(this);
-        submit_Fcybtn.setOnClickListener(this);
-        top_desc.setOnClickListener(this);
-        price_from_Et.addTextChangedListener(new TextOnChangeListener());
-        price_to_Et.addTextChangedListener(new TextOnChangeListener());
-        findViewById(R.id.editGoods_select_class_Ll).setOnClickListener(this);
-        productDate.setOnClickListener(this);
-        initData(multCheckDatas);
-        adapter = new GridAdapter(this);
-        gridView.setAdapter(adapter);
-        String[] specificationArr = {"克", "千克"};
-//        String[] unitPriceArr = {"￥", "￥"};
-        sp_specification.setAdapter(new TestArrayAdapter(this, specificationArr));
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (position == (pictrueDatas.size() - 1)) {
-                    //原始的
-                    Intent intent = new Intent(ActivityEditGoods.this, SelectPicture_new.class);
-                    intent.putExtra("PicStyle", 2);
-                    startActivity(intent);
-                }
-            }
-
-        });
-
-    }
 
     /**
      * 日历控件的显示
@@ -788,6 +799,56 @@ public class ActivityEditGoods extends ActivityBaseHeader2 implements View.OnCli
             categoryId = (String) data.getExtras().get(Constant.INTENT_GOODCATEGORYID);
             good_class.setText(categoryName);
         }
+    }
+
+    /**
+     * 接口url：appGoods/selectAllunitName
+     * 功能描述：查询所有单位列表list
+     */
+    public void getSelectAllunitName() {
+        SelectAllunitName seName = new SelectAllunitName(
+                publicArg.getSys_token(),
+                Constant.getUUID(),
+                Constant.SYS_FUNC,
+                publicArg.getSys_user(),
+                publicArg.getSys_name(),
+                publicArg.getSys_member()
+        );
+
+        LogShow(mGson.toJson(seName));
+        OkGo.post(Constant.SelectAllunitNameUrl)
+                .tag(this)
+                .params("param", mGson.toJson(seName))
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(String data, Call call, Response response) {
+                        LogShow(data);
+
+                        SelectAllunitNameJson entity = mGson.fromJson(data, SelectAllunitNameJson.class);
+                        if (entity.getReturn_code() != 0) {
+                            toastSHORT(entity.getReturn_message());
+                            return;
+                        }
+                        bean = entity.getAllunitList();
+                        specificationArr = new String[bean.size()];
+                        for (int i = 0; i < bean.size(); i++) {
+                            specificationArr[i] = bean.get(i).getUnitName();
+                        }
+                        if (specificationArr.length > 0)
+                            mHandler.sendEmptyMessage(Constant.HANDLERTYPE_6);
+                        if (!flag) {
+                            initData2();
+                        }
+                    }
+
+                    @Override
+                    public void onError(Call call, Response response, Exception e) {
+                        super.onError(call, response, e);
+                        if (!flag) {
+                            initData2();
+                        }
+                    }
+                });
     }
 
     /*//验证表单
