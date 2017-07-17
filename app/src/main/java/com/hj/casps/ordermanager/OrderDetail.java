@@ -145,6 +145,7 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
         } else {
             id = "";
             orders = getIntent().getParcelableArrayListExtra("orders");
+            toast(orders.get(0).getFinalprice());
             orderList = getIntent().getBooleanExtra("OrderList", false);
             buy_name = getIntent().getStringExtra("buy_name");
             buy_id = getIntent().getStringExtra("buy_id");
