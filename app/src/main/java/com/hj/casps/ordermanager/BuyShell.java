@@ -256,7 +256,7 @@ public class BuyShell extends ActivityBaseHeader2 implements View.OnClickListene
                     orderShellModel.setFinalprice(String.valueOf((buy_list.get(i).getMinPrice()
                             + buy_list.get(i).getMaxPrice()) / 2));
                 }
-
+                toast(orderShellModel.getFinalprice());
                 orderShellModels.add(orderShellModel);
             }
         }
