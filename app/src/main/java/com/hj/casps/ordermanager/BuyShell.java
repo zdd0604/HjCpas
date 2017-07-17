@@ -256,7 +256,7 @@ public class BuyShell extends ActivityBaseHeader2 implements View.OnClickListene
                     orderShellModel.setFinalprice(String.valueOf((buy_list.get(i).getMinPrice()
                             + buy_list.get(i).getMaxPrice()) / 2));
                 }
-                toast(orderShellModel.getFinalprice());
+
                 orderShellModels.add(orderShellModel);
             }
         }
@@ -438,6 +438,7 @@ public class BuyShell extends ActivityBaseHeader2 implements View.OnClickListene
                     bundle.putString("buy_name", buy_name);
                     bundle.putString("buy_id", buy_id);
                     bundle.putParcelableArrayList("orders", (ArrayList<? extends Parcelable>) orderShellModels2);
+                    toast(orderShellModels2.get(0).getFinalprice());
                     intentActivity(OrderDetail.class, bundle);
                 }
                 break;
