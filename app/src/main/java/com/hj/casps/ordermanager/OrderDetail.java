@@ -419,6 +419,7 @@ public class OrderDetail extends ActivityBaseHeader2 implements View.OnClickList
         order_detail_submit = (Button) footer.findViewById(R.id.order_detail_submit);
         order_detail_submit.setOnClickListener(this);
         order_detail_process.setAdapter(stringArrayAdapter3);
+        adapter.notifyDataSetChanged();
 //        OrderShellDetailAdapter.setUpDataPrice(this);
     }
 
