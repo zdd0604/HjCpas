@@ -26,16 +26,17 @@ public class OrderShellModel implements Parcelable {
     private boolean status;//是否是指定商品
     private boolean delete;//是否删除该商品
 
+
     protected OrderShellModel(Parcel in) {
         name = in.readString();
         goodsId = in.readString();
         quoteId = in.readString();
         price = in.readString();
         finalprice = in.readString();
-        id = in.readString();
         allprice = in.readString();
         size = in.readString();
         categoryId = in.readString();
+        id = in.readString();
         num = in.readInt();
         no = in.readInt();
         minPrice = in.readDouble();
@@ -219,6 +220,7 @@ public class OrderShellModel implements Parcelable {
         num = 0;
     }
 
+
     @Override
     public int describeContents() {
         return 0;
@@ -230,11 +232,11 @@ public class OrderShellModel implements Parcelable {
         parcel.writeString(goodsId);
         parcel.writeString(quoteId);
         parcel.writeString(price);
-        parcel.writeString(id);
         parcel.writeString(finalprice);
         parcel.writeString(allprice);
         parcel.writeString(size);
         parcel.writeString(categoryId);
+        parcel.writeString(id);
         parcel.writeInt(num);
         parcel.writeInt(no);
         parcel.writeDouble(minPrice);

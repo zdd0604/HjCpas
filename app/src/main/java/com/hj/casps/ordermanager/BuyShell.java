@@ -438,7 +438,7 @@ public class BuyShell extends ActivityBaseHeader2 implements View.OnClickListene
                     bundle.putString("buy_name", buy_name);
                     bundle.putString("buy_id", buy_id);
                     bundle.putParcelableArrayList("orders", (ArrayList<? extends Parcelable>) orderShellModels2);
-                    toast(orderShellModels2.get(0).getFinalprice());
+//                    toast(orderShellModels2.get(0).getFinalprice());
                     intentActivity(OrderDetail.class, bundle);
                 }
                 break;
